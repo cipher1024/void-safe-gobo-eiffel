@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-4-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-4-0 http://www.eiffel.com/developers/xml/configuration-1-4-0.xsd" name="gobo_all" uuid="CCB152F0-2D87-42AF-AD4A-0D5514133C1A" library_target="gobo">
+	<target name="gobo">
+		<description>gobo library</description>
+		<root all_classes="true"/>
+		<file_rule>
+			<exclude>/\.svn</exclude>
+			<exclude>/hact$</exclude>
+			<exclude>/se$</exclude>
+			<exclude>/ve$</exclude>
+			<exclude>/ge$</exclude>
+			<exclude>/base$</exclude>
+			<exclude>/cvs$</exclude>
+			<exclude>/free_elks$</exclude>
+			<exclude>/EIFGENs$</exclude>
+			<exclude>/Documentation$</exclude>
+		</file_rule>
+		<option full_class_checking="true" is_attached_by_default="true" is_void_safe="true" syntax_level="1" namespace="Gobo.Library">
+		</option>
+		<setting name="dotnet_naming_convention" value="true"/>
+		<library name="eiffelbase" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
+		<library name="eiffeltime" location="$ISE_LIBRARY\library\time\time-safe.ecf"/>
+		<library name="gobo_argument" location="gobo_argument-safe.ecf" readonly="false"/>
+		<library name="gobo_kernel" location="gobo_kernel-safe.ecf" readonly="false"/>
+		<library name="gobo_lexical" location="gobo_lexical-safe.ecf" readonly="false"/>
+		<library name="gobo_math" location="gobo_math-safe.ecf" readonly="false"/>
+		<library name="gobo_parse" location="gobo_parse-safe.ecf" readonly="false"/>
+		<library name="gobo_pattern" location="gobo_pattern-safe.ecf" readonly="false"/>
+		<library name="gobo_regexp" location="gobo_regexp-safe.ecf" readonly="false"/>
+		<library name="gobo_string" location="gobo_string-safe.ecf" readonly="false"/>
+		<library name="gobo_structures" location="gobo_structures-safe.ecf" readonly="false"/>
+		<library name="gobo_time" location="gobo_time-safe.ecf" readonly="false"/>
+		<library name="gobo_utility" location="gobo_utility-safe.ecf" readonly="false"/>
+		<library name="gobo_xml" location="gobo_xml-safe.ecf" readonly="false"/>
+		<assembly name="eiffelsoftware.runtime" location="$ISE_EIFFEL\studio\spec\$ISE_PLATFORM\lib\EiffelSoftware.Runtime.dll"/>
+	</target>
+</system>
