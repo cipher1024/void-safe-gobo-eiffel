@@ -82,14 +82,15 @@ feature {NONE} -- Cursor implementation
 
 	frozen attached_internal_cursor: like new_cursor is
 			-- Attached internal cursor
+			--| FIXME:jfiat
 		require
 			internal_cursor_attached: internal_cursor /= Void
 		local
-			l_internal_cursor: like internal_cursor
+			c: like internal_cursor
 		do
-			l_internal_cursor := internal_cursor
-			check l_internal_cursor /= Void end
-			Result := l_internal_cursor
+			c := internal_cursor
+			check c /= Void end
+			Result := c
 		end
 
 feature {DS_CURSOR} -- Cursor implementation
@@ -139,13 +140,12 @@ feature {DS_CURSOR} -- Cursor implementation
 		require
 			a_cursor_not_void: a_cursor /= Void
 		local
-			l_internal_cursor: like internal_cursor
+			c: like internal_cursor
 		do
-			l_internal_cursor := internal_cursor
-			if a_cursor /= l_internal_cursor then
-				check l_internal_cursor /= Void end
-				a_cursor.set_next_cursor (l_internal_cursor.next_cursor)
-				l_internal_cursor.set_next_cursor (a_cursor)
+			c := attached_internal_cursor
+			if a_cursor /= c then
+				a_cursor.set_next_cursor (c.next_cursor)
+				c.set_next_cursor (a_cursor)
 			end
 		end
 
@@ -157,14 +157,13 @@ feature {DS_CURSOR} -- Cursor implementation
 			a_cursor_not_void: a_cursor /= Void
 		local
 			current_cursor, previous_cursor: ?like new_cursor
-			l_internal_cursor: like internal_cursor
+			c: like internal_cursor
 		do
-			l_internal_cursor := internal_cursor
-			if a_cursor /= l_internal_cursor then
-				check l_internal_cursor /= Void end
+			c := attached_internal_cursor
+			if a_cursor /= c then
 				from
-					previous_cursor := l_internal_cursor
-					current_cursor := previous_cursor.next_cursor
+					previous_cursor := c
+					current_cursor := c.next_cursor
 				until
 					current_cursor = a_cursor or current_cursor = Void
 				loop
@@ -195,6 +194,6 @@ invariant
 
 	empty_constraint: initialized implies (is_empty implies off)
 	internal_cursor_not_void: initialized implies (internal_cursor /= Void)
-	valid_internal_cursor: initialized implies valid_cursor (attached_internal_cursor)
+	valid_internal_cursor: initialized implies {ot_cursor: like internal_cursor} internal_cursor and then valid_cursor (ot_cursor)
 
 end

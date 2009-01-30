@@ -80,14 +80,13 @@ feature {NONE} -- Initialization
 			-- Use `=' as comparison criterion.
 		require
 			other_not_void: other /= Void
---			not_same: other /= Current
 		local
 			other_cursor: DS_LINEAR_CURSOR [G]
 			i, nb: INTEGER
 		do
 			nb := other.count
 			make (nb)
-			check not_same: other /= Current end
+			check not_same: other /= Current end -- FIXME:jfiat can not use Current before
 			count := nb
 			from
 				i := 1
@@ -1153,7 +1152,7 @@ feature {DS_ARRAYED_LIST_CURSOR} -- Cursor implementation
 			end
 		end
 
-	cursor_search_back (a_cursor: like new_cursor; v: ?G) is
+	cursor_search_back (a_cursor: like new_cursor; v: G) is
 			-- Move `a_cursor' to first position at or before its current
 			-- position where `cursor_item (a_cursor)' and `v' are equal.
 			-- (Use `equality_tester''s comparison criterion

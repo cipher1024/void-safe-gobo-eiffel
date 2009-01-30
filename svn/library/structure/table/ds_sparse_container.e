@@ -506,7 +506,7 @@ feature -- Optimization
 		ensure
 			same_count: count = old count
 			compressed: last_position = count
-			not_reszied: capacity = old capacity
+			not_resized: capacity = old capacity
 		end
 
 feature {DS_SPARSE_CONTAINER_CURSOR} -- Implementation

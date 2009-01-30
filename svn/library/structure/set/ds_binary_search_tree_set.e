@@ -78,7 +78,7 @@ feature -- Status report
 		do
 			if not is_empty then
 				l_first_node := first_node
-				check l_first_node /= Void end
+				check l_first_node /= Void end -- implied by `not is_empty'
 				Result := l_first_node.item = Void
 			end
 		end
@@ -251,8 +251,7 @@ feature -- Duplication
 			l_internal_cursor: like internal_cursor
 		do
 			if other /= Current then
-				l_internal_cursor := internal_cursor
-				check l_internal_cursor /= Void end
+				l_internal_cursor := attached_internal_cursor
 				if not l_internal_cursor.off then
 					l_old_cursor_position := l_internal_cursor.position
 				end
@@ -324,7 +323,7 @@ feature -- Basic operations
 					l_item := l_node.item
 					l_node := successor (l_node)
 					if not other.has (l_item) then
-						check l_node /= Void end
+						check l_node /= Void end -- implied by ... ?
 						remove_node (l_node)
 					end
 				end
@@ -353,7 +352,7 @@ feature -- Basic operations
 					l_item := l_node.item
 					l_node := successor (l_node)
 					if other.has (l_item) then
-						check l_node /= Void end
+						check l_node /= Void end -- implied by ... ?
 						remove_node (l_node)
 					end
 				end

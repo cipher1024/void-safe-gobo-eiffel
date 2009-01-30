@@ -57,13 +57,10 @@ feature {NONE} -- Implementation
 			-- Hash position of `v' in `slots';
 			-- Use `hash_function' as hashing function
 			-- if not Void, `v.hash_code' otherwise.
-		local
-			l_hash_function: like hash_function
 		do
 			if v /= Void then
-				l_hash_function := hash_function
-				if l_hash_function /= Void then
-					Result := l_hash_function.hash_code (v) \\ modulus
+				if {h_function: like hash_function} hash_function then
+					Result := h_function.hash_code (v) \\ modulus
 				else
 					Result := v.hash_code \\ modulus
 				end

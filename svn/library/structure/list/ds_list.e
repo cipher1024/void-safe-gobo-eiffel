@@ -165,11 +165,8 @@ feature -- Element change
 			-- Do not move cursors.
 		require
 			not_off: not off
-		local
-			l_internal_cursor: like new_cursor
 		do
-			l_internal_cursor := attached_internal_cursor
-			l_internal_cursor.replace (v)
+			attached_internal_cursor.replace (v)
 		ensure
 			same_count: count = old count
 			replaced: item_for_iteration = v

@@ -198,7 +198,6 @@ feature {DS_CURSOR} -- Cursor implementation
 	cursor_off (a_cursor: like new_cursor): BOOLEAN is
 			-- Is there no item at `a_cursor' position?
 		do
-			check a_cursor /= Void end -- FIXME: inherited precondition!!
 			Result := cursor_after (a_cursor)
 		end
 

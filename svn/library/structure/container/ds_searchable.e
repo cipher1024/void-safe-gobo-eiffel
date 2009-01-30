@@ -36,11 +36,11 @@ feature -- Status report
 	has_void: BOOLEAN is
 			-- Does container include Void?
 		local
---			v: ?G
+			v: ?G
 		do
---			if v = Void then
---				Result := has (v)
---			end
+			if {d: DS_SEARCHABLE [?G]} Current then
+				Result := d.has (v)
+			end
 		ensure
 			not_empty: Result implies not is_empty
 		end
@@ -49,12 +49,9 @@ feature -- Status report
 			-- Are `v' and `u' considered equal?
 			-- (Use `equality_tester''s comparison criterion
 			-- if not void, use `=' criterion otherwise.)
-		local
-			l_equality_tester: like equality_tester
 		do
-			l_equality_tester := equality_tester
-			if l_equality_tester /= Void then
-				Result := l_equality_tester.test (v, u)
+			if {e: like equality_tester} equality_tester then
+				Result := e.test (v, u)
 			else
 				Result := (v = u)
 			end

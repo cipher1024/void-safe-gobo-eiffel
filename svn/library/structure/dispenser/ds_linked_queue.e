@@ -114,7 +114,7 @@ feature -- Access
 			a_cell: like first_cell
 		do
 			a_cell := first_cell
-			check a_cell /= Void end
+			check a_cell /= Void end -- implied by precondition `not_empty'
 			Result := a_cell.item
 		end
 
@@ -162,15 +162,14 @@ feature -- Duplication
 	copy (other: like Current) is
 			-- Copy `other' to current queue.
 		local
-			old_cell: like first_cell
-			a_cell, new_cell: !like first_cell
+			a_cell, new_cell, old_cell: like first_cell
 		do
 			if other /= Current then
 				standard_copy (other)
 				if not other.is_empty then
 					from
 						old_cell := other.first_cell
-						check old_cell /= Void end
+						check old_cell /= Void end -- implied by `not other.is_empty'
 						create new_cell.make (old_cell.item)
 						first_cell := new_cell
 						a_cell := new_cell
@@ -205,7 +204,7 @@ feature -- Comparison
 				until
 					a_cell = Void
 				loop
-					check other_cell /= Void end
+					check other_cell /= Void end -- implied by `a_cell /= Void' and `other.count = count'
 					if a_cell.item /= other_cell.item then
 						Result := False
 							-- Jump out of the loop.
@@ -224,7 +223,7 @@ feature -- Element change
 			-- Add `v' to back of queue.
 		local
 			a_cell: like last_cell
-			new_cell: !like first_cell
+			new_cell: like first_cell
 		do
 			create new_cell.make (v)
 			if is_empty then
@@ -233,7 +232,7 @@ feature -- Element change
 				count := 1
 			else
 				a_cell := last_cell
-				check a_cell /= Void end
+				check a_cell /= Void end -- implied by `not is_empty'
 				a_cell.put_right (new_cell)
 				last_cell := new_cell
 				count := count + 1
@@ -244,8 +243,8 @@ feature -- Element change
 			-- Add items of `other' to back of queue.
 			-- Add `other.first' first, etc.
 		local
+			a_cell, new_last, new_first: like first_cell
 			a_last_cell: like last_cell
-			a_cell, new_last, new_first: !like first_cell
 			other_cursor: DS_LINEAR_CURSOR [G]
 		do
 			if not other.is_empty then
@@ -267,7 +266,7 @@ feature -- Element change
 					first_cell := new_first
 				else
 					a_last_cell := last_cell
-					check a_last_cell /= Void end
+					check a_last_cell /= Void end -- implied by `not is_empty'
 					a_last_cell.put_right (new_first)
 				end
 				last_cell := new_last
@@ -286,7 +285,7 @@ feature -- Removal
 				wipe_out
 			else
 				a_cell := first_cell
-				check a_cell /= Void end
+				check a_cell /= Void end -- implied by precondition `not_empty'
 				first_cell := a_cell.right
 				count := count - 1
 			end
@@ -302,13 +301,14 @@ feature -- Removal
 				wipe_out
 			else
 				a_cell := first_cell
+				check a_cell /= Void end -- implied by `n /= count' and precondition `valid_n'
 				from
 					i := 1
 				until
 					i > n
 				loop
-					check a_cell /= Void end
 					a_cell := a_cell.right
+					check a_cell /= Void end -- implied by `n /= count' and precondition `valid_n'					
 					i := i + 1
 				end
 				first_cell := a_cell

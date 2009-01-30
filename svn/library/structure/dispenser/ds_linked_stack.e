@@ -114,7 +114,7 @@ feature -- Access
 			a_cell: like first_cell
 		do
 			a_cell := first_cell
-			check a_cell /= Void end
+			check a_cell /= Void end -- implied by precondition `not_empty'
 			Result := a_cell.item
 		end
 
@@ -162,15 +162,14 @@ feature -- Duplication
 	copy (other: like Current) is
 			-- Copy `other' to current stack.
 		local
-			a_cell, new_cell: !like first_cell
-			old_cell: like first_cell
+			a_cell, new_cell, old_cell: like first_cell
 		do
 			if other /= Current then
 				standard_copy (other)
 				if not other.is_empty then
 					from
 						old_cell := other.first_cell
-						check old_cell /= Void end
+						check old_cell /= Void end -- implied by `not other.is_empty'
 						create a_cell.make (old_cell.item)
 						first_cell := a_cell
 						old_cell := old_cell.right
@@ -203,7 +202,7 @@ feature -- Comparison
 				until
 					a_cell = Void
 				loop
-					check other_cell /= Void end
+					check other_cell /= Void end -- implied by `other.count = count' and `a_cell /= Void'
 					if a_cell.item /= other_cell.item then
 						Result := False
 							-- Jump out of the loop.
@@ -238,7 +237,7 @@ feature -- Element change
 			a_cell: like first_cell
 		do
 			a_cell := first_cell
-			check a_cell /= Void end
+			check a_cell /= Void end -- implied by inherited precondition `not_empty'
 			a_cell.put (v)
 		end
 
@@ -246,7 +245,6 @@ feature -- Element change
 			-- Add items of `other' to stack.
 			-- Add `other.first' first, etc.
 		local
-			fcell: like first_cell
 			a_cell, new_first: like first_cell
 			other_cursor: DS_LINEAR_CURSOR [G]
 		do
@@ -255,8 +253,7 @@ feature -- Element change
 				from
 					other_cursor.start
 					create a_cell.make (other_cursor.item)
-					fcell := first_cell
-					if fcell /= Void then
+					if {fcell: like first_cell} first_cell then
 						a_cell.put_right (fcell)
 					end
 					new_first := a_cell
@@ -282,7 +279,7 @@ feature -- Removal
 			a_cell: like first_cell
 		do
 			a_cell := first_cell
-			check a_cell /= Void end
+			check a_cell /= Void end -- implied by inherited precondition `not_empty'
 			first_cell := a_cell.right
 			count := count - 1
 		end
@@ -297,13 +294,14 @@ feature -- Removal
 				wipe_out
 			else
 				a_cell := first_cell
+				check a_cell /= Void end -- implied by `valid_n' and `n < count'
 				from
 					i := 1
 				until
 					i > n
 				loop
-					check a_cell /= Void end
 					a_cell := a_cell.right
+					check a_cell /= Void end -- implied by `valid_n' and `i < n < count'
 					i := i + 1
 				end
 				first_cell := a_cell

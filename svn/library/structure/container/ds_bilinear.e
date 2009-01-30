@@ -143,7 +143,7 @@ feature {DS_BILINEAR_CURSOR} -- Cursor implementation
 		deferred
 		end
 
-	cursor_search_back (a_cursor: like new_cursor; v: ?G) is
+	cursor_search_back (a_cursor: like new_cursor; v: G) is
 			-- Move `a_cursor' to first position at or before its current
 			-- position where `cursor_item (a_cursor)' and `v' are equal.
 			-- (Use `equality_tester''s comparison criterion

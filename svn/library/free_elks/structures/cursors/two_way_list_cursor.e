@@ -1,0 +1,37 @@
+note
+	description: "Cursors for two way lists."
+	legal: "See notice at end of class."
+	status: "See notice at end of class."
+	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
+	revision: "$Revision: 6572 $"
+
+class
+	TWO_WAY_LIST_CURSOR [G]
+
+inherit
+	LINKED_LIST_CURSOR [G]
+		redefine
+			active
+		end
+
+create
+	make
+
+feature {TWO_WAY_LIST} -- Implementation
+
+	active: ?BI_LINKABLE [G];
+			-- Current element in linked list
+
+note
+	library:	"EiffelBase: Library of reusable components for Eiffel."
+	copyright:	"Copyright (c) 1984-2008, Eiffel Software and others"
+	license:	"Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"
+	source: "[
+			 Eiffel Software
+			 356 Storke Road, Goleta, CA 93117 USA
+			 Telephone 805-685-1006, Fax 805-685-6869
+			 Website http://www.eiffel.com
+			 Customer support http://support.eiffel.com
+		]"
+
+end

@@ -342,7 +342,7 @@ feature -- Iteration
 			-- (Semantics not guaranteed if `an_action' or `a_test' change the structure.)
 		local
 			i: INTEGER
-			l_item: ?G
+			l_item: G
 		do
 			from
 				i := count
@@ -350,7 +350,6 @@ feature -- Iteration
 				i < 1
 			loop
 				l_item := storage.item (i)
-				check l_item /= Void end -- implied by `1 > i >= count'
 				if a_test.item ([l_item]) then
 					an_action.call ([l_item])
 				end
@@ -363,16 +362,13 @@ feature -- Iteration
 			-- (Semantics not guaranteed if `a_test' changes the structure.)
 		local
 			i: INTEGER
-			l_item: ?G
 		do
 			from
 				i := count
 			until
 				i < 1
 			loop
-				l_item := storage.item (i)
-				check l_item /= Void end -- implied by `1 > i >= count'				
-				if a_test.item ([l_item]) then
+				if a_test.item ([storage.item (i)]) then
 					Result := True
 						-- Jump out of the loop.
 					i := 0
