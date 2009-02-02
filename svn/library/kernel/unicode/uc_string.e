@@ -1882,7 +1882,6 @@ feature -- Element change
 			old_a_string_count: INTEGER
 			new_byte_count: INTEGER
 			new_count: INTEGER
-			a_utf8_string: UC_UTF8_STRING
 			b: BOOLEAN
 		do
 			if ANY_.same_types (a_string, dummy_string) then
@@ -2370,7 +2369,7 @@ feature -- Element change
 			end
 		end
 
-	replace_substring (a_string: STRING; start_index, end_index: INTEGER) is
+	replace_substring (a_string: READABLE_STRING_8; start_index, end_index: INTEGER) is
 			-- Replace the substring from `start_index' to `end_index',
 			-- inclusive, with `a_string'.
 			-- (ELKS 2001 STRING)
@@ -2378,7 +2377,7 @@ feature -- Element change
 			replace_substring_by_string (a_string, start_index, end_index)
 		end
 
-	replace_substring_by_string (a_string: STRING; start_index, end_index: INTEGER) is
+	replace_substring_by_string (a_string: READABLE_STRING_8; start_index, end_index: INTEGER) is
 			-- Replace the substring from `start_index' to `end_index',
 			-- inclusive, with `a_string'.
 		local
@@ -3586,20 +3585,19 @@ feature {NONE} -- Implementation
 							j := j + 1
 						end
 					else
-						a_uc_string ?= a_string
-						if a_uc_string /= Void then
+						if {ot_uc_string: UC_STRING} a_string then
 							k := i
-							j := a_uc_string.byte_index (start_index)
+							j := ot_uc_string.byte_index (start_index)
 							nb := j + b - 1
 							from
 							until
 								j > nb
 							loop
-								a_code := a_uc_string.item_code_at_byte_index (j)
+								a_code := ot_uc_string.item_code_at_byte_index (j)
 								z := utf8.code_byte_count (a_code)
 								put_code_at_byte_index (a_code, z, k)
 								k := k + z
-								j := a_uc_string.next_byte_index (j)
+								j := ot_uc_string.next_byte_index (j)
 							end
 						else
 							k := i
