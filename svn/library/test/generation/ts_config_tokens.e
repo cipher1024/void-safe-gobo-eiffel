@@ -11,8 +11,8 @@ inherit
 
 feature -- Last values
 
-	last_any_value: ANY
-	last_et_identifier_value: ET_IDENTIFIER
+	last_any_value: ?ANY
+	last_et_identifier_value: ?ET_IDENTIFIER
 
 feature -- Access
 

@@ -83,7 +83,7 @@ feature -- Access
 	last_character: CHARACTER
 			-- Last character read
 
-	last_string: STRING
+	last_string: ?STRING
 			-- Last string read
 			-- (Note: this query always return the same object.
 			-- Therefore a clone should be used if the result
@@ -104,18 +104,19 @@ feature -- Input
 			-- '%R%N and '%R'.
 		local
 			done: BOOLEAN
-			a_target: STRING
+			a_target: like last_string
 			c: CHARACTER
 			is_eof: BOOLEAN
 			has_carriage: BOOLEAN
 		do
-			if last_string = Void then
-				create last_string.make (256)
+			a_target := last_string
+			if a_target = Void then
+				create a_target.make (256)
+				last_string := a_target
 			else
-				last_string.clear_all
+				a_target.clear_all
 			end
 			is_eof := True
-			a_target := last_string
 			from until done loop
 				read_character
 				if end_of_file then
@@ -151,23 +152,27 @@ feature -- Input
 			-- was found.
 			-- Line separators recognized by current file are:
 			-- '%N', '%R%N and '%R'.
+		local
+			l_last_string: like last_string
 		do
-			if last_string = Void then
-				create last_string.make (256)
+			l_last_string := last_string
+			if l_last_string = Void then
+				create l_last_string.make (256)
+				last_string := l_last_string
 			else
-				last_string.clear_all
+				l_last_string.clear_all
 			end
 			read_character
 			if not end_of_file then
 				inspect last_character
 				when '%N' then
-					last_string.append_character ('%N')
+					l_last_string.append_character ('%N')
 				when '%R' then
-					last_string.append_character ('%R')
+					l_last_string.append_character ('%R')
 					read_character
 					if not end_of_file then
 						if last_character = '%N' then
-							last_string.append_character ('%N')
+							l_last_string.append_character ('%N')
 						else
 								-- Put character back to input file.
 							unread_character (last_character)

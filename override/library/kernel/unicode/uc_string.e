@@ -1600,7 +1600,7 @@ feature -- Comparison
 				Result := 0
 			elseif ANY_.same_types (Current, other) then
 				uc_string ?= other
-				check uc_string_attached: uc_string /= Void end
+				check uc_string /= Void end -- implied by `same_types...'
 				nb1 := byte_count
 				nb2 := uc_string.byte_count
 				if nb1 < nb2 then

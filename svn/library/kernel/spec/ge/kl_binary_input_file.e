@@ -80,7 +80,7 @@ feature -- Access
 	last_character: CHARACTER
 			-- Last character read
 
-	last_string: STRING
+	last_string: ?STRING
 			-- Last string read
 			-- (Note: this query always return the same object.
 			-- Therefore a clone should be used if the result

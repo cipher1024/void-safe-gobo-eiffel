@@ -263,7 +263,7 @@ feature -- Error handling
 			-- Report a syntax error.
 		local
 			an_error: UT_SYNTAX_ERROR
-			file_buffer: YY_FILE_BUFFER
+			file_buffer: ?YY_FILE_BUFFER
 			filename: STRING
 		do
 			file_buffer ?= input_buffer
@@ -358,8 +358,8 @@ invariant
 
 	error_handler_not_void: error_handler /= Void
 	defined_values_not_void: defined_values /= Void
-	no_void_defined_value: not defined_values.has_item (Void)
+	no_void_defined_value: not defined_values.has_void_item
 	config_values_not_void: config_values /= Void
-	no_void_config_value: not config_values.has_item (Void)
+	no_void_config_value: not config_values.has_void_item
 
 end

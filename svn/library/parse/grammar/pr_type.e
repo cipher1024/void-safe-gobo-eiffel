@@ -298,6 +298,7 @@ feature -- Output
 			a_file.put_string (": like yyspecial_routines")
 			a_file.put_integer (id)
 			a_file.put_string ("} yyspecial_routines")
+			a_file.put_integer (id)
 			a_file.put_line (" then")
 
 			print_indentation (indent + 1, a_file)
@@ -326,7 +327,6 @@ feature -- Output
 			a_file.put_integer (id)
 			a_file.put_string ("} yyvs")
 			a_file.put_integer (id)
-			a_file.put_line (" /= Void then")
 			a_file.put_line (" then")
 			print_indentation (indent + 1, a_file)
 			a_file.put_string ("l_yyvs")

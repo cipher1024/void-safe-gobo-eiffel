@@ -90,8 +90,12 @@ CCL_CHAR			[^\\\n\]]|{ESC}
 	\"|\'|%|-												more
 	^"%}"		{
 					last_string := text_substring (1, text_count - 2)
-					line_nb := line_nb + last_string.occurrences ('%N')
-					description.eiffel_header.force_last (last_string)
+					if {l_last_string_1: like last_string} last_string then
+						line_nb := line_nb + l_last_string_1.occurrences ('%N')
+						description.eiffel_header.force_last (l_last_string_1)
+					else
+						check False end
+					end
 					set_start_condition (INITIAL)
 				}
 }
@@ -186,7 +190,11 @@ CCL_CHAR			[^\\\n\]]|{ESC}
 	{WS}|{C}		-- Separates name and definition.
 	[^ \t\n\r][^\n\r]*	{
 					check last_string_not_void: last_string /= Void end
-					process_name_definition (last_string, text)
+					if {l_last_string_2: like last_string} last_string then
+						process_name_definition (l_last_string_2, text)
+					else
+						check False end
+					end
 					set_start_condition (INITIAL)
 				}
 	{NL}		{
@@ -254,10 +262,14 @@ CCL_CHAR			[^\\\n\]]|{ESC}
 	"$"/[ \t\r\n]	last_token := Dollar_code
 	"{"{NAME}"}"	{
 					last_string := text.as_lower
-					if name_definitions.has (last_string) then
-						put_back_string (name_definitions.item (last_string))
+					if {l_last_string_3: like last_string} last_string then
+						if name_definitions.has (l_last_string_3) then
+							put_back_string (name_definitions.item (l_last_string_3))
+						else
+							report_undefined_definition_error (text)
+						end
 					else
-						report_undefined_definition_error (text)
+						check False end
 					end
 				}
 	"{"			{
@@ -266,14 +278,18 @@ CCL_CHAR			[^\\\n\]]|{ESC}
 				}
 	"["{FIRST_CCL_CHAR}{CCL_CHAR}*"]"	{
 					last_string := text
-					if character_classes.has (last_string) then
-						last_token := CCL_OP
-						last_lx_symbol_class_value := character_classes.item (last_string)
+					if {l_last_string_4: like last_string} last_string then
+						if character_classes.has (l_last_string_4) then
+							last_token := CCL_OP
+							last_lx_symbol_class_value := character_classes.item (l_last_string_4)
+						else
+							last_token := Left_bracket_code
+							last_string_value := l_last_string_4
+							less (1)
+							set_start_condition (FIRSTCCL)
+						end
 					else
-						last_token := Left_bracket_code
-						last_string_value := last_string
-						less (1)
-						set_start_condition (FIRSTCCL)
+						check False end
 					end
 				}
 	"["			{
@@ -437,7 +453,11 @@ CCL_CHAR			[^\\\n\]]|{ESC}
 					if nb_open_brackets = 0 then
 						last_token := EIF_CODE
 						last_string := text_substring (1, text_count - 1)
-						line_nb := line_nb + last_string.occurrences ('%N')
+						if {l_last_string_5: like last_string} last_string then
+							line_nb := line_nb + l_last_string_5.occurrences ('%N')
+						else
+							check False end
+						end
 						last_string_value := last_string
 						set_start_condition (SECT2)
 					else

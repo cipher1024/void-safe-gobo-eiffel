@@ -3662,10 +3662,6 @@ feature -- Scanning
 			yy_rejected_column: INTEGER
 			yy_rejected_position: INTEGER
 			yy_done: BOOLEAN
-			l_yy_content_area: like yy_content_area
-			l_yy_ec: like yy_ec
-			l_yy_meta: like yy_meta
-			l_yy_acclist: like yy_acclist
 		do
 				-- This routine is implemented with a loop whose body
 				-- is a big inspect instruction. This is a mere
@@ -3724,17 +3720,15 @@ feature -- Scanning
 					until
 						yy_done
 					loop
-						l_yy_content_area := yy_content_area
-						l_yy_ec := yy_ec
-						if l_yy_ec /= Void then
-							if l_yy_content_area /= Void then
-								yy_c := l_yy_ec.item (l_yy_content_area.item (yy_cp).code)
+						if {l_yy_ec: like yy_ec} yy_ec then
+							if {l_yy_content_area_1: like yy_content_area} yy_content_area then
+								yy_c := l_yy_ec.item (l_yy_content_area_1.item (yy_cp).code)
 							else
 								yy_c := l_yy_ec.item (yy_content.item (yy_cp).code)
 							end
 						else
-							if l_yy_content_area /= Void then
-								yy_c := l_yy_content_area.item (yy_cp).code
+							if {l_yy_content_area_2: like yy_content_area} yy_content_area then
+								yy_c := l_yy_content_area_2.item (yy_cp).code
 							else
 								yy_c := yy_content.item (yy_cp).code
 							end
@@ -3754,9 +3748,8 @@ feature -- Scanning
 							yy_chk.item (yy_base.item (yy_current_state) + yy_c) = yy_current_state
 						loop
 							yy_current_state := yy_def.item (yy_current_state)
-							l_yy_meta := yy_meta
 							if
-								l_yy_meta /= Void and then
+								{l_yy_meta: like yy_meta} yy_meta and then
 								yy_current_state >= yyTemplate_mark
 							then
 									-- We've arranged it so that templates are
@@ -3803,9 +3796,11 @@ feature -- Scanning
 							yy_lp /= 0 and
 							yy_lp < yy_accept.item (yy_current_state + 1)
 						then
-							l_yy_acclist := yy_acclist
-							check l_yy_acclist /= Void end
-							yy_act := l_yy_acclist.item (yy_lp)
+							if {l_yy_acclist: like yy_acclist} yy_acclist then
+								yy_act := l_yy_acclist.item (yy_lp)
+							else
+								check False end
+							end
 							if yyVariable_trail_context then
 								if
 									yy_act < - yyNb_rules or

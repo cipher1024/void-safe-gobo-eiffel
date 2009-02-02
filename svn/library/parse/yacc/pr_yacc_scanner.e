@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Parse Library"
 	copyright: "Copyright (c) 1999, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-11-20 10:24:46 +0100 (Thu, 20 Nov 2008) $"
-	revision: "$Revision: 6557 $"
+	date: "$Date: 2007-03-31 00:05:10 +0200 (Sat, 31 Mar 2007) $"
+	revision: "$Revision: 5933 $"
 
 class PR_YACC_SCANNER
 
@@ -44,8 +44,6 @@ feature {NONE} -- Implementation
 
 	yy_execute_action (yy_act: INTEGER) is
 			-- Execute semantic action.
-		local
-			l_rule: like rule
 		do
 if yy_act <= 33 then
 if yy_act <= 17 then
@@ -150,7 +148,7 @@ end
 
 						line_nb := line_nb + 1
 						set_start_condition (EIFFEL_CODE)
-
+					
 end
 end
 else
@@ -162,7 +160,7 @@ debug ("GELEX")
 end
 
 						set_start_condition (EIFFEL_CODE)
-
+					
 else
 --|#line 58 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -171,7 +169,7 @@ end
 
 						last_token := T_2PERCENTS
 						set_start_condition (SECTION2)
-
+					
 end
 else
 if yy_act = 16 then
@@ -208,7 +206,7 @@ end
 
 						last_token := T_INTEGER
 						last_string_value := text
-
+					
 end
 else
 if yy_act = 20 then
@@ -219,7 +217,7 @@ end
 
 						last_token := T_BOOLEAN
 						last_string_value := text
-
+					
 else
 --|#line 77 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -228,7 +226,7 @@ end
 
 						last_token := T_REAL
 						last_string_value := text
-
+					
 end
 end
 else
@@ -241,7 +239,7 @@ end
 
 						last_token := T_DOUBLE
 						last_string_value := text
-
+					
 else
 --|#line 85 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -250,7 +248,7 @@ end
 
 						last_token := T_CHARACTER
 						last_string_value := text
-
+					
 end
 else
 if yy_act = 24 then
@@ -261,7 +259,7 @@ end
 
 						last_token := T_POINTER
 						last_string_value := text
-
+					
 else
 --|#line 93 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -270,7 +268,7 @@ end
 
 						last_token := T_LIKE
 						last_string_value := text
-
+					
 end
 end
 end
@@ -285,7 +283,7 @@ end
 
 						last_token := T_IDENTIFIER
 						last_string_value := text
-
+					
 else
 --|#line 101 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -297,7 +295,7 @@ end
 						if last_integer_value = 0 then
 							report_null_integer_error
 						end
-
+					
 end
 else
 if yy_act = 28 then
@@ -308,7 +306,7 @@ end
 
 						last_token := T_CHAR
 						last_string_value := text
-
+					
 else
 --|#line 112 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -320,7 +318,7 @@ end
 						if text_count < 4 then
 							report_invalid_string_token_error (text)
 						end
-
+					
 end
 end
 else
@@ -340,7 +338,7 @@ end
 						last_token := T_ERROR
 						last_integer_value := line_nb
 						set_start_condition (ERROR_SECTION)
-
+					
 end
 else
 if yy_act = 32 then
@@ -351,7 +349,7 @@ end
 
 						last_token := Colon_code
 						last_integer_value := line_nb
-
+					
 else
 --|#line 132 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -360,7 +358,7 @@ end
 
 						last_token := Bar_code
 						last_integer_value := line_nb
-
+					
 end
 end
 end
@@ -385,7 +383,7 @@ end
 
 						line_nb := line_nb + 1
 						set_start_condition (EIFFEL_ACTION)
-
+					
 end
 else
 if yy_act = 36 then
@@ -395,7 +393,7 @@ debug ("GELEX")
 end
 
 						set_start_condition (EIFFEL_ACTION)
-
+					
 else
 --|#line 144 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -404,7 +402,7 @@ end
 
 						last_token := T_2PERCENTS
 						set_start_condition (SECTION3)
-
+					
 end
 end
 else
@@ -417,7 +415,7 @@ end
 
 						last_token := T_USER_CODE
 						last_string_value := text
-
+					
 else
 --|#line 158 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -459,7 +457,7 @@ end
 						last_token := T_NUMBER
 						last_error := text.to_integer
 						last_integer_value := last_error
-
+					
 end
 else
 if yy_act = 44 then
@@ -470,7 +468,7 @@ end
 
 						line_nb := line_nb + 1
 						set_start_condition (ERROR_ACTION)
-
+					
 else
 --|#line 172 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -478,7 +476,7 @@ debug ("GELEX")
 end
 
 						set_start_condition (ERROR_ACTION)
-
+					
 end
 end
 else
@@ -531,7 +529,7 @@ end
 
 					line_nb := line_nb + 1
 					more
-
+				
 end
 else
 if yy_act = 52 then
@@ -543,7 +541,7 @@ end
 					last_token := T_EIFFEL
 					last_string_value := text_substring (1, text_count - 2)
 					set_start_condition (INITIAL)
-
+				
 else
 --|#line 201 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -551,7 +549,7 @@ debug ("GELEX")
 end
 
 					action_buffer.append_string (text)
-
+				
 end
 end
 else
@@ -563,7 +561,7 @@ debug ("GELEX")
 end
 
 					action_buffer.append_string (text)
-
+				
 else
 --|#line 203 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -571,7 +569,7 @@ debug ("GELEX")
 end
 
 					action_buffer.append_string (text)
-
+				
 end
 else
 if yy_act = 56 then
@@ -581,7 +579,7 @@ debug ("GELEX")
 end
 
 					action_buffer.append_string (text)
-
+				
 else
 --|#line 205 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -589,7 +587,7 @@ debug ("GELEX")
 end
 
 					action_buffer.append_string (text)
-
+				
 end
 end
 end
@@ -604,7 +602,7 @@ end
 
 					line_nb := line_nb + text_count
 					action_buffer.append_string (text)
-
+				
 else
 --|#line 212 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -614,15 +612,12 @@ end
 					if start_condition = ERROR_ACTION then
 						report_invalid_dollar_dollar_error
 						action_buffer.append_string ("$$")
+					elseif {l_rule_0: like rule} rule then
+						process_dollar_dollar (l_rule_0)
 					else
-						l_rule := rule
-						if l_rule /= Void then
-							process_dollar_dollar (l_rule)
-						else
-							action_buffer.append_string ("$$")
-						end
+						action_buffer.append_string ("$$")
 					end
-
+				
 end
 else
 if yy_act = 60 then
@@ -632,12 +627,11 @@ debug ("GELEX")
 end
 
 					if text_substring (2, text_count).is_integer then
-						l_rule := rule
-						if l_rule /= Void then
+						if {l_rule_1: like rule} rule then
 							if start_condition = ERROR_ACTION then
-								process_dollar_n (text_substring (2, text_count).to_integer, last_error - 1, l_rule)
+								process_dollar_n (text_substring (2, text_count).to_integer, last_error - 1, l_rule_1)
 							else
-								process_dollar_n (text_substring (2, text_count).to_integer, l_rule.rhs.count, l_rule)
+								process_dollar_n (text_substring (2, text_count).to_integer, l_rule_1.rhs.count, l_rule_1)
 							end
 						else
 							action_buffer.append_string (text)
@@ -646,7 +640,7 @@ end
 						report_integer_too_large_error (text_substring (2, text_count))
 						action_buffer.append_string (text)
 					end
-
+				
 else
 --|#line 238 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -654,12 +648,11 @@ debug ("GELEX")
 end
 
 					if text_substring (3, text_count).is_integer then
-						l_rule := rule
-						if l_rule /= Void then
+						if {l_rule_2: like rule} rule then
 							if start_condition = ERROR_ACTION then
-								process_dollar_n (- text_substring (3, text_count).to_integer, last_error - 1, l_rule)
+								process_dollar_n (- text_substring (3, text_count).to_integer, last_error - 1, l_rule_2)
 							else
-								process_dollar_n (- text_substring (3, text_count).to_integer, l_rule.rhs.count, l_rule)
+								process_dollar_n (- text_substring (3, text_count).to_integer, l_rule_2.rhs.count, l_rule_2)
 							end
 						else
 							action_buffer.append_string (text)
@@ -668,7 +661,7 @@ end
 						report_integer_too_large_error (text_substring (3, text_count))
 						action_buffer.append_string (text)
 					end
-
+				
 end
 end
 else
@@ -681,7 +674,7 @@ end
 
 					action_buffer.append_character ('{')
 					nb_open_brackets := nb_open_brackets + 1
-
+				
 else
 --|#line 258 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -697,7 +690,7 @@ end
 						action_buffer.append_character ('}')
 						nb_open_brackets := nb_open_brackets - 1
 					end
-
+				
 end
 else
 if yy_act = 64 then
@@ -707,7 +700,7 @@ debug ("GELEX")
 end
 
 					last_token := text_item (1).code
-
+				
 else
 --|#line 0 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -737,7 +730,7 @@ end
 					last_token := T_EIFFEL
 					last_string_value := text_substring (1, text_count)
 					set_start_condition (INITIAL)
-
+				
 when 4, 6 then
 --|#line 0 "pr_yacc_scanner.l"
 debug ("GELEX")
@@ -749,7 +742,7 @@ end
 					last_string_value := cloned_string (action_buffer)
 					action_buffer.wipe_out
 					set_start_condition (SECTION2)
-
+				
 			else
 				terminate
 			end

@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Lexical Library"
 	copyright: "Copyright (c) 2001-2003, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-11-20 10:24:46 +0100 (Thu, 20 Nov 2008) $"
-	revision: "$Revision: 6557 $"
+	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
+	revision: "$Revision: 5877 $"
 
 class LX_WILDCARD_SCANNER
 
@@ -54,8 +54,6 @@ feature {NONE} -- Implementation
 
 	yy_execute_action (yy_act: INTEGER) is
 			-- Execute semantic action.
-		local
-			l_last_string: like last_string
 		do
 if yy_act <= 10 then
 if yy_act <= 5 then
@@ -69,45 +67,48 @@ end
 
 					last_token := Double_quote_code
 					set_start_condition (QUOTE)
-
+				
 else
 --|#line 52 "lx_wildcard_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 52")
 end
 
-					l_last_string := text
-					last_string := l_last_string
-					if character_classes.has (l_last_string) then
-						last_token := CCL_OP
-						last_lx_symbol_class_value := character_classes.item (l_last_string)
+					last_string := text
+					if {l_last_string_1: like last_string} last_string then
+						if character_classes.has (l_last_string_1) then
+							last_token := CCL_OP
+							last_lx_symbol_class_value := character_classes.item (l_last_string_1)
+						else
+							last_token := Left_bracket_code
+							last_string_value := l_last_string_1
+							less (1)
+							set_start_condition (FIRSTCCL)
+						end
 					else
-						last_token := Left_bracket_code
-						last_string_value := last_string
-						less (1)
-						set_start_condition (FIRSTCCL)
+						check False end
 					end
 					last_string := Void
-
+				
 end
 else
---|#line 65 "lx_wildcard_scanner.l"
+--|#line 69 "lx_wildcard_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 65")
+	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 69")
 end
 last_token := STAR_PAREN
 end
 else
 if yy_act = 4 then
---|#line 66 "lx_wildcard_scanner.l"
+--|#line 70 "lx_wildcard_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 66")
+	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 70")
 end
 last_token := STAR_STAR_SLASH
 else
---|#line 67 "lx_wildcard_scanner.l"
+--|#line 71 "lx_wildcard_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 67")
+	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 71")
 end
 last_token := text_item (1).code
 end
@@ -116,50 +117,50 @@ else
 if yy_act <= 8 then
 if yy_act <= 7 then
 if yy_act = 6 then
---|#line 68 "lx_wildcard_scanner.l"
+--|#line 72 "lx_wildcard_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 68")
+	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 72")
 end
 
 					last_token := CHAR
 					process_character (text_item (1).code)
-
-else
---|#line 75 "lx_wildcard_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 75")
-end
-
-					process_character (text_item (1).code)
-					last_token := CHAR
-
-end
+				
 else
 --|#line 79 "lx_wildcard_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 79")
 end
 
-					last_token := Double_quote_code
-					set_start_condition (INITIAL)
-
+					process_character (text_item (1).code)
+					last_token := CHAR
+				
 end
 else
-if yy_act = 9 then
 --|#line 83 "lx_wildcard_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 83")
+end
+
+					last_token := Double_quote_code
+					set_start_condition (INITIAL)
+				
+end
+else
+if yy_act = 9 then
+--|#line 87 "lx_wildcard_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 87")
 end
 
 					report_missing_quote_error
 					line_nb := line_nb + 1
 					last_token := Double_quote_code
 					set_start_condition (INITIAL)
-
+				
 else
---|#line 91 "lx_wildcard_scanner.l"
+--|#line 95 "lx_wildcard_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 91")
+	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 95")
 end
 
 					last_token := CHAR
@@ -167,7 +168,7 @@ end
 					if start_condition = FIRSTCCL then
 						set_start_condition (CCL)
 					end
-
+				
 end
 end
 end
@@ -177,50 +178,50 @@ if yy_act <= 13 then
 if yy_act <= 12 then
 if yy_act = 11 then
 	yy_end := yy_end - 1
---|#line 100 "lx_wildcard_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 100")
-end
-
-					set_start_condition (CCL)
-					last_token := Caret_code
-
-else
-	yy_end := yy_end - 1
 --|#line 104 "lx_wildcard_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 104")
 end
+
+					set_start_condition (CCL)
+					last_token := Caret_code
+				
+else
+	yy_end := yy_end - 1
+--|#line 108 "lx_wildcard_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 108")
+end
 last_token := Caret_code
 end
 else
---|#line 105 "lx_wildcard_scanner.l"
+--|#line 109 "lx_wildcard_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 105")
+	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 109")
 end
 
 					last_token := CHAR
 					process_character (text_item (1).code)
 					set_start_condition (CCL)
-
+				
 end
 else
 if yy_act = 14 then
---|#line 110 "lx_wildcard_scanner.l"
+--|#line 114 "lx_wildcard_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 110")
+	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 114")
 end
 
 					report_bad_character_class_error
 					line_nb := line_nb + 1
 					last_token := Right_bracket_code
 					set_start_condition (INITIAL)
-
+				
 else
 	yy_end := yy_end - 1
---|#line 119 "lx_wildcard_scanner.l"
+--|#line 123 "lx_wildcard_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 119")
+	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 123")
 end
 last_token := Minus_code
 end
@@ -229,41 +230,41 @@ else
 if yy_act <= 18 then
 if yy_act <= 17 then
 if yy_act = 16 then
---|#line 120 "lx_wildcard_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 120")
-end
-
-					last_token := CHAR
-					process_character (text_item (1).code)
-
-else
 --|#line 124 "lx_wildcard_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 124")
 end
 
-					last_token := Right_bracket_code
-					set_start_condition (INITIAL)
-
-end
+					last_token := CHAR
+					process_character (text_item (1).code)
+				
 else
 --|#line 128 "lx_wildcard_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 128")
 end
 
+					last_token := Right_bracket_code
+					set_start_condition (INITIAL)
+				
+end
+else
+--|#line 132 "lx_wildcard_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 132")
+end
+
 					report_bad_character_class_error
 					line_nb := line_nb + 1
 					last_token := Right_bracket_code
 					set_start_condition (INITIAL)
-
+				
 end
 else
 if yy_act = 19 then
---|#line 136 "lx_wildcard_scanner.l"
+--|#line 140 "lx_wildcard_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 136")
+	std.error.put_line ("Executing scanner user-code from file 'lx_wildcard_scanner.l' at line 140")
 end
 
 					if text_item (1) = '%N' then
@@ -272,7 +273,7 @@ end
 					else
 						report_bad_character_error (text)
 					end
-
+				
 else
 --|#line 0 "lx_wildcard_scanner.l"
 debug ("GELEX")

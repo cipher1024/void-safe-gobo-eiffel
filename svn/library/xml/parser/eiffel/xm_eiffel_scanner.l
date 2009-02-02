@@ -989,7 +989,7 @@ feature -- Scanning
 					-- END INLINING 'yy_at_beginning_of_line'
 					if yyReject_or_variable_trail_context then
 							-- Set up for storing up states.
-						yy_state_stack.put (yy_current_state, 0)
+						attached_yy_state_stack.put (yy_current_state, 0)
 						yy_state_count := 1
 					end
 					yy_goto := yyMatch
@@ -1000,15 +1000,15 @@ feature -- Scanning
 					until
 						yy_done
 					loop
-						if yy_ec /= Void then
-							if yy_content_area /= Void then
-								yy_c := yy_ec.item (yy_content_area.item (yy_cp).code)
+						if {l_yy_ec: like yy_ec} yy_ec then
+							if {l_yy_content_area_1: like yy_content_area} yy_content_area then
+								yy_c := l_yy_ec.item (l_yy_content_area_1.item (yy_cp).code)
 							else
-								yy_c := yy_ec.item (yy_content.item (yy_cp).code)
+								yy_c := l_yy_ec.item (yy_content.item (yy_cp).code)
 							end
 						else
-							if yy_content_area /= Void then
-								yy_c := yy_content_area.item (yy_cp).code
+							if {l_yy_content_area_2: like yy_content_area} yy_content_area then
+								yy_c := l_yy_content_area_2.item (yy_cp).code
 							else
 								yy_c := yy_content.item (yy_cp).code
 							end
@@ -1029,7 +1029,7 @@ feature -- Scanning
 						loop
 							yy_current_state := yy_def.item (yy_current_state)
 							if
-								yy_meta /= Void and then
+								{l_yy_meta: like yy_meta} yy_meta and then
 								yy_current_state >= yyTemplate_mark
 							then
 									-- We've arranged it so that templates are
@@ -1039,12 +1039,12 @@ feature -- Scanning
 									-- meta-equivalence class without worrying
 									-- about erroneously looking up the meta
 									-- equivalence class twice.
-								yy_c := yy_meta.item (yy_c)
+								yy_c := l_yy_meta.item (yy_c)
 							end
 						end
 						yy_current_state := yy_nxt.item (yy_base.item (yy_current_state) + yy_c)
 						if yyReject_or_variable_trail_context then
-							yy_state_stack.put (yy_current_state, yy_state_count)
+							attached_yy_state_stack.put (yy_current_state, yy_state_count)
 							yy_state_count := yy_state_count + 1
 						end
 						yy_cp := yy_cp + 1
@@ -1064,7 +1064,7 @@ feature -- Scanning
 						yy_goto := yyDo_action
 					else
 						yy_state_count := yy_state_count - 1
-						yy_current_state := yy_state_stack.item (yy_state_count)
+						yy_current_state := attached_yy_state_stack.item (yy_state_count)
 						yy_lp := yy_accept.item (yy_current_state)
 						yy_goto := yyFind_rule
 					end
@@ -1076,7 +1076,11 @@ feature -- Scanning
 							yy_lp /= 0 and
 							yy_lp < yy_accept.item (yy_current_state + 1)
 						then
-							yy_act := yy_acclist.item (yy_lp)
+							if {l_yy_acclist: like yy_acclist} yy_acclist then
+								yy_act := l_yy_acclist.item (yy_lp)
+							else
+								check False end
+							end
 							if yyVariable_trail_context then
 								if
 									yy_act < - yyNb_rules or
@@ -1112,7 +1116,7 @@ feature -- Scanning
 						else
 							yy_cp := yy_cp - 1
 							yy_state_count := yy_state_count - 1
-							yy_current_state := yy_state_stack.item (yy_state_count)
+							yy_current_state := attached_yy_state_stack.item (yy_state_count)
 							yy_lp := yy_accept.item (yy_current_state)
 						end
 					end
@@ -1235,7 +1239,7 @@ feature -- Scanning
 									-- Restore original state.
 								yy_state_count := yy_full_state
 									-- Restore current state.
-								yy_current_state := yy_state_stack.item (yy_state_count - 1)
+								yy_current_state := attached_yy_state_stack.item (yy_state_count - 1)
 							end
 							yy_lp := yy_lp + 1
 							yy_goto := yyFind_rule
