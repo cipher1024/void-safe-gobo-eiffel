@@ -957,7 +957,7 @@ feature -- Access
 
 feature -- Element change
 
-	define_value (a_value: ?STRING; a_name: ?STRING) is
+	define_value (a_value: STRING; a_name: STRING) is
 			-- Define `a_name' with `a_value'.
 		require
 			a_value_not_void: a_value /= Void
@@ -968,7 +968,7 @@ feature -- Element change
 			a_name_defined: is_defined (a_name)
 		end
 
-	undefine_value (a_name: ?STRING) is
+	undefine_value (a_name: STRING) is
 			-- Undefine `a_name'.
 		require
 			a_name_not_void: a_name /= Void
