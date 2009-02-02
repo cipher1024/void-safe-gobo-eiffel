@@ -1,6 +1,6 @@
 indexing
 
-	description: 
+	description:
 
 		"XML parsers using a native Eiffel parser"
 
@@ -9,8 +9,8 @@ indexing
 	library: "Gobo Eiffel XML Library"
 	copyright: "Copyright (c) 2002, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-04-03 23:47:03 +0200 (Thu, 03 Apr 2008) $"
-	revision: "$Revision: 6332 $"
+	date: "$Date: 2008-11-20 10:24:46 +0100 (Thu, 20 Nov 2008) $"
+	revision: "$Revision: 6557 $"
 
 class XM_EIFFEL_PARSER
 
@@ -107,58 +107,87 @@ feature {NONE} -- Implementation
 			-- Push semantic value associated with token `last_token'
 			-- (with internal id `yychar1') on top of corresponding
 			-- value stack.
+		local
+			l_yyvs1: like yyvs1
+			l_yyvs2: like yyvs2
+			l_yyvs3: like yyvs3
+			l_yyvs4: like yyvs4
+			l_yyvs5: like yyvs5
+			l_yyvs6: like yyvs6
+			l_yyvs7: like yyvs7
+			l_yyvs8: like yyvs8
+			l_yyvs9: like yyvs9
+			l_yyvs10: like yyvs10
+			l_yyvs11: like yyvs11
+			l_last_any_value: like last_any_value
+			l_last_string_value: like last_string_value
+			l_yyspecial_routines1: like yyspecial_routines1
+			l_yyspecial_routines4: like yyspecial_routines4
 		do
 			inspect yytypes2.item (yychar1)
 			when 1 then
 				yyvsp1 := yyvsp1 + 1
+				l_yyvs1 := yyvs1
 				if yyvsp1 >= yyvsc1 then
-					if yyvs1 = Void then
+					if l_yyvs1 = Void then
 						debug ("GEYACC")
 							std.error.put_line ("Create yyvs1")
 						end
-						create yyspecial_routines1
+						create l_yyspecial_routines1
+						yyspecial_routines1 := l_yyspecial_routines1
 						yyvsc1 := yyInitial_yyvs_size
-						if {l_yyspecial_routines2: like yyspecial_routines1} yyspecial_routines1 then
-							yyvs1 := l_yyspecial_routines2.make (yyvsc1)
-						end
+						l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 					else
 						debug ("GEYACC")
 							std.error.put_line ("Resize yyvs1")
 						end
 						yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-						if {l_yyspecial_routines1: like yyspecial_routines1} yyspecial_routines1 then
-							yyvs1 := l_yyspecial_routines1.resize (yyvs1, yyvsc1)
-						end
+						l_yyspecial_routines1 := yyspecial_routines1
+						check l_yyspecial_routines1 /= Void end
+						l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 					end
+					yyvs1 := l_yyvs1
+				else
+					check l_yyvs1 /= Void end
 				end
-				if {l_yyvs3: like yyvs1} yyvs1 then
-					l_yyvs3.put (last_any_value, yyvsp1)
+				l_last_any_value := last_any_value
+				if l_last_any_value /= Void then
+					l_yyvs1.put (l_last_any_value, yyvsp1)
+				else
+					l_yyvs1.put_default (yyvsp1)
 				end
 			when 4 then
 				yyvsp4 := yyvsp4 + 1
+				l_yyvs4 := yyvs4
 				if yyvsp4 >= yyvsc4 then
-					if yyvs4 = Void then
+					if l_yyvs4 = Void then
 						debug ("GEYACC")
 							std.error.put_line ("Create yyvs4")
 						end
-						create yyspecial_routines4
+						create l_yyspecial_routines4
+						yyspecial_routines4 := l_yyspecial_routines4
 						yyvsc4 := yyInitial_yyvs_size
-						if {l_yyspecial_routines5: like yyspecial_routines4} yyspecial_routines4 then
-							yyvs4 := l_yyspecial_routines5.make (yyvsc4)
-						end
+						l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
 					else
 						debug ("GEYACC")
 							std.error.put_line ("Resize yyvs4")
 						end
 						yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-						if {l_yyspecial_routines4: like yyspecial_routines4} yyspecial_routines4 then
-							yyvs4 := l_yyspecial_routines4.resize (yyvs4, yyvsc4)
-						end
+						l_yyspecial_routines4 := yyspecial_routines4
+						check l_yyspecial_routines4 /= Void end
+						l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
 					end
+					yyvs4 := l_yyvs4
+				else
+					check l_yyvs4 /= Void end
 				end
-				if {l_yyvs6: like yyvs4} yyvs4 then
-					l_yyvs6.put (last_string_value, yyvsp4)
+				l_last_string_value := last_string_value
+				if l_last_string_value /= Void then
+					l_yyvs4.put (l_last_string_value, yyvsp4)
+				else
+					l_yyvs4.put_default (yyvsp4)
 				end
+
 			else
 				debug ("GEYACC")
 					std.error.put_string ("Error in parser: not a token type: ")
@@ -173,32 +202,34 @@ feature {NONE} -- Implementation
 			-- Push semantic value associated with token 'error'
 			-- on top of corresponding value stack.
 		local
-			yyval1: ?ANY
+			l_yyvs1: like yyvs1
+			l_yyspecial_routines1: like yyspecial_routines1
 		do
 			yyvsp1 := yyvsp1 + 1
+			l_yyvs1 := yyvs1
 			if yyvsp1 >= yyvsc1 then
-				if yyvs1 = Void then
+				if l_yyvs1 = Void then
 					debug ("GEYACC")
 						std.error.put_line ("Create yyvs1")
 					end
-					create yyspecial_routines1
+					create l_yyspecial_routines1
+					yyspecial_routines1 := l_yyspecial_routines1
 					yyvsc1 := yyInitial_yyvs_size
-					if {l_yyspecial_routines8: like yyspecial_routines1} yyspecial_routines1 then
-						yyvs1 := l_yyspecial_routines8.make (yyvsc1)
-					end
+					l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 				else
 					debug ("GEYACC")
 						std.error.put_line ("Resize yyvs1")
 					end
 					yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-					if {l_yyspecial_routines7: like yyspecial_routines1} yyspecial_routines1 then
-						yyvs1 := l_yyspecial_routines7.resize (yyvs1, yyvsc1)
-					end
+					l_yyspecial_routines1 := yyspecial_routines1
+					check l_yyspecial_routines1 /= Void end
+					l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 				end
+				yyvs1 := l_yyvs1
+			else
+				check l_yyvs1 /= Void end
 			end
-			if {l_yyvs9: like yyvs1} yyvs1 then
-				l_yyvs9.put (yyval1, yyvsp1)
-			end
+			l_yyvs1.put_default (yyvsp1)
 		end
 
 	yy_pop_last_value (yystate: INTEGER) is
@@ -245,17 +276,39 @@ feature {NONE} -- Semantic actions
 	yy_do_action (yy_act: INTEGER) is
 			-- Execute semantic action.
 		local
-			yyval1: ?ANY
-			yyval2: ?XM_EIFFEL_PARSER_NAME
-			yyval4: ?STRING
-			yyval11: ?XM_EIFFEL_DECLARATION
-			yyval5: ?XM_DTD_EXTERNAL_ID
+			s: ?STRING
+			yyval2: XM_EIFFEL_PARSER_NAME
+			yyval4: STRING
+			yyval11: XM_EIFFEL_DECLARATION
+			yyval5: XM_DTD_EXTERNAL_ID
 			yyval10: BOOLEAN
-			yyval3: ?DS_HASH_SET [XM_EIFFEL_PARSER_NAME]
-			yyval6: ?XM_DTD_ELEMENT_CONTENT
-			yyval8: ?DS_BILINKED_LIST [XM_DTD_ATTRIBUTE_CONTENT]
-			yyval7: ?XM_DTD_ATTRIBUTE_CONTENT
-			yyval9: ?DS_BILINKED_LIST [STRING]
+			yyval3: DS_HASH_SET [XM_EIFFEL_PARSER_NAME]
+			yyval6: XM_DTD_ELEMENT_CONTENT
+			yyval8: DS_BILINKED_LIST [XM_DTD_ATTRIBUTE_CONTENT]
+			yyval7: XM_DTD_ATTRIBUTE_CONTENT
+			yyval9: DS_BILINKED_LIST [STRING]
+			l_yyvs1: like yyvs1
+			l_yyvs2: like yyvs2
+			l_yyvs3: like yyvs3
+			l_yyvs4: like yyvs4
+			l_yyvs5: like yyvs5
+			l_yyvs6: like yyvs6
+			l_yyvs7: like yyvs7
+			l_yyvs8: like yyvs8
+			l_yyvs9: like yyvs9
+			l_yyvs10: like yyvs10
+			l_yyvs11: like yyvs11
+			l_yyspecial_routines1: like yyspecial_routines1
+			l_yyspecial_routines2: like yyspecial_routines2
+			l_yyspecial_routines3: like yyspecial_routines3
+			l_yyspecial_routines4: like yyspecial_routines4
+			l_yyspecial_routines5: like yyspecial_routines5
+			l_yyspecial_routines6: like yyspecial_routines6
+			l_yyspecial_routines7: like yyspecial_routines7
+			l_yyspecial_routines8: like yyspecial_routines8
+			l_yyspecial_routines9: like yyspecial_routines9
+			l_yyspecial_routines10: like yyspecial_routines10
+			l_yyspecial_routines11: like yyspecial_routines11
 		do
 			inspect yy_act
 when 1 then
@@ -268,9 +321,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -2
-	if {l_yyvs10: like yyvs1} yyvs1 then
-		l_yyvs10.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 2 then
 --|#line 134 "xm_eiffel_parser.y"
@@ -279,35 +332,38 @@ debug ("GEYACC")
 end
 
 			yyval2 := new_namespace_name
-			namespace_force_last (yyval2, yyvs4.item (yyvsp4))
-		
+			l_yyvs4 := yyvs4
+			check l_yyvs4 /= Void end
+			namespace_force_last (yyval2, l_yyvs4.item (yyvsp4))
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp2 := yyvsp2 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs2 := yyvs2
 	if yyvsp2 >= yyvsc2 then
-		if yyvs2 = Void then
+		if l_yyvs2 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs2")
 			end
-			create yyspecial_routines2
+			create l_yyspecial_routines2
+			yyspecial_routines2 := l_yyspecial_routines2
 			yyvsc2 := yyInitial_yyvs_size
-			if {l_yyspecial_routines12: like yyspecial_routines2} yyspecial_routines2 then
-				yyvs2 := l_yyspecial_routines12.make (yyvsc2)
-			end
+			l_yyvs2 := l_yyspecial_routines2.make (yyvsc2)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs2")
 			end
 			yyvsc2 := yyvsc2 + yyInitial_yyvs_size
-			if {l_yyspecial_routines11: like yyspecial_routines2} yyspecial_routines2 then
-				yyvs2 := l_yyspecial_routines11.resize (yyvs2, yyvsc2)
-			end
+			l_yyspecial_routines2 := yyspecial_routines2
+			check l_yyspecial_routines2 /= Void end
+			l_yyvs2 := l_yyspecial_routines2.resize (l_yyvs2, yyvsc2)
 		end
+		yyvs2 := l_yyvs2
+	else
+		check l_yyvs2 /= Void end
 	end
-	if {l_yyvs13: like yyvs2} yyvs2 then
-		l_yyvs13.put (yyval2, yyvsp2)
-	end
+	l_yyvs2.put (yyval2, yyvsp2)
 end
 when 3 then
 --|#line 139 "xm_eiffel_parser.y"
@@ -318,34 +374,35 @@ end
 			yyval2 := new_namespace_name
 			namespace_force_last (yyval2, shared_empty_string)
 			namespace_force_last (yyval2, shared_empty_string)
-		
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp2 := yyvsp2 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs2 := yyvs2
 	if yyvsp2 >= yyvsc2 then
-		if yyvs2 = Void then
+		if l_yyvs2 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs2")
 			end
-			create yyspecial_routines2
+			create l_yyspecial_routines2
+			yyspecial_routines2 := l_yyspecial_routines2
 			yyvsc2 := yyInitial_yyvs_size
-			if {l_yyspecial_routines15: like yyspecial_routines2} yyspecial_routines2 then
-				yyvs2 := l_yyspecial_routines15.make (yyvsc2)
-			end
+			l_yyvs2 := l_yyspecial_routines2.make (yyvsc2)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs2")
 			end
 			yyvsc2 := yyvsc2 + yyInitial_yyvs_size
-			if {l_yyspecial_routines14: like yyspecial_routines2} yyspecial_routines2 then
-				yyvs2 := l_yyspecial_routines14.resize (yyvs2, yyvsc2)
-			end
+			l_yyspecial_routines2 := yyspecial_routines2
+			check l_yyspecial_routines2 /= Void end
+			l_yyvs2 := l_yyspecial_routines2.resize (l_yyvs2, yyvsc2)
 		end
+		yyvs2 := l_yyvs2
+	else
+		check l_yyvs2 /= Void end
 	end
-	if {l_yyvs16: like yyvs2} yyvs2 then
-		l_yyvs16.put (yyval2, yyvsp2)
-	end
+	l_yyvs2.put (yyval2, yyvsp2)
 end
 when 4 then
 --|#line 145 "xm_eiffel_parser.y"
@@ -355,35 +412,38 @@ end
 
 			yyval2 := new_namespace_name
 			namespace_force_last (yyval2, shared_empty_string)
-			namespace_force_last (yyval2, yyvs4.item (yyvsp4))
-		
+			l_yyvs4 := yyvs4
+			check l_yyvs4 /= Void end
+			namespace_force_last (yyval2, l_yyvs4.item (yyvsp4))
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp2 := yyvsp2 + 1
 	yyvsp4 := yyvsp4 -2
+	l_yyvs2 := yyvs2
 	if yyvsp2 >= yyvsc2 then
-		if yyvs2 = Void then
+		if l_yyvs2 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs2")
 			end
-			create yyspecial_routines2
+			create l_yyspecial_routines2
+			yyspecial_routines2 := l_yyspecial_routines2
 			yyvsc2 := yyInitial_yyvs_size
-			if {l_yyspecial_routines18: like yyspecial_routines2} yyspecial_routines2 then
-				yyvs2 := l_yyspecial_routines18.make (yyvsc2)
-			end
+			l_yyvs2 := l_yyspecial_routines2.make (yyvsc2)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs2")
 			end
 			yyvsc2 := yyvsc2 + yyInitial_yyvs_size
-			if {l_yyspecial_routines17: like yyspecial_routines2} yyspecial_routines2 then
-				yyvs2 := l_yyspecial_routines17.resize (yyvs2, yyvsc2)
-			end
+			l_yyspecial_routines2 := yyspecial_routines2
+			check l_yyspecial_routines2 /= Void end
+			l_yyvs2 := l_yyspecial_routines2.resize (l_yyvs2, yyvsc2)
 		end
+		yyvs2 := l_yyvs2
+	else
+		check l_yyvs2 /= Void end
 	end
-	if {l_yyvs19: like yyvs2} yyvs2 then
-		l_yyvs19.put (yyval2, yyvsp2)
-	end
+	l_yyvs2.put (yyval2, yyvsp2)
 end
 when 5 then
 --|#line 151 "xm_eiffel_parser.y"
@@ -391,15 +451,17 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 151")
 end
 
-			yyval2 := yyvs2.item (yyvsp2)
-			namespace_force_last (yyval2, yyvs4.item (yyvsp4))
-		
+			l_yyvs2 := yyvs2
+			check l_yyvs2 /= Void end
+			yyval2 := l_yyvs2.item (yyvsp2)
+			l_yyvs4 := yyvs4
+			check l_yyvs4 /= Void end
+			namespace_force_last (yyval2, l_yyvs4.item (yyvsp4))
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs20: like yyvs2} yyvs2 then
-		l_yyvs20.put (yyval2, yyvsp2)
-	end
+	l_yyvs2.put (yyval2, yyvsp2)
 end
 when 6 then
 --|#line 156 "xm_eiffel_parser.y"
@@ -407,15 +469,15 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 156")
 end
 
-			yyval2 := yyvs2.item (yyvsp2)
+			l_yyvs2 := yyvs2
+			check l_yyvs2 /= Void end
+			yyval2 := l_yyvs2.item (yyvsp2)
 			namespace_force_last (yyval2, shared_empty_string)
-		
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs21: like yyvs2} yyvs2 then
-		l_yyvs21.put (yyval2, yyvsp2)
-	end
+	l_yyvs2.put (yyval2, yyvsp2)
 end
 when 7 then
 --|#line 163 "xm_eiffel_parser.y"
@@ -423,12 +485,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 163")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs22: like yyvs4} yyvs4 then
-		l_yyvs22.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 8 then
 --|#line 164 "xm_eiffel_parser.y"
@@ -436,12 +498,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 164")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs23: like yyvs4} yyvs4 then
-		l_yyvs23.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 9 then
 --|#line 171 "xm_eiffel_parser.y"
@@ -449,12 +511,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 171")
 end
 
-yyval4 := onstring_ascii (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_ascii (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs24: like yyvs4} yyvs4 then
-		l_yyvs24.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 10 then
 --|#line 172 "xm_eiffel_parser.y"
@@ -462,12 +526,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 172")
 end
 
-yyval4 := onstring_utf8 (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_utf8 (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs25: like yyvs4} yyvs4 then
-		l_yyvs25.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 11 then
 --|#line 175 "xm_eiffel_parser.y"
@@ -475,12 +541,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 175")
 end
 
-yyval4 := onstring_ascii (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_ascii (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs26: like yyvs4} yyvs4 then
-		l_yyvs26.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 12 then
 --|#line 176 "xm_eiffel_parser.y"
@@ -488,12 +556,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 176")
 end
 
-yyval4 := onstring_utf8 (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_utf8 (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs27: like yyvs4} yyvs4 then
-		l_yyvs27.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 13 then
 --|#line 179 "xm_eiffel_parser.y"
@@ -501,12 +571,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 179")
 end
 
-yyval4 := onstring_ascii (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_ascii (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs28: like yyvs4} yyvs4 then
-		l_yyvs28.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 14 then
 --|#line 180 "xm_eiffel_parser.y"
@@ -514,12 +586,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 180")
 end
 
-yyval4 := onstring_utf8 (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_utf8 (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs29: like yyvs4} yyvs4 then
-		l_yyvs29.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 15 then
 --|#line 183 "xm_eiffel_parser.y"
@@ -527,12 +601,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 183")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs30: like yyvs4} yyvs4 then
-		l_yyvs30.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 16 then
 --|#line 184 "xm_eiffel_parser.y"
@@ -540,12 +616,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 184")
 end
 
-yyval4 := onstring_ascii (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_ascii (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs31: like yyvs4} yyvs4 then
-		l_yyvs31.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 17 then
 --|#line 185 "xm_eiffel_parser.y"
@@ -553,12 +631,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 185")
 end
 
-yyval4 := onstring_utf8 (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_utf8 (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs32: like yyvs4} yyvs4 then
-		l_yyvs32.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 18 then
 --|#line 188 "xm_eiffel_parser.y"
@@ -566,12 +646,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 188")
 end
 
-yyval4 := onstring_ascii (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_ascii (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs33: like yyvs4} yyvs4 then
-		l_yyvs33.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 19 then
 --|#line 189 "xm_eiffel_parser.y"
@@ -579,12 +661,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 189")
 end
 
-yyval4 := onstring_utf8 (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_utf8 (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs34: like yyvs4} yyvs4 then
-		l_yyvs34.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 20 then
 --|#line 192 "xm_eiffel_parser.y"
@@ -592,12 +676,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 192")
 end
 
-yyval4 := onstring_ascii (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_ascii (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs35: like yyvs4} yyvs4 then
-		l_yyvs35.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 21 then
 --|#line 193 "xm_eiffel_parser.y"
@@ -605,12 +691,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 193")
 end
 
-yyval4 := onstring_utf8 (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_utf8 (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs36: like yyvs4} yyvs4 then
-		l_yyvs36.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 22 then
 --|#line 196 "xm_eiffel_parser.y"
@@ -618,12 +706,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 196")
 end
 
-yyval4 := onstring_ascii (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_ascii (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs37: like yyvs4} yyvs4 then
-		l_yyvs37.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 23 then
 --|#line 197 "xm_eiffel_parser.y"
@@ -631,12 +721,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 197")
 end
 
-yyval4 := onstring_utf8 (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_utf8 (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs38: like yyvs4} yyvs4 then
-		l_yyvs38.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 24 then
 --|#line 200 "xm_eiffel_parser.y"
@@ -644,12 +736,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 200")
 end
 
-yyval4 := onstring_ascii (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_ascii (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs39: like yyvs4} yyvs4 then
-		l_yyvs39.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 25 then
 --|#line 201 "xm_eiffel_parser.y"
@@ -657,12 +751,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 201")
 end
 
-yyval4 := onstring_utf8 (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_utf8 (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs40: like yyvs4} yyvs4 then
-		l_yyvs40.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 26 then
 --|#line 204 "xm_eiffel_parser.y"
@@ -670,12 +766,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 204")
 end
 
-yyval4 := onstring_ascii (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_ascii (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs41: like yyvs4} yyvs4 then
-		l_yyvs41.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 27 then
 --|#line 205 "xm_eiffel_parser.y"
@@ -683,12 +781,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 205")
 end
 
-yyval4 := onstring_utf8 (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := onstring_utf8 (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs42: like yyvs4} yyvs4 then
-		l_yyvs42.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 28 then
 --|#line 212 "xm_eiffel_parser.y"
@@ -696,12 +796,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 212")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs43: like yyvs4} yyvs4 then
-		l_yyvs43.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 29 then
 --|#line 213 "xm_eiffel_parser.y"
@@ -709,12 +809,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 213")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs44: like yyvs4} yyvs4 then
-		l_yyvs44.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 30 then
 --|#line 214 "xm_eiffel_parser.y"
@@ -722,12 +822,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 214")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs45: like yyvs4} yyvs4 then
-		l_yyvs45.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 31 then
 --|#line 215 "xm_eiffel_parser.y"
@@ -735,12 +835,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 215")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs46: like yyvs4} yyvs4 then
-		l_yyvs46.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 32 then
 --|#line 216 "xm_eiffel_parser.y"
@@ -748,12 +848,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 216")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs47: like yyvs4} yyvs4 then
-		l_yyvs47.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 33 then
 --|#line 217 "xm_eiffel_parser.y"
@@ -761,12 +861,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 217")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs48: like yyvs4} yyvs4 then
-		l_yyvs48.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 34 then
 --|#line 218 "xm_eiffel_parser.y"
@@ -774,12 +874,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 218")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs49: like yyvs4} yyvs4 then
-		l_yyvs49.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 35 then
 --|#line 219 "xm_eiffel_parser.y"
@@ -787,12 +887,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 219")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs50: like yyvs4} yyvs4 then
-		l_yyvs50.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 36 then
 --|#line 220 "xm_eiffel_parser.y"
@@ -800,12 +900,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 220")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs51: like yyvs4} yyvs4 then
-		l_yyvs51.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 37 then
 --|#line 221 "xm_eiffel_parser.y"
@@ -813,12 +913,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 221")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs52: like yyvs4} yyvs4 then
-		l_yyvs52.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 38 then
 --|#line 222 "xm_eiffel_parser.y"
@@ -826,12 +926,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 222")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs53: like yyvs4} yyvs4 then
-		l_yyvs53.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 39 then
 --|#line 223 "xm_eiffel_parser.y"
@@ -839,12 +939,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 223")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs54: like yyvs4} yyvs4 then
-		l_yyvs54.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 40 then
 --|#line 224 "xm_eiffel_parser.y"
@@ -852,12 +952,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 224")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs55: like yyvs4} yyvs4 then
-		l_yyvs55.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 41 then
 --|#line 225 "xm_eiffel_parser.y"
@@ -865,12 +965,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 225")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs56: like yyvs4} yyvs4 then
-		l_yyvs56.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 42 then
 --|#line 226 "xm_eiffel_parser.y"
@@ -878,12 +978,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 226")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs57: like yyvs4} yyvs4 then
-		l_yyvs57.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 43 then
 --|#line 229 "xm_eiffel_parser.y"
@@ -895,29 +995,30 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 0
 	yyvsp1 := yyvsp1 + 1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines59: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines59.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines58: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines58.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs60: like yyvs1} yyvs1 then
-		l_yyvs60.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 44 then
 --|#line 230 "xm_eiffel_parser.y"
@@ -928,9 +1029,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs61: like yyvs1} yyvs1 then
-		l_yyvs61.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 45 then
 --|#line 233 "xm_eiffel_parser.y"
@@ -941,9 +1042,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs62: like yyvs1} yyvs1 then
-		l_yyvs62.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 46 then
 --|#line 234 "xm_eiffel_parser.y"
@@ -955,9 +1056,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs63: like yyvs1} yyvs1 then
-		l_yyvs63.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 47 then
 --|#line 237 "xm_eiffel_parser.y"
@@ -970,29 +1071,30 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines65: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines65.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines64: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines64.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs66: like yyvs1} yyvs1 then
-		l_yyvs66.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 48 then
 --|#line 238 "xm_eiffel_parser.y"
@@ -1002,37 +1104,38 @@ end
 
 				-- Really applies only in DTD, but token cannot appear in content
 				-- and test above would catch, if unintentionally.
-			if not in_external_dtd then 
-				force_error (Error_doctype_peref_only_in_dtd) 
-			end 
-		
+			if not in_external_dtd then
+				force_error (Error_doctype_peref_only_in_dtd)
+			end
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines68: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines68.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines67: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines67.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs69: like yyvs1} yyvs1 then
-		l_yyvs69.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 49 then
 --|#line 250 "xm_eiffel_parser.y"
@@ -1040,13 +1143,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 250")
 end
 
-yyval4 := shared_empty_string 
+yyval4 := shared_empty_string
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs70: like yyvs4} yyvs4 then
-		l_yyvs70.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 50 then
 --|#line 252 "xm_eiffel_parser.y"
@@ -1054,13 +1157,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 252")
 end
 
-yyval4 := yyvs4.item (yyvsp4 - 1) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4 - 1)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs71: like yyvs4} yyvs4 then
-		l_yyvs71.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 51 then
 --|#line 254 "xm_eiffel_parser.y"
@@ -1068,13 +1171,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 254")
 end
 
-yyval4 := yyvs4.item (yyvsp4 - 1) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4 - 1)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs72: like yyvs4} yyvs4 then
-		l_yyvs72.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 52 then
 --|#line 258 "xm_eiffel_parser.y"
@@ -1082,13 +1185,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 258")
 end
 
-yyval4 := STRING_.concat (yyvs4.item (yyvsp4 - 1), yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := STRING_.concat (l_yyvs4.item (yyvsp4 - 1), l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs73: like yyvs4} yyvs4 then
-		l_yyvs73.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 53 then
 --|#line 260 "xm_eiffel_parser.y"
@@ -1096,13 +1199,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 260")
 end
 
-yyval4 := STRING_.appended_string (yyvs4.item (yyvsp4 - 1), yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := STRING_.appended_string (l_yyvs4.item (yyvsp4 - 1), l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs74: like yyvs4} yyvs4 then
-		l_yyvs74.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 54 then
 --|#line 264 "xm_eiffel_parser.y"
@@ -1110,12 +1213,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 264")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs75: like yyvs4} yyvs4 then
-		l_yyvs75.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 55 then
 --|#line 266 "xm_eiffel_parser.y"
@@ -1123,12 +1226,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 266")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs76: like yyvs4} yyvs4 then
-		l_yyvs76.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 56 then
 --|#line 270 "xm_eiffel_parser.y"
@@ -1136,12 +1239,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 270")
 end
 
-yyval4 := entity_referenced_in_entity_value (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+s := entity_referenced_in_entity_value (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
+	check s /= Void end -- implied by ... ?
+	yyval4 := s
 	yyssp := yyssp - 1
-	if {l_yyvs77: like yyvs4} yyvs4 then
-		l_yyvs77.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 57 then
 --|#line 276 "xm_eiffel_parser.y"
@@ -1149,13 +1254,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 276")
 end
 
-yyval4 := shared_empty_string 
+yyval4 := shared_empty_string
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs78: like yyvs4} yyvs4 then
-		l_yyvs78.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 58 then
 --|#line 278 "xm_eiffel_parser.y"
@@ -1163,13 +1268,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 278")
 end
 
-yyval4 := yyvs4.item (yyvsp4 - 1) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4 - 1)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs79: like yyvs4} yyvs4 then
-		l_yyvs79.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 59 then
 --|#line 280 "xm_eiffel_parser.y"
@@ -1177,13 +1282,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 280")
 end
 
-yyval4 := yyvs4.item (yyvsp4 - 1) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4 - 1)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs80: like yyvs4} yyvs4 then
-		l_yyvs80.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 60 then
 --|#line 284 "xm_eiffel_parser.y"
@@ -1191,13 +1296,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 284")
 end
 
-yyval4 := STRING_.concat (yyvs4.item (yyvsp4 - 1), yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := STRING_.concat (l_yyvs4.item (yyvsp4 - 1), l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs81: like yyvs4} yyvs4 then
-		l_yyvs81.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 61 then
 --|#line 286 "xm_eiffel_parser.y"
@@ -1205,13 +1310,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 286")
 end
 
-yyval4 := STRING_.appended_string (yyvs4.item (yyvsp4 - 1), yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := STRING_.appended_string (l_yyvs4.item (yyvsp4 - 1), l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs82: like yyvs4} yyvs4 then
-		l_yyvs82.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 62 then
 --|#line 290 "xm_eiffel_parser.y"
@@ -1219,12 +1324,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 290")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs83: like yyvs4} yyvs4 then
-		l_yyvs83.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 63 then
 --|#line 291 "xm_eiffel_parser.y"
@@ -1232,12 +1337,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 291")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs84: like yyvs4} yyvs4 then
-		l_yyvs84.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 64 then
 --|#line 292 "xm_eiffel_parser.y"
@@ -1245,12 +1350,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 292")
 end
 
-force_error (Error_lt_not_allowed_attribute_value) 
+force_error (Error_lt_not_allowed_attribute_value)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs85: like yyvs4} yyvs4 then
-		l_yyvs85.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put_default (yyvsp4)
 end
 when 65 then
 --|#line 295 "xm_eiffel_parser.y"
@@ -1258,12 +1363,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 295")
 end
 
-yyval4 := shared_empty_string 
+yyval4 := shared_empty_string
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs86: like yyvs4} yyvs4 then
-		l_yyvs86.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 66 then
 --|#line 296 "xm_eiffel_parser.y"
@@ -1271,12 +1376,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 296")
 end
 
-yyval4 := shared_empty_string 
+yyval4 := shared_empty_string
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs87: like yyvs4} yyvs4 then
-		l_yyvs87.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 67 then
 --|#line 301 "xm_eiffel_parser.y"
@@ -1284,34 +1389,37 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 301")
 end
 
-on_comment (yyvs4.item (yyvsp4 - 1)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+on_comment (l_yyvs4.item (yyvsp4 - 1))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -3
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines89: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines89.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines88: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines88.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs90: like yyvs1} yyvs1 then
-		l_yyvs90.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 68 then
 --|#line 303 "xm_eiffel_parser.y"
@@ -1319,34 +1427,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 303")
 end
 
-on_comment (shared_empty_string) 
+on_comment (shared_empty_string)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -2
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines92: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines92.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines91: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines91.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs93: like yyvs1} yyvs1 then
-		l_yyvs93.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 69 then
 --|#line 307 "xm_eiffel_parser.y"
@@ -1354,34 +1463,37 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 307")
 end
 
-on_dtd_comment (yyvs4.item (yyvsp4 - 1)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+on_dtd_comment (l_yyvs4.item (yyvsp4 - 1))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -3
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines95: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines95.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines94: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines94.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs96: like yyvs1} yyvs1 then
-		l_yyvs96.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 70 then
 --|#line 309 "xm_eiffel_parser.y"
@@ -1389,34 +1501,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 309")
 end
 
-on_dtd_comment (shared_empty_string) 
+on_dtd_comment (shared_empty_string)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -2
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines98: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines98.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines97: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines97.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs99: like yyvs1} yyvs1 then
-		l_yyvs99.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 71 then
 --|#line 313 "xm_eiffel_parser.y"
@@ -1424,12 +1537,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 313")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs100: like yyvs4} yyvs4 then
-		l_yyvs100.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 72 then
 --|#line 315 "xm_eiffel_parser.y"
@@ -1437,12 +1550,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 315")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs101: like yyvs4} yyvs4 then
-		l_yyvs101.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 73 then
 --|#line 319 "xm_eiffel_parser.y"
@@ -1450,13 +1563,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 319")
 end
 
-yyval4 := STRING_.concat (yyvs4.item (yyvsp4 - 1), yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := STRING_.concat (l_yyvs4.item (yyvsp4 - 1), l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs102: like yyvs4} yyvs4 then
-		l_yyvs102.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 74 then
 --|#line 321 "xm_eiffel_parser.y"
@@ -1464,13 +1577,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 321")
 end
 
-yyval4 := STRING_.appended_string (yyvs4.item (yyvsp4 - 1), yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := STRING_.appended_string (l_yyvs4.item (yyvsp4 - 1), l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs103: like yyvs4} yyvs4 then
-		l_yyvs103.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 75 then
 --|#line 325 "xm_eiffel_parser.y"
@@ -1478,12 +1591,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 325")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs104: like yyvs4} yyvs4 then
-		l_yyvs104.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 76 then
 --|#line 326 "xm_eiffel_parser.y"
@@ -1491,12 +1604,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 326")
 end
 
-force_error (Error_no_dash_dash_in_comment) 
+force_error (Error_no_dash_dash_in_comment)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs105: like yyvs4} yyvs4 then
-		l_yyvs105.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put_default (yyvsp4)
 end
 when 77 then
 --|#line 331 "xm_eiffel_parser.y"
@@ -1504,13 +1617,15 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 331")
 end
 
-on_processing_instruction (yyvs4.item (yyvsp4 - 2), yyvs4.item (yyvsp4 - 1)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+on_processing_instruction (l_yyvs4.item (yyvsp4 - 2), l_yyvs4.item (yyvsp4 - 1))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp4 := yyvsp4 -4
-	if {l_yyvs106: like yyvs1} yyvs1 then
-		l_yyvs106.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 78 then
 --|#line 333 "xm_eiffel_parser.y"
@@ -1518,13 +1633,15 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 333")
 end
 
-on_processing_instruction (yyvs4.item (yyvsp4 - 1), shared_empty_string) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+on_processing_instruction (l_yyvs4.item (yyvsp4 - 1), shared_empty_string)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 4
 	yyvsp4 := yyvsp4 -3
-	if {l_yyvs107: like yyvs1} yyvs1 then
-		l_yyvs107.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 79 then
 --|#line 335 "xm_eiffel_parser.y"
@@ -1532,34 +1649,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 335")
 end
 
-force_error (Error_pi_xml_reserved) 
+force_error (Error_pi_xml_reserved)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines109: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines109.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines108: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines108.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs110: like yyvs1} yyvs1 then
-		l_yyvs110.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 80 then
 --|#line 338 "xm_eiffel_parser.y"
@@ -1567,13 +1685,15 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 338")
 end
 
-on_dtd_processing_instruction (yyvs4.item (yyvsp4 - 2), yyvs4.item (yyvsp4 - 1)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+on_dtd_processing_instruction (l_yyvs4.item (yyvsp4 - 2), l_yyvs4.item (yyvsp4 - 1))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp4 := yyvsp4 -4
-	if {l_yyvs111: like yyvs1} yyvs1 then
-		l_yyvs111.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 81 then
 --|#line 340 "xm_eiffel_parser.y"
@@ -1581,13 +1701,15 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 340")
 end
 
-on_dtd_processing_instruction (yyvs4.item (yyvsp4 - 1), shared_empty_string) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+on_dtd_processing_instruction (l_yyvs4.item (yyvsp4 - 1), shared_empty_string)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 4
 	yyvsp4 := yyvsp4 -3
-	if {l_yyvs112: like yyvs1} yyvs1 then
-		l_yyvs112.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 82 then
 --|#line 342 "xm_eiffel_parser.y"
@@ -1595,34 +1717,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 342")
 end
 
-force_error (Error_pi_xml_reserved) 
+force_error (Error_pi_xml_reserved)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines114: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines114.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines113: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines113.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs115: like yyvs1} yyvs1 then
-		l_yyvs115.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 83 then
 --|#line 345 "xm_eiffel_parser.y"
@@ -1630,13 +1753,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 345")
 end
 
-yyval4 := STRING_.concat (yyvs4.item (yyvsp4 - 1), yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := STRING_.concat (l_yyvs4.item (yyvsp4 - 1), l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs116: like yyvs4} yyvs4 then
-		l_yyvs116.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 84 then
 --|#line 347 "xm_eiffel_parser.y"
@@ -1644,13 +1767,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 347")
 end
 
-yyval4 := STRING_.concat (yyvs4.item (yyvsp4 - 1), yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := STRING_.concat (l_yyvs4.item (yyvsp4 - 1), l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs117: like yyvs4} yyvs4 then
-		l_yyvs117.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 85 then
 --|#line 349 "xm_eiffel_parser.y"
@@ -1658,12 +1781,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 349")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs118: like yyvs4} yyvs4 then
-		l_yyvs118.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 86 then
 --|#line 353 "xm_eiffel_parser.y"
@@ -1671,13 +1794,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 353")
 end
 
-yyval4 := STRING_.concat (yyvs4.item (yyvsp4 - 1), yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := STRING_.concat (l_yyvs4.item (yyvsp4 - 1), l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs119: like yyvs4} yyvs4 then
-		l_yyvs119.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 87 then
 --|#line 355 "xm_eiffel_parser.y"
@@ -1685,13 +1808,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 355")
 end
 
-yyval4 := STRING_.appended_string (yyvs4.item (yyvsp4 - 1), yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := STRING_.appended_string (l_yyvs4.item (yyvsp4 - 1), l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs120: like yyvs4} yyvs4 then
-		l_yyvs120.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 88 then
 --|#line 359 "xm_eiffel_parser.y"
@@ -1699,12 +1822,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 359")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs121: like yyvs4} yyvs4 then
-		l_yyvs121.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 89 then
 --|#line 360 "xm_eiffel_parser.y"
@@ -1712,12 +1835,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 360")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs122: like yyvs4} yyvs4 then
-		l_yyvs122.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 90 then
 --|#line 361 "xm_eiffel_parser.y"
@@ -1725,12 +1848,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 361")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs123: like yyvs4} yyvs4 then
-		l_yyvs123.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 91 then
 --|#line 364 "xm_eiffel_parser.y"
@@ -1738,12 +1861,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 364")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs124: like yyvs4} yyvs4 then
-		l_yyvs124.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 92 then
 --|#line 365 "xm_eiffel_parser.y"
@@ -1751,12 +1874,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 365")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs125: like yyvs4} yyvs4 then
-		l_yyvs125.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 93 then
 --|#line 370 "xm_eiffel_parser.y"
@@ -1769,29 +1892,30 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -2
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines127: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines127.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines126: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines126.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs128: like yyvs1} yyvs1 then
-		l_yyvs128.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 94 then
 --|#line 371 "xm_eiffel_parser.y"
@@ -1804,29 +1928,30 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -3
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines130: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines130.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines129: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines129.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs131: like yyvs1} yyvs1 then
-		l_yyvs131.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 95 then
 --|#line 374 "xm_eiffel_parser.y"
@@ -1837,9 +1962,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs132: like yyvs4} yyvs4 then
-		l_yyvs132.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put_default (yyvsp4)
 end
 when 96 then
 --|#line 375 "xm_eiffel_parser.y"
@@ -1851,9 +1976,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs133: like yyvs4} yyvs4 then
-		l_yyvs133.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put_default (yyvsp4)
 end
 when 97 then
 --|#line 378 "xm_eiffel_parser.y"
@@ -1861,12 +1986,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 378")
 end
 
-on_content (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+on_content (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs134: like yyvs4} yyvs4 then
-		l_yyvs134.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put_default (yyvsp4)
 end
 when 98 then
 --|#line 384 "xm_eiffel_parser.y"
@@ -1874,15 +1999,17 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 384")
 end
 
-			apply_encoding (yyvs11.item (yyvsp11).encoding)
-			yyvs11.item (yyvsp11).process (Current) -- event
-		
+			l_yyvs11 := yyvs11
+			check l_yyvs11 /= Void end
+			apply_encoding (l_yyvs11.item (yyvsp11).encoding)
+			l_yyvs11.item (yyvsp11).process (Current) -- event
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp11 := yyvsp11 -1
-	if {l_yyvs135: like yyvs1} yyvs1 then
-		l_yyvs135.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 99 then
 --|#line 391 "xm_eiffel_parser.y"
@@ -1890,34 +2017,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 391")
 end
 
-create yyval11.make 
+create yyval11.make
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp11 := yyvsp11 + 1
 	yyvsp1 := yyvsp1 -1
+	l_yyvs11 := yyvs11
 	if yyvsp11 >= yyvsc11 then
-		if yyvs11 = Void then
+		if l_yyvs11 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs11")
 			end
-			create yyspecial_routines11
+			create l_yyspecial_routines11
+			yyspecial_routines11 := l_yyspecial_routines11
 			yyvsc11 := yyInitial_yyvs_size
-			if {l_yyspecial_routines137: like yyspecial_routines11} yyspecial_routines11 then
-				yyvs11 := l_yyspecial_routines137.make (yyvsc11)
-			end
+			l_yyvs11 := l_yyspecial_routines11.make (yyvsc11)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs11")
 			end
 			yyvsc11 := yyvsc11 + yyInitial_yyvs_size
-			if {l_yyspecial_routines136: like yyspecial_routines11} yyspecial_routines11 then
-				yyvs11 := l_yyspecial_routines136.resize (yyvs11, yyvsc11)
-			end
+			l_yyspecial_routines11 := yyspecial_routines11
+			check l_yyspecial_routines11 /= Void end
+			l_yyvs11 := l_yyspecial_routines11.resize (l_yyvs11, yyvsc11)
 		end
+		yyvs11 := l_yyvs11
+	else
+		check l_yyvs11 /= Void end
 	end
-	if {l_yyvs138: like yyvs11} yyvs11 then
-		l_yyvs138.put (yyval11, yyvsp11)
-	end
+	l_yyvs11.put (yyval11, yyvsp11)
 end
 when 100 then
 --|#line 393 "xm_eiffel_parser.y"
@@ -1925,12 +2053,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 393")
 end
 
-yyval11 := yyvs11.item (yyvsp11) 
+l_yyvs11 := yyvs11
+check l_yyvs11 /= Void end
+yyval11 := l_yyvs11.item (yyvsp11)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs139: like yyvs11} yyvs11 then
-		l_yyvs139.put (yyval11, yyvsp11)
-	end
+	l_yyvs11.put (yyval11, yyvsp11)
 end
 when 101 then
 --|#line 395 "xm_eiffel_parser.y"
@@ -1938,13 +2066,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 395")
 end
 
-yyval11 := yyvs11.item (yyvsp11) 
+l_yyvs11 := yyvs11
+check l_yyvs11 /= Void end
+yyval11 := l_yyvs11.item (yyvsp11)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs140: like yyvs11} yyvs11 then
-		l_yyvs140.put (yyval11, yyvsp11)
-	end
+	l_yyvs11.put (yyval11, yyvsp11)
 end
 when 102 then
 --|#line 399 "xm_eiffel_parser.y"
@@ -1956,29 +2084,30 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 0
 	yyvsp1 := yyvsp1 + 1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines142: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines142.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines141: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines141.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs143: like yyvs1} yyvs1 then
-		l_yyvs143.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 103 then
 --|#line 400 "xm_eiffel_parser.y"
@@ -1989,9 +2118,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs144: like yyvs1} yyvs1 then
-		l_yyvs144.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 104 then
 --|#line 401 "xm_eiffel_parser.y"
@@ -2003,9 +2132,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs145: like yyvs1} yyvs1 then
-		l_yyvs145.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 105 then
 --|#line 404 "xm_eiffel_parser.y"
@@ -2017,29 +2146,30 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 0
 	yyvsp1 := yyvsp1 + 1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines147: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines147.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines146: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines146.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs148: like yyvs1} yyvs1 then
-		l_yyvs148.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 106 then
 --|#line 405 "xm_eiffel_parser.y"
@@ -2050,9 +2180,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs149: like yyvs1} yyvs1 then
-		l_yyvs149.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 107 then
 --|#line 408 "xm_eiffel_parser.y"
@@ -2063,9 +2193,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs150: like yyvs1} yyvs1 then
-		l_yyvs150.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 108 then
 --|#line 409 "xm_eiffel_parser.y"
@@ -2077,9 +2207,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs151: like yyvs1} yyvs1 then
-		l_yyvs151.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 109 then
 --|#line 412 "xm_eiffel_parser.y"
@@ -2087,15 +2217,17 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 412")
 end
 
-			yyvs11.item (yyvsp11).set_version (yyvs4.item (yyvsp4 - 1))
-			yyval11 := yyvs11.item (yyvsp11)
-		
+			l_yyvs11 := yyvs11
+			check l_yyvs11 /= Void end
+			l_yyvs4 := yyvs4
+			check l_yyvs4 /= Void end
+			l_yyvs11.item (yyvsp11).set_version (l_yyvs4.item (yyvsp4 - 1))
+			yyval11 := l_yyvs11.item (yyvsp11)
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 4
 	yyvsp4 := yyvsp4 -3
-	if {l_yyvs152: like yyvs11} yyvs11 then
-		l_yyvs152.put (yyval11, yyvsp11)
-	end
+	l_yyvs11.put (yyval11, yyvsp11)
 end
 when 110 then
 --|#line 417 "xm_eiffel_parser.y"
@@ -2103,35 +2235,36 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 417")
 end
 
-force_error (Error_xml_declaration) 
+force_error (Error_xml_declaration)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp11 := yyvsp11 + 1
 	yyvsp4 := yyvsp4 -1
 	yyvsp1 := yyvsp1 -1
+	l_yyvs11 := yyvs11
 	if yyvsp11 >= yyvsc11 then
-		if yyvs11 = Void then
+		if l_yyvs11 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs11")
 			end
-			create yyspecial_routines11
+			create l_yyspecial_routines11
+			yyspecial_routines11 := l_yyspecial_routines11
 			yyvsc11 := yyInitial_yyvs_size
-			if {l_yyspecial_routines154: like yyspecial_routines11} yyspecial_routines11 then
-				yyvs11 := l_yyspecial_routines154.make (yyvsc11)
-			end
+			l_yyvs11 := l_yyspecial_routines11.make (yyvsc11)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs11")
 			end
 			yyvsc11 := yyvsc11 + yyInitial_yyvs_size
-			if {l_yyspecial_routines153: like yyspecial_routines11} yyspecial_routines11 then
-				yyvs11 := l_yyspecial_routines153.resize (yyvs11, yyvsc11)
-			end
+			l_yyspecial_routines11 := yyspecial_routines11
+			check l_yyspecial_routines11 /= Void end
+			l_yyvs11 := l_yyspecial_routines11.resize (l_yyvs11, yyvsc11)
 		end
+		yyvs11 := l_yyvs11
+	else
+		check l_yyvs11 /= Void end
 	end
-	if {l_yyvs155: like yyvs11} yyvs11 then
-		l_yyvs155.put (yyval11, yyvsp11)
-	end
+	l_yyvs11.put_default (yyvsp11)
 end
 when 111 then
 --|#line 420 "xm_eiffel_parser.y"
@@ -2139,34 +2272,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 420")
 end
 
-create yyval11.make 
+create yyval11.make
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp11 := yyvsp11 + 1
 	yyvsp1 := yyvsp1 -1
+	l_yyvs11 := yyvs11
 	if yyvsp11 >= yyvsc11 then
-		if yyvs11 = Void then
+		if l_yyvs11 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs11")
 			end
-			create yyspecial_routines11
+			create l_yyspecial_routines11
+			yyspecial_routines11 := l_yyspecial_routines11
 			yyvsc11 := yyInitial_yyvs_size
-			if {l_yyspecial_routines157: like yyspecial_routines11} yyspecial_routines11 then
-				yyvs11 := l_yyspecial_routines157.make (yyvsc11)
-			end
+			l_yyvs11 := l_yyspecial_routines11.make (yyvsc11)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs11")
 			end
 			yyvsc11 := yyvsc11 + yyInitial_yyvs_size
-			if {l_yyspecial_routines156: like yyspecial_routines11} yyspecial_routines11 then
-				yyvs11 := l_yyspecial_routines156.resize (yyvs11, yyvsc11)
-			end
+			l_yyspecial_routines11 := yyspecial_routines11
+			check l_yyspecial_routines11 /= Void end
+			l_yyvs11 := l_yyspecial_routines11.resize (l_yyvs11, yyvsc11)
 		end
+		yyvs11 := l_yyvs11
+	else
+		check l_yyvs11 /= Void end
 	end
-	if {l_yyvs158: like yyvs11} yyvs11 then
-		l_yyvs158.put (yyval11, yyvsp11)
-	end
+	l_yyvs11.put (yyval11, yyvsp11)
 end
 when 112 then
 --|#line 422 "xm_eiffel_parser.y"
@@ -2174,37 +2308,40 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 422")
 end
 
-			create yyval11.make 
-			yyval11.set_stand_alone (yyvs10.item (yyvsp10))
-		
+			create yyval11.make
+			l_yyvs10 := yyvs10
+			check l_yyvs10 /= Void end
+			yyval11.set_stand_alone (l_yyvs10.item (yyvsp10))
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp11 := yyvsp11 + 1
 	yyvsp1 := yyvsp1 -2
 	yyvsp10 := yyvsp10 -1
+	l_yyvs11 := yyvs11
 	if yyvsp11 >= yyvsc11 then
-		if yyvs11 = Void then
+		if l_yyvs11 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs11")
 			end
-			create yyspecial_routines11
+			create l_yyspecial_routines11
+			yyspecial_routines11 := l_yyspecial_routines11
 			yyvsc11 := yyInitial_yyvs_size
-			if {l_yyspecial_routines160: like yyspecial_routines11} yyspecial_routines11 then
-				yyvs11 := l_yyspecial_routines160.make (yyvsc11)
-			end
+			l_yyvs11 := l_yyspecial_routines11.make (yyvsc11)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs11")
 			end
 			yyvsc11 := yyvsc11 + yyInitial_yyvs_size
-			if {l_yyspecial_routines159: like yyspecial_routines11} yyspecial_routines11 then
-				yyvs11 := l_yyspecial_routines159.resize (yyvs11, yyvsc11)
-			end
+			l_yyspecial_routines11 := yyspecial_routines11
+			check l_yyspecial_routines11 /= Void end
+			l_yyvs11 := l_yyspecial_routines11.resize (l_yyvs11, yyvsc11)
 		end
+		yyvs11 := l_yyvs11
+	else
+		check l_yyvs11 /= Void end
 	end
-	if {l_yyvs161: like yyvs11} yyvs11 then
-		l_yyvs161.put (yyval11, yyvsp11)
-	end
+	l_yyvs11.put (yyval11, yyvsp11)
 end
 when 113 then
 --|#line 427 "xm_eiffel_parser.y"
@@ -2212,38 +2349,41 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 427")
 end
 
-			create yyval11.make 
-			yyval11.set_encoding (yyvs4.item (yyvsp4))
-			apply_encoding (yyvs4.item (yyvsp4))
-		
+			create yyval11.make
+			l_yyvs4 := yyvs4
+			check l_yyvs4 /= Void end
+			yyval11.set_encoding (l_yyvs4.item (yyvsp4))
+			apply_encoding (l_yyvs4.item (yyvsp4))
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp11 := yyvsp11 + 1
 	yyvsp1 := yyvsp1 -2
 	yyvsp4 := yyvsp4 -1
+	l_yyvs11 := yyvs11
 	if yyvsp11 >= yyvsc11 then
-		if yyvs11 = Void then
+		if l_yyvs11 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs11")
 			end
-			create yyspecial_routines11
+			create l_yyspecial_routines11
+			yyspecial_routines11 := l_yyspecial_routines11
 			yyvsc11 := yyInitial_yyvs_size
-			if {l_yyspecial_routines163: like yyspecial_routines11} yyspecial_routines11 then
-				yyvs11 := l_yyspecial_routines163.make (yyvsc11)
-			end
+			l_yyvs11 := l_yyspecial_routines11.make (yyvsc11)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs11")
 			end
 			yyvsc11 := yyvsc11 + yyInitial_yyvs_size
-			if {l_yyspecial_routines162: like yyspecial_routines11} yyspecial_routines11 then
-				yyvs11 := l_yyspecial_routines162.resize (yyvs11, yyvsc11)
-			end
+			l_yyspecial_routines11 := yyspecial_routines11
+			check l_yyspecial_routines11 /= Void end
+			l_yyvs11 := l_yyspecial_routines11.resize (l_yyvs11, yyvsc11)
 		end
+		yyvs11 := l_yyvs11
+	else
+		check l_yyvs11 /= Void end
 	end
-	if {l_yyvs164: like yyvs11} yyvs11 then
-		l_yyvs164.put (yyval11, yyvsp11)
-	end
+	l_yyvs11.put (yyval11, yyvsp11)
 end
 when 114 then
 --|#line 433 "xm_eiffel_parser.y"
@@ -2252,39 +2392,44 @@ debug ("GEYACC")
 end
 
 			create yyval11.make;
-			yyval11.set_encoding (yyvs4.item (yyvsp4))
-			yyval11.set_stand_alone (yyvs10.item (yyvsp10)) 
-			apply_encoding (yyvs4.item (yyvsp4))
-		
+			l_yyvs4 := yyvs4
+			check l_yyvs4 /= Void end
+			yyval11.set_encoding (l_yyvs4.item (yyvsp4))
+			l_yyvs10 := yyvs10
+			check l_yyvs10 /= Void end
+			yyval11.set_stand_alone (l_yyvs10.item (yyvsp10))
+			apply_encoding (l_yyvs4.item (yyvsp4))
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp11 := yyvsp11 + 1
 	yyvsp1 := yyvsp1 -3
 	yyvsp4 := yyvsp4 -1
 	yyvsp10 := yyvsp10 -1
+	l_yyvs11 := yyvs11
 	if yyvsp11 >= yyvsc11 then
-		if yyvs11 = Void then
+		if l_yyvs11 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs11")
 			end
-			create yyspecial_routines11
+			create l_yyspecial_routines11
+			yyspecial_routines11 := l_yyspecial_routines11
 			yyvsc11 := yyInitial_yyvs_size
-			if {l_yyspecial_routines166: like yyspecial_routines11} yyspecial_routines11 then
-				yyvs11 := l_yyspecial_routines166.make (yyvsc11)
-			end
+			l_yyvs11 := l_yyspecial_routines11.make (yyvsc11)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs11")
 			end
 			yyvsc11 := yyvsc11 + yyInitial_yyvs_size
-			if {l_yyspecial_routines165: like yyspecial_routines11} yyspecial_routines11 then
-				yyvs11 := l_yyspecial_routines165.resize (yyvs11, yyvsc11)
-			end
+			l_yyspecial_routines11 := yyspecial_routines11
+			check l_yyspecial_routines11 /= Void end
+			l_yyvs11 := l_yyspecial_routines11.resize (l_yyvs11, yyvsc11)
 		end
+		yyvs11 := l_yyvs11
+	else
+		check l_yyvs11 /= Void end
 	end
-	if {l_yyvs167: like yyvs11} yyvs11 then
-		l_yyvs167.put (yyval11, yyvsp11)
-	end
+	l_yyvs11.put (yyval11, yyvsp11)
 end
 when 115 then
 --|#line 442 "xm_eiffel_parser.y"
@@ -2295,9 +2440,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs168: like yyvs4} yyvs4 then
-		l_yyvs168.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put_default (yyvsp4)
 end
 when 116 then
 --|#line 443 "xm_eiffel_parser.y"
@@ -2309,9 +2454,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs169: like yyvs4} yyvs4 then
-		l_yyvs169.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put_default (yyvsp4)
 end
 when 117 then
 --|#line 444 "xm_eiffel_parser.y"
@@ -2323,9 +2468,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs170: like yyvs4} yyvs4 then
-		l_yyvs170.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put_default (yyvsp4)
 end
 when 118 then
 --|#line 445 "xm_eiffel_parser.y"
@@ -2337,9 +2482,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs171: like yyvs4} yyvs4 then
-		l_yyvs171.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put_default (yyvsp4)
 end
 when 119 then
 --|#line 448 "xm_eiffel_parser.y"
@@ -2347,13 +2492,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 448")
 end
 
-yyval4 := yyvs4.item (yyvsp4 - 1) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4 - 1)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp4 := yyvsp4 -4
-	if {l_yyvs172: like yyvs4} yyvs4 then
-		l_yyvs172.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 120 then
 --|#line 450 "xm_eiffel_parser.y"
@@ -2361,13 +2506,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 450")
 end
 
-yyval4 := yyvs4.item (yyvsp4 - 1) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4 - 1)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp4 := yyvsp4 -4
-	if {l_yyvs173: like yyvs4} yyvs4 then
-		l_yyvs173.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 121 then
 --|#line 454 "xm_eiffel_parser.y"
@@ -2378,9 +2523,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs174: like yyvs1} yyvs1 then
-		l_yyvs174.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 122 then
 --|#line 455 "xm_eiffel_parser.y"
@@ -2391,9 +2536,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs175: like yyvs1} yyvs1 then
-		l_yyvs175.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 123 then
 --|#line 456 "xm_eiffel_parser.y"
@@ -2406,29 +2551,30 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines177: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines177.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines176: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines176.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs178: like yyvs1} yyvs1 then
-		l_yyvs178.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 124 then
 --|#line 459 "xm_eiffel_parser.y"
@@ -2439,9 +2585,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs179: like yyvs1} yyvs1 then
-		l_yyvs179.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 125 then
 --|#line 460 "xm_eiffel_parser.y"
@@ -2453,9 +2599,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs180: like yyvs1} yyvs1 then
-		l_yyvs180.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 126 then
 --|#line 463 "xm_eiffel_parser.y"
@@ -2463,13 +2609,15 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 463")
 end
 
-on_doctype (yyvs4.item (yyvsp4), Void, True) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+on_doctype (l_yyvs4.item (yyvsp4), Void, True)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs181: like yyvs1} yyvs1 then
-		l_yyvs181.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 127 then
 --|#line 467 "xm_eiffel_parser.y"
@@ -2477,14 +2625,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 467")
 end
 
-on_dtd_end 
+on_dtd_end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp1 := yyvsp1 -2
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs182: like yyvs1} yyvs1 then
-		l_yyvs182.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 128 then
 --|#line 471 "xm_eiffel_parser.y"
@@ -2492,16 +2640,18 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 471")
 end
 
-			on_doctype (yyvs4.item (yyvsp4), yyvs5.item (yyvsp5), False) 
-			yyval5 := yyvs5.item (yyvsp5)
-		
+			l_yyvs4 := yyvs4
+			check l_yyvs4 /= Void end
+			l_yyvs5 := yyvs5
+			check l_yyvs5 /= Void end
+			on_doctype (l_yyvs4.item (yyvsp4), l_yyvs5.item (yyvsp5), False)
+			yyval5 := l_yyvs5.item (yyvsp5)
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 4
 	yyvsp4 := yyvsp4 -1
 	yyvsp1 := yyvsp1 -2
-	if {l_yyvs183: like yyvs5} yyvs5 then
-		l_yyvs183.put (yyval5, yyvsp5)
-	end
+	l_yyvs5.put (yyval5, yyvsp5)
 end
 when 129 then
 --|#line 478 "xm_eiffel_parser.y"
@@ -2513,17 +2663,19 @@ end
 				std.error.put_string ("[dtd: in]")
 			end
 			in_external_dtd := True
-			when_external_dtd (yyvs5.item (yyvsp5)) 
+			l_yyvs5 := yyvs5
+			check l_yyvs5 /= Void end
+			when_external_dtd (l_yyvs5.item (yyvsp5))
 			on_dtd_end
-		
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -2
 	yyvsp5 := yyvsp5 -1
-	if {l_yyvs184: like yyvs1} yyvs1 then
-		l_yyvs184.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 130 then
 --|#line 491 "xm_eiffel_parser.y"
@@ -2538,14 +2690,14 @@ end
 				std.error.put_string ("[dtd: out]")
 			end
 			in_external_dtd := False
-		
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 4
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs185: like yyvs1} yyvs1 then
-		l_yyvs185.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 131 then
 --|#line 503 "xm_eiffel_parser.y"
@@ -2557,29 +2709,30 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 0
 	yyvsp1 := yyvsp1 + 1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines187: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines187.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines186: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines186.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs188: like yyvs1} yyvs1 then
-		l_yyvs188.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 132 then
 --|#line 504 "xm_eiffel_parser.y"
@@ -2590,9 +2743,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs189: like yyvs1} yyvs1 then
-		l_yyvs189.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 133 then
 --|#line 507 "xm_eiffel_parser.y"
@@ -2603,9 +2756,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs190: like yyvs1} yyvs1 then
-		l_yyvs190.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 134 then
 --|#line 508 "xm_eiffel_parser.y"
@@ -2617,9 +2770,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs191: like yyvs1} yyvs1 then
-		l_yyvs191.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 135 then
 --|#line 511 "xm_eiffel_parser.y"
@@ -2630,9 +2783,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs192: like yyvs1} yyvs1 then
-		l_yyvs192.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 136 then
 --|#line 512 "xm_eiffel_parser.y"
@@ -2643,9 +2796,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs193: like yyvs1} yyvs1 then
-		l_yyvs193.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 137 then
 --|#line 517 "xm_eiffel_parser.y"
@@ -2657,29 +2810,30 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 0
 	yyvsp1 := yyvsp1 + 1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines195: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines195.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines194: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines194.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs196: like yyvs1} yyvs1 then
-		l_yyvs196.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 138 then
 --|#line 518 "xm_eiffel_parser.y"
@@ -2691,9 +2845,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs197: like yyvs1} yyvs1 then
-		l_yyvs197.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 139 then
 --|#line 519 "xm_eiffel_parser.y"
@@ -2706,9 +2860,9 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 4
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs198: like yyvs1} yyvs1 then
-		l_yyvs198.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 140 then
 --|#line 522 "xm_eiffel_parser.y"
@@ -2719,9 +2873,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs199: like yyvs1} yyvs1 then
-		l_yyvs199.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 141 then
 --|#line 523 "xm_eiffel_parser.y"
@@ -2733,9 +2887,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs200: like yyvs1} yyvs1 then
-		l_yyvs200.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 142 then
 --|#line 528 "xm_eiffel_parser.y"
@@ -2746,9 +2900,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs201: like yyvs1} yyvs1 then
-		l_yyvs201.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 143 then
 --|#line 529 "xm_eiffel_parser.y"
@@ -2759,9 +2913,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs202: like yyvs1} yyvs1 then
-		l_yyvs202.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 144 then
 --|#line 530 "xm_eiffel_parser.y"
@@ -2772,9 +2926,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs203: like yyvs1} yyvs1 then
-		l_yyvs203.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 145 then
 --|#line 531 "xm_eiffel_parser.y"
@@ -2785,9 +2939,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs204: like yyvs1} yyvs1 then
-		l_yyvs204.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 146 then
 --|#line 532 "xm_eiffel_parser.y"
@@ -2798,9 +2952,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs205: like yyvs1} yyvs1 then
-		l_yyvs205.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 147 then
 --|#line 533 "xm_eiffel_parser.y"
@@ -2811,9 +2965,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs206: like yyvs1} yyvs1 then
-		l_yyvs206.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 148 then
 --|#line 534 "xm_eiffel_parser.y"
@@ -2826,29 +2980,30 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines208: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines208.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines207: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines207.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs209: like yyvs1} yyvs1 then
-		l_yyvs209.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 149 then
 --|#line 535 "xm_eiffel_parser.y"
@@ -2861,29 +3016,30 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines211: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines211.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines210: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines210.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs212: like yyvs1} yyvs1 then
-		l_yyvs212.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 150 then
 --|#line 540 "xm_eiffel_parser.y"
@@ -2891,34 +3047,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 540")
 end
 
-yyval10 := True 
+yyval10 := True
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp10 := yyvsp10 + 1
 	yyvsp4 := yyvsp4 -5
+	l_yyvs10 := yyvs10
 	if yyvsp10 >= yyvsc10 then
-		if yyvs10 = Void then
+		if l_yyvs10 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs10")
 			end
-			create yyspecial_routines10
+			create l_yyspecial_routines10
+			yyspecial_routines10 := l_yyspecial_routines10
 			yyvsc10 := yyInitial_yyvs_size
-			if {l_yyspecial_routines214: like yyspecial_routines10} yyspecial_routines10 then
-				yyvs10 := l_yyspecial_routines214.make (yyvsc10)
-			end
+			l_yyvs10 := l_yyspecial_routines10.make (yyvsc10)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs10")
 			end
 			yyvsc10 := yyvsc10 + yyInitial_yyvs_size
-			if {l_yyspecial_routines213: like yyspecial_routines10} yyspecial_routines10 then
-				yyvs10 := l_yyspecial_routines213.resize (yyvs10, yyvsc10)
-			end
+			l_yyspecial_routines10 := yyspecial_routines10
+			check l_yyspecial_routines10 /= Void end
+			l_yyvs10 := l_yyspecial_routines10.resize (l_yyvs10, yyvsc10)
 		end
+		yyvs10 := l_yyvs10
+	else
+		check l_yyvs10 /= Void end
 	end
-	if {l_yyvs215: like yyvs10} yyvs10 then
-		l_yyvs215.put (yyval10, yyvsp10)
-	end
+	l_yyvs10.put (yyval10, yyvsp10)
 end
 when 151 then
 --|#line 541 "xm_eiffel_parser.y"
@@ -2926,34 +3083,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 541")
 end
 
-yyval10 := True 
+yyval10 := True
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp10 := yyvsp10 + 1
 	yyvsp4 := yyvsp4 -5
+	l_yyvs10 := yyvs10
 	if yyvsp10 >= yyvsc10 then
-		if yyvs10 = Void then
+		if l_yyvs10 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs10")
 			end
-			create yyspecial_routines10
+			create l_yyspecial_routines10
+			yyspecial_routines10 := l_yyspecial_routines10
 			yyvsc10 := yyInitial_yyvs_size
-			if {l_yyspecial_routines217: like yyspecial_routines10} yyspecial_routines10 then
-				yyvs10 := l_yyspecial_routines217.make (yyvsc10)
-			end
+			l_yyvs10 := l_yyspecial_routines10.make (yyvsc10)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs10")
 			end
 			yyvsc10 := yyvsc10 + yyInitial_yyvs_size
-			if {l_yyspecial_routines216: like yyspecial_routines10} yyspecial_routines10 then
-				yyvs10 := l_yyspecial_routines216.resize (yyvs10, yyvsc10)
-			end
+			l_yyspecial_routines10 := yyspecial_routines10
+			check l_yyspecial_routines10 /= Void end
+			l_yyvs10 := l_yyspecial_routines10.resize (l_yyvs10, yyvsc10)
 		end
+		yyvs10 := l_yyvs10
+	else
+		check l_yyvs10 /= Void end
 	end
-	if {l_yyvs218: like yyvs10} yyvs10 then
-		l_yyvs218.put (yyval10, yyvsp10)
-	end
+	l_yyvs10.put (yyval10, yyvsp10)
 end
 when 152 then
 --|#line 542 "xm_eiffel_parser.y"
@@ -2961,34 +3119,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 542")
 end
 
-yyval10 := False 
+yyval10 := False
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp10 := yyvsp10 + 1
 	yyvsp4 := yyvsp4 -5
+	l_yyvs10 := yyvs10
 	if yyvsp10 >= yyvsc10 then
-		if yyvs10 = Void then
+		if l_yyvs10 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs10")
 			end
-			create yyspecial_routines10
+			create l_yyspecial_routines10
+			yyspecial_routines10 := l_yyspecial_routines10
 			yyvsc10 := yyInitial_yyvs_size
-			if {l_yyspecial_routines220: like yyspecial_routines10} yyspecial_routines10 then
-				yyvs10 := l_yyspecial_routines220.make (yyvsc10)
-			end
+			l_yyvs10 := l_yyspecial_routines10.make (yyvsc10)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs10")
 			end
 			yyvsc10 := yyvsc10 + yyInitial_yyvs_size
-			if {l_yyspecial_routines219: like yyspecial_routines10} yyspecial_routines10 then
-				yyvs10 := l_yyspecial_routines219.resize (yyvs10, yyvsc10)
-			end
+			l_yyspecial_routines10 := yyspecial_routines10
+			check l_yyspecial_routines10 /= Void end
+			l_yyvs10 := l_yyspecial_routines10.resize (l_yyvs10, yyvsc10)
 		end
+		yyvs10 := l_yyvs10
+	else
+		check l_yyvs10 /= Void end
 	end
-	if {l_yyvs221: like yyvs10} yyvs10 then
-		l_yyvs221.put (yyval10, yyvsp10)
-	end
+	l_yyvs10.put (yyval10, yyvsp10)
 end
 when 153 then
 --|#line 543 "xm_eiffel_parser.y"
@@ -2996,34 +3155,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 543")
 end
 
-yyval10 := False 
+yyval10 := False
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp10 := yyvsp10 + 1
 	yyvsp4 := yyvsp4 -5
+	l_yyvs10 := yyvs10
 	if yyvsp10 >= yyvsc10 then
-		if yyvs10 = Void then
+		if l_yyvs10 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs10")
 			end
-			create yyspecial_routines10
+			create l_yyspecial_routines10
+			yyspecial_routines10 := l_yyspecial_routines10
 			yyvsc10 := yyInitial_yyvs_size
-			if {l_yyspecial_routines223: like yyspecial_routines10} yyspecial_routines10 then
-				yyvs10 := l_yyspecial_routines223.make (yyvsc10)
-			end
+			l_yyvs10 := l_yyspecial_routines10.make (yyvsc10)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs10")
 			end
 			yyvsc10 := yyvsc10 + yyInitial_yyvs_size
-			if {l_yyspecial_routines222: like yyspecial_routines10} yyspecial_routines10 then
-				yyvs10 := l_yyspecial_routines222.resize (yyvs10, yyvsc10)
-			end
+			l_yyspecial_routines10 := yyspecial_routines10
+			check l_yyspecial_routines10 /= Void end
+			l_yyvs10 := l_yyspecial_routines10.resize (l_yyvs10, yyvsc10)
 		end
+		yyvs10 := l_yyvs10
+	else
+		check l_yyvs10 /= Void end
 	end
-	if {l_yyvs224: like yyvs10} yyvs10 then
-		l_yyvs224.put (yyval10, yyvsp10)
-	end
+	l_yyvs10.put (yyval10, yyvsp10)
 end
 when 154 then
 --|#line 548 "xm_eiffel_parser.y"
@@ -3034,9 +3194,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs225: like yyvs1} yyvs1 then
-		l_yyvs225.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 155 then
 --|#line 549 "xm_eiffel_parser.y"
@@ -3044,37 +3204,40 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 549")
 end
 
-			if not yyvs2.item (yyvsp2 - 1).is_equal (yyvs2.item (yyvsp2)) then
+			l_yyvs2 := yyvs2
+			check l_yyvs2 /= Void end
+			if not l_yyvs2.item (yyvsp2 - 1).is_equal (l_yyvs2.item (yyvsp2)) then
 				force_error (Error_end_tag_mismatch)
 			end
-		
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 + 1
 	yyvsp2 := yyvsp2 -2
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines227: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines227.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines226: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines226.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs228: like yyvs1} yyvs1 then
-		l_yyvs228.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 156 then
 --|#line 555 "xm_eiffel_parser.y"
@@ -3082,16 +3245,18 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 555")
 end
 
-			if not yyvs2.item (yyvsp2 - 1).is_equal (yyvs2.item (yyvsp2)) then
+			l_yyvs2 := yyvs2
+			check l_yyvs2 /= Void end
+			if not l_yyvs2.item (yyvsp2 - 1).is_equal (l_yyvs2.item (yyvsp2)) then
 				force_error (Error_end_tag_mismatch)
 			end
-		
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp2 := yyvsp2 -2
-	if {l_yyvs229: like yyvs1} yyvs1 then
-		l_yyvs229.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 157 then
 --|#line 561 "xm_eiffel_parser.y"
@@ -3099,14 +3264,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 561")
 end
 
-force_error (Error_element_end_tag) 
+force_error (Error_element_end_tag)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -1
 	yyvsp2 := yyvsp2 -1
-	if {l_yyvs230: like yyvs1} yyvs1 then
-		l_yyvs230.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 158 then
 --|#line 562 "xm_eiffel_parser.y"
@@ -3114,13 +3279,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 562")
 end
 
-force_error (Error_element_content) 
+force_error (Error_element_content)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp2 := yyvsp2 -1
-	if {l_yyvs231: like yyvs1} yyvs1 then
-		l_yyvs231.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 159 then
 --|#line 568 "xm_eiffel_parser.y"
@@ -3128,15 +3293,15 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 568")
 end
 
-			yyval2 := yyvs2.item (yyvsp2)
+			l_yyvs2 := yyvs2
+			check l_yyvs2 /= Void end
+			yyval2 := l_yyvs2.item (yyvsp2)
 			on_start_tag_finish
-		
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs232: like yyvs2} yyvs2 then
-		l_yyvs232.put (yyval2, yyvsp2)
-	end
+	l_yyvs2.put (yyval2, yyvsp2)
 end
 when 160 then
 --|#line 573 "xm_eiffel_parser.y"
@@ -3144,17 +3309,17 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 573")
 end
 
-			yyval2 := yyvs2.item (yyvsp2)
+			l_yyvs2 := yyvs2
+			check l_yyvs2 /= Void end
+			yyval2 := l_yyvs2.item (yyvsp2)
 			on_start_tag_finish
-		
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp4 := yyvsp4 -2
 	yyvsp1 := yyvsp1 -1
 	yyvsp3 := yyvsp3 -1
-	if {l_yyvs233: like yyvs2} yyvs2 then
-		l_yyvs233.put (yyval2, yyvsp2)
-	end
+	l_yyvs2.put (yyval2, yyvsp2)
 end
 when 161 then
 --|#line 578 "xm_eiffel_parser.y"
@@ -3162,35 +3327,36 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 578")
 end
 
-force_error (Error_start_tag) 
+force_error (Error_start_tag)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp2 := yyvsp2 + 1
 	yyvsp4 := yyvsp4 -1
 	yyvsp1 := yyvsp1 -1
+	l_yyvs2 := yyvs2
 	if yyvsp2 >= yyvsc2 then
-		if yyvs2 = Void then
+		if l_yyvs2 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs2")
 			end
-			create yyspecial_routines2
+			create l_yyspecial_routines2
+			yyspecial_routines2 := l_yyspecial_routines2
 			yyvsc2 := yyInitial_yyvs_size
-			if {l_yyspecial_routines235: like yyspecial_routines2} yyspecial_routines2 then
-				yyvs2 := l_yyspecial_routines235.make (yyvsc2)
-			end
+			l_yyvs2 := l_yyspecial_routines2.make (yyvsc2)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs2")
 			end
 			yyvsc2 := yyvsc2 + yyInitial_yyvs_size
-			if {l_yyspecial_routines234: like yyspecial_routines2} yyspecial_routines2 then
-				yyvs2 := l_yyspecial_routines234.resize (yyvs2, yyvsc2)
-			end
+			l_yyspecial_routines2 := yyspecial_routines2
+			check l_yyspecial_routines2 /= Void end
+			l_yyvs2 := l_yyspecial_routines2.resize (l_yyvs2, yyvsc2)
 		end
+		yyvs2 := l_yyvs2
+	else
+		check l_yyvs2 /= Void end
 	end
-	if {l_yyvs236: like yyvs2} yyvs2 then
-		l_yyvs236.put (yyval2, yyvsp2)
-	end
+	l_yyvs2.put_default (yyvsp2)
 end
 when 162 then
 --|#line 581 "xm_eiffel_parser.y"
@@ -3199,36 +3365,41 @@ debug ("GEYACC")
 end
 
 			on_start_tag_finish -- makes empty attributes
-			on_end_tag (Void, yyvs2.item (yyvsp2).ns_prefix, yyvs2.item (yyvsp2).local_part)
-		
+			l_yyvs2 := yyvs2
+			check l_yyvs2 /= Void end
+			s := l_yyvs2.item (yyvsp2).local_part
+			check s /= Void end -- implied by ...
+			on_end_tag (Void, l_yyvs2.item (yyvsp2).ns_prefix, s)
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -2
 	yyvsp2 := yyvsp2 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines238: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines238.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines237: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines237.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs239: like yyvs1} yyvs1 then
-		l_yyvs239.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 163 then
 --|#line 586 "xm_eiffel_parser.y"
@@ -3237,16 +3408,20 @@ debug ("GEYACC")
 end
 
 			on_start_tag_finish
-			on_end_tag (Void, yyvs2.item (yyvsp2).ns_prefix, yyvs2.item (yyvsp2).local_part)
-		
+			l_yyvs2 := yyvs2
+			check l_yyvs2 /= Void end
+			s := l_yyvs2.item (yyvsp2).local_part
+			check s /= Void end
+			on_end_tag (Void, l_yyvs2.item (yyvsp2).ns_prefix, s)
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp4 := yyvsp4 -2
 	yyvsp2 := yyvsp2 -1
 	yyvsp3 := yyvsp3 -1
-	if {l_yyvs240: like yyvs1} yyvs1 then
-		l_yyvs240.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 164 then
 --|#line 593 "xm_eiffel_parser.y"
@@ -3254,14 +3429,16 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 593")
 end
 
-			yyval2 := yyvs2.item (yyvsp2)
-			on_start_tag (Void, yyvs2.item (yyvsp2).ns_prefix, yyvs2.item (yyvsp2).local_part)
-		
+			l_yyvs2 := yyvs2
+			check l_yyvs2 /= Void end
+			yyval2 := l_yyvs2.item (yyvsp2)
+			s := l_yyvs2.item (yyvsp2).local_part
+			check s /= Void end
+			on_start_tag (Void, l_yyvs2.item (yyvsp2).ns_prefix, s)
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs241: like yyvs2} yyvs2 then
-		l_yyvs241.put (yyval2, yyvsp2)
-	end
+	l_yyvs2.put (yyval2, yyvsp2)
 end
 when 165 then
 --|#line 600 "xm_eiffel_parser.y"
@@ -3270,35 +3447,38 @@ debug ("GEYACC")
 end
 
 			yyval3 := new_name_set
-			yyval3.force_new (yyvs2.item (yyvsp2))
-		
+			l_yyvs2 := yyvs2
+			check l_yyvs2 /= Void end
+			yyval3.force_new (l_yyvs2.item (yyvsp2))
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp3 := yyvsp3 + 1
 	yyvsp2 := yyvsp2 -1
+	l_yyvs3 := yyvs3
 	if yyvsp3 >= yyvsc3 then
-		if yyvs3 = Void then
+		if l_yyvs3 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs3")
 			end
-			create yyspecial_routines3
+			create l_yyspecial_routines3
+			yyspecial_routines3 := l_yyspecial_routines3
 			yyvsc3 := yyInitial_yyvs_size
-			if {l_yyspecial_routines243: like yyspecial_routines3} yyspecial_routines3 then
-				yyvs3 := l_yyspecial_routines243.make (yyvsc3)
-			end
+			l_yyvs3 := l_yyspecial_routines3.make (yyvsc3)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs3")
 			end
 			yyvsc3 := yyvsc3 + yyInitial_yyvs_size
-			if {l_yyspecial_routines242: like yyspecial_routines3} yyspecial_routines3 then
-				yyvs3 := l_yyspecial_routines242.resize (yyvs3, yyvsc3)
-			end
+			l_yyspecial_routines3 := yyspecial_routines3
+			check l_yyspecial_routines3 /= Void end
+			l_yyvs3 := l_yyspecial_routines3.resize (l_yyvs3, yyvsc3)
 		end
+		yyvs3 := l_yyvs3
+	else
+		check l_yyvs3 /= Void end
 	end
-	if {l_yyvs244: like yyvs3} yyvs3 then
-		l_yyvs244.put (yyval3, yyvsp3)
-	end
+	l_yyvs3.put (yyval3, yyvsp3)
 end
 when 166 then
 --|#line 605 "xm_eiffel_parser.y"
@@ -3306,20 +3486,22 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 605")
 end
 
-			yyval3 := yyvs3.item (yyvsp3)
-			if (yyval3).has (yyvs2.item (yyvsp2)) then
+			l_yyvs3 := yyvs3
+			check l_yyvs3 /= Void end
+			yyval3 := l_yyvs3.item (yyvsp3)
+			l_yyvs2 := yyvs2
+			check l_yyvs2 /= Void end
+			if (yyval3).has (l_yyvs2.item (yyvsp2)) then
 				force_error (Error_attribute_duplicate)
 			else
-				yyval3.force_new (yyvs2.item (yyvsp2))
+				yyval3.force_new (l_yyvs2.item (yyvsp2))
 			end
-		
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -1
 	yyvsp2 := yyvsp2 -1
-	if {l_yyvs245: like yyvs3} yyvs3 then
-		l_yyvs245.put (yyval3, yyvsp3)
-	end
+	l_yyvs3.put (yyval3, yyvsp3)
 end
 when 167 then
 --|#line 616 "xm_eiffel_parser.y"
@@ -3327,15 +3509,19 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 616")
 end
 
-			yyval2 := yyvs2.item (yyvsp2)
-			on_attribute (Void, yyvs2.item (yyvsp2).ns_prefix, yyvs2.item (yyvsp2).local_part, yyvs4.item (yyvsp4))
-		
+			l_yyvs2 := yyvs2
+			check l_yyvs2 /= Void end
+			yyval2 := l_yyvs2.item (yyvsp2)
+			l_yyvs4 := yyvs4
+			check l_yyvs4 /= Void end
+			s := l_yyvs2.item (yyvsp2).local_part
+			check s /= Void end
+			on_attribute (Void, l_yyvs2.item (yyvsp2).ns_prefix, s, l_yyvs4.item (yyvsp4))
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs246: like yyvs2} yyvs2 then
-		l_yyvs246.put (yyval2, yyvsp2)
-	end
+	l_yyvs2.put (yyval2, yyvsp2)
 end
 when 168 then
 --|#line 621 "xm_eiffel_parser.y"
@@ -3343,13 +3529,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 621")
 end
 
-force_error (Error_attribute) 
+force_error (Error_attribute)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs247: like yyvs2} yyvs2 then
-		l_yyvs247.put (yyval2, yyvsp2)
-	end
+	l_yyvs2 := yyvs2
+	check l_yyvs2 /= Void end
+	l_yyvs2.put_default (yyvsp2)
 end
 when 169 then
 --|#line 625 "xm_eiffel_parser.y"
@@ -3357,15 +3543,17 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 625")
 end
 
-			yyval2 := yyvs2.item (yyvsp2)
-			on_end_tag (Void, yyvs2.item (yyvsp2).ns_prefix, yyvs2.item (yyvsp2).local_part)
-		
+			l_yyvs2 := yyvs2
+			check l_yyvs2 /= Void end
+			yyval2 := l_yyvs2.item (yyvsp2)
+			s := l_yyvs2.item (yyvsp2).local_part
+			check s /= Void end
+			on_end_tag (Void, l_yyvs2.item (yyvsp2).ns_prefix, s)
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs248: like yyvs2} yyvs2 then
-		l_yyvs248.put (yyval2, yyvsp2)
-	end
+	l_yyvs2.put (yyval2, yyvsp2)
 end
 when 170 then
 --|#line 630 "xm_eiffel_parser.y"
@@ -3373,35 +3561,36 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 630")
 end
 
-force_error (Error_end_tag) 
+force_error (Error_end_tag)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp2 := yyvsp2 + 1
 	yyvsp4 := yyvsp4 -1
 	yyvsp1 := yyvsp1 -1
+	l_yyvs2 := yyvs2
 	if yyvsp2 >= yyvsc2 then
-		if yyvs2 = Void then
+		if l_yyvs2 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs2")
 			end
-			create yyspecial_routines2
+			create l_yyspecial_routines2
+			yyspecial_routines2 := l_yyspecial_routines2
 			yyvsc2 := yyInitial_yyvs_size
-			if {l_yyspecial_routines250: like yyspecial_routines2} yyspecial_routines2 then
-				yyvs2 := l_yyspecial_routines250.make (yyvsc2)
-			end
+			l_yyvs2 := l_yyspecial_routines2.make (yyvsc2)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs2")
 			end
 			yyvsc2 := yyvsc2 + yyInitial_yyvs_size
-			if {l_yyspecial_routines249: like yyspecial_routines2} yyspecial_routines2 then
-				yyvs2 := l_yyspecial_routines249.resize (yyvs2, yyvsc2)
-			end
+			l_yyspecial_routines2 := yyspecial_routines2
+			check l_yyspecial_routines2 /= Void end
+			l_yyvs2 := l_yyspecial_routines2.resize (l_yyvs2, yyvsc2)
 		end
+		yyvs2 := l_yyvs2
+	else
+		check l_yyvs2 /= Void end
 	end
-	if {l_yyvs251: like yyvs2} yyvs2 then
-		l_yyvs251.put (yyval2, yyvsp2)
-	end
+	l_yyvs2.put_default (yyvsp2)
 end
 when 171 then
 --|#line 633 "xm_eiffel_parser.y"
@@ -3412,9 +3601,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs252: like yyvs1} yyvs1 then
-		l_yyvs252.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 172 then
 --|#line 634 "xm_eiffel_parser.y"
@@ -3426,9 +3615,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs253: like yyvs1} yyvs1 then
-		l_yyvs253.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 173 then
 --|#line 637 "xm_eiffel_parser.y"
@@ -3436,34 +3625,37 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 637")
 end
 
-on_content (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+on_content (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines255: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines255.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines254: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines254.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs256: like yyvs1} yyvs1 then
-		l_yyvs256.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 174 then
 --|#line 638 "xm_eiffel_parser.y"
@@ -3474,9 +3666,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs257: like yyvs1} yyvs1 then
-		l_yyvs257.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 175 then
 --|#line 639 "xm_eiffel_parser.y"
@@ -3487,9 +3679,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs258: like yyvs1} yyvs1 then
-		l_yyvs258.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 176 then
 --|#line 640 "xm_eiffel_parser.y"
@@ -3500,9 +3692,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs259: like yyvs1} yyvs1 then
-		l_yyvs259.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 177 then
 --|#line 641 "xm_eiffel_parser.y"
@@ -3513,9 +3705,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs260: like yyvs1} yyvs1 then
-		l_yyvs260.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 178 then
 --|#line 642 "xm_eiffel_parser.y"
@@ -3523,34 +3715,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 642")
 end
 
-force_error (Error_no_cdata_end_in_content) 
+force_error (Error_no_cdata_end_in_content)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines262: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines262.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines261: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines261.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs263: like yyvs1} yyvs1 then
-		l_yyvs263.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 179 then
 --|#line 643 "xm_eiffel_parser.y"
@@ -3561,9 +3754,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs264: like yyvs1} yyvs1 then
-		l_yyvs264.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 180 then
 --|#line 646 "xm_eiffel_parser.y"
@@ -3576,29 +3769,30 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines266: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines266.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines265: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines265.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs267: like yyvs1} yyvs1 then
-		l_yyvs267.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 181 then
 --|#line 647 "xm_eiffel_parser.y"
@@ -3611,29 +3805,30 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines269: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines269.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines268: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines268.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs270: like yyvs1} yyvs1 then
-		l_yyvs270.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 182 then
 --|#line 648 "xm_eiffel_parser.y"
@@ -3641,34 +3836,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 648")
 end
 
-force_error (Error_entity_xml_declaration) 
+force_error (Error_entity_xml_declaration)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines272: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines272.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines271: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines271.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs273: like yyvs1} yyvs1 then
-		l_yyvs273.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 183 then
 --|#line 651 "xm_eiffel_parser.y"
@@ -3676,12 +3872,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 651")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs274: like yyvs4} yyvs4 then
-		l_yyvs274.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 184 then
 --|#line 653 "xm_eiffel_parser.y"
@@ -3689,12 +3885,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 653")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs275: like yyvs4} yyvs4 then
-		l_yyvs275.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 185 then
 --|#line 659 "xm_eiffel_parser.y"
@@ -3702,15 +3898,19 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 659")
 end
 
-on_element_declaration (yyvs4.item (yyvsp4 - 1),yyvs6.item (yyvsp6)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+on_element_declaration (l_yyvs4.item (yyvsp4 - 1),l_yyvs6.item (yyvsp6))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 6
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -3
 	yyvsp6 := yyvsp6 -1
-	if {l_yyvs276: like yyvs1} yyvs1 then
-		l_yyvs276.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 186 then
 --|#line 661 "xm_eiffel_parser.y"
@@ -3718,13 +3918,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 661")
 end
 
-force_error (Error_doctype_element) 
+force_error (Error_doctype_element)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs277: like yyvs1} yyvs1 then
-		l_yyvs277.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 187 then
 --|#line 664 "xm_eiffel_parser.y"
@@ -3732,35 +3932,36 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 664")
 end
 
-create yyval6.make_empty 
+create yyval6.make_empty
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp6 := yyvsp6 + 1
 	yyvsp4 := yyvsp4 -1
 	yyvsp1 := yyvsp1 -1
+	l_yyvs6 := yyvs6
 	if yyvsp6 >= yyvsc6 then
-		if yyvs6 = Void then
+		if l_yyvs6 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs6")
 			end
-			create yyspecial_routines6
+			create l_yyspecial_routines6
+			yyspecial_routines6 := l_yyspecial_routines6
 			yyvsc6 := yyInitial_yyvs_size
-			if {l_yyspecial_routines279: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines279.make (yyvsc6)
-			end
+			l_yyvs6 := l_yyspecial_routines6.make (yyvsc6)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs6")
 			end
 			yyvsc6 := yyvsc6 + yyInitial_yyvs_size
-			if {l_yyspecial_routines278: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines278.resize (yyvs6, yyvsc6)
-			end
+			l_yyspecial_routines6 := yyspecial_routines6
+			check l_yyspecial_routines6 /= Void end
+			l_yyvs6 := l_yyspecial_routines6.resize (l_yyvs6, yyvsc6)
 		end
+		yyvs6 := l_yyvs6
+	else
+		check l_yyvs6 /= Void end
 	end
-	if {l_yyvs280: like yyvs6} yyvs6 then
-		l_yyvs280.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 188 then
 --|#line 666 "xm_eiffel_parser.y"
@@ -3768,35 +3969,36 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 666")
 end
 
-create yyval6.make_any 
+create yyval6.make_any
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp6 := yyvsp6 + 1
 	yyvsp4 := yyvsp4 -1
 	yyvsp1 := yyvsp1 -1
+	l_yyvs6 := yyvs6
 	if yyvsp6 >= yyvsc6 then
-		if yyvs6 = Void then
+		if l_yyvs6 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs6")
 			end
-			create yyspecial_routines6
+			create l_yyspecial_routines6
+			yyspecial_routines6 := l_yyspecial_routines6
 			yyvsc6 := yyInitial_yyvs_size
-			if {l_yyspecial_routines282: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines282.make (yyvsc6)
-			end
+			l_yyvs6 := l_yyspecial_routines6.make (yyvsc6)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs6")
 			end
 			yyvsc6 := yyvsc6 + yyInitial_yyvs_size
-			if {l_yyspecial_routines281: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines281.resize (yyvs6, yyvsc6)
-			end
+			l_yyspecial_routines6 := yyspecial_routines6
+			check l_yyspecial_routines6 /= Void end
+			l_yyvs6 := l_yyspecial_routines6.resize (l_yyvs6, yyvsc6)
 		end
+		yyvs6 := l_yyvs6
+	else
+		check l_yyvs6 /= Void end
 	end
-	if {l_yyvs283: like yyvs6} yyvs6 then
-		l_yyvs283.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 189 then
 --|#line 668 "xm_eiffel_parser.y"
@@ -3804,13 +4006,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 668")
 end
 
-yyval6 := yyvs6.item (yyvsp6) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs284: like yyvs6} yyvs6 then
-		l_yyvs284.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 190 then
 --|#line 670 "xm_eiffel_parser.y"
@@ -3818,12 +4020,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 670")
 end
 
-yyval6 := yyvs6.item (yyvsp6) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs285: like yyvs6} yyvs6 then
-		l_yyvs285.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 191 then
 --|#line 674 "xm_eiffel_parser.y"
@@ -3831,13 +4033,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 674")
 end
 
-yyval6 := yyvs6.item (yyvsp6) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs286: like yyvs6} yyvs6 then
-		l_yyvs286.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 192 then
 --|#line 676 "xm_eiffel_parser.y"
@@ -3845,13 +4047,15 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 676")
 end
 
-yyval6 := yyvs6.item (yyvsp6); set_element_repetition (yyval6, yyvs4.item (yyvsp4)) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6); set_element_repetition (yyval6, l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs287: like yyvs6} yyvs6 then
-		l_yyvs287.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 193 then
 --|#line 678 "xm_eiffel_parser.y"
@@ -3859,13 +4063,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 678")
 end
 
-yyval6 := yyvs6.item (yyvsp6) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs288: like yyvs6} yyvs6 then
-		l_yyvs288.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 194 then
 --|#line 680 "xm_eiffel_parser.y"
@@ -3873,13 +4077,15 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 680")
 end
 
-yyval6 := yyvs6.item (yyvsp6); set_element_repetition (yyval6, yyvs4.item (yyvsp4)) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6); set_element_repetition (yyval6, l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs289: like yyvs6} yyvs6 then
-		l_yyvs289.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 195 then
 --|#line 684 "xm_eiffel_parser.y"
@@ -3887,34 +4093,37 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 684")
 end
 
-yyval6 := element_name (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval6 := element_name (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp6 := yyvsp6 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs6 := yyvs6
 	if yyvsp6 >= yyvsc6 then
-		if yyvs6 = Void then
+		if l_yyvs6 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs6")
 			end
-			create yyspecial_routines6
+			create l_yyspecial_routines6
+			yyspecial_routines6 := l_yyspecial_routines6
 			yyvsc6 := yyInitial_yyvs_size
-			if {l_yyspecial_routines291: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines291.make (yyvsc6)
-			end
+			l_yyvs6 := l_yyspecial_routines6.make (yyvsc6)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs6")
 			end
 			yyvsc6 := yyvsc6 + yyInitial_yyvs_size
-			if {l_yyspecial_routines290: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines290.resize (yyvs6, yyvsc6)
-			end
+			l_yyspecial_routines6 := yyspecial_routines6
+			check l_yyspecial_routines6 /= Void end
+			l_yyvs6 := l_yyspecial_routines6.resize (l_yyvs6, yyvsc6)
 		end
+		yyvs6 := l_yyvs6
+	else
+		check l_yyvs6 /= Void end
 	end
-	if {l_yyvs292: like yyvs6} yyvs6 then
-		l_yyvs292.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 196 then
 --|#line 686 "xm_eiffel_parser.y"
@@ -3922,34 +4131,37 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 686")
 end
 
-yyval6 := element_name (yyvs4.item (yyvsp4 - 1)); set_element_repetition (yyval6, yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval6 := element_name (l_yyvs4.item (yyvsp4 - 1)); set_element_repetition (yyval6, l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp6 := yyvsp6 + 1
 	yyvsp4 := yyvsp4 -2
+	l_yyvs6 := yyvs6
 	if yyvsp6 >= yyvsc6 then
-		if yyvs6 = Void then
+		if l_yyvs6 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs6")
 			end
-			create yyspecial_routines6
+			create l_yyspecial_routines6
+			yyspecial_routines6 := l_yyspecial_routines6
 			yyvsc6 := yyInitial_yyvs_size
-			if {l_yyspecial_routines294: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines294.make (yyvsc6)
-			end
+			l_yyvs6 := l_yyspecial_routines6.make (yyvsc6)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs6")
 			end
 			yyvsc6 := yyvsc6 + yyInitial_yyvs_size
-			if {l_yyspecial_routines293: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines293.resize (yyvs6, yyvsc6)
-			end
+			l_yyspecial_routines6 := yyspecial_routines6
+			check l_yyspecial_routines6 /= Void end
+			l_yyvs6 := l_yyspecial_routines6.resize (l_yyvs6, yyvsc6)
 		end
+		yyvs6 := l_yyvs6
+	else
+		check l_yyvs6 /= Void end
 	end
-	if {l_yyvs295: like yyvs6} yyvs6 then
-		l_yyvs295.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 197 then
 --|#line 688 "xm_eiffel_parser.y"
@@ -3957,13 +4169,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 688")
 end
 
-yyval6 := yyvs6.item (yyvsp6) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs296: like yyvs6} yyvs6 then
-		l_yyvs296.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 198 then
 --|#line 690 "xm_eiffel_parser.y"
@@ -3971,13 +4183,15 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 690")
 end
 
-yyval6 := yyvs6.item (yyvsp6); set_element_repetition (yyval6, yyvs4.item (yyvsp4)) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6); set_element_repetition (yyval6, l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs297: like yyvs6} yyvs6 then
-		l_yyvs297.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 199 then
 --|#line 692 "xm_eiffel_parser.y"
@@ -3985,13 +4199,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 692")
 end
 
-yyval6 := yyvs6.item (yyvsp6) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs298: like yyvs6} yyvs6 then
-		l_yyvs298.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 200 then
 --|#line 694 "xm_eiffel_parser.y"
@@ -3999,13 +4213,15 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 694")
 end
 
-yyval6 := yyvs6.item (yyvsp6); set_element_repetition (yyval6, yyvs4.item (yyvsp4)) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6); set_element_repetition (yyval6, l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs299: like yyvs6} yyvs6 then
-		l_yyvs299.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 201 then
 --|#line 698 "xm_eiffel_parser.y"
@@ -4013,13 +4229,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 698")
 end
 
-yyval4 := Zero_or_more_repetition 
+yyval4 := Zero_or_more_repetition
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs300: like yyvs4} yyvs4 then
-		l_yyvs300.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 202 then
 --|#line 700 "xm_eiffel_parser.y"
@@ -4027,13 +4243,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 700")
 end
 
-yyval4 := One_or_more_repetition 
+yyval4 := One_or_more_repetition
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs301: like yyvs4} yyvs4 then
-		l_yyvs301.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 203 then
 --|#line 702 "xm_eiffel_parser.y"
@@ -4041,13 +4257,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 702")
 end
 
-yyval4 := Zero_or_one_repetition 
+yyval4 := Zero_or_one_repetition
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs302: like yyvs4} yyvs4 then
-		l_yyvs302.put (yyval4, yyvsp4)
-	end
+	l_yyvs4 := yyvs4
+	check l_yyvs4 /= Void end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 204 then
 --|#line 706 "xm_eiffel_parser.y"
@@ -4055,14 +4271,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 706")
 end
 
-yyval6 := yyvs6.item (yyvsp6); yyval6.items.force_first (yyvs6.item (yyvsp6 - 1)) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6); yyval6.attached_items.force_first (l_yyvs6.item (yyvsp6 - 1))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp6 := yyvsp6 -1
 	yyvsp1 := yyvsp1 -3
-	if {l_yyvs303: like yyvs6} yyvs6 then
-		l_yyvs303.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 205 then
 --|#line 710 "xm_eiffel_parser.y"
@@ -4070,12 +4286,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 710")
 end
 
-create yyval6.make_choice; yyval6.items.force_last (yyvs6.item (yyvsp6)) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+create yyval6.make_choice; yyval6.attached_items.force_last (l_yyvs6.item (yyvsp6))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs304: like yyvs6} yyvs6 then
-		l_yyvs304.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 206 then
 --|#line 712 "xm_eiffel_parser.y"
@@ -4083,14 +4299,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 712")
 end
 
-yyval6 := yyvs6.item (yyvsp6 - 1); yyval6.items.force_last (yyvs6.item (yyvsp6)) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6 - 1); yyval6.attached_items.force_last (l_yyvs6.item (yyvsp6))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp6 := yyvsp6 -1
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs305: like yyvs6} yyvs6 then
-		l_yyvs305.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 207 then
 --|#line 717 "xm_eiffel_parser.y"
@@ -4098,13 +4314,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 717")
 end
 
-yyval6 := yyvs6.item (yyvsp6) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -2
-	if {l_yyvs306: like yyvs6} yyvs6 then
-		l_yyvs306.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 208 then
 --|#line 721 "xm_eiffel_parser.y"
@@ -4112,12 +4328,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 721")
 end
 
-create yyval6.make_sequence; yyval6.items.force_last (yyvs6.item (yyvsp6)) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+create yyval6.make_sequence; yyval6.attached_items.force_last (l_yyvs6.item (yyvsp6))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs307: like yyvs6} yyvs6 then
-		l_yyvs307.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 209 then
 --|#line 723 "xm_eiffel_parser.y"
@@ -4125,14 +4341,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 723")
 end
 
-yyval6 := yyvs6.item (yyvsp6 - 1); yyval6.items.force_last (yyvs6.item (yyvsp6)) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6 - 1); yyval6.attached_items.force_last (l_yyvs6.item (yyvsp6))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp6 := yyvsp6 -1
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs308: like yyvs6} yyvs6 then
-		l_yyvs308.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 210 then
 --|#line 727 "xm_eiffel_parser.y"
@@ -4140,34 +4356,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 727")
 end
 
-create yyval6.make_mixed 
+create yyval6.make_mixed
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp6 := yyvsp6 + 1
 	yyvsp1 := yyvsp1 -3
+	l_yyvs6 := yyvs6
 	if yyvsp6 >= yyvsc6 then
-		if yyvs6 = Void then
+		if l_yyvs6 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs6")
 			end
-			create yyspecial_routines6
+			create l_yyspecial_routines6
+			yyspecial_routines6 := l_yyspecial_routines6
 			yyvsc6 := yyInitial_yyvs_size
-			if {l_yyspecial_routines310: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines310.make (yyvsc6)
-			end
+			l_yyvs6 := l_yyspecial_routines6.make (yyvsc6)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs6")
 			end
 			yyvsc6 := yyvsc6 + yyInitial_yyvs_size
-			if {l_yyspecial_routines309: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines309.resize (yyvs6, yyvsc6)
-			end
+			l_yyspecial_routines6 := yyspecial_routines6
+			check l_yyspecial_routines6 /= Void end
+			l_yyvs6 := l_yyspecial_routines6.resize (l_yyvs6, yyvsc6)
 		end
+		yyvs6 := l_yyvs6
+	else
+		check l_yyvs6 /= Void end
 	end
-	if {l_yyvs311: like yyvs6} yyvs6 then
-		l_yyvs311.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 211 then
 --|#line 729 "xm_eiffel_parser.y"
@@ -4175,35 +4392,36 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 729")
 end
 
-create yyval6.make_mixed; yyval6.set_zero_or_more 
+create yyval6.make_mixed; yyval6.set_zero_or_more
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 4
 	yyvsp6 := yyvsp6 + 1
 	yyvsp1 := yyvsp1 -3
 	yyvsp4 := yyvsp4 -1
+	l_yyvs6 := yyvs6
 	if yyvsp6 >= yyvsc6 then
-		if yyvs6 = Void then
+		if l_yyvs6 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs6")
 			end
-			create yyspecial_routines6
+			create l_yyspecial_routines6
+			yyspecial_routines6 := l_yyspecial_routines6
 			yyvsc6 := yyInitial_yyvs_size
-			if {l_yyspecial_routines313: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines313.make (yyvsc6)
-			end
+			l_yyvs6 := l_yyspecial_routines6.make (yyvsc6)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs6")
 			end
 			yyvsc6 := yyvsc6 + yyInitial_yyvs_size
-			if {l_yyspecial_routines312: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines312.resize (yyvs6, yyvsc6)
-			end
+			l_yyspecial_routines6 := yyspecial_routines6
+			check l_yyspecial_routines6 /= Void end
+			l_yyvs6 := l_yyspecial_routines6.resize (l_yyvs6, yyvsc6)
 		end
+		yyvs6 := l_yyvs6
+	else
+		check l_yyvs6 /= Void end
 	end
-	if {l_yyvs314: like yyvs6} yyvs6 then
-		l_yyvs314.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 212 then
 --|#line 731 "xm_eiffel_parser.y"
@@ -4211,14 +4429,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 731")
 end
 
-yyval6 := yyvs6.item (yyvsp6); yyval6.set_zero_or_more 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6); yyval6.set_zero_or_more
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 6
 	yyvsp1 := yyvsp1 -4
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs315: like yyvs6} yyvs6 then
-		l_yyvs315.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 213 then
 --|#line 735 "xm_eiffel_parser.y"
@@ -4226,34 +4444,37 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 735")
 end
 
-create yyval6.make_mixed; yyval6.items.force_last (element_name (yyvs4.item (yyvsp4))) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+create yyval6.make_mixed; yyval6.attached_items.force_last (element_name (l_yyvs4.item (yyvsp4)))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp6 := yyvsp6 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs6 := yyvs6
 	if yyvsp6 >= yyvsc6 then
-		if yyvs6 = Void then
+		if l_yyvs6 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs6")
 			end
-			create yyspecial_routines6
+			create l_yyspecial_routines6
+			yyspecial_routines6 := l_yyspecial_routines6
 			yyvsc6 := yyInitial_yyvs_size
-			if {l_yyspecial_routines317: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines317.make (yyvsc6)
-			end
+			l_yyvs6 := l_yyspecial_routines6.make (yyvsc6)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs6")
 			end
 			yyvsc6 := yyvsc6 + yyInitial_yyvs_size
-			if {l_yyspecial_routines316: like yyspecial_routines6} yyspecial_routines6 then
-				yyvs6 := l_yyspecial_routines316.resize (yyvs6, yyvsc6)
-			end
+			l_yyspecial_routines6 := yyspecial_routines6
+			check l_yyspecial_routines6 /= Void end
+			l_yyvs6 := l_yyspecial_routines6.resize (l_yyvs6, yyvsc6)
 		end
+		yyvs6 := l_yyvs6
+	else
+		check l_yyvs6 /= Void end
 	end
-	if {l_yyvs318: like yyvs6} yyvs6 then
-		l_yyvs318.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 214 then
 --|#line 737 "xm_eiffel_parser.y"
@@ -4261,14 +4482,16 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 737")
 end
 
-yyval6 := yyvs6.item (yyvsp6); yyval6.items.force_last (element_name (yyvs4.item (yyvsp4))) 
+l_yyvs6 := yyvs6
+check l_yyvs6 /= Void end
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval6 := l_yyvs6.item (yyvsp6); yyval6.attached_items.force_last (element_name (l_yyvs4.item (yyvsp4)))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs319: like yyvs6} yyvs6 then
-		l_yyvs319.put (yyval6, yyvsp6)
-	end
+	l_yyvs6.put (yyval6, yyvsp6)
 end
 when 215 then
 --|#line 743 "xm_eiffel_parser.y"
@@ -4276,13 +4499,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 743")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs320: like yyvs4} yyvs4 then
-		l_yyvs320.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 216 then
 --|#line 747 "xm_eiffel_parser.y"
@@ -4294,9 +4517,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs321: like yyvs1} yyvs1 then
-		l_yyvs321.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 217 then
 --|#line 750 "xm_eiffel_parser.y"
@@ -4308,9 +4531,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs322: like yyvs1} yyvs1 then
-		l_yyvs322.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 218 then
 --|#line 753 "xm_eiffel_parser.y"
@@ -4322,9 +4545,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs323: like yyvs1} yyvs1 then
-		l_yyvs323.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 219 then
 --|#line 756 "xm_eiffel_parser.y"
@@ -4337,29 +4560,30 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines325: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines325.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines324: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines324.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs326: like yyvs1} yyvs1 then
-		l_yyvs326.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 220 then
 --|#line 759 "xm_eiffel_parser.y"
@@ -4371,9 +4595,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs327: like yyvs1} yyvs1 then
-		l_yyvs327.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 221 then
 --|#line 764 "xm_eiffel_parser.y"
@@ -4386,9 +4610,9 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -3
-	if {l_yyvs328: like yyvs1} yyvs1 then
-		l_yyvs328.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 222 then
 --|#line 766 "xm_eiffel_parser.y"
@@ -4396,15 +4620,19 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 766")
 end
 
-on_attribute_declarations (yyvs4.item (yyvsp4 - 1), yyvs8.item (yyvsp8)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+l_yyvs8 := yyvs8
+check l_yyvs8 /= Void end
+on_attribute_declarations (l_yyvs4.item (yyvsp4 - 1), l_yyvs8.item (yyvsp8))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 6
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -3
 	yyvsp8 := yyvsp8 -1
-	if {l_yyvs329: like yyvs1} yyvs1 then
-		l_yyvs329.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 223 then
 --|#line 768 "xm_eiffel_parser.y"
@@ -4412,13 +4640,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 768")
 end
 
-force_error (Error_doctype_attribute) 
+force_error (Error_doctype_attribute)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs330: like yyvs1} yyvs1 then
-		l_yyvs330.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 224 then
 --|#line 772 "xm_eiffel_parser.y"
@@ -4426,34 +4654,37 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 772")
 end
 
-yyval8 := new_dtd_attribute_content_list; yyval8.force_last (yyvs7.item (yyvsp7)) 
+l_yyvs7 := yyvs7
+check l_yyvs7 /= Void end
+yyval8 := new_dtd_attribute_content_list; yyval8.force_last (l_yyvs7.item (yyvsp7))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp8 := yyvsp8 + 1
 	yyvsp7 := yyvsp7 -1
+	l_yyvs8 := yyvs8
 	if yyvsp8 >= yyvsc8 then
-		if yyvs8 = Void then
+		if l_yyvs8 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs8")
 			end
-			create yyspecial_routines8
+			create l_yyspecial_routines8
+			yyspecial_routines8 := l_yyspecial_routines8
 			yyvsc8 := yyInitial_yyvs_size
-			if {l_yyspecial_routines332: like yyspecial_routines8} yyspecial_routines8 then
-				yyvs8 := l_yyspecial_routines332.make (yyvsc8)
-			end
+			l_yyvs8 := l_yyspecial_routines8.make (yyvsc8)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs8")
 			end
 			yyvsc8 := yyvsc8 + yyInitial_yyvs_size
-			if {l_yyspecial_routines331: like yyspecial_routines8} yyspecial_routines8 then
-				yyvs8 := l_yyspecial_routines331.resize (yyvs8, yyvsc8)
-			end
+			l_yyspecial_routines8 := yyspecial_routines8
+			check l_yyspecial_routines8 /= Void end
+			l_yyvs8 := l_yyspecial_routines8.resize (l_yyvs8, yyvsc8)
 		end
+		yyvs8 := l_yyvs8
+	else
+		check l_yyvs8 /= Void end
 	end
-	if {l_yyvs333: like yyvs8} yyvs8 then
-		l_yyvs333.put (yyval8, yyvsp8)
-	end
+	l_yyvs8.put (yyval8, yyvsp8)
 end
 when 225 then
 --|#line 774 "xm_eiffel_parser.y"
@@ -4461,13 +4692,15 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 774")
 end
 
-yyval8 := yyvs8.item (yyvsp8); yyval8.force_last (yyvs7.item (yyvsp7)) 
+l_yyvs8 := yyvs8
+check l_yyvs8 /= Void end
+l_yyvs7 := yyvs7
+check l_yyvs7 /= Void end
+yyval8 := l_yyvs8.item (yyvsp8); yyval8.force_last (l_yyvs7.item (yyvsp7))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp7 := yyvsp7 -1
-	if {l_yyvs334: like yyvs8} yyvs8 then
-		l_yyvs334.put (yyval8, yyvsp8)
-	end
+	l_yyvs8.put (yyval8, yyvsp8)
 end
 when 226 then
 --|#line 778 "xm_eiffel_parser.y"
@@ -4475,15 +4708,17 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 778")
 end
 
-yyval7 := yyvs7.item (yyvsp7 - 1); yyval7.set_name (yyvs4.item (yyvsp4)); yyval7.copy_default (yyvs7.item (yyvsp7)) 
+l_yyvs7 := yyvs7
+check l_yyvs7 /= Void end
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval7 := l_yyvs7.item (yyvsp7 - 1); yyval7.set_name (l_yyvs4.item (yyvsp4)); yyval7.copy_default (l_yyvs7.item (yyvsp7))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 6
 	yyvsp7 := yyvsp7 -1
 	yyvsp1 := yyvsp1 -3
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs335: like yyvs7} yyvs7 then
-		l_yyvs335.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 227 then
 --|#line 780 "xm_eiffel_parser.y"
@@ -4491,35 +4726,36 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 780")
 end
 
-force_error (Error_doctype_attribute_item) 
+force_error (Error_doctype_attribute_item)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp7 := yyvsp7 + 1
 	yyvsp1 := yyvsp1 -2
 	yyvsp4 := yyvsp4 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines337: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines337.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines336: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines336.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs338: like yyvs7} yyvs7 then
-		l_yyvs338.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put_default (yyvsp7)
 end
 when 228 then
 --|#line 783 "xm_eiffel_parser.y"
@@ -4527,34 +4763,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 783")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_data 
+yyval7 := new_dtd_attribute_content; yyval7.set_data
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines340: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines340.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines339: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines339.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs341: like yyvs7} yyvs7 then
-		l_yyvs341.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 229 then
 --|#line 785 "xm_eiffel_parser.y"
@@ -4562,12 +4799,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 785")
 end
 
-yyval7 := yyvs7.item (yyvsp7) 
+l_yyvs7 := yyvs7
+check l_yyvs7 /= Void end
+yyval7 := l_yyvs7.item (yyvsp7)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs342: like yyvs7} yyvs7 then
-		l_yyvs342.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 230 then
 --|#line 787 "xm_eiffel_parser.y"
@@ -4575,12 +4812,12 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 787")
 end
 
-yyval7 := yyvs7.item (yyvsp7) 
+l_yyvs7 := yyvs7
+check l_yyvs7 /= Void end
+yyval7 := l_yyvs7.item (yyvsp7)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs343: like yyvs7} yyvs7 then
-		l_yyvs343.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 231 then
 --|#line 791 "xm_eiffel_parser.y"
@@ -4588,34 +4825,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 791")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_id 
+yyval7 := new_dtd_attribute_content; yyval7.set_id
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines345: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines345.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines344: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines344.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs346: like yyvs7} yyvs7 then
-		l_yyvs346.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 232 then
 --|#line 793 "xm_eiffel_parser.y"
@@ -4623,34 +4861,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 793")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_id_ref 
+yyval7 := new_dtd_attribute_content; yyval7.set_id_ref
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines348: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines348.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines347: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines347.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs349: like yyvs7} yyvs7 then
-		l_yyvs349.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 233 then
 --|#line 795 "xm_eiffel_parser.y"
@@ -4658,34 +4897,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 795")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_id_ref; yyval7.set_list_type 
+yyval7 := new_dtd_attribute_content; yyval7.set_id_ref; yyval7.set_list_type
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines351: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines351.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines350: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines350.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs352: like yyvs7} yyvs7 then
-		l_yyvs352.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 234 then
 --|#line 797 "xm_eiffel_parser.y"
@@ -4693,34 +4933,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 797")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_entity 
+yyval7 := new_dtd_attribute_content; yyval7.set_entity
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines354: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines354.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines353: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines353.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs355: like yyvs7} yyvs7 then
-		l_yyvs355.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 235 then
 --|#line 799 "xm_eiffel_parser.y"
@@ -4728,34 +4969,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 799")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_entity; yyval7.set_list_type 
+yyval7 := new_dtd_attribute_content; yyval7.set_entity; yyval7.set_list_type
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines357: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines357.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines356: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines356.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs358: like yyvs7} yyvs7 then
-		l_yyvs358.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 236 then
 --|#line 801 "xm_eiffel_parser.y"
@@ -4763,34 +5005,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 801")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_token 
+yyval7 := new_dtd_attribute_content; yyval7.set_token
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines360: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines360.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines359: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines359.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs361: like yyvs7} yyvs7 then
-		l_yyvs361.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 237 then
 --|#line 803 "xm_eiffel_parser.y"
@@ -4798,34 +5041,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 803")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_token; yyval7.set_list_type 
+yyval7 := new_dtd_attribute_content; yyval7.set_token; yyval7.set_list_type
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines363: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines363.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines362: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines362.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs364: like yyvs7} yyvs7 then
-		l_yyvs364.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 238 then
 --|#line 807 "xm_eiffel_parser.y"
@@ -4833,34 +5077,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 807")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_notation 
+yyval7 := new_dtd_attribute_content; yyval7.set_notation
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
 	yyvsp1 := yyvsp1 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines366: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines366.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines365: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines365.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs367: like yyvs7} yyvs7 then
-		l_yyvs367.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 239 then
 --|#line 809 "xm_eiffel_parser.y"
@@ -4868,34 +5113,37 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 809")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_enumeration_list (yyvs9.item (yyvsp9)) 
+l_yyvs9 := yyvs9
+check l_yyvs9 /= Void end
+yyval7 := new_dtd_attribute_content; yyval7.set_enumeration_list (l_yyvs9.item (yyvsp9))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
 	yyvsp9 := yyvsp9 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines369: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines369.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines368: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines368.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs370: like yyvs7} yyvs7 then
-		l_yyvs370.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 240 then
 --|#line 813 "xm_eiffel_parser.y"
@@ -4908,9 +5156,9 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp1 := yyvsp1 -2
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs371: like yyvs1} yyvs1 then
-		l_yyvs371.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 241 then
 --|#line 816 "xm_eiffel_parser.y"
@@ -4923,29 +5171,30 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines373: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines373.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines372: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines372.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs374: like yyvs1} yyvs1 then
-		l_yyvs374.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 242 then
 --|#line 817 "xm_eiffel_parser.y"
@@ -4958,9 +5207,9 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs375: like yyvs1} yyvs1 then
-		l_yyvs375.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 243 then
 --|#line 820 "xm_eiffel_parser.y"
@@ -4968,13 +5217,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 820")
 end
 
-yyval9 := yyvs9.item (yyvsp9) 
+l_yyvs9 := yyvs9
+check l_yyvs9 /= Void end
+yyval9 := l_yyvs9.item (yyvsp9)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -2
-	if {l_yyvs376: like yyvs9} yyvs9 then
-		l_yyvs376.put (yyval9, yyvsp9)
-	end
+	l_yyvs9.put (yyval9, yyvsp9)
 end
 when 244 then
 --|#line 824 "xm_eiffel_parser.y"
@@ -4982,35 +5231,38 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 824")
 end
 
-yyval9 := new_string_bilinked_list; yyval9.force_last (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval9 := new_string_bilinked_list; yyval9.force_last (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp9 := yyvsp9 + 1
 	yyvsp4 := yyvsp4 -1
 	yyvsp1 := yyvsp1 -1
+	l_yyvs9 := yyvs9
 	if yyvsp9 >= yyvsc9 then
-		if yyvs9 = Void then
+		if l_yyvs9 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs9")
 			end
-			create yyspecial_routines9
+			create l_yyspecial_routines9
+			yyspecial_routines9 := l_yyspecial_routines9
 			yyvsc9 := yyInitial_yyvs_size
-			if {l_yyspecial_routines378: like yyspecial_routines9} yyspecial_routines9 then
-				yyvs9 := l_yyspecial_routines378.make (yyvsc9)
-			end
+			l_yyvs9 := l_yyspecial_routines9.make (yyvsc9)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs9")
 			end
 			yyvsc9 := yyvsc9 + yyInitial_yyvs_size
-			if {l_yyspecial_routines377: like yyspecial_routines9} yyspecial_routines9 then
-				yyvs9 := l_yyspecial_routines377.resize (yyvs9, yyvsc9)
-			end
+			l_yyspecial_routines9 := yyspecial_routines9
+			check l_yyspecial_routines9 /= Void end
+			l_yyvs9 := l_yyspecial_routines9.resize (l_yyvs9, yyvsc9)
 		end
+		yyvs9 := l_yyvs9
+	else
+		check l_yyvs9 /= Void end
 	end
-	if {l_yyvs379: like yyvs9} yyvs9 then
-		l_yyvs379.put (yyval9, yyvsp9)
-	end
+	l_yyvs9.put (yyval9, yyvsp9)
 end
 when 245 then
 --|#line 826 "xm_eiffel_parser.y"
@@ -5018,14 +5270,16 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 826")
 end
 
-yyval9 := yyvs9.item (yyvsp9); yyval9.force_last (yyvs4.item (yyvsp4)) 
+l_yyvs9 := yyvs9
+check l_yyvs9 /= Void end
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval9 := l_yyvs9.item (yyvsp9); yyval9.force_last (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 4
 	yyvsp1 := yyvsp1 -2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs380: like yyvs9} yyvs9 then
-		l_yyvs380.put (yyval9, yyvsp9)
-	end
+	l_yyvs9.put (yyval9, yyvsp9)
 end
 when 246 then
 --|#line 830 "xm_eiffel_parser.y"
@@ -5033,34 +5287,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 830")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_value_required 
+yyval7 := new_dtd_attribute_content; yyval7.set_value_required
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines382: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines382.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines381: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines381.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs383: like yyvs7} yyvs7 then
-		l_yyvs383.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 247 then
 --|#line 832 "xm_eiffel_parser.y"
@@ -5068,34 +5323,35 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 832")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_value_implied 
+yyval7 := new_dtd_attribute_content; yyval7.set_value_implied
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines385: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines385.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines384: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines384.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs386: like yyvs7} yyvs7 then
-		l_yyvs386.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 248 then
 --|#line 834 "xm_eiffel_parser.y"
@@ -5103,35 +5359,38 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 834")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_value_fixed (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval7 := new_dtd_attribute_content; yyval7.set_value_fixed (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp7 := yyvsp7 + 1
 	yyvsp4 := yyvsp4 -2
 	yyvsp1 := yyvsp1 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines388: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines388.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines387: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines387.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs389: like yyvs7} yyvs7 then
-		l_yyvs389.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 249 then
 --|#line 836 "xm_eiffel_parser.y"
@@ -5139,34 +5398,37 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 836")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_default_value (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval7 := new_dtd_attribute_content; yyval7.set_default_value (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs7 := yyvs7
 	if yyvsp7 >= yyvsc7 then
-		if yyvs7 = Void then
+		if l_yyvs7 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs7")
 			end
-			create yyspecial_routines7
+			create l_yyspecial_routines7
+			yyspecial_routines7 := l_yyspecial_routines7
 			yyvsc7 := yyInitial_yyvs_size
-			if {l_yyspecial_routines391: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines391.make (yyvsc7)
-			end
+			l_yyvs7 := l_yyspecial_routines7.make (yyvsc7)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs7")
 			end
 			yyvsc7 := yyvsc7 + yyInitial_yyvs_size
-			if {l_yyspecial_routines390: like yyspecial_routines7} yyspecial_routines7 then
-				yyvs7 := l_yyspecial_routines390.resize (yyvs7, yyvsc7)
-			end
+			l_yyspecial_routines7 := yyspecial_routines7
+			check l_yyspecial_routines7 /= Void end
+			l_yyvs7 := l_yyspecial_routines7.resize (l_yyvs7, yyvsc7)
 		end
+		yyvs7 := l_yyvs7
+	else
+		check l_yyvs7 /= Void end
 	end
-	if {l_yyvs392: like yyvs7} yyvs7 then
-		l_yyvs392.put (yyval7, yyvsp7)
-	end
+	l_yyvs7.put (yyval7, yyvsp7)
 end
 when 250 then
 --|#line 842 "xm_eiffel_parser.y"
@@ -5177,9 +5439,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs393: like yyvs1} yyvs1 then
-		l_yyvs393.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 251 then
 --|#line 843 "xm_eiffel_parser.y"
@@ -5190,9 +5452,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs394: like yyvs1} yyvs1 then
-		l_yyvs394.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 252 then
 --|#line 844 "xm_eiffel_parser.y"
@@ -5200,13 +5462,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 844")
 end
 
-force_error (Error_doctype_conditional_section) 
+force_error (Error_doctype_conditional_section)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs395: like yyvs1} yyvs1 then
-		l_yyvs395.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 253 then
 --|#line 847 "xm_eiffel_parser.y"
@@ -5218,9 +5480,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs396: like yyvs1} yyvs1 then
-		l_yyvs396.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 254 then
 --|#line 848 "xm_eiffel_parser.y"
@@ -5233,9 +5495,9 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs397: like yyvs1} yyvs1 then
-		l_yyvs397.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 255 then
 --|#line 851 "xm_eiffel_parser.y"
@@ -5248,9 +5510,9 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -3
-	if {l_yyvs398: like yyvs1} yyvs1 then
-		l_yyvs398.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 256 then
 --|#line 854 "xm_eiffel_parser.y"
@@ -5263,9 +5525,9 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs399: like yyvs1} yyvs1 then
-		l_yyvs399.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 257 then
 --|#line 857 "xm_eiffel_parser.y"
@@ -5273,14 +5535,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 857")
 end
 
-scanner.push_start_condition_dtd_ignore 
+scanner.push_start_condition_dtd_ignore
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -3
-	if {l_yyvs400: like yyvs1} yyvs1 then
-		l_yyvs400.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 258 then
 --|#line 861 "xm_eiffel_parser.y"
@@ -5292,29 +5554,30 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 0
 	yyvsp1 := yyvsp1 + 1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines402: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines402.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines401: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines401.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs403: like yyvs1} yyvs1 then
-		l_yyvs403.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 259 then
 --|#line 862 "xm_eiffel_parser.y"
@@ -5325,9 +5588,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs404: like yyvs1} yyvs1 then
-		l_yyvs404.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 260 then
 --|#line 865 "xm_eiffel_parser.y"
@@ -5338,9 +5601,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs405: like yyvs1} yyvs1 then
-		l_yyvs405.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 261 then
 --|#line 866 "xm_eiffel_parser.y"
@@ -5352,9 +5615,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	if {l_yyvs406: like yyvs1} yyvs1 then
-		l_yyvs406.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 262 then
 --|#line 869 "xm_eiffel_parser.y"
@@ -5367,29 +5630,30 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines408: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines408.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines407: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines407.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs409: like yyvs1} yyvs1 then
-		l_yyvs409.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 263 then
 --|#line 870 "xm_eiffel_parser.y"
@@ -5401,9 +5665,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp4 := yyvsp4 -2
-	if {l_yyvs410: like yyvs1} yyvs1 then
-		l_yyvs410.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 264 then
 --|#line 879 "xm_eiffel_parser.y"
@@ -5414,9 +5678,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs411: like yyvs1} yyvs1 then
-		l_yyvs411.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 265 then
 --|#line 880 "xm_eiffel_parser.y"
@@ -5427,9 +5691,9 @@ end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	if {l_yyvs412: like yyvs1} yyvs1 then
-		l_yyvs412.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 266 then
 --|#line 881 "xm_eiffel_parser.y"
@@ -5437,13 +5701,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 881")
 end
 
-force_error (Error_doctype_entity) 
+force_error (Error_doctype_entity)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs413: like yyvs1} yyvs1 then
-		l_yyvs413.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 267 then
 --|#line 884 "xm_eiffel_parser.y"
@@ -5452,16 +5716,18 @@ debug ("GEYACC")
 end
 
 				-- Internal entity.
-			when_entity_declared (yyvs4.item (yyvsp4 - 2), new_literal_entity (yyvs4.item (yyvsp4 - 2), yyvs4.item (yyvsp4 - 1)))
-			on_entity_declaration (yyvs4.item (yyvsp4 - 2), False, yyvs4.item (yyvsp4 - 1), Void, Void)
-		
+			l_yyvs4 := yyvs4
+			check l_yyvs4 /= Void end
+			when_entity_declared (l_yyvs4.item (yyvsp4 - 2), new_literal_entity (l_yyvs4.item (yyvsp4 - 2), l_yyvs4.item (yyvsp4 - 1)))
+			on_entity_declaration (l_yyvs4.item (yyvsp4 - 2), False, l_yyvs4.item (yyvsp4 - 1), Void, Void)
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 7
 	yyvsp1 := yyvsp1 -2
 	yyvsp4 := yyvsp4 -4
-	if {l_yyvs414: like yyvs1} yyvs1 then
-		l_yyvs414.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 268 then
 --|#line 890 "xm_eiffel_parser.y"
@@ -5470,17 +5736,21 @@ debug ("GEYACC")
 end
 
 				-- External entity.
-			when_entity_declared (yyvs4.item (yyvsp4 - 1), new_external_entity (yyvs5.item (yyvsp5)))
-			on_entity_declaration (yyvs4.item (yyvsp4 - 1), False, Void, yyvs5.item (yyvsp5), Void)
-		
+			l_yyvs4 := yyvs4
+			check l_yyvs4 /= Void end
+			l_yyvs5 := yyvs5
+			check l_yyvs5 /= Void end
+			when_entity_declared (l_yyvs4.item (yyvsp4 - 1), new_external_entity (l_yyvs5.item (yyvsp5)))
+			on_entity_declaration (l_yyvs4.item (yyvsp4 - 1), False, Void, l_yyvs5.item (yyvsp5), Void)
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 7
 	yyvsp1 := yyvsp1 -2
 	yyvsp4 := yyvsp4 -3
 	yyvsp5 := yyvsp5 -1
-	if {l_yyvs415: like yyvs1} yyvs1 then
-		l_yyvs415.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 269 then
 --|#line 896 "xm_eiffel_parser.y"
@@ -5489,16 +5759,20 @@ debug ("GEYACC")
 end
 
 				-- Unparsed NDATA entity.
-			on_entity_declaration (yyvs4.item (yyvsp4 - 2), False, Void, yyvs5.item (yyvsp5), yyvs4.item (yyvsp4 - 1))
-		
+			l_yyvs4 := yyvs4
+			check l_yyvs4 /= Void end
+			l_yyvs5 := yyvs5
+			check l_yyvs5 /= Void end
+			on_entity_declaration (l_yyvs4.item (yyvsp4 - 2), False, Void, l_yyvs5.item (yyvsp5), l_yyvs4.item (yyvsp4 - 1))
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 8
 	yyvsp1 := yyvsp1 -2
 	yyvsp4 := yyvsp4 -4
 	yyvsp5 := yyvsp5 -1
-	if {l_yyvs416: like yyvs1} yyvs1 then
-		l_yyvs416.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 270 then
 --|#line 903 "xm_eiffel_parser.y"
@@ -5507,16 +5781,18 @@ debug ("GEYACC")
 end
 
 				-- Internal PE entity.
-			when_pe_entity_declared (yyvs4.item (yyvsp4 - 2), new_literal_entity (yyvs4.item (yyvsp4 - 2), yyvs4.item (yyvsp4 - 1)))
-			on_entity_declaration (yyvs4.item (yyvsp4 - 2), True, yyvs4.item (yyvsp4 - 1), Void, Void) 
-		
+			l_yyvs4 := yyvs4
+			check l_yyvs4 /= Void end
+			when_pe_entity_declared (l_yyvs4.item (yyvsp4 - 2), new_literal_entity (l_yyvs4.item (yyvsp4 - 2), l_yyvs4.item (yyvsp4 - 1)))
+			on_entity_declaration (l_yyvs4.item (yyvsp4 - 2), True, l_yyvs4.item (yyvsp4 - 1), Void, Void)
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 9
 	yyvsp1 := yyvsp1 -3
 	yyvsp4 := yyvsp4 -5
-	if {l_yyvs417: like yyvs1} yyvs1 then
-		l_yyvs417.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 271 then
 --|#line 909 "xm_eiffel_parser.y"
@@ -5525,17 +5801,21 @@ debug ("GEYACC")
 end
 
 				-- External PE entity.
-			when_pe_entity_declared (yyvs4.item (yyvsp4 - 1), new_external_entity (yyvs5.item (yyvsp5))) 
-			on_entity_declaration (yyvs4.item (yyvsp4 - 1), True, Void, yyvs5.item (yyvsp5), Void)
-		
+			l_yyvs4 := yyvs4
+			check l_yyvs4 /= Void end
+			l_yyvs5 := yyvs5
+			check l_yyvs5 /= Void end
+			when_pe_entity_declared (l_yyvs4.item (yyvsp4 - 1), new_external_entity (l_yyvs5.item (yyvsp5)))
+			on_entity_declaration (l_yyvs4.item (yyvsp4 - 1), True, Void, l_yyvs5.item (yyvsp5), Void)
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 9
 	yyvsp1 := yyvsp1 -3
 	yyvsp4 := yyvsp4 -4
 	yyvsp5 := yyvsp5 -1
-	if {l_yyvs418: like yyvs1} yyvs1 then
-		l_yyvs418.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 272 then
 --|#line 917 "xm_eiffel_parser.y"
@@ -5543,34 +5823,37 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 917")
 end
 
-yyval5 := new_dtd_external_id; yyval5.set_system (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval5 := new_dtd_external_id; yyval5.set_system (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp5 := yyvsp5 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs5 := yyvs5
 	if yyvsp5 >= yyvsc5 then
-		if yyvs5 = Void then
+		if l_yyvs5 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs5")
 			end
-			create yyspecial_routines5
+			create l_yyspecial_routines5
+			yyspecial_routines5 := l_yyspecial_routines5
 			yyvsc5 := yyInitial_yyvs_size
-			if {l_yyspecial_routines420: like yyspecial_routines5} yyspecial_routines5 then
-				yyvs5 := l_yyspecial_routines420.make (yyvsc5)
-			end
+			l_yyvs5 := l_yyspecial_routines5.make (yyvsc5)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs5")
 			end
 			yyvsc5 := yyvsc5 + yyInitial_yyvs_size
-			if {l_yyspecial_routines419: like yyspecial_routines5} yyspecial_routines5 then
-				yyvs5 := l_yyspecial_routines419.resize (yyvs5, yyvsc5)
-			end
+			l_yyspecial_routines5 := yyspecial_routines5
+			check l_yyspecial_routines5 /= Void end
+			l_yyvs5 := l_yyspecial_routines5.resize (l_yyvs5, yyvsc5)
 		end
+		yyvs5 := l_yyvs5
+	else
+		check l_yyvs5 /= Void end
 	end
-	if {l_yyvs421: like yyvs5} yyvs5 then
-		l_yyvs421.put (yyval5, yyvsp5)
-	end
+	l_yyvs5.put (yyval5, yyvsp5)
 end
 when 273 then
 --|#line 919 "xm_eiffel_parser.y"
@@ -5578,34 +5861,37 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 919")
 end
 
-yyval5 := new_dtd_external_id; yyval5.set_public (yyvs4.item (yyvsp4 - 1)); yyval5.set_system (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval5 := new_dtd_external_id; yyval5.set_public (l_yyvs4.item (yyvsp4 - 1)); yyval5.set_system (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp5 := yyvsp5 + 1
 	yyvsp4 := yyvsp4 -2
+	l_yyvs5 := yyvs5
 	if yyvsp5 >= yyvsc5 then
-		if yyvs5 = Void then
+		if l_yyvs5 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs5")
 			end
-			create yyspecial_routines5
+			create l_yyspecial_routines5
+			yyspecial_routines5 := l_yyspecial_routines5
 			yyvsc5 := yyInitial_yyvs_size
-			if {l_yyspecial_routines423: like yyspecial_routines5} yyspecial_routines5 then
-				yyvs5 := l_yyspecial_routines423.make (yyvsc5)
-			end
+			l_yyvs5 := l_yyspecial_routines5.make (yyvsc5)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs5")
 			end
 			yyvsc5 := yyvsc5 + yyInitial_yyvs_size
-			if {l_yyspecial_routines422: like yyspecial_routines5} yyspecial_routines5 then
-				yyvs5 := l_yyspecial_routines422.resize (yyvs5, yyvsc5)
-			end
+			l_yyspecial_routines5 := yyspecial_routines5
+			check l_yyspecial_routines5 /= Void end
+			l_yyvs5 := l_yyspecial_routines5.resize (l_yyvs5, yyvsc5)
 		end
+		yyvs5 := l_yyvs5
+	else
+		check l_yyvs5 /= Void end
 	end
-	if {l_yyvs424: like yyvs5} yyvs5 then
-		l_yyvs424.put (yyval5, yyvsp5)
-	end
+	l_yyvs5.put (yyval5, yyvsp5)
 end
 when 274 then
 --|#line 923 "xm_eiffel_parser.y"
@@ -5613,14 +5899,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 923")
 end
 
-yyval4 := yyvs4.item (yyvsp4) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 4
 	yyvsp4 := yyvsp4 -1
 	yyvsp1 := yyvsp1 -2
-	if {l_yyvs425: like yyvs4} yyvs4 then
-		l_yyvs425.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 275 then
 --|#line 929 "xm_eiffel_parser.y"
@@ -5632,29 +5918,30 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 0
 	yyvsp1 := yyvsp1 + 1
+	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if yyvs1 = Void then
+		if l_yyvs1 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs1")
 			end
-			create yyspecial_routines1
+			create l_yyspecial_routines1
+			yyspecial_routines1 := l_yyspecial_routines1
 			yyvsc1 := yyInitial_yyvs_size
-			if {l_yyspecial_routines427: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines427.make (yyvsc1)
-			end
+			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs1")
 			end
 			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			if {l_yyspecial_routines426: like yyspecial_routines1} yyspecial_routines1 then
-				yyvs1 := l_yyspecial_routines426.resize (yyvs1, yyvsc1)
-			end
+			l_yyspecial_routines1 := yyspecial_routines1
+			check l_yyspecial_routines1 /= Void end
+			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
 		end
+		yyvs1 := l_yyvs1
+	else
+		check l_yyvs1 /= Void end
 	end
-	if {l_yyvs428: like yyvs1} yyvs1 then
-		l_yyvs428.put (yyval1, yyvsp1)
-	end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 276 then
 --|#line 930 "xm_eiffel_parser.y"
@@ -5666,9 +5953,9 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 4
 	yyvsp4 := yyvsp4 -3
-	if {l_yyvs429: like yyvs1} yyvs1 then
-		l_yyvs429.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 277 then
 --|#line 931 "xm_eiffel_parser.y"
@@ -5681,9 +5968,9 @@ if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 6
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -4
-	if {l_yyvs430: like yyvs1} yyvs1 then
-		l_yyvs430.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 278 then
 --|#line 932 "xm_eiffel_parser.y"
@@ -5691,13 +5978,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 932")
 end
 
-force_error (Error_xml_declaration) 
+force_error (Error_xml_declaration)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs431: like yyvs1} yyvs1 then
-		l_yyvs431.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 279 then
 --|#line 935 "xm_eiffel_parser.y"
@@ -5705,13 +5992,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 935")
 end
 
-yyval4 := yyvs4.item (yyvsp4 - 1) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4 - 1)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp4 := yyvsp4 -4
-	if {l_yyvs432: like yyvs4} yyvs4 then
-		l_yyvs432.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 280 then
 --|#line 937 "xm_eiffel_parser.y"
@@ -5719,13 +6006,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 937")
 end
 
-yyval4 := yyvs4.item (yyvsp4 - 1) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval4 := l_yyvs4.item (yyvsp4 - 1)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp4 := yyvsp4 -4
-	if {l_yyvs433: like yyvs4} yyvs4 then
-		l_yyvs433.put (yyval4, yyvsp4)
-	end
+	l_yyvs4.put (yyval4, yyvsp4)
 end
 when 281 then
 --|#line 943 "xm_eiffel_parser.y"
@@ -5733,15 +6020,19 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 943")
 end
 
-on_notation_declaration (yyvs4.item (yyvsp4 - 1), yyvs5.item (yyvsp5)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+l_yyvs5 := yyvs5
+check l_yyvs5 /= Void end
+on_notation_declaration (l_yyvs4.item (yyvsp4 - 1), l_yyvs5.item (yyvsp5))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 7
 	yyvsp1 := yyvsp1 -2
 	yyvsp4 := yyvsp4 -3
 	yyvsp5 := yyvsp5 -1
-	if {l_yyvs434: like yyvs1} yyvs1 then
-		l_yyvs434.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 282 then
 --|#line 945 "xm_eiffel_parser.y"
@@ -5749,15 +6040,19 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 945")
 end
 
-on_notation_declaration (yyvs4.item (yyvsp4 - 1), yyvs5.item (yyvsp5)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+l_yyvs5 := yyvs5
+check l_yyvs5 /= Void end
+on_notation_declaration (l_yyvs4.item (yyvsp4 - 1), l_yyvs5.item (yyvsp5))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 7
 	yyvsp1 := yyvsp1 -2
 	yyvsp4 := yyvsp4 -3
 	yyvsp5 := yyvsp5 -1
-	if {l_yyvs435: like yyvs1} yyvs1 then
-		l_yyvs435.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 283 then
 --|#line 947 "xm_eiffel_parser.y"
@@ -5765,13 +6060,13 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 947")
 end
 
-force_error (Error_doctype_notation) 
+force_error (Error_doctype_notation)
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 -1
-	if {l_yyvs436: like yyvs1} yyvs1 then
-		l_yyvs436.put (yyval1, yyvsp1)
-	end
+	l_yyvs1 := yyvs1
+	check l_yyvs1 /= Void end
+	l_yyvs1.put_default (yyvsp1)
 end
 when 284 then
 --|#line 951 "xm_eiffel_parser.y"
@@ -5779,34 +6074,37 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 951")
 end
 
-yyval5 := new_dtd_external_id; yyval5.set_system (yyvs4.item (yyvsp4)) 
+l_yyvs4 := yyvs4
+check l_yyvs4 /= Void end
+yyval5 := new_dtd_external_id; yyval5.set_system (l_yyvs4.item (yyvsp4))
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp5 := yyvsp5 + 1
 	yyvsp4 := yyvsp4 -1
+	l_yyvs5 := yyvs5
 	if yyvsp5 >= yyvsc5 then
-		if yyvs5 = Void then
+		if l_yyvs5 = Void then
 			debug ("GEYACC")
 				std.error.put_line ("Create yyvs5")
 			end
-			create yyspecial_routines5
+			create l_yyspecial_routines5
+			yyspecial_routines5 := l_yyspecial_routines5
 			yyvsc5 := yyInitial_yyvs_size
-			if {l_yyspecial_routines438: like yyspecial_routines5} yyspecial_routines5 then
-				yyvs5 := l_yyspecial_routines438.make (yyvsc5)
-			end
+			l_yyvs5 := l_yyspecial_routines5.make (yyvsc5)
 		else
 			debug ("GEYACC")
 				std.error.put_line ("Resize yyvs5")
 			end
 			yyvsc5 := yyvsc5 + yyInitial_yyvs_size
-			if {l_yyspecial_routines437: like yyspecial_routines5} yyspecial_routines5 then
-				yyvs5 := l_yyspecial_routines437.resize (yyvs5, yyvsc5)
-			end
+			l_yyspecial_routines5 := yyspecial_routines5
+			check l_yyspecial_routines5 /= Void end
+			l_yyvs5 := l_yyspecial_routines5.resize (l_yyvs5, yyvsc5)
 		end
+		yyvs5 := l_yyvs5
+	else
+		check l_yyvs5 /= Void end
 	end
-	if {l_yyvs439: like yyvs5} yyvs5 then
-		l_yyvs439.put (yyval5, yyvsp5)
-	end
+	l_yyvs5.put (yyval5, yyvsp5)
 end
 			else
 				debug ("GEYACC")
@@ -6323,7 +6621,7 @@ feature {NONE} -- Table templates
 
 feature {NONE} -- Semantic value stacks
 
-	yyvs1: ?SPECIAL [?ANY]
+	yyvs1: ?SPECIAL [ANY]
 			-- Stack for semantic values of type ANY
 
 	yyvsc1: INTEGER
@@ -6332,10 +6630,10 @@ feature {NONE} -- Semantic value stacks
 	yyvsp1: INTEGER
 			-- Top of semantic value stack `yyvs1'
 
-	yyspecial_routines1: ?KL_SPECIAL_ROUTINES [?ANY]
+	yyspecial_routines1: ?KL_SPECIAL_ROUTINES [ANY]
 			-- Routines that ought to be in SPECIAL [ANY]
 
-	yyvs2: ?SPECIAL [?XM_EIFFEL_PARSER_NAME]
+	yyvs2: ?SPECIAL [XM_EIFFEL_PARSER_NAME]
 			-- Stack for semantic values of type XM_EIFFEL_PARSER_NAME
 
 	yyvsc2: INTEGER
@@ -6344,10 +6642,10 @@ feature {NONE} -- Semantic value stacks
 	yyvsp2: INTEGER
 			-- Top of semantic value stack `yyvs2'
 
-	yyspecial_routines2: ?KL_SPECIAL_ROUTINES [?XM_EIFFEL_PARSER_NAME]
+	yyspecial_routines2: ?KL_SPECIAL_ROUTINES [XM_EIFFEL_PARSER_NAME]
 			-- Routines that ought to be in SPECIAL [XM_EIFFEL_PARSER_NAME]
 
-	yyvs3: ?SPECIAL [?DS_HASH_SET [XM_EIFFEL_PARSER_NAME]]
+	yyvs3: ?SPECIAL [DS_HASH_SET [XM_EIFFEL_PARSER_NAME]]
 			-- Stack for semantic values of type DS_HASH_SET [XM_EIFFEL_PARSER_NAME]
 
 	yyvsc3: INTEGER
@@ -6356,10 +6654,10 @@ feature {NONE} -- Semantic value stacks
 	yyvsp3: INTEGER
 			-- Top of semantic value stack `yyvs3'
 
-	yyspecial_routines3: ?KL_SPECIAL_ROUTINES [?DS_HASH_SET [XM_EIFFEL_PARSER_NAME]]
+	yyspecial_routines3: ?KL_SPECIAL_ROUTINES [DS_HASH_SET [XM_EIFFEL_PARSER_NAME]]
 			-- Routines that ought to be in SPECIAL [DS_HASH_SET [XM_EIFFEL_PARSER_NAME]]
 
-	yyvs4: ?SPECIAL [?STRING]
+	yyvs4: ?SPECIAL [STRING]
 			-- Stack for semantic values of type STRING
 
 	yyvsc4: INTEGER
@@ -6368,10 +6666,10 @@ feature {NONE} -- Semantic value stacks
 	yyvsp4: INTEGER
 			-- Top of semantic value stack `yyvs4'
 
-	yyspecial_routines4: ?KL_SPECIAL_ROUTINES [?STRING]
+	yyspecial_routines4: ?KL_SPECIAL_ROUTINES [STRING]
 			-- Routines that ought to be in SPECIAL [STRING]
 
-	yyvs5: ?SPECIAL [?XM_DTD_EXTERNAL_ID]
+	yyvs5: ?SPECIAL [XM_DTD_EXTERNAL_ID]
 			-- Stack for semantic values of type XM_DTD_EXTERNAL_ID
 
 	yyvsc5: INTEGER
@@ -6380,10 +6678,10 @@ feature {NONE} -- Semantic value stacks
 	yyvsp5: INTEGER
 			-- Top of semantic value stack `yyvs5'
 
-	yyspecial_routines5: ?KL_SPECIAL_ROUTINES [?XM_DTD_EXTERNAL_ID]
+	yyspecial_routines5: ?KL_SPECIAL_ROUTINES [XM_DTD_EXTERNAL_ID]
 			-- Routines that ought to be in SPECIAL [XM_DTD_EXTERNAL_ID]
 
-	yyvs6: ?SPECIAL [?XM_DTD_ELEMENT_CONTENT]
+	yyvs6: ?SPECIAL [XM_DTD_ELEMENT_CONTENT]
 			-- Stack for semantic values of type XM_DTD_ELEMENT_CONTENT
 
 	yyvsc6: INTEGER
@@ -6392,10 +6690,10 @@ feature {NONE} -- Semantic value stacks
 	yyvsp6: INTEGER
 			-- Top of semantic value stack `yyvs6'
 
-	yyspecial_routines6: ?KL_SPECIAL_ROUTINES [?XM_DTD_ELEMENT_CONTENT]
+	yyspecial_routines6: ?KL_SPECIAL_ROUTINES [XM_DTD_ELEMENT_CONTENT]
 			-- Routines that ought to be in SPECIAL [XM_DTD_ELEMENT_CONTENT]
 
-	yyvs7: ?SPECIAL [?XM_DTD_ATTRIBUTE_CONTENT]
+	yyvs7: ?SPECIAL [XM_DTD_ATTRIBUTE_CONTENT]
 			-- Stack for semantic values of type XM_DTD_ATTRIBUTE_CONTENT
 
 	yyvsc7: INTEGER
@@ -6404,10 +6702,10 @@ feature {NONE} -- Semantic value stacks
 	yyvsp7: INTEGER
 			-- Top of semantic value stack `yyvs7'
 
-	yyspecial_routines7: ?KL_SPECIAL_ROUTINES [?XM_DTD_ATTRIBUTE_CONTENT]
+	yyspecial_routines7: ?KL_SPECIAL_ROUTINES [XM_DTD_ATTRIBUTE_CONTENT]
 			-- Routines that ought to be in SPECIAL [XM_DTD_ATTRIBUTE_CONTENT]
 
-	yyvs8: ?SPECIAL [?DS_BILINKED_LIST [XM_DTD_ATTRIBUTE_CONTENT]]
+	yyvs8: ?SPECIAL [DS_BILINKED_LIST [XM_DTD_ATTRIBUTE_CONTENT]]
 			-- Stack for semantic values of type DS_BILINKED_LIST [XM_DTD_ATTRIBUTE_CONTENT]
 
 	yyvsc8: INTEGER
@@ -6416,10 +6714,10 @@ feature {NONE} -- Semantic value stacks
 	yyvsp8: INTEGER
 			-- Top of semantic value stack `yyvs8'
 
-	yyspecial_routines8: ?KL_SPECIAL_ROUTINES [?DS_BILINKED_LIST [XM_DTD_ATTRIBUTE_CONTENT]]
+	yyspecial_routines8: ?KL_SPECIAL_ROUTINES [DS_BILINKED_LIST [XM_DTD_ATTRIBUTE_CONTENT]]
 			-- Routines that ought to be in SPECIAL [DS_BILINKED_LIST [XM_DTD_ATTRIBUTE_CONTENT]]
 
-	yyvs9: ?SPECIAL [?DS_BILINKED_LIST [STRING]]
+	yyvs9: ?SPECIAL [DS_BILINKED_LIST [STRING]]
 			-- Stack for semantic values of type DS_BILINKED_LIST [STRING]
 
 	yyvsc9: INTEGER
@@ -6428,7 +6726,7 @@ feature {NONE} -- Semantic value stacks
 	yyvsp9: INTEGER
 			-- Top of semantic value stack `yyvs9'
 
-	yyspecial_routines9: ?KL_SPECIAL_ROUTINES [?DS_BILINKED_LIST [STRING]]
+	yyspecial_routines9: ?KL_SPECIAL_ROUTINES [DS_BILINKED_LIST [STRING]]
 			-- Routines that ought to be in SPECIAL [DS_BILINKED_LIST [STRING]]
 
 	yyvs10: ?SPECIAL [BOOLEAN]
@@ -6443,7 +6741,7 @@ feature {NONE} -- Semantic value stacks
 	yyspecial_routines10: ?KL_SPECIAL_ROUTINES [BOOLEAN]
 			-- Routines that ought to be in SPECIAL [BOOLEAN]
 
-	yyvs11: ?SPECIAL [?XM_EIFFEL_DECLARATION]
+	yyvs11: ?SPECIAL [XM_EIFFEL_DECLARATION]
 			-- Stack for semantic values of type XM_EIFFEL_DECLARATION
 
 	yyvsc11: INTEGER
@@ -6452,7 +6750,7 @@ feature {NONE} -- Semantic value stacks
 	yyvsp11: INTEGER
 			-- Top of semantic value stack `yyvs11'
 
-	yyspecial_routines11: ?KL_SPECIAL_ROUTINES [?XM_EIFFEL_DECLARATION]
+	yyspecial_routines11: ?KL_SPECIAL_ROUTINES [XM_EIFFEL_DECLARATION]
 			-- Routines that ought to be in SPECIAL [XM_EIFFEL_DECLARATION]
 
 feature {NONE} -- Constants

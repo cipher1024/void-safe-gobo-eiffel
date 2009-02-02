@@ -6,8 +6,8 @@ indexing
 
 	copyright: "Copyright (c) 2007, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-09-07 20:03:00 +0200 (Fri, 07 Sep 2007) $"
-	revision: "$Revision: 6060 $"
+	date: "$Date: 2008-11-20 10:24:46 +0100 (Thu, 20 Nov 2008) $"
+	revision: "$Revision: 6557 $"
 
 deferred class UT_CONFIG_SCANNER
 
@@ -49,6 +49,8 @@ feature {NONE} -- Implementation
 
 	yy_execute_action (yy_act: INTEGER) is
 			-- Execute semantic action.
+		local
+			l_last_string_value: like last_string_value
 		do
 if yy_act <= 14 then
 if yy_act <= 7 then
@@ -62,7 +64,7 @@ end
 
 						-- Comment.
 						set_start_condition (S_SKIP_EOL)
-					
+
 else
 --|#line 41 "ut_config_scanner.l"
 debug ("GELEX")
@@ -71,7 +73,7 @@ end
 
 						-- Comment.
 						set_start_condition (S_SKIP_EOL)
-					
+
 end
 else
 if yy_act = 3 then
@@ -82,7 +84,7 @@ end
 
 						last_token := P_IFDEF
 						set_start_condition (S_PREPROC)
-					
+
 else
 --|#line 49 "ut_config_scanner.l"
 debug ("GELEX")
@@ -91,7 +93,7 @@ end
 
 						last_token := P_IFNDEF
 						set_start_condition (S_PREPROC)
-					
+
 end
 end
 else
@@ -104,7 +106,7 @@ end
 
 						last_token := P_ELSE
 						set_start_condition (S_PREPROC)
-					
+
 else
 --|#line 57 "ut_config_scanner.l"
 debug ("GELEX")
@@ -113,7 +115,7 @@ end
 
 						last_token := P_ENDIF
 						set_start_condition (S_PREPROC)
-					
+
 end
 else
 --|#line 61 "ut_config_scanner.l"
@@ -123,7 +125,7 @@ end
 
 						last_token := P_INCLUDE
 						set_start_condition (S_PREPROC)
-					
+
 end
 end
 else
@@ -137,7 +139,7 @@ end
 
 						last_token := P_DEFINE
 						set_start_condition (S_PREPROC)
-					
+
 else
 --|#line 69 "ut_config_scanner.l"
 debug ("GELEX")
@@ -146,7 +148,7 @@ end
 
 						last_token := P_UNDEF
 						set_start_condition (S_PREPROC)
-					
+
 end
 else
 if yy_act = 10 then
@@ -156,53 +158,50 @@ debug ("GELEX")
 end
 
 						last_token := P_NAME
-						last_string_value := text
-						if {l_last_string_value_1: like last_string_value} last_string_value then
-							STRING_.left_adjust (l_last_string_value_1)
-						else
-							check False end
-						end
+						l_last_string_value := text
+						last_string_value := l_last_string_value
+						STRING_.left_adjust (l_last_string_value)
 						set_start_condition (S_NAME)
-					
+
 else
---|#line 83 "ut_config_scanner.l"
+--|#line 79 "ut_config_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 83")
+	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 79")
 end
 
 						last_token := P_EOL
 						line_nb := line_nb + 1
-					
+
 end
 end
 else
 if yy_act <= 13 then
 if yy_act = 12 then
---|#line 87 "ut_config_scanner.l"
+--|#line 83 "ut_config_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 87")
+	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 83")
 end
 
 						set_start_condition (S_EMPTY_LINE)
-					
+
+else
+--|#line 89 "ut_config_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 89")
+end
+
+						line_nb := line_nb + 1
+						set_start_condition (INITIAL)
+
+end
 else
 --|#line 93 "ut_config_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 93")
 end
 
-						line_nb := line_nb + 1
 						set_start_condition (INITIAL)
-					
-end
-else
---|#line 97 "ut_config_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 97")
-end
 
-						set_start_condition (INITIAL)
-					
 end
 end
 end
@@ -211,35 +210,35 @@ if yy_act <= 21 then
 if yy_act <= 18 then
 if yy_act <= 16 then
 if yy_act = 15 then
---|#line 103 "ut_config_scanner.l"
+--|#line 99 "ut_config_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 103")
+	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 99")
 end
 -- Separator.
 else
+--|#line 100 "ut_config_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 100")
+end
+
+						last_token := P_STRING
+						last_string_value := text_substring (2, text_count - 1)
+
+end
+else
+if yy_act = 17 then
 --|#line 104 "ut_config_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 104")
 end
 
-						last_token := P_STRING
-						last_string_value := text_substring (2, text_count - 1)
-					
-end
+						last_token := P_NAME
+						last_string_value := text
+
 else
-if yy_act = 17 then
 --|#line 108 "ut_config_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 108")
-end
-
-						last_token := P_NAME
-						last_string_value := text
-					
-else
---|#line 112 "ut_config_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 112")
 end
 last_token := P_AND
 end
@@ -247,26 +246,26 @@ end
 else
 if yy_act <= 20 then
 if yy_act = 19 then
---|#line 113 "ut_config_scanner.l"
+--|#line 109 "ut_config_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 113")
+	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 109")
 end
 last_token := P_OR
 else
---|#line 114 "ut_config_scanner.l"
+--|#line 110 "ut_config_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 114")
+	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 110")
 end
 
 						last_token := P_EOL
 						line_nb := line_nb + 1
 						set_start_condition (INITIAL)
-					
+
 end
 else
---|#line 126 "ut_config_scanner.l"
+--|#line 122 "ut_config_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 126")
+	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 122")
 end
 -- Separator.
 end
@@ -275,64 +274,64 @@ else
 if yy_act <= 25 then
 if yy_act <= 23 then
 if yy_act = 22 then
---|#line 127 "ut_config_scanner.l"
+--|#line 123 "ut_config_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 127")
+	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 123")
 end
 
 						last_token := P_COLON
 						set_start_condition (S_VALUE)
-					
+
 else
---|#line 134 "ut_config_scanner.l"
+--|#line 130 "ut_config_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 134")
+	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 130")
 end
 -- Separator.
 end
 else
 if yy_act = 24 then
+--|#line 131 "ut_config_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 131")
+end
+
+						last_token := P_VALUE
+						last_string_value := text
+
+else
 --|#line 135 "ut_config_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 135")
 end
 
-						last_token := P_VALUE
-						last_string_value := text
-					
-else
---|#line 139 "ut_config_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 139")
-end
-
 						last_token := P_EOL
 						line_nb := line_nb + 1
 						set_start_condition (INITIAL)
-					
+
 end
 end
 else
 if yy_act <= 27 then
 if yy_act = 26 then
---|#line 151 "ut_config_scanner.l"
+--|#line 147 "ut_config_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 151")
+	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 147")
 end
 
 						last_token := P_EOL
 						line_nb := line_nb + 1
 						set_start_condition (INITIAL)
-					
+
 else
---|#line 162 "ut_config_scanner.l"
+--|#line 158 "ut_config_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 162")
+	std.error.put_line ("Executing scanner user-code from file 'ut_config_scanner.l' at line 158")
 end
 
 						last_token := text_item (1).code
 						set_start_condition (INITIAL)
-					
+
 end
 else
 --|#line 0 "ut_config_scanner.l"
@@ -360,7 +359,7 @@ end
 
 						last_token := P_EOL
 						set_start_condition (INITIAL)
-					
+
 when 5 then
 --|#line 0 "ut_config_scanner.l"
 debug ("GELEX")
@@ -369,7 +368,7 @@ end
 
 						last_token := P_EOL
 						set_start_condition (INITIAL)
-					
+
 when 6 then
 --|#line 0 "ut_config_scanner.l"
 debug ("GELEX")
@@ -378,7 +377,7 @@ end
 
 						last_token := P_EOL
 						set_start_condition (INITIAL)
-					
+
 			else
 				terminate
 			end
