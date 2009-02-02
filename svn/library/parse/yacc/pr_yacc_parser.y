@@ -321,7 +321,11 @@ Rules: -- Empty
 
 Rule: Lhs Colon Rhs_list ';'
 		{
-			process_rule (rule)
+			if {l_rule_0: like rule} rule then
+				process_rule (l_rule_0)
+			else
+				check False end
+			end
 			rule := Void
 			precedence_token := Void
 		}
@@ -339,7 +343,11 @@ Lhs: Identifier
 				end
 			end
 			precedence_token := Void
-			put_rule (rule)
+			if {l_rule_3: like rule} rule then
+				put_rule (l_rule_3)
+			else
+				check False end
+			end
 		}
 	;
 
@@ -408,11 +416,19 @@ Terminal: Identifier
 
 Bar: '|'
 		{
-			process_rule (rule)
-			rule := new_rule (rule.lhs)
-			precedence_token := Void
-			rule.set_line_nb ($1)
-			put_rule (rule)
+			if {l_rule_1: like rule} rule then
+				process_rule (l_rule_1)
+				rule := new_rule (l_rule_1.lhs)
+			else
+				check False end
+			end
+				precedence_token := Void
+			if {l_rule_2: like rule} rule then
+				l_rule_2.set_line_nb ($1)
+				put_rule (l_rule_2)
+			else
+				check False end
+			end
 		}
 	;
 

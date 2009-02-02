@@ -151,11 +151,13 @@ namespace_name: tagname_first
 	| namespace_name TAG_NAME_COLON namespace_name_second
 		{ 
 			$$ := $1
+			check $$ /= Void end
 			namespace_force_last ($$, $3)
 		}
 	| namespace_name TAG_NAME_COLON
 		{
 			$$ := $1
+			check $$ /= Void end
 			namespace_force_last ($$, shared_empty_string)
 		}
 	;

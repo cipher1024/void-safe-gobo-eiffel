@@ -218,12 +218,15 @@ feature {NONE} -- Implementation
 			-- "?" character class (i.e. all characters except /)
 		local
 			question_string: STRING
-			equiv_classes: LX_EQUIVALENCE_CLASSES
+			equiv_classes: ?LX_EQUIVALENCE_CLASSES
+			a_character_class: ?LX_SYMBOL_CLASS
 		do
 			question_string := "?"
 			character_classes.search (question_string)
 			if character_classes.found then
-				Result := character_classes.found_item
+				a_character_class := character_classes.found_item
+				check a_character_class /= Void end -- implied by `.found'
+				Result := a_character_class
 			else
 				create Result.make (1)
 				Result.put (Slash_code)
