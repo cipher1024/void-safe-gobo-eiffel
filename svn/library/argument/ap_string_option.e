@@ -73,9 +73,8 @@ feature {AP_PARSER} -- Parser Interface
 			l_last_option_parameter: ?STRING
 		do
 			l_last_option_parameter := a_parser.last_option_parameter
-			if l_last_option_parameter /= Void then
-				parameters.force_last (l_last_option_parameter)
-			end
+			check l_last_option_parameter /= Void end
+			parameters.force_last (l_last_option_parameter)
 		end
 
 end
