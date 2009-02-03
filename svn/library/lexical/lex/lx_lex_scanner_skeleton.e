@@ -117,7 +117,7 @@ feature -- Access
 
 feature {NONE} -- Access
 
-	character_classes: DS_HASH_TABLE [LX_SYMBOL_CLASS, STRING]
+	character_classes: DS_HASH_TABLE [LX_SYMBOL_CLASS, ?STRING]
 			-- Character classes declared so far
 
 	name_definitions: DS_HASH_TABLE [STRING, STRING]

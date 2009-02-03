@@ -210,11 +210,13 @@ feature -- Output
 		local
 			l_is_basic_type: BOOLEAN
 		do
+
+
 			l_is_basic_type := {l_basic_type: PR_BASIC_TYPE} Current
 			print_indentation (indent, a_file)
 			a_file.put_string ("yyvs")
 			a_file.put_integer (id)
-			a_file.put_string (": ?SPECIAL [")
+			a_file.put_string (": SPECIAL [")
 			if not l_is_basic_type then
 				a_file.put_string ("?")
 			end
@@ -245,7 +247,7 @@ feature -- Output
 			print_indentation (indent, a_file)
 			a_file.put_string ("yyspecial_routines")
 			a_file.put_integer (id)
-			a_file.put_string (": ?KL_SPECIAL_ROUTINES [")
+			a_file.put_string (": KL_SPECIAL_ROUTINES [")
 			if not l_is_basic_type then
 				a_file.put_string ("?")
 			end
@@ -257,24 +259,13 @@ feature -- Output
 			a_file.put_line ("]")
 		end
 
-	object_test_counter: CELL [INTEGER_REF]
-		once
-			create Result.put (1)
-		end
-
 	print_create_yyvs (indent: INTEGER; a_file: KI_TEXT_OUTPUT_STREAM) is
 			-- Print "yyvs := yyspecial_routines.make (yyInitial_stack_size)" to `a_file'.
 		require
 			indent_positive: indent >= 0
 			a_file_not_void: a_file /= Void
 			a_file_open_write: a_file.is_open_write
-		local
-			l_object_test_variable_postfix: INTEGER_REF
- 		do
-				-- Temporary code until scoping gets fixed.
-			l_object_test_variable_postfix := object_test_counter.item
-			object_test_counter.put (l_object_test_variable_postfix + 1)
-
+		do
 			print_indentation (indent, a_file)
 			a_file.put_line ("debug (%"GEYACC%")")
 			print_indentation (indent + 1, a_file)
@@ -293,24 +284,13 @@ feature -- Output
 			a_file.put_line (" := yyInitial_yyvs_size")
 			print_indentation (indent, a_file)
 
-			a_file.put_string ("if {l_yyspecial_routines")
-			a_file.put_integer (l_object_test_variable_postfix)
-			a_file.put_string (": like yyspecial_routines")
-			a_file.put_integer (id)
-			a_file.put_string ("} yyspecial_routines")
-			a_file.put_integer (id)
-			a_file.put_line (" then")
-
-			print_indentation (indent + 1, a_file)
 			a_file.put_string ("yyvs")
 			a_file.put_integer (id)
-			a_file.put_string (" := l_yyspecial_routines")
-			a_file.put_integer (l_object_test_variable_postfix)
+			a_file.put_string (" := yyspecial_routines")
+			a_file.put_integer (id)
 			a_file.put_string (".make (yyvsc")
 			a_file.put_integer (id)
 			a_file.put_line (")")
-			print_indentation (indent, a_file)
-			a_file.put_line ("end")
 		end
 
 	print_clear_yyvs (indent: INTEGER; a_file: KI_TEXT_OUTPUT_STREAM) is
@@ -321,19 +301,9 @@ feature -- Output
 			a_file_open_write: a_file.is_open_write
 		do
 			print_indentation (indent, a_file)
-			a_file.put_string ("if {l_yyvs")
-			a_file.put_integer (id)
-			a_file.put_string (": like yyvs")
-			a_file.put_integer (id)
-			a_file.put_string ("} yyvs")
-			a_file.put_integer (id)
-			a_file.put_line (" then")
-			print_indentation (indent + 1, a_file)
-			a_file.put_string ("l_yyvs")
+			a_file.put_string ("yyvs")
 			a_file.put_integer (id)
 			a_file.put_line (".clear_all")
-			print_indentation (indent, a_file)
-			a_file.put_line ("end")
 		end
 
 	print_increment_yyvsp (nb: INTEGER; indent: INTEGER; a_file: KI_TEXT_OUTPUT_STREAM) is
@@ -364,29 +334,15 @@ feature -- Output
 			indent_positive: indent >= 0
 			a_file_not_void: a_file /= Void
 			a_file_open_write: a_file.is_open_write
-		local
-			l_object_test_postfix: INTEGER_REF
- 		do
-			l_object_test_postfix := object_test_counter.item
-			object_test_counter.put (l_object_test_postfix + 1)
+		do
 			print_indentation (indent, a_file)
-			a_file.put_string ("if {l_yyvs")
-			a_file.put_integer (l_object_test_postfix)
-			a_file.put_string (": like yyvs")
+			a_file.put_string ("yyvs")
 			a_file.put_integer (id)
-			a_file.put_string ("} yyvs")
-			a_file.put_integer (id)
-			a_file.put_line (" then")
-			print_indentation (indent + 1, a_file)
-			a_file.put_string ("l_yyvs")
-			a_file.put_integer (l_object_test_postfix)
 			a_file.put_string (".put (yyval")
 			a_file.put_integer (id)
 			a_file.put_string (", yyvsp")
 			a_file.put_integer (id)
 			a_file.put_line (")")
-			print_indentation (indent, a_file)
-			a_file.put_line ("end")
 		end
 
 	print_push_last_value (indent: INTEGER; a_file: KI_TEXT_OUTPUT_STREAM) is
@@ -395,8 +351,6 @@ feature -- Output
 			indent_positive: indent >= 0
 			a_file_not_void: a_file /= Void
 			a_file_open_write: a_file.is_open_write
-		local
-			l_object_test_postfix: INTEGER_REF
 		do
 			print_indentation (indent, a_file)
 			a_file.put_string ("yyvsp")
@@ -406,26 +360,14 @@ feature -- Output
 			a_file.put_line (" + 1")
 			print_resize_yyvs (indent, a_file)
 
-			l_object_test_postfix := object_test_counter.item
-			object_test_counter.put (l_object_test_postfix + 1)
 			print_indentation (indent, a_file)
-			a_file.put_string ("if {l_yyvs")
-			a_file.put_integer (l_object_test_postfix)
-			a_file.put_string (": like yyvs")
+			a_file.put_string ("yyvs")
 			a_file.put_integer (id)
-			a_file.put_string ("} yyvs")
-			a_file.put_integer (id)
-			a_file.put_line (" then")
-			print_indentation (indent + 1, a_file)
-			a_file.put_string ("l_yyvs")
-			a_file.put_integer (l_object_test_postfix)
 			a_file.put_string (".put (")
 			a_file.put_string (last_value_name)
 			a_file.put_string (", yyvsp")
 			a_file.put_integer (id)
 			a_file.put_line (")")
-			print_indentation (indent, a_file)
-			a_file.put_line ("end")
 		end
 
 	print_pop_last_value (indent: INTEGER; a_file: KI_TEXT_OUTPUT_STREAM) is
@@ -450,12 +392,7 @@ feature -- Output
 			indent_positive: indent >= 0
 			a_file_not_void: a_file /= Void
 			a_file_open_write: a_file.is_open_write
-		local
-			l_object_test_postfix: INTEGER_REF
- 		do
-			l_object_test_postfix := object_test_counter.item
-			object_test_counter.put (l_object_test_postfix + 1)
-
+		do
 			print_indentation (indent, a_file)
 			a_file.put_string ("if yyvsp")
 			a_file.put_integer (id)
@@ -463,48 +400,29 @@ feature -- Output
 			a_file.put_integer (id)
 			a_file.put_line (" then")
 			print_indentation (indent + 1, a_file)
-			a_file.put_string ("if yyvs")
-			a_file.put_integer (id)
-			a_file.put_line (" = Void then")
-			print_create_yyvs (indent + 2, a_file)
-			print_indentation (indent + 1, a_file)
-			a_file.put_line ("else")
-			print_indentation (indent + 2, a_file)
 			a_file.put_line ("debug (%"GEYACC%")")
-			print_indentation (indent + 3, a_file)
+			print_indentation (indent + 2, a_file)
 			a_file.put_string ("std.error.put_line (%"Resize yyvs")
 			a_file.put_integer (id)
 			a_file.put_line ("%")")
-			print_indentation (indent + 2, a_file)
+			print_indentation (indent + 1, a_file)
 			a_file.put_line ("end")
-			print_indentation (indent + 2, a_file)
+			print_indentation (indent + 1, a_file)
 			a_file.put_string ("yyvsc")
 			a_file.put_integer (id)
 			a_file.put_string (" := yyvsc")
 			a_file.put_integer (id)
 			a_file.put_line (" + yyInitial_yyvs_size")
-			print_indentation (indent + 2, a_file)
-			a_file.put_string ("if {l_yyspecial_routines")
-			a_file.put_integer (l_object_test_postfix)
-			a_file.put_string (": like yyspecial_routines")
-			a_file.put_integer (id)
-			a_file.put_string ("} yyspecial_routines")
-			a_file.put_integer (id)
-			a_file.put_line (" then")
-			print_indentation (indent + 3, a_file)
+			print_indentation (indent + 1, a_file)
 			a_file.put_string ("yyvs")
 			a_file.put_integer (id)
-			a_file.put_string (" := l_yyspecial_routines")
-			a_file.put_integer (l_object_test_postfix)
+			a_file.put_string (" := yyspecial_routines")
+			a_file.put_integer (id)
 			a_file.put_string (".resize (yyvs")
 			a_file.put_integer (id)
 			a_file.put_string (", yyvsc")
 			a_file.put_integer (id)
 			a_file.put_line (")")
-			print_indentation (indent + 2, a_file)
-			a_file.put_line ("end")
-			print_indentation (indent + 1, a_file)
-			a_file.put_line ("end")
 			print_indentation (indent, a_file)
 			a_file.put_line ("end")
 		end

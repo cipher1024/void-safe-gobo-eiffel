@@ -12,6 +12,8 @@ svn/test/
 svn/library/tools/
 _
 git/
+*.swp
+*.swo
 *.c
 *.h
 *.xsl

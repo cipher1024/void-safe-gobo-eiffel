@@ -313,7 +313,8 @@ feature {NONE} -- Generation
 			a_file_open_write: a_file.is_open_write
 		local
 			i, nb: INTEGER
-			eiffel_header: DS_ARRAYED_LIST [STRING]
+			eiffel_header: DS_ARRAYED_LIST [?STRING]
+			s: ?STRING
 		do
 			eiffel_header := machine.grammar.eiffel_header
 			nb := eiffel_header.count
@@ -322,7 +323,9 @@ feature {NONE} -- Generation
 			until
 				i > nb
 			loop
-				a_file.put_string (eiffel_header.item (i))
+				s := eiffel_header.item (i)
+				check s /= Void end -- implied by ... ?
+				a_file.put_string (s)
 				i := i + 1
 			end
 		end
@@ -368,10 +371,24 @@ feature {NONE} -- Generation
 		require
 			a_file_not_void: a_file /= Void
 			a_file_open_write: a_file.is_open_write
+		local
+			types: DS_ARRAYED_LIST [PR_TYPE]
+			i, nb: INTEGER
 		do
 			a_file.put_line ("%Tyy_create_value_stacks is")
 			a_file.put_line ("%T%T%T-- Create value stacks.")
 			a_file.put_line ("%T%Tdo")
+
+			types := machine.grammar.types
+			nb := types.count
+			from
+				i := 1
+			until
+				i > nb
+			loop
+				types.item (i).print_create_yyvs (3, a_file)
+				i := i + 1
+			end
 			a_file.put_line ("%T%Tend")
 		end
 

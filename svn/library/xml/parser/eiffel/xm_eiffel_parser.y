@@ -258,9 +258,9 @@ entity_value: VALUE_START VALUE_END
 	;
 
 entity_value_trail: entity_value_trail_item entity_value_trail_item
-		{ $$ := STRING_.concat ($1, $2) }
+		{ $$ := string_concat ($1, $2) }
 	| entity_value_trail entity_value_trail_item
-		{ $$ := STRING_.appended_string ($1, $2) }
+		{ $$ := string_appended_string ($1, $2) }
 	;
 
 entity_value_trail_item: char_data
@@ -284,9 +284,9 @@ att_value: VALUE_START VALUE_END
 	;
 
 att_value_trail: att_value_trail_item att_value_trail_item
-		{ $$ := STRING_.concat ($1, $2) }
+		{ $$ := string_concat ($1, $2) }
 	| att_value_trail att_value_trail_item
-		{ $$ := STRING_.appended_string ($1, $2) }
+		{ $$ := string_appended_string ($1, $2) }
 	;
 
 att_value_trail_item: char_data { $$ := $1 }
@@ -301,15 +301,15 @@ value_reference: ATTRIBUTE_ENTITY { $$ := shared_empty_string } -- really handle
 -- 2.5 Comments
 
 comment: COMMENT_START comment_content COMMENT_END
-		{ on_comment ($2) }
+		{ process_on_comment ($2) }
 	| COMMENT_START COMMENT_END
-		{ on_comment (shared_empty_string) }
+		{ process_on_comment (shared_empty_string) }
 	;
 
 dtd_comment: COMMENT_START comment_content COMMENT_END
-		{ on_dtd_comment ($2) }
+		{ process_on_dtd_comment ($2) }
 	| COMMENT_START COMMENT_END
-		{ on_dtd_comment (shared_empty_string) }
+		{ process_on_dtd_comment (shared_empty_string) }
 	;
 
 comment_content: comment_content_item
@@ -319,9 +319,9 @@ comment_content: comment_content_item
 	;
 
 comment_content_trail: comment_content_item comment_content_item
-		{ $$ := STRING_.concat ($1, $2) }
+		{ $$ := string_concat ($1, $2) }
 	| comment_content_trail comment_content_item
-		{ $$ := STRING_.appended_string ($1, $2) }
+		{ $$ := string_appended_string ($1, $2) }
 	;
 
 comment_content_item: char_data { $$ := $1 }
@@ -331,31 +331,31 @@ comment_content_item: char_data { $$ := $1 }
 -- 2.6 Processing instructions
 
 pi: PI_START pi_target_token req_space pi_content PI_END
-		{ on_processing_instruction ($2, $4) }
+		{ process_on_processing_instruction ($2, $4) }
 	| PI_START pi_target_token maybe_space PI_END
-		{ on_processing_instruction ($2, shared_empty_string) }
+		{ process_on_processing_instruction ($2, shared_empty_string) }
 	| PI_RESERVED { force_error (Error_pi_xml_reserved) }
 	;
 
 dtd_pi: PI_START pi_target_token req_space pi_content PI_END
-		{ on_dtd_processing_instruction ($2, $4) }
+		{ process_on_dtd_processing_instruction ($2, $4) }
 	| PI_START pi_target_token maybe_space PI_END
-		{ on_dtd_processing_instruction ($2, shared_empty_string) }
+		{ process_on_dtd_processing_instruction ($2, shared_empty_string) }
 	| PI_RESERVED { force_error (Error_pi_xml_reserved) }
 	;
 
 pi_content: pi_content_first pi_content_item
-		{ $$ := STRING_.concat ($1, $2) }
+		{ $$ := string_concat ($1, $2) }
 	| pi_content_first pi_content_trail
-		{ $$ := STRING_.concat ($1, $2) }
+		{ $$ := string_concat ($1, $2) }
 	| pi_content_first
 		{ $$ := $1 }
 	;
 	
 pi_content_trail: pi_content_item pi_content_item
-		{ $$ := STRING_.concat ($1, $2) }
+		{ $$ := string_concat ($1, $2) }
 	| pi_content_trail pi_content_item
-		{ $$ := STRING_.appended_string ($1, $2) }
+		{ $$ := string_appended_string ($1, $2) }
 	;
 
 pi_content_item: char_data { $$ := $1 }
@@ -378,15 +378,19 @@ cdata_body: cdata_body_item
 	;
 
 cdata_body_item: char_data
-		{ on_content ($1) }
+		{ process_on_content ($1) }
 	;
 
 -- 2.8 Prolog and DTD
 
 prolog: xml_decl_misc doctype_decl_misc
 		{
-			apply_encoding ($1.encoding)
-			$1.process (Current) -- event
+			if {l_decl_1: XM_EIFFEL_DECLARATION} $1 then
+				apply_encoding (l_decl_1.encoding)
+				l_decl_1.process (Current) -- event
+			else
+				check False end
+			end
 		}
 	;
 
@@ -413,7 +417,11 @@ misc_trail: misc
 
 xml_decl: XMLDECLARATION_START version_info xml_decl_opt XMLDECLARATION_END
 		{ 
-			$3.set_version ($2)
+			if {l_decl_3: XM_EIFFEL_DECLARATION} $3 then
+				l_decl_3.set_version ($2)
+			else
+				check False end
+			end
 			$$ := $3
 		}
 	| XMLDECLARATION_START error { force_error (Error_xml_declaration) }
@@ -463,7 +471,7 @@ doctype_decl: doctype_decl_internal
 	;
 
 doctype_decl_internal_name: doctype_name maybe_space 
-		{ on_doctype ($1, Void, True) }
+		{ process_on_doctype ($1, Void, True) }
 	;
 	
 doctype_decl_internal: DOCTYPE_START req_space doctype_decl_internal_name doctype_decl_declaration DOCTYPE_END
@@ -472,7 +480,7 @@ doctype_decl_internal: DOCTYPE_START req_space doctype_decl_internal_name doctyp
 
 doctype_decl_external_name: doctype_name req_space external_id maybe_space
 		{ 
-			on_doctype ($1, $3, False) 
+			process_on_doctype ($1, $3, False) 
 			$$ := $3
 		}
 	;
@@ -550,13 +558,13 @@ sd_decl: XMLDECLARATION_STANDALONE space_eq APOS XMLDECLARATION_STANDALONE_YES A
 element: empty_elem_tag
 	| s_tag e_tag 
 		{
-			if not $1.is_equal ($2) then
+			if not query_is_equal ($1, $2) then
 				force_error (Error_end_tag_mismatch)
 			end
 		}
 	| s_tag content e_tag
 		{
-			if not $1.is_equal ($3) then
+			if not query_is_equal ($1, $3) then
 				force_error (Error_end_tag_mismatch)
 			end
 		}
@@ -583,34 +591,44 @@ s_tag: TAG_START s_tag_name TAG_END
 empty_elem_tag: TAG_START s_tag_name TAG_END_EMPTY
 		{
 			on_start_tag_finish -- makes empty attributes
-			on_end_tag (Void, $2.ns_prefix, $2.local_part)
+			process_on_end_tag (Void, $2)
 		}
 	| TAG_START s_tag_name req_space s_tag_trail TAG_END_EMPTY
 		{
 			on_start_tag_finish
-			on_end_tag (Void, $2.ns_prefix, $2.local_part)
+			process_on_end_tag (Void, $2)
 		}
 	;
 
 s_tag_name: namespace_name
 		{
 			$$ := $1
-			on_start_tag (Void, $1.ns_prefix, $1.local_part)
+			process_on_start_tag (Void, $$)
 		}
 	;
 
 s_tag_trail: attribute
 		{
 			$$ := new_name_set
-			$$.force_new ($1)
+			check $$ /= Void end
+			if {s_tag_trail_1: XM_EIFFEL_PARSER_NAME} $1 then
+				$$.force_new (s_tag_trail_1)
+			else 
+				check False end
+			end
 		}
 	| s_tag_trail req_space attribute
 		{
 			$$ := $1
-			if ($$).has ($3) then
-				force_error (Error_attribute_duplicate)
+			check $$ /= Void end
+			if {s_tag_trail_3: XM_EIFFEL_PARSER_NAME} $3 then
+				if ($$).has (s_tag_trail_3) then
+					force_error (Error_attribute_duplicate)
+				else
+					$$.force_new (s_tag_trail_3)
+				end
 			else
-				$$.force_new ($3)
+				check False end
 			end
 		}
 	;
@@ -618,7 +636,7 @@ s_tag_trail: attribute
 attribute: namespace_name EQ att_value
 		{
 			$$ := $1
-			on_attribute (Void, $1.ns_prefix, $1.local_part, $3)
+			process_on_attribute (Void, $$, $3)
 		}
 	| namespace_name error 
 		{ force_error (Error_attribute) }
@@ -627,7 +645,7 @@ attribute: namespace_name EQ att_value
 e_tag: TAG_START_END namespace_name TAG_END
 		{
 			$$ := $2
-			on_end_tag (Void, $2.ns_prefix, $2.local_part)
+			process_on_end_tag (Void, $2)
 		}
 	| TAG_START_END error { force_error (Error_end_tag) }
 	;
@@ -636,7 +654,7 @@ content: content_item
 	| content content_item
 	;
 
-content_item: content_text { on_content ($1) }
+content_item: content_text { process_on_content ($1) }
 	| cd_sect
 	| element
 	| pi
@@ -659,7 +677,7 @@ content_text: char_data -- includes character_reference
 -- 3.2 Element type declaration
 
 element_decl: DOCTYPE_ELEMENT req_space doctype_name req_space content_spec DOCTYPE_END
-		{ on_element_declaration ($3,$5) }
+		{ process_on_element_declaration ($3,$5) }
 	| DOCTYPE_ELEMENT error { force_error (Error_doctype_element) }
 	;
 
@@ -706,13 +724,13 @@ repetition: DOCTYPE_GROUP_ANY maybe_space
 	;
 
 choice: group_start cp group_or choice_trail group_end
-		{ $$ := $4; $$.items.force_first ($2) }
+		{ $$ := $4; check $$ /= Void end; dtd_element_content_items_force_first ($$, $2) }
 	;-- ensure choice.is_choice (that's why $4 is used)
 
 choice_trail: cp
-		{ create $$.make_choice; $$.items.force_last ($1) }
+		{ create $$.make_choice; dtd_element_content_items_force_last ($$, $1) }
 	| choice_trail group_or cp
-		{ $$ := $1; $$.items.force_last ($3) }
+		{ $$ := $1; check $$ /= Void end; dtd_element_content_items_force_last ($$, $3) }
 	; -- ensure choice_trail.is_choice
 
 
@@ -721,9 +739,9 @@ seq: group_start seq_trail group_end
 	;
 
 seq_trail: cp
-		{ create $$.make_sequence; $$.items.force_last ($1) }
+		{ create $$.make_sequence; dtd_element_content_items_force_last ($$, $1) }
 	| seq_trail group_seq cp
-		{ $$ := $1; $$.items.force_last ($3) }
+		{ $$ := $1; check $$ /= Void end; dtd_element_content_items_force_last ($$, $3) }
 	; -- ensure seq_trail.is_sequence
 
 mixed: group_start pc_data group_end
@@ -731,13 +749,13 @@ mixed: group_start pc_data group_end
 	| group_start pc_data group_end DOCTYPE_GROUP_ANY
 		{ create $$.make_mixed; $$.set_zero_or_more } 
 	| group_start pc_data group_or mixed_trail group_end DOCTYPE_GROUP_ANY
-		{ $$ := $4; $$.set_zero_or_more }
+		{ $$ := $4; check $$ /= Void end; $$.set_zero_or_more }
 	; -- ensure mixed.is_content_mixed
 
 mixed_trail: doctype_name_space
-		{ create $$.make_mixed; $$.items.force_last (element_name ($1)) }
+		{ create $$.make_mixed; dtd_element_content_items_force_last ($$, element_name ($1)) }
 	| mixed_trail group_or doctype_name_space
-		{ $$ := $1; $$.items.force_last (element_name ($3)) }
+		{ $$ := $1; check $$ /= Void end; dtd_element_content_items_force_last ($$, element_name ($3)) }
 	; -- ensure mixed_trail.is_content_mixed
 
 -- Primitives with space
@@ -772,13 +790,37 @@ attlist_decl: DOCTYPE_ATTLIST req_space doctype_name maybe_space DOCTYPE_END
 	;
 
 attlist_decl_trail: att_def
-		{ $$ := new_dtd_attribute_content_list; $$.force_last ($1) }
+		{ 
+			$$ := new_dtd_attribute_content_list; 
+			if {l_att_content_1: XM_DTD_ATTRIBUTE_CONTENT} $1 then
+				$$.force_last (l_att_content_1) 
+			else
+				check False end
+			end
+		}
 	|  attlist_decl_trail att_def
-		{ $$ := $1; $$.force_last ($2) }
+		{ 
+			$$ := $1;
+			check $$ /= Void end; 
+			if {l_att_content_2: XM_DTD_ATTRIBUTE_CONTENT} $2 then
+				$$.force_last (l_att_content_2) 
+			else
+				check False end
+			end
+		}
 	;
 
 att_def: req_space doctype_name req_space att_type req_space default_decl
-		{ $$ := $4; $$.set_name ($2); $$.copy_default ($6) }
+		{ 
+			$$ := $4;
+			check $$ /= Void end; 
+			$$.set_name ($2); 
+			if {l_att_def_6: XM_DTD_ATTRIBUTE_CONTENT} $6 then
+				$$.copy_default (l_att_def_6) 
+			else
+				check False end
+			end
+		}
 	| req_space doctype_name error { force_error (Error_doctype_attribute_item) }
 	;
 
@@ -824,9 +866,24 @@ enumeration: group_start enumeration_trail group_end
 	;
 
 enumeration_trail: nm_token maybe_space
-		{ $$ := new_string_bilinked_list; $$.force_last ($1) }
+		{ 
+			$$ := new_string_bilinked_list; 
+			if {l_trail_1: STRING} $1 then
+				$$.force_last (l_trail_1) 
+			else
+				check False end
+			end
+		}
 	| enumeration_trail group_or nm_token maybe_space
-		{ $$ := $1; $$.force_last ($3) }
+		{ 
+			$$ := $1;
+			check $$ /= Void end; 
+			if {l_trail_3: STRING} $3 then
+				$$.force_last (l_trail_3) 
+			else
+				check False end
+			end
+		}
 	;
 
 default_decl: DOCTYPE_REQUIRED
@@ -887,18 +944,18 @@ ge_decl: DOCTYPE_ENTITY req_space doctype_name req_space entity_value maybe_spac
 		{
 				-- Internal entity.
 			when_entity_declared ($3, new_literal_entity ($3, $5))
-			on_entity_declaration ($3, False, $5, Void, Void)
+			process_on_entity_declaration ($3, False, $5, Void, Void)
 		}
 	| DOCTYPE_ENTITY req_space doctype_name req_space external_id maybe_space DOCTYPE_END
 		{
 				-- External entity.
 			when_entity_declared ($3, new_external_entity ($5))
-			on_entity_declaration ($3, False, Void, $5, Void)
+			process_on_entity_declaration ($3, False, Void, $5, Void)
 		}
 	| DOCTYPE_ENTITY req_space doctype_name req_space external_id ndata_decl maybe_space DOCTYPE_END
 		{
 				-- Unparsed NDATA entity.
-			on_entity_declaration ($3, False, Void, $5, $6)
+			process_on_entity_declaration ($3, False, Void, $5, $6)
 		}
 	;
 
@@ -906,13 +963,13 @@ pe_decl: DOCTYPE_ENTITY req_space DOCTYPE_PERCENT req_space doctype_name req_spa
 		{
 				-- Internal PE entity.
 			when_pe_entity_declared ($5, new_literal_entity ($5, $7))
-			on_entity_declaration ($5, True, $7, Void, Void) 
+			process_on_entity_declaration ($5, True, $7, Void, Void) 
 		}
 	| DOCTYPE_ENTITY req_space DOCTYPE_PERCENT req_space doctype_name req_space external_id maybe_space DOCTYPE_END
 		{
 				-- External PE entity.
 			when_pe_entity_declared ($5, new_external_entity ($7)) 
-			on_entity_declaration ($5, True, Void, $7, Void)
+			process_on_entity_declaration ($5, True, Void, $7, Void)
 		}
 	;
 
@@ -943,9 +1000,9 @@ encoding_decl: XMLDECLARATION_ENCODING space_eq APOS XMLDECLARATION_ENCODING_VAL
 -- 4.7 Notation declaration
 
 notation_decl: DOCTYPE_NOTATION req_space doctype_name req_space external_id maybe_space DOCTYPE_END
-		{ on_notation_declaration ($3, $5) }
+		{ process_on_notation_declaration ($3, $5) }
 	| DOCTYPE_NOTATION req_space doctype_name req_space public_id maybe_space DOCTYPE_END
-		{ on_notation_declaration ($3, $5) }
+		{ process_on_notation_declaration ($3, $5) }
 	| DOCTYPE_NOTATION error
 		{ force_error (Error_doctype_notation) }
 	;
@@ -1281,6 +1338,149 @@ feature -- Parsing
 			end
 			abort
 			yy_clear_all
+		end
+
+	query_is_equal (a,b: ?ANY): BOOLEAN
+		require
+			a_attached: a /= Void
+			b_attached: b /= Void
+		do
+			Result := a.is_equal (b)
+		end
+
+	process_on_start_tag (a_namespace: ?STRING; a_name: ?XM_EIFFEL_PARSER_NAME)
+		require
+			a_name_attached: a_name /= Void
+		local
+			l_local_part: ?STRING
+		do
+			l_local_part := a_name.local_part
+			check l_local_part /= Void end
+			on_start_tag (a_namespace, a_name.ns_prefix, l_local_part)
+		end
+
+
+	process_on_end_tag (a_namespace: ?STRING; a_name: ?XM_EIFFEL_PARSER_NAME)
+		require
+			a_name_attached: a_name /= Void
+		local
+			l_local_part: ?STRING
+		do
+			l_local_part := a_name.local_part
+			check l_local_part /= Void end
+			on_end_tag (a_namespace, a_name.ns_prefix, l_local_part)
+		end
+
+	process_on_attribute (a_namespace: ?STRING; a_name: ?XM_EIFFEL_PARSER_NAME; a_value: ?STRING)
+		require
+			a_name_attached: a_name /= Void
+			a_value_attached: a_value /= Void
+		local
+			l_local_part: ?STRING
+		do
+			l_local_part := a_name.local_part
+			check l_local_part /= Void end
+			on_attribute (a_namespace, a_name.ns_prefix, l_local_part, a_value)
+		end
+	
+	process_on_content (a_content: ?STRING_8)
+		require
+			a_content_not_void: a_content /= Void
+		do
+			on_content (a_content)
+		end
+
+	process_on_comment (a_content: ?STRING_8)
+		require
+			a_content_not_void: a_content /= Void
+		do
+			on_comment (a_content)
+		end
+
+	process_on_dtd_comment (a_content: ?STRING_8)
+		require
+			a_content_not_void: a_content /= Void
+		do
+			on_dtd_comment (a_content)
+		end
+
+	process_on_element_declaration (a_name: ?STRING_8; a_model: ?XM_DTD_ELEMENT_CONTENT)
+		require
+			a_name_not_void: a_name /= Void
+			a_model_not_void: a_model /= Void
+		do
+			on_element_declaration (a_name, a_model)
+		end
+
+	process_on_entity_declaration (entity_name: ?STRING; is_parameter: BOOLEAN; value: ?STRING; an_id: ?XM_DTD_EXTERNAL_ID; notation_name: ?STRING)
+		require
+			entity_name_attached: entity_name /= Void
+		do
+			on_entity_declaration (entity_name, is_parameter, value, an_id, notation_name)
+		end
+
+	process_on_notation_declaration (notation_name: ?STRING; an_id: ?XM_DTD_EXTERNAL_ID)
+		require
+			notation_name_attached: notation_name /= Void
+			an_id_attached: an_id /= Void
+		do
+			on_notation_declaration (notation_name, an_id)
+		end
+
+	process_on_processing_instruction (a_name, a_content: ?STRING)
+		require
+			a_name_not_void: a_name /= Void
+			a_content_not_void: a_content /= Void
+		do
+			on_processing_instruction (a_name, a_content)
+		end
+
+	process_on_dtd_processing_instruction (a_name, a_content: ?STRING)
+		require
+			a_name_not_void: a_name /= Void
+			a_content_not_void: a_content /= Void
+		do
+			on_dtd_processing_instruction (a_name, a_content)
+		end
+
+	process_on_doctype (a_name: ?STRING; an_id: ?XM_DTD_EXTERNAL_ID; has_internal_subset: BOOLEAN) is
+		require
+			a_name_attached: a_name /= Void
+			an_id_attached: an_id /= Void
+ 		do
+			on_doctype (a_name, an_id, has_internal_subset)
+		end
+
+	dtd_element_content_items_force_first (a_target: XM_DTD_ELEMENT_CONTENT; v: ?XM_DTD_ELEMENT_CONTENT)
+		require
+			a_target_attached: a_target /= Void
+			v_attached: v /= Void
+		do
+			a_target.attached_items.force_first (v)
+		end
+
+	dtd_element_content_items_force_last (a_target: XM_DTD_ELEMENT_CONTENT; v: ?XM_DTD_ELEMENT_CONTENT)
+		require
+			a_target_attached: a_target /= Void
+			v_attached: v /= Void
+		do
+			a_target.attached_items.force_last (v)
+		end
+
+	string_concat (a_string, other: ?STRING): STRING
+		require
+			a_string_not_void: a_string /= Void
+			other_not_void: other /= Void
+		do
+			Result := string_concat (a_string, other)
+		end
+
+	string_appended_string (a_string, other: ?STRING): STRING
+		require
+			a_string_not_void: a_string /= Void
+			other_not_void: other /= Void
+		do
+			Result := string_appended_string (a_string, other)
 		end
 
 end

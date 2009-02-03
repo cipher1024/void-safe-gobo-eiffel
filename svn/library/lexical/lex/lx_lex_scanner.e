@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Lexical Library"
 	copyright: "Copyright (c) 1999-2003, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-11-20 10:24:46 +0100 (Thu, 20 Nov 2008) $"
-	revision: "$Revision: 6557 $"
+	date: "$Date: 2007-03-31 00:05:10 +0200 (Sat, 31 Mar 2007) $"
+	revision: "$Revision: 5933 $"
 
 class LX_LEX_SCANNER
 
@@ -54,8 +54,6 @@ feature {NONE} -- Implementation
 
 	yy_execute_action (yy_act: INTEGER) is
 			-- Execute semantic action.
-		local
-			l_last_string: like last_string
 		do
 if yy_act <= 60 then
 if yy_act <= 30 then
@@ -85,7 +83,7 @@ end
 
 					line_nb := line_nb + 1
 					set_start_condition (EIFFEL_BLOCK)
-
+				
 else
 --|#line 63 "lx_lex_scanner.l"
 debug ("GELEX")
@@ -119,7 +117,7 @@ end
 						-- Keep track of the definition name.
 					last_string := text
 					set_start_condition (DEFINITION)
-
+				
 else
 --|#line 71 "lx_lex_scanner.l"
 debug ("GELEX")
@@ -128,7 +126,7 @@ end
 
 					last_token := ENDSECT
 					set_start_condition (SECT2)
-
+				
 end
 end
 end
@@ -143,7 +141,7 @@ end
 
 					report_unrecognized_directive_error
 					set_start_condition (RECOVER1)
-
+				
 else
 --|#line 79 "lx_lex_scanner.l"
 debug ("GELEX")
@@ -152,7 +150,7 @@ end
 
 					report_directive_expected_error
 					set_start_condition (RECOVER1)
-
+				
 end
 else
 if yy_act = 11 then
@@ -203,66 +201,69 @@ debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 91")
 end
 
-					l_last_string := text_substring (1, text_count - 2)
-					last_string := l_last_string
-					line_nb := line_nb + l_last_string.occurrences ('%N')
-					description.eiffel_header.force_last (l_last_string)
+					last_string := text_substring (1, text_count - 2)
+					if {l_last_string_1: like last_string} last_string then
+						line_nb := line_nb + l_last_string_1.occurrences ('%N')
+						description.eiffel_header.force_last (l_last_string_1)
+					else
+						check False end
+					end
 					set_start_condition (INITIAL)
-
+				
 else
---|#line 100 "lx_lex_scanner.l"
+--|#line 104 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 100")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 104")
 end
 -- Separator or comment.
 end
 else
 if yy_act = 18 then
---|#line 101 "lx_lex_scanner.l"
+--|#line 105 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 101")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 105")
 end
 add_new_start_condition (text, start_condition = XSCNAME)
 else
---|#line 102 "lx_lex_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 102")
-end
-
-					line_nb := line_nb + 1
-					set_start_condition (INITIAL)
-
-end
-end
-else
-if yy_act <= 21 then
-if yy_act = 20 then
 --|#line 106 "lx_lex_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 106")
 end
 
+					line_nb := line_nb + 1
+					set_start_condition (INITIAL)
+				
+end
+end
+else
+if yy_act <= 21 then
+if yy_act = 20 then
+--|#line 110 "lx_lex_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 110")
+end
+
 					report_start_condition_expected_error
 					set_start_condition (RECOVER1)
-
+				
 else
---|#line 113 "lx_lex_scanner.l"
+--|#line 117 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 113")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 117")
 end
 -- Separator or comment.
 end
 else
 if yy_act = 22 then
---|#line 114 "lx_lex_scanner.l"
+--|#line 118 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 114")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 118")
 end
 description.set_backing_up_report (True)
 else
---|#line 115 "lx_lex_scanner.l"
+--|#line 119 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 115")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 119")
 end
 description.set_backing_up_report (False)
 end
@@ -272,33 +273,33 @@ else
 if yy_act <= 27 then
 if yy_act <= 25 then
 if yy_act = 24 then
---|#line 116 "lx_lex_scanner.l"
+--|#line 120 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 116")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 120")
 end
 
 					description.set_case_insensitive (False)
-
-else
---|#line 119 "lx_lex_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 119")
-end
-
-					description.set_case_insensitive (True)
-
-end
-else
-if yy_act = 26 then
---|#line 122 "lx_lex_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 122")
-end
-description.set_debug_mode (True)
+				
 else
 --|#line 123 "lx_lex_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 123")
+end
+
+					description.set_case_insensitive (True)
+				
+end
+else
+if yy_act = 26 then
+--|#line 126 "lx_lex_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 126")
+end
+description.set_debug_mode (True)
+else
+--|#line 127 "lx_lex_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 127")
 end
 description.set_debug_mode (False)
 end
@@ -306,22 +307,22 @@ end
 else
 if yy_act <= 29 then
 if yy_act = 28 then
---|#line 124 "lx_lex_scanner.l"
+--|#line 128 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 124")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 128")
 end
 description.set_no_default_rule (False)
 else
---|#line 125 "lx_lex_scanner.l"
+--|#line 129 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 125")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 129")
 end
 description.set_no_default_rule (True)
 end
 else
---|#line 126 "lx_lex_scanner.l"
+--|#line 130 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 126")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 130")
 end
 description.set_equiv_classes_used (True)
 end
@@ -334,29 +335,29 @@ if yy_act <= 38 then
 if yy_act <= 34 then
 if yy_act <= 32 then
 if yy_act = 31 then
---|#line 127 "lx_lex_scanner.l"
+--|#line 131 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 127")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 131")
 end
 description.set_equiv_classes_used (False)
 else
---|#line 128 "lx_lex_scanner.l"
+--|#line 132 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 128")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 132")
 end
 description.set_full_table (True)
 end
 else
 if yy_act = 33 then
---|#line 129 "lx_lex_scanner.l"
+--|#line 133 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 129")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 133")
 end
 description.set_full_table (False)
 else
---|#line 130 "lx_lex_scanner.l"
+--|#line 134 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 130")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 134")
 end
 description.set_meta_equiv_classes_used (True)
 end
@@ -364,29 +365,29 @@ end
 else
 if yy_act <= 36 then
 if yy_act = 35 then
---|#line 131 "lx_lex_scanner.l"
+--|#line 135 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 131")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 135")
 end
 description.set_meta_equiv_classes_used (False)
 else
---|#line 132 "lx_lex_scanner.l"
+--|#line 136 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 132")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 136")
 end
 description.set_reject_used (True)
 end
 else
 if yy_act = 37 then
---|#line 133 "lx_lex_scanner.l"
+--|#line 137 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 133")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 137")
 end
 description.set_reject_used (False)
 else
---|#line 134 "lx_lex_scanner.l"
+--|#line 138 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 134")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 138")
 end
 description.set_line_used (True)
 end
@@ -396,29 +397,29 @@ else
 if yy_act <= 42 then
 if yy_act <= 40 then
 if yy_act = 39 then
---|#line 135 "lx_lex_scanner.l"
+--|#line 139 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 135")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 139")
 end
 description.set_line_used (False)
 else
---|#line 136 "lx_lex_scanner.l"
+--|#line 140 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 136")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 140")
 end
 description.set_position_used (True)
 end
 else
 if yy_act = 41 then
---|#line 137 "lx_lex_scanner.l"
+--|#line 141 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 137")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 141")
 end
 description.set_position_used (False)
 else
---|#line 138 "lx_lex_scanner.l"
+--|#line 142 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 138")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 142")
 end
 description.set_pre_action_used (True)
 end
@@ -426,22 +427,22 @@ end
 else
 if yy_act <= 44 then
 if yy_act = 43 then
---|#line 139 "lx_lex_scanner.l"
+--|#line 143 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 139")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 143")
 end
 description.set_pre_action_used (False)
 else
---|#line 140 "lx_lex_scanner.l"
+--|#line 144 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 140")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 144")
 end
 description.set_post_action_used (True)
 end
 else
---|#line 141 "lx_lex_scanner.l"
+--|#line 145 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 141")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 145")
 end
 description.set_post_action_used (False)
 end
@@ -452,29 +453,29 @@ if yy_act <= 53 then
 if yy_act <= 49 then
 if yy_act <= 47 then
 if yy_act = 46 then
---|#line 142 "lx_lex_scanner.l"
+--|#line 146 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 142")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 146")
 end
 description.set_pre_eof_action_used (True)
 else
---|#line 143 "lx_lex_scanner.l"
+--|#line 147 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 143")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 147")
 end
 description.set_pre_eof_action_used (False)
 end
 else
 if yy_act = 48 then
---|#line 144 "lx_lex_scanner.l"
+--|#line 148 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 144")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 148")
 end
 description.set_post_eof_action_used (True)
 else
---|#line 145 "lx_lex_scanner.l"
+--|#line 149 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 145")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 149")
 end
 description.set_post_eof_action_used (False)
 end
@@ -482,38 +483,38 @@ end
 else
 if yy_act <= 51 then
 if yy_act = 50 then
---|#line 146 "lx_lex_scanner.l"
+--|#line 150 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 146")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 150")
 end
 
 					description.set_no_warning (False)
-
+				
 else
---|#line 149 "lx_lex_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 149")
-end
-
-					description.set_no_warning (True)
-
-end
-else
-if yy_act = 52 then
 --|#line 153 "lx_lex_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 153")
 end
+
+					description.set_no_warning (True)
+				
+end
+else
+if yy_act = 52 then
+--|#line 157 "lx_lex_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 157")
+end
 set_start_condition (OUTFILE)
 else
---|#line 163 "lx_lex_scanner.l"
+--|#line 167 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 163")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 167")
 end
 
 					line_nb := line_nb + 1
 					set_start_condition (INITIAL)
-
+				
 end
 end
 end
@@ -521,39 +522,39 @@ else
 if yy_act <= 57 then
 if yy_act <= 55 then
 if yy_act = 54 then
---|#line 167 "lx_lex_scanner.l"
+--|#line 171 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 167")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 171")
 end
 
 					report_unrecognized_option_error (text)
 					set_start_condition (RECOVER1)
-
+			
 else
---|#line 174 "lx_lex_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 174")
-end
-
-					description.set_output_filename (text_substring (2, text_count - 1))
-					set_start_condition (OPTION)
-
-end
-else
-if yy_act = 56 then
 --|#line 178 "lx_lex_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 178")
 end
 
+					description.set_output_filename (text_substring (2, text_count - 1))
+					set_start_condition (OPTION)
+				
+end
+else
+if yy_act = 56 then
+--|#line 182 "lx_lex_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 182")
+end
+
 					description.set_output_filename (Void)
 					report_missing_quote_error
 					set_start_condition (RECOVER1)
-
+				
 else
---|#line 186 "lx_lex_scanner.l"
+--|#line 190 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 186")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 190")
 end
 -- Separates name and definition.
 end
@@ -561,35 +562,39 @@ end
 else
 if yy_act <= 59 then
 if yy_act = 58 then
---|#line 187 "lx_lex_scanner.l"
+--|#line 191 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 187")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 191")
 end
-					l_last_string := last_string
-					check last_string_not_void: l_last_string /= Void end
-					process_name_definition (l_last_string, text)
+
+					check last_string_not_void: last_string /= Void end
+					if {l_last_string_2: like last_string} last_string then
+						process_name_definition (l_last_string_2, text)
+					else
+						check False end
+					end
 					set_start_condition (INITIAL)
-
-else
---|#line 192 "lx_lex_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 192")
-end
-
-					line_nb := line_nb + 1
-					report_incomplete_name_definition_error
-					set_start_condition (INITIAL)
-
-end
+				
 else
 --|#line 200 "lx_lex_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 200")
 end
 
+					line_nb := line_nb + 1
+					report_incomplete_name_definition_error
+					set_start_condition (INITIAL)
+				
+end
+else
+--|#line 208 "lx_lex_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 208")
+end
+
 						-- Eat characters to end of line.
 					set_start_condition (INITIAL)
-
+				
 end
 end
 end
@@ -602,46 +607,46 @@ if yy_act <= 68 then
 if yy_act <= 64 then
 if yy_act <= 62 then
 if yy_act = 61 then
---|#line 204 "lx_lex_scanner.l"
+--|#line 212 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 204")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 212")
 end
 
 						-- Eat characters to end of line.
 					line_nb := line_nb + 1
 					set_start_condition (INITIAL)
-
+				
 else
---|#line 217 "lx_lex_scanner.l"
+--|#line 225 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 217")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 225")
 end
 -- Separator or comment.
 end
 else
 if yy_act = 63 then
---|#line 218 "lx_lex_scanner.l"
+--|#line 226 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 218")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 226")
 end
 line_nb := line_nb + 1
 else
---|#line 219 "lx_lex_scanner.l"
+--|#line 227 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 219")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 227")
 end
 
 					last_token := ENDSECT
 					set_start_condition (SECT3)
-
+				
 end
 end
 else
 if yy_act <= 66 then
 if yy_act = 65 then
---|#line 223 "lx_lex_scanner.l"
+--|#line 231 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 223")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 231")
 end
 
 					last_token := Caret_code
@@ -651,30 +656,30 @@ end
 						-- be scanned.
 					rule_line_nb := line_nb
 					set_start_condition (REGEXP)
-
+				
 else
---|#line 232 "lx_lex_scanner.l"
+--|#line 240 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 232")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 240")
 end
 last_token := Left_brace_code
 end
 else
 if yy_act = 67 then
---|#line 233 "lx_lex_scanner.l"
+--|#line 241 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 233")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 241")
 end
 last_token := Right_brace_code
 else
---|#line 234 "lx_lex_scanner.l"
+--|#line 242 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 234")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 242")
 end
 
 					last_token := Less_than_code
 					set_start_condition (SCOND)
-
+				
 end
 end
 end
@@ -682,9 +687,9 @@ else
 if yy_act <= 72 then
 if yy_act <= 70 then
 if yy_act = 69 then
---|#line 238 "lx_lex_scanner.l"
+--|#line 246 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 238")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 246")
 end
 
 					less (0)
@@ -694,81 +699,87 @@ end
 						-- be scanned.
 					rule_line_nb := line_nb
 					set_start_condition (REGEXP)
-
+				
 else
---|#line 250 "lx_lex_scanner.l"
+--|#line 258 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 250")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 258")
 end
 
 					last_token := Double_quote_code
 					set_start_condition (QUOTE)
-
+				
 end
 else
 if yy_act = 71 then
 	yy_end := yy_end - 1
---|#line 254 "lx_lex_scanner.l"
+--|#line 262 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 254")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 262")
 end
 last_token := Dollar_code
 else
---|#line 255 "lx_lex_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 255")
-end
-
-					l_last_string := text.as_lower
-					last_string := l_last_string
-					if name_definitions.has (l_last_string) then
-						put_back_string (name_definitions.item (l_last_string))
-					else
-						report_undefined_definition_error (text)
-					end
-
-end
-end
-else
-if yy_act <= 74 then
-if yy_act = 73 then
 --|#line 263 "lx_lex_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 263")
 end
 
+					last_string := text.as_lower
+					if {l_last_string_3: like last_string} last_string then
+						if name_definitions.has (l_last_string_3) then
+							put_back_string (name_definitions.item (l_last_string_3))
+						else
+							report_undefined_definition_error (text)
+						end
+					else
+						check False end
+					end
+				
+end
+end
+else
+if yy_act <= 74 then
+if yy_act = 73 then
+--|#line 275 "lx_lex_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 275")
+end
+
 					last_token := Left_brace_code
 					set_start_condition (NUM)
-
-else
---|#line 267 "lx_lex_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 267")
-end
-
-					l_last_string := text
-					last_string := l_last_string
-					if character_classes.has (l_last_string) then
-						last_token := CCL_OP
-						last_lx_symbol_class_value := character_classes.item (l_last_string)
-					else
-						last_token := Left_bracket_code
-						last_string_value := last_string
-						less (1)
-						set_start_condition (FIRSTCCL)
-					end
-
-end
+				
 else
 --|#line 279 "lx_lex_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 279")
 end
 
+					last_string := text
+					if {l_last_string_4: like last_string} last_string then
+						if character_classes.has (l_last_string_4) then
+							last_token := CCL_OP
+							last_lx_symbol_class_value := character_classes.item (l_last_string_4)
+						else
+							last_token := Left_bracket_code
+							last_string_value := l_last_string_4
+							less (1)
+							set_start_condition (FIRSTCCL)
+						end
+					else
+						check False end
+					end
+				
+end
+else
+--|#line 295 "lx_lex_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 295")
+end
+
 					report_bad_character_class_error
 					last_token := CHAR
 					process_character (text_item (1).code)
-
+				
 end
 end
 end
@@ -777,68 +788,68 @@ if yy_act <= 83 then
 if yy_act <= 79 then
 if yy_act <= 77 then
 if yy_act = 76 then
---|#line 284 "lx_lex_scanner.l"
+--|#line 300 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 284")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 300")
 end
 last_token := EOF_OP
-else
---|#line 285 "lx_lex_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 285")
-end
-last_token := text_item (1).code
-end
-else
-if yy_act = 78 then
---|#line 286 "lx_lex_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 286")
-end
-
-					set_start_condition (ACTION_TEXT)
-
-else
---|#line 289 "lx_lex_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 289")
-end
-
-					line_nb := line_nb + 1
-					last_token := EMPTY
-					set_start_condition (SECT2)
-
-end
-end
-else
-if yy_act <= 81 then
-if yy_act = 80 then
---|#line 294 "lx_lex_scanner.l"
-debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 294")
-end
-
-					last_token := CHAR
-					process_character (text_item (1).code)
-
 else
 --|#line 301 "lx_lex_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 301")
 end
--- Separator or comment.
+last_token := text_item (1).code
 end
 else
-if yy_act = 82 then
+if yy_act = 78 then
 --|#line 302 "lx_lex_scanner.l"
 debug ("GELEX")
 	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 302")
 end
+
+					set_start_condition (ACTION_TEXT)
+				
+else
+--|#line 305 "lx_lex_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 305")
+end
+
+					line_nb := line_nb + 1
+					last_token := EMPTY
+					set_start_condition (SECT2)
+				
+end
+end
+else
+if yy_act <= 81 then
+if yy_act = 80 then
+--|#line 310 "lx_lex_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 310")
+end
+
+					last_token := CHAR
+					process_character (text_item (1).code)
+				
+else
+--|#line 317 "lx_lex_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 317")
+end
+-- Separator or comment.
+end
+else
+if yy_act = 82 then
+--|#line 318 "lx_lex_scanner.l"
+debug ("GELEX")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 318")
+end
 line_nb := line_nb + 1
 else
---|#line 303 "lx_lex_scanner.l"
+--|#line 319 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 303")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 319")
 end
 last_token := Comma_code
 end
@@ -848,53 +859,53 @@ else
 if yy_act <= 87 then
 if yy_act <= 85 then
 if yy_act = 84 then
---|#line 304 "lx_lex_scanner.l"
+--|#line 320 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 304")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 320")
 end
 last_token := Star_code
 else
---|#line 305 "lx_lex_scanner.l"
+--|#line 321 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 305")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 321")
 end
 
 					last_token := Greater_than_code
 					set_start_condition (SECT2)
-
+				
 end
 else
 if yy_act = 86 then
---|#line 309 "lx_lex_scanner.l"
+--|#line 325 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 309")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 325")
 end
 
 					last_token := NAME
 					last_string_value := text
-
+				
 else
---|#line 313 "lx_lex_scanner.l"
+--|#line 329 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 313")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 329")
 end
 
 					report_bad_start_condition_error (text)
-
+				
 end
 end
 else
 if yy_act <= 89 then
 if yy_act = 88 then
---|#line 319 "lx_lex_scanner.l"
+--|#line 335 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 319")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 335")
 end
 -- Separator.
 else
---|#line 320 "lx_lex_scanner.l"
+--|#line 336 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 320")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 336")
 end
 
 					if text.is_integer then
@@ -903,12 +914,12 @@ end
 					else
 						report_integer_too_large_error (text)
 					end
-
+				
 end
 else
---|#line 328 "lx_lex_scanner.l"
+--|#line 344 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 328")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 344")
 end
 last_token := Comma_code
 end
@@ -921,76 +932,76 @@ if yy_act <= 98 then
 if yy_act <= 94 then
 if yy_act <= 92 then
 if yy_act = 91 then
---|#line 329 "lx_lex_scanner.l"
+--|#line 345 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 329")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 345")
 end
 
 					last_token := Right_brace_code
 					set_start_condition (REGEXP)
-
+				
 else
---|#line 333 "lx_lex_scanner.l"
+--|#line 349 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 333")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 349")
 end
 
 					report_bad_character_in_brackets_error
 					last_token := Right_brace_code
 					set_start_condition (REGEXP)
-
+				
 end
 else
 if yy_act = 93 then
---|#line 338 "lx_lex_scanner.l"
+--|#line 354 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 338")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 354")
 end
 
 					report_missing_bracket_error
 					line_nb := line_nb + 1
 					last_token := Right_brace_code
 					set_start_condition (REGEXP)
-
+				
 else
---|#line 347 "lx_lex_scanner.l"
+--|#line 363 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 347")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 363")
 end
 
 					process_character (text_item (1).code)
 					last_token := CHAR
-
+				
 end
 end
 else
 if yy_act <= 96 then
 if yy_act = 95 then
---|#line 351 "lx_lex_scanner.l"
+--|#line 367 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 351")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 367")
 end
 
 					last_token := Double_quote_code
 					set_start_condition (REGEXP)
-
+				
 else
---|#line 355 "lx_lex_scanner.l"
+--|#line 371 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 355")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 371")
 end
 
 					report_missing_quote_error
 					line_nb := line_nb + 1
 					last_token := Double_quote_code
 					set_start_condition (REGEXP)
-
+				
 end
 else
 if yy_act = 97 then
---|#line 363 "lx_lex_scanner.l"
+--|#line 379 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 363")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 379")
 end
 
 					last_token := CHAR
@@ -998,17 +1009,17 @@ end
 					if start_condition = FIRSTCCL then
 						set_start_condition (CCL)
 					end
-
+				
 else
 	yy_end := yy_end - 1
---|#line 372 "lx_lex_scanner.l"
+--|#line 388 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 372")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 388")
 end
 
 					set_start_condition (CCL)
 					last_token := Caret_code
-
+				
 end
 end
 end
@@ -1017,39 +1028,39 @@ if yy_act <= 102 then
 if yy_act <= 100 then
 if yy_act = 99 then
 	yy_end := yy_end - 1
---|#line 376 "lx_lex_scanner.l"
+--|#line 392 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 376")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 392")
 end
 last_token := Caret_code
 else
---|#line 377 "lx_lex_scanner.l"
+--|#line 393 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 377")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 393")
 end
 
 					last_token := CHAR
 					process_character (text_item (1).code)
 					set_start_condition (CCL)
-
+				
 end
 else
 if yy_act = 101 then
---|#line 382 "lx_lex_scanner.l"
+--|#line 398 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 382")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 398")
 end
 
 					report_bad_character_class_error
 					line_nb := line_nb + 1
 					last_token := Right_bracket_code
 					set_start_condition (REGEXP)
-
+				
 else
 	yy_end := yy_end - 1
---|#line 391 "lx_lex_scanner.l"
+--|#line 407 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 391")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 407")
 end
 last_token := Minus_code
 end
@@ -1057,35 +1068,35 @@ end
 else
 if yy_act <= 104 then
 if yy_act = 103 then
---|#line 392 "lx_lex_scanner.l"
+--|#line 408 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 392")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 408")
 end
 
 					last_token := CHAR
 					process_character (text_item (1).code)
-
+				
 else
---|#line 396 "lx_lex_scanner.l"
+--|#line 412 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 396")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 412")
 end
 
 					last_token := Right_bracket_code
 					set_start_condition (REGEXP)
-
+				
 end
 else
---|#line 400 "lx_lex_scanner.l"
+--|#line 416 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 400")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 416")
 end
 
 					report_bad_character_class_error
 					line_nb := line_nb + 1
 					last_token := Right_bracket_code
 					set_start_condition (REGEXP)
-
+				
 end
 end
 end
@@ -1094,63 +1105,63 @@ if yy_act <= 112 then
 if yy_act <= 109 then
 if yy_act <= 107 then
 if yy_act = 106 then
---|#line 409 "lx_lex_scanner.l"
+--|#line 425 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 409")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 425")
 end
 
 					last_token := PIPED
 					set_start_condition (SECT2)
-
+				
 else
---|#line 413 "lx_lex_scanner.l"
+--|#line 429 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 413")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 429")
 end
 
 					last_token := EMPTY
 					line_nb := line_nb + 1
 					set_start_condition (SECT2)
-
+				
 end
 else
 if yy_act = 108 then
---|#line 418 "lx_lex_scanner.l"
+--|#line 434 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 418")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 434")
 end
 set_start_condition (EIFFEL_BLOCK2)
 else
---|#line 419 "lx_lex_scanner.l"
+--|#line 435 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 419")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 435")
 end
 
 					last_token := EIF_CODE
 					last_string_value := text
 					set_start_condition (SECT2)
-
+				
 end
 end
 else
 if yy_act <= 111 then
 if yy_act = 110 then
---|#line 427 "lx_lex_scanner.l"
+--|#line 443 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 427")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 443")
 end
 more
 else
---|#line 428 "lx_lex_scanner.l"
+--|#line 444 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 428")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 444")
 end
 more
 end
 else
---|#line 429 "lx_lex_scanner.l"
+--|#line 445 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 429")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 445")
 end
 more
 end
@@ -1159,63 +1170,66 @@ else
 if yy_act <= 116 then
 if yy_act <= 114 then
 if yy_act = 113 then
---|#line 430 "lx_lex_scanner.l"
+--|#line 446 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 430")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 446")
 end
 more
 else
---|#line 431 "lx_lex_scanner.l"
+--|#line 447 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 431")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 447")
 end
 more
 end
 else
 if yy_act = 115 then
---|#line 432 "lx_lex_scanner.l"
+--|#line 448 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 432")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 448")
 end
 
 					nb_open_brackets := nb_open_brackets + 1
 					more
-
+				
 else
---|#line 436 "lx_lex_scanner.l"
+--|#line 452 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 436")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 452")
 end
 
 					if nb_open_brackets = 0 then
 						last_token := EIF_CODE
-						l_last_string := text_substring (1, text_count - 1)
-						last_string := l_last_string
-						line_nb := line_nb + l_last_string.occurrences ('%N')
-						last_string_value := l_last_string
+						last_string := text_substring (1, text_count - 1)
+						if {l_last_string_5: like last_string} last_string then
+							line_nb := line_nb + l_last_string_5.occurrences ('%N')
+						else
+							check False end
+						end
+						last_string_value := last_string
 						set_start_condition (SECT2)
 					else
 						nb_open_brackets := nb_open_brackets - 1
 						more
 					end
-
+				
 end
 end
 else
 if yy_act <= 118 then
 if yy_act = 117 then
---|#line 454 "lx_lex_scanner.l"
+--|#line 474 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 454")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 474")
 end
 
 					last_token := EIF_CODE
 					last_string_value := text
-
+				
 else
---|#line 459 "lx_lex_scanner.l"
+--|#line 479 "lx_lex_scanner.l"
 debug ("GELEX")
-	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 459")
+	std.error.put_line ("Executing scanner user-code from file 'lx_lex_scanner.l' at line 479")
 end
 
 					if text_item (1) = '%N' then
@@ -1224,7 +1238,7 @@ end
 					else
 						report_bad_character_error (text)
 					end
-
+				
 end
 else
 --|#line 0 "lx_lex_scanner.l"

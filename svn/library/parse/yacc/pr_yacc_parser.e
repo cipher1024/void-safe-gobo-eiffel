@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Parse Library"
 	copyright: "Copyright (c) 1999, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-11-20 10:24:46 +0100 (Thu, 20 Nov 2008) $"
-	revision: "$Revision: 6557 $"
+	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
+	revision: "$Revision: 5877 $"
 
 class PR_YACC_PARSER
 
@@ -47,6 +47,42 @@ feature {NONE} -- Implementation
 	yy_create_value_stacks is
 			-- Create value stacks.
 		do
+			debug ("GEYACC")
+				std.error.put_line ("Create yyvs1")
+			end
+			create yyspecial_routines1
+			yyvsc1 := yyInitial_yyvs_size
+			yyvs1 := yyspecial_routines1.make (yyvsc1)
+			debug ("GEYACC")
+				std.error.put_line ("Create yyvs2")
+			end
+			create yyspecial_routines2
+			yyvsc2 := yyInitial_yyvs_size
+			yyvs2 := yyspecial_routines2.make (yyvsc2)
+			debug ("GEYACC")
+				std.error.put_line ("Create yyvs3")
+			end
+			create yyspecial_routines3
+			yyvsc3 := yyInitial_yyvs_size
+			yyvs3 := yyspecial_routines3.make (yyvsc3)
+			debug ("GEYACC")
+				std.error.put_line ("Create yyvs4")
+			end
+			create yyspecial_routines4
+			yyvsc4 := yyInitial_yyvs_size
+			yyvs4 := yyspecial_routines4.make (yyvsc4)
+			debug ("GEYACC")
+				std.error.put_line ("Create yyvs5")
+			end
+			create yyspecial_routines5
+			yyvsc5 := yyInitial_yyvs_size
+			yyvs5 := yyspecial_routines5.make (yyvsc5)
+			debug ("GEYACC")
+				std.error.put_line ("Create yyvs6")
+			end
+			create yyspecial_routines6
+			yyvsc6 := yyInitial_yyvs_size
+			yyvs6 := yyspecial_routines6.make (yyvsc6)
 		end
 
 	yy_init_value_stacks is
@@ -64,129 +100,50 @@ feature {NONE} -- Implementation
 			-- Clear objects in semantic value stacks so that
 			-- they can be collected by the garbage collector.
 		do
-			if {l_yyvs1: like yyvs1} yyvs1 then
-				l_yyvs1.clear_all
-			end
-			if {l_yyvs2: like yyvs2} yyvs2 then
-				l_yyvs2.clear_all
-			end
-			if {l_yyvs3: like yyvs3} yyvs3 then
-				l_yyvs3.clear_all
-			end
-			if {l_yyvs4: like yyvs4} yyvs4 then
-				l_yyvs4.clear_all
-			end
-			if {l_yyvs5: like yyvs5} yyvs5 then
-				l_yyvs5.clear_all
-			end
-			if {l_yyvs6: like yyvs6} yyvs6 then
-				l_yyvs6.clear_all
-			end
+			yyvs1.clear_all
+			yyvs2.clear_all
+			yyvs3.clear_all
+			yyvs4.clear_all
+			yyvs5.clear_all
+			yyvs6.clear_all
 		end
 
 	yy_push_last_value (yychar1: INTEGER) is
 			-- Push semantic value associated with token `last_token'
 			-- (with internal id `yychar1') on top of corresponding
 			-- value stack.
-		local
-			l_yyvs1: like yyvs1
-			l_yyvs2: like yyvs2
-			l_yyvs3: like yyvs3
-			l_last_any_value: like last_any_value
-			l_last_string_value: like last_string_value
-			l_yyspecial_routines1: like yyspecial_routines1
-			l_yyspecial_routines2: like yyspecial_routines2
-			l_yyspecial_routines3: like yyspecial_routines3
 		do
 			inspect yytypes2.item (yychar1)
 			when 1 then
 				yyvsp1 := yyvsp1 + 1
-				l_yyvs1 := yyvs1
 				if yyvsp1 >= yyvsc1 then
-					if l_yyvs1 = Void then
-						debug ("GEYACC")
-							std.error.put_line ("Create yyvs1")
-						end
-						create l_yyspecial_routines1
-						yyspecial_routines1 := l_yyspecial_routines1
-						yyvsc1 := yyInitial_yyvs_size
-						l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-					else
-						debug ("GEYACC")
-							std.error.put_line ("Resize yyvs1")
-						end
-						yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-						l_yyspecial_routines1 := yyspecial_routines1
-						check l_yyspecial_routines1 /= Void end
-						l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
+					debug ("GEYACC")
+						std.error.put_line ("Resize yyvs1")
 					end
-					yyvs1 := l_yyvs1
-				else
-					check l_yyvs1 /= Void end
+					yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+					yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
 				end
-				l_last_any_value := last_any_value
-				if l_last_any_value /= Void then
-					l_yyvs1.put (l_last_any_value, yyvsp1)
-				else
-					l_yyvs1.put_default (yyvsp1)
-				end
+				yyvs1.put (last_any_value, yyvsp1)
 			when 2 then
 				yyvsp2 := yyvsp2 + 1
-				l_yyvs2 := yyvs2
 				if yyvsp2 >= yyvsc2 then
-					if l_yyvs2 = Void then
-						debug ("GEYACC")
-							std.error.put_line ("Create yyvs2")
-						end
-						create l_yyspecial_routines2
-						yyspecial_routines2 := l_yyspecial_routines2
-						yyvsc2 := yyInitial_yyvs_size
-						l_yyvs2 := l_yyspecial_routines2.make (yyvsc2)
-					else
-						debug ("GEYACC")
-							std.error.put_line ("Resize yyvs2")
-						end
-						yyvsc2 := yyvsc2 + yyInitial_yyvs_size
-						l_yyspecial_routines2 := yyspecial_routines2
-						check l_yyspecial_routines2 /= Void end
-						l_yyvs2 := l_yyspecial_routines2.resize (l_yyvs2, yyvsc2)
+					debug ("GEYACC")
+						std.error.put_line ("Resize yyvs2")
 					end
-					yyvs2 := l_yyvs2
-				else
-					check l_yyvs2 /= Void end
+					yyvsc2 := yyvsc2 + yyInitial_yyvs_size
+					yyvs2 := yyspecial_routines2.resize (yyvs2, yyvsc2)
 				end
-				l_last_string_value := last_string_value
-				if l_last_string_value /= Void then
-					l_yyvs2.put (l_last_string_value, yyvsp2)
-				else
-					l_yyvs2.put_default (yyvsp2)
-				end
+				yyvs2.put (last_string_value, yyvsp2)
 			when 3 then
 				yyvsp3 := yyvsp3 + 1
-				l_yyvs3 := yyvs3
 				if yyvsp3 >= yyvsc3 then
-					if l_yyvs3 = Void then
-						debug ("GEYACC")
-							std.error.put_line ("Create yyvs3")
-						end
-						create l_yyspecial_routines3
-						yyspecial_routines3 := l_yyspecial_routines3
-						yyvsc3 := yyInitial_yyvs_size
-						l_yyvs3 := l_yyspecial_routines3.make (yyvsc3)
-					else
-						debug ("GEYACC")
-							std.error.put_line ("Resize yyvs3")
-						end
-						yyvsc3 := yyvsc3 + yyInitial_yyvs_size
-						l_yyspecial_routines3 := yyspecial_routines3
-						check l_yyspecial_routines3 /= Void end
-						l_yyvs3 := l_yyspecial_routines3.resize (l_yyvs3, yyvsc3)
+					debug ("GEYACC")
+						std.error.put_line ("Resize yyvs3")
 					end
-					yyvs3 := l_yyvs3
-				else
-					check l_yyvs3 /= Void end
+					yyvsc3 := yyvsc3 + yyInitial_yyvs_size
+					yyvs3 := yyspecial_routines3.resize (yyvs3, yyvsc3)
 				end
-				l_yyvs3.put (last_integer_value, yyvsp3)
+				yyvs3.put (last_integer_value, yyvsp3)
 			else
 				debug ("GEYACC")
 					std.error.put_string ("Error in parser: not a token type: ")
@@ -201,34 +158,17 @@ feature {NONE} -- Implementation
 			-- Push semantic value associated with token 'error'
 			-- on top of corresponding value stack.
 		local
-			l_yyvs1: like yyvs1
-			l_yyspecial_routines1: like yyspecial_routines1
+			yyval1: ?ANY
 		do
 			yyvsp1 := yyvsp1 + 1
-			l_yyvs1 := yyvs1
 			if yyvsp1 >= yyvsc1 then
-				if l_yyvs1 = Void then
-					debug ("GEYACC")
-						std.error.put_line ("Create yyvs1")
-					end
-					create l_yyspecial_routines1
-					yyspecial_routines1 := l_yyspecial_routines1
-					yyvsc1 := yyInitial_yyvs_size
-					l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-				else
-					debug ("GEYACC")
-						std.error.put_line ("Resize yyvs1")
-					end
-					yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-					l_yyspecial_routines1 := yyspecial_routines1
-					check l_yyspecial_routines1 /= Void end
-					l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
+				debug ("GEYACC")
+					std.error.put_line ("Resize yyvs1")
 				end
-				yyvs1 := l_yyvs1
-			else
-				check l_yyvs1 /= Void end
+				yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+				yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
 			end
-			l_yyvs1.put_default (yyvsp1)
+			yyvs1.put (yyval1, yyvsp1)
 		end
 
 	yy_pop_last_value (yystate: INTEGER) is
@@ -265,25 +205,11 @@ feature {NONE} -- Semantic actions
 	yy_do_action (yy_act: INTEGER) is
 			-- Execute semantic action.
 		local
-			yyval1: ANY
-			yyval5: PR_TYPE
+			yyval1: ?ANY
+			yyval5: ?PR_TYPE
 			yyval6: ?DS_ARRAYED_LIST [PR_TYPE]
-			yyval4: PR_TOKEN
-			yyval2: STRING
-			l_rule: like rule
-			l_yyvs1: like yyvs1
-			l_yyvs2: like yyvs2
-			l_yyvs3: like yyvs3
-			l_yyvs4: like yyvs4
-			l_yyvs5: like yyvs5
-			l_yyvs6: like yyvs6
-			l_type: like type
-			l_yyspecial_routines1: like yyspecial_routines1
-			l_yyspecial_routines2: like yyspecial_routines2
-			l_yyspecial_routines3: like yyspecial_routines3
-			l_yyspecial_routines4: like yyspecial_routines4
-			l_yyspecial_routines5: like yyspecial_routines5
-			l_yyspecial_routines6: like yyspecial_routines6
+			yyval4: ?PR_TOKEN
+			yyval2: ?STRING
 		do
 			inspect yy_act
 when 1 then
@@ -296,13 +222,11 @@ end
 				set_start_symbol
 				process_symbols
 			end
-
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 5
 	yyvsp1 := yyvsp1 -4
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
 when 2 then
 --|#line 51 "pr_yacc_parser.y"
@@ -311,35 +235,18 @@ debug ("GEYACC")
 end
 
 			initialize_grammar
-
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 0
 	yyvsp1 := yyvsp1 + 1
-	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
 		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
 	end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
 when 3 then
 --|#line 64 "pr_yacc_parser.y"
@@ -348,34 +255,18 @@ debug ("GEYACC")
 end
 
 			precedence := 1
-
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 0
 	yyvsp1 := yyvsp1 + 1
-	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
 		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
 	end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
 when 4 then
 --|#line 68 "pr_yacc_parser.y"
@@ -387,9 +278,7 @@ end
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
 when 5 then
 --|#line 71 "pr_yacc_parser.y"
@@ -397,2532 +286,1594 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 71")
 end
 
-	l_yyvs2 := yyvs2
-	check l_yyvs2 /= Void end
-			last_grammar.eiffel_header.force_last (l_yyvs2.item (yyvsp2))
-
+			if {l_decl_1: STRING} yyvs2.item (yyvsp2) then
+				last_grammar.eiffel_header.force_last (l_decl_1)
+			else
+				check False end
+			end
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp1 := yyvsp1 + 1
 	yyvsp2 := yyvsp2 -1
-	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
 		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
 	end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
 when 6 then
---|#line 75 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 75")
-end
-
-			type := Void
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 3
-	yyvsp1 := yyvsp1 -2
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 7 then
 --|#line 79 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 79")
 end
 
 			type := Void
-
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -2
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 8 then
+when 7 then
 --|#line 83 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 83")
 end
 
-			precedence := precedence + 1
-
+			type := Void
+		
 if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp1 := yyvsp1 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
+	yyssp := yyssp - 3
+	yyvsp1 := yyvsp1 -2
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 9 then
+when 8 then
 --|#line 87 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 87")
 end
 
 			precedence := precedence + 1
-
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 10 then
+when 9 then
 --|#line 91 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 91")
 end
 
 			precedence := precedence + 1
-
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp1 := yyvsp1 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 11 then
+when 10 then
 --|#line 95 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 95")
 end
 
+			precedence := precedence + 1
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 2
+	yyvsp1 := yyvsp1 -1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 11 then
+--|#line 99 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 99")
+end
+
 			if start_symbol /= Void then
 				report_multiple_start_declarations_error
 			else
-				l_yyvs2 := yyvs2
-				check l_yyvs2 /= Void end
-				create start_symbol.make (l_yyvs2.item (yyvsp2), line_nb)
+				if {l_start_symbol_name: STRING} yyvs2.item (yyvsp2) then
+					create start_symbol.make (l_start_symbol_name, line_nb)
+				else
+					check False end
+				end
 			end
-
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp2 := yyvsp2 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
 when 12 then
---|#line 103 "pr_yacc_parser.y"
+--|#line 111 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 103")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 111")
 end
 
-	l_yyvs3 := yyvs3
-	check l_yyvs3 /= Void end
-			last_grammar.set_expected_conflicts (l_yyvs3.item (yyvsp3))
-
+			last_grammar.set_expected_conflicts (yyvs3.item (yyvsp3))
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp3 := yyvsp3 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
 when 13 then
---|#line 109 "pr_yacc_parser.y"
+--|#line 117 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 109")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 117")
 end
 
 			type := No_type
-
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 0
 	yyvsp1 := yyvsp1 + 1
-	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
 		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
 	end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
 when 14 then
---|#line 113 "pr_yacc_parser.y"
+--|#line 121 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 113")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 121")
 end
 
-	l_yyvs5 := yyvs5
-	check l_yyvs5 /= Void end
-			type := l_yyvs5.item (yyvsp5)
-
+			type := yyvs5.item (yyvsp5)
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -1
 	yyvsp5 := yyvsp5 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
 when 15 then
---|#line 119 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 119")
-end
-
-	l_yyvs2 := l_yyvs2
-	check l_yyvs2 /= Void end
-			yyval5 := new_type (l_yyvs2.item (yyvsp2))
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	yyvsp5 := yyvsp5 + 1
-	yyvsp2 := yyvsp2 -1
-	l_yyvs5 := yyvs5
-	if yyvsp5 >= yyvsc5 then
-		if l_yyvs5 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs5")
-			end
-			create l_yyspecial_routines5
-			yyspecial_routines5 := l_yyspecial_routines5
-			yyvsc5 := yyInitial_yyvs_size
-			l_yyvs5 := l_yyspecial_routines5.make (yyvsc5)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs5")
-			end
-			yyvsc5 := yyvsc5 + yyInitial_yyvs_size
-			l_yyspecial_routines5 := yyspecial_routines5
-			check l_yyspecial_routines5 /= Void end
-			l_yyvs5 := l_yyspecial_routines5.resize (l_yyvs5, yyvsc5)
-		end
-		yyvs5 := l_yyvs5
-	else
-		check l_yyvs5 /= Void end
-	end
-	l_yyvs5.put (yyval5, yyvsp5)
-end
-when 16 then
---|#line 123 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 123")
-end
-
-	l_yyvs2 := yyvs2
-	check l_yyvs2 /= Void end
-			yyval5 := new_basic_type (l_yyvs2.item (yyvsp2))
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	yyvsp5 := yyvsp5 + 1
-	yyvsp2 := yyvsp2 -1
-	l_yyvs5	:= yyvs5
-	if yyvsp5 >= yyvsc5 then
-		if l_yyvs5 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs5")
-			end
-			create l_yyspecial_routines5
-			yyspecial_routines5 := l_yyspecial_routines5
-			yyvsc5 := yyInitial_yyvs_size
-			l_yyvs5 := l_yyspecial_routines5.make (yyvsc5)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs5")
-			end
-			yyvsc5 := yyvsc5 + yyInitial_yyvs_size
-			l_yyspecial_routines5 := yyspecial_routines5
-			check l_yyspecial_routines5 /= Void end
-			l_yyvs5 := l_yyspecial_routines5.resize (l_yyvs5, yyvsc5)
-		end
-		yyvs5 := l_yyvs5
-	else
-		check l_yyvs5 /= Void end
-	end
-	l_yyvs5.put (yyval5, yyvsp5)
-end
-when 17 then
 --|#line 127 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 127")
 end
 
-	l_yyvs2 := yyvs2
-	check l_yyvs2 /= Void end
-			yyval5 := new_basic_type (l_yyvs2.item (yyvsp2))
-
+			yyval5 := new_type (yyvs2.item (yyvsp2))
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp5 := yyvsp5 + 1
 	yyvsp2 := yyvsp2 -1
-	l_yyvs5 := yyvs5
 	if yyvsp5 >= yyvsc5 then
-		if l_yyvs5 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs5")
-			end
-			create l_yyspecial_routines5
-			yyspecial_routines5 := l_yyspecial_routines5
-			yyvsc5 := yyInitial_yyvs_size
-			l_yyvs5 := l_yyspecial_routines5.make (yyvsc5)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs5")
-			end
-			yyvsc5 := yyvsc5 + yyInitial_yyvs_size
-			l_yyspecial_routines5 := yyspecial_routines5
-			check l_yyspecial_routines5 /= Void end
-			l_yyvs5 := l_yyspecial_routines5.resize (l_yyvs5, yyvsc5)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs5")
 		end
-		yyvs5 := l_yyvs5
-	else
-		check l_yyvs5 /= Void end
+		yyvsc5 := yyvsc5 + yyInitial_yyvs_size
+		yyvs5 := yyspecial_routines5.resize (yyvs5, yyvsc5)
 	end
-	l_yyvs5.put (yyval5, yyvsp5)
+	yyvs5.put (yyval5, yyvsp5)
 end
-when 18 then
+when 16 then
 --|#line 131 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 131")
 end
 
-	l_yyvs2 := yyvs2
-	check l_yyvs2 /= Void end
-			yyval5 := new_basic_type (l_yyvs2.item (yyvsp2))
-
+			yyval5 := new_basic_type (yyvs2.item (yyvsp2))
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp5 := yyvsp5 + 1
 	yyvsp2 := yyvsp2 -1
-	l_yyvs5 := yyvs5
 	if yyvsp5 >= yyvsc5 then
-		if l_yyvs5 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs5")
-			end
-			create l_yyspecial_routines5
-			yyspecial_routines5 := l_yyspecial_routines5
-			yyvsc5 := yyInitial_yyvs_size
-			l_yyvs5 := l_yyspecial_routines5.make (yyvsc5)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs5")
-			end
-			yyvsc5 := yyvsc5 + yyInitial_yyvs_size
-			l_yyspecial_routines5 := yyspecial_routines5
-			check l_yyspecial_routines5 /= Void end
-			l_yyvs5 := l_yyspecial_routines5.resize (l_yyvs5, yyvsc5)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs5")
 		end
-		yyvs5 := l_yyvs5
-	else
-		check l_yyvs5 /= Void end
+		yyvsc5 := yyvsc5 + yyInitial_yyvs_size
+		yyvs5 := yyspecial_routines5.resize (yyvs5, yyvsc5)
 	end
-	l_yyvs5.put (yyval5, yyvsp5)
+	yyvs5.put (yyval5, yyvsp5)
 end
-when 19 then
+when 17 then
 --|#line 135 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 135")
 end
 
-	l_yyvs2 := yyvs2
-	check l_yyvs2 /= Void end
-			yyval5 := new_basic_type (l_yyvs2.item (yyvsp2))
-
+			yyval5 := new_basic_type (yyvs2.item (yyvsp2))
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp5 := yyvsp5 + 1
 	yyvsp2 := yyvsp2 -1
-	l_yyvs5 := yyvs5
 	if yyvsp5 >= yyvsc5 then
-		if l_yyvs5 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs5")
-			end
-			create l_yyspecial_routines5
-			yyspecial_routines5 := l_yyspecial_routines5
-			yyvsc5 := yyInitial_yyvs_size
-			l_yyvs5 := l_yyspecial_routines5.make (yyvsc5)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs5")
-			end
-			yyvsc5 := yyvsc5 + yyInitial_yyvs_size
-			l_yyspecial_routines5 := yyspecial_routines5
-			check l_yyspecial_routines5 /= Void end
-			l_yyvs5 := l_yyspecial_routines5.resize (l_yyvs5, yyvsc5)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs5")
 		end
-		yyvs5 := l_yyvs5
-	else
-		check l_yyvs5 /= Void end
+		yyvsc5 := yyvsc5 + yyInitial_yyvs_size
+		yyvs5 := yyspecial_routines5.resize (yyvs5, yyvsc5)
 	end
-	l_yyvs5.put (yyval5, yyvsp5)
+	yyvs5.put (yyval5, yyvsp5)
 end
-when 20 then
+when 18 then
 --|#line 139 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 139")
 end
 
-	l_yyvs2 := yyvs2
-	check l_yyvs2 /= Void end
-			yyval5 := new_basic_type (l_yyvs2.item (yyvsp2))
-
+			yyval5 := new_basic_type (yyvs2.item (yyvsp2))
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp5 := yyvsp5 + 1
 	yyvsp2 := yyvsp2 -1
-	l_yyvs5 := yyvs5
 	if yyvsp5 >= yyvsc5 then
-		if l_yyvs5 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs5")
-			end
-			create l_yyspecial_routines5
-			yyspecial_routines5 := l_yyspecial_routines5
-			yyvsc5 := yyInitial_yyvs_size
-			l_yyvs5 := l_yyspecial_routines5.make (yyvsc5)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs5")
-			end
-			yyvsc5 := yyvsc5 + yyInitial_yyvs_size
-			l_yyspecial_routines5 := yyspecial_routines5
-			check l_yyspecial_routines5 /= Void end
-			l_yyvs5 := l_yyspecial_routines5.resize (l_yyvs5, yyvsc5)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs5")
 		end
-		yyvs5 := l_yyvs5
-	else
-		check l_yyvs5 /= Void end
+		yyvsc5 := yyvsc5 + yyInitial_yyvs_size
+		yyvs5 := yyspecial_routines5.resize (yyvs5, yyvsc5)
 	end
-	l_yyvs5.put (yyval5, yyvsp5)
+	yyvs5.put (yyval5, yyvsp5)
 end
-when 21 then
+when 19 then
 --|#line 143 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 143")
 end
 
-	l_yyvs2 := yyvs2
-	check l_yyvs2 /= Void end
-			yyval5 := new_basic_type (l_yyvs2.item (yyvsp2))
-
+			yyval5 := new_basic_type (yyvs2.item (yyvsp2))
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp5 := yyvsp5 + 1
 	yyvsp2 := yyvsp2 -1
-	l_yyvs5 := yyvs5
 	if yyvsp5 >= yyvsc5 then
-		if l_yyvs5 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs5")
-			end
-			create l_yyspecial_routines5
-			yyspecial_routines5 := l_yyspecial_routines5
-			yyvsc5 := yyInitial_yyvs_size
-			l_yyvs5 := l_yyspecial_routines5.make (yyvsc5)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs5")
-			end
-			yyvsc5 := yyvsc5 + yyInitial_yyvs_size
-			l_yyspecial_routines5 := yyspecial_routines5
-			check l_yyspecial_routines5 /= Void end
-			l_yyvs5 := l_yyspecial_routines5.resize (l_yyvs5, yyvsc5)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs5")
 		end
-		yyvs5 := l_yyvs5
-	else
-		check l_yyvs5 /= Void end
+		yyvsc5 := yyvsc5 + yyInitial_yyvs_size
+		yyvs5 := yyspecial_routines5.resize (yyvs5, yyvsc5)
 	end
-	l_yyvs5.put (yyval5, yyvsp5)
+	yyvs5.put (yyval5, yyvsp5)
 end
-when 22 then
+when 20 then
 --|#line 147 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 147")
 end
 
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			l_yyvs6 := yyvs6
-			check l_yyvs6 /= Void end
-			yyval5 := new_generic_type (l_yyvs2.item (yyvsp2), l_yyvs6.item (yyvsp6))
-
+			yyval5 := new_basic_type (yyvs2.item (yyvsp2))
+		
 if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
+	yyssp := yyssp - 1
 	yyvsp5 := yyvsp5 + 1
 	yyvsp2 := yyvsp2 -1
-	yyvsp6 := yyvsp6 -1
-	l_yyvs5 := yyvs5
 	if yyvsp5 >= yyvsc5 then
-		if l_yyvs5 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs5")
-			end
-			create l_yyspecial_routines5
-			yyspecial_routines5 := l_yyspecial_routines5
-			yyvsc5 := yyInitial_yyvs_size
-			l_yyvs5 := l_yyspecial_routines5.make (yyvsc5)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs5")
-			end
-			yyvsc5 := yyvsc5 + yyInitial_yyvs_size
-			l_yyspecial_routines5 := yyspecial_routines5
-			check l_yyspecial_routines5 /= Void end
-			l_yyvs5 := l_yyspecial_routines5.resize (l_yyvs5, yyvsc5)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs5")
 		end
-		yyvs5 := l_yyvs5
-	else
-		check l_yyvs5 /= Void end
+		yyvsc5 := yyvsc5 + yyInitial_yyvs_size
+		yyvs5 := yyspecial_routines5.resize (yyvs5, yyvsc5)
 	end
-	l_yyvs5.put (yyval5, yyvsp5)
+	yyvs5.put (yyval5, yyvsp5)
 end
-when 23 then
+when 21 then
 --|#line 151 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 151")
 end
 
-	l_yyvs2 := yyvs2
-	check l_yyvs2 /= Void end
-			yyval5 := new_anchored_type (l_yyvs2.item (yyvsp2))
+			yyval5 := new_basic_type (yyvs2.item (yyvsp2))
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvsp5 := yyvsp5 + 1
+	yyvsp2 := yyvsp2 -1
+	if yyvsp5 >= yyvsc5 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs5")
+		end
+		yyvsc5 := yyvsc5 + yyInitial_yyvs_size
+		yyvs5 := yyspecial_routines5.resize (yyvs5, yyvsc5)
+	end
+	yyvs5.put (yyval5, yyvsp5)
+end
+when 22 then
+--|#line 155 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 155")
+end
 
+			yyval5 := new_generic_type (yyvs2.item (yyvsp2), yyvs6.item (yyvsp6))
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 2
+	yyvsp5 := yyvsp5 + 1
+	yyvsp2 := yyvsp2 -1
+	yyvsp6 := yyvsp6 -1
+	if yyvsp5 >= yyvsc5 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs5")
+		end
+		yyvsc5 := yyvsc5 + yyInitial_yyvs_size
+		yyvs5 := yyspecial_routines5.resize (yyvs5, yyvsc5)
+	end
+	yyvs5.put (yyval5, yyvsp5)
+end
+when 23 then
+--|#line 159 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 159")
+end
+
+			yyval5 := new_anchored_type (yyvs2.item (yyvsp2))
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp5 := yyvsp5 + 1
 	yyvsp2 := yyvsp2 -2
-	l_yyvs5 := yyvs5
 	if yyvsp5 >= yyvsc5 then
-		if l_yyvs5 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs5")
-			end
-			create l_yyspecial_routines5
-			yyspecial_routines5 := l_yyspecial_routines5
-			yyvsc5 := yyInitial_yyvs_size
-			l_yyvs5 := l_yyspecial_routines5.make (yyvsc5)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs5")
-			end
-			yyvsc5 := yyvsc5 + yyInitial_yyvs_size
-			l_yyspecial_routines5 := yyspecial_routines5
-			check l_yyspecial_routines5 /= Void end
-			l_yyvs5 := l_yyspecial_routines5.resize (l_yyvs5, yyvsc5)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs5")
 		end
-		yyvs5 := l_yyvs5
-	else
-		check l_yyvs5 /= Void end
+		yyvsc5 := yyvsc5 + yyInitial_yyvs_size
+		yyvs5 := yyspecial_routines5.resize (yyvs5, yyvsc5)
 	end
-	l_yyvs5.put (yyval5, yyvsp5)
+	yyvs5.put (yyval5, yyvsp5)
 end
 when 24 then
---|#line 157 "pr_yacc_parser.y"
+--|#line 165 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 157")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 165")
 end
 
-			l_yyvs6 := yyvs6
-			check l_yyvs6 /= Void end
-			yyval6 := l_yyvs6.item (yyvsp6)
-
+			yyval6 := yyvs6.item (yyvsp6)
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -2
-	l_yyvs6 := yyvs6
-	check l_yyvs6 /= Void end
-	l_yyvs6.put (yyval6, yyvsp6)
+	yyvs6.put (yyval6, yyvsp6)
 end
 when 25 then
---|#line 163 "pr_yacc_parser.y"
+--|#line 171 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 163")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 171")
 end
 
 			yyval6 := Void
-
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 0
 	yyvsp6 := yyvsp6 + 1
-	l_yyvs6 := yyvs6
 	if yyvsp6 >= yyvsc6 then
-		if l_yyvs6 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs6")
-			end
-			create l_yyspecial_routines6
-			yyspecial_routines6 := l_yyspecial_routines6
-			yyvsc6 := yyInitial_yyvs_size
-			l_yyvs6 := l_yyspecial_routines6.make (yyvsc6)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs6")
-			end
-			yyvsc6 := yyvsc6 + yyInitial_yyvs_size
-			l_yyspecial_routines6 := yyspecial_routines6
-			check l_yyspecial_routines6 /= Void end
-			l_yyvs6 := l_yyspecial_routines6.resize (l_yyvs6, yyvsc6)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs6")
 		end
-		yyvs6 := l_yyvs6
-	else
-		check l_yyvs6 /= Void end
+		yyvsc6 := yyvsc6 + yyInitial_yyvs_size
+		yyvs6 := yyspecial_routines6.resize (yyvs6, yyvsc6)
 	end
-	l_yyvs6.put_default (yyvsp6)
+	yyvs6.put (yyval6, yyvsp6)
 end
 when 26 then
---|#line 167 "pr_yacc_parser.y"
+--|#line 175 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 167")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 175")
 end
 
 			create yyval6.make (5)
-				l_yyvs5 := yyvs5
-				check l_yyvs5 /= Void end
-			yyval6.force_last (l_yyvs5.item (yyvsp5))
-
+			check yyval6 /= Void end -- FIXME:jfiat
+			if {l_type_1: PR_TYPE} yyvs5.item (yyvsp5) then
+				yyval6.force_last (l_type_1)
+			else
+				check False end
+			end
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp6 := yyvsp6 + 1
 	yyvsp5 := yyvsp5 -1
-	l_yyvs6 := yyvs6
 	if yyvsp6 >= yyvsc6 then
-		if l_yyvs6 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs6")
-			end
-			create l_yyspecial_routines6
-			yyspecial_routines6 := l_yyspecial_routines6
-			yyvsc6 := yyInitial_yyvs_size
-			l_yyvs6 := l_yyspecial_routines6.make (yyvsc6)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs6")
-			end
-			yyvsc6 := yyvsc6 + yyInitial_yyvs_size
-			l_yyspecial_routines6 := yyspecial_routines6
-			check l_yyspecial_routines6 /= Void end
-			l_yyvs6 := l_yyspecial_routines6.resize (l_yyvs6, yyvsc6)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs6")
 		end
-		yyvs6 := l_yyvs6
-	else
-		check l_yyvs6 /= Void end
+		yyvsc6 := yyvsc6 + yyInitial_yyvs_size
+		yyvs6 := yyspecial_routines6.resize (yyvs6, yyvsc6)
 	end
-	l_yyvs6.put (yyval6, yyvsp6)
+	yyvs6.put (yyval6, yyvsp6)
 end
 when 27 then
---|#line 172 "pr_yacc_parser.y"
+--|#line 185 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 172")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 185")
 end
 
-			l_yyvs6 := yyvs6
-			check l_yyvs6 /= Void end
-			yyval6 := l_yyvs6.item (yyvsp6)
-			l_yyvs5 := yyvs5
-			check l_yyvs5 /= Void end
-			yyval6.force_last (l_yyvs5.item (yyvsp5))
-
+			yyval6 := yyvs6.item (yyvsp6)
+			check yyval6 /= Void end
+			if {l_type_3: PR_TYPE} yyvs5.item (yyvsp5) then
+				yyval6.force_last (l_type_3)
+			else
+				check False end
+			end
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -1
 	yyvsp5 := yyvsp5 -1
-	l_yyvs6 := yyvs6
-	check l_yyvs6 /= Void end
-	l_yyvs6.put (yyval6, yyvsp6)
+	yyvs6.put (yyval6, yyvsp6)
 end
 when 28 then
---|#line 179 "pr_yacc_parser.y"
+--|#line 197 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 179")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 197")
 end
 
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 0
 	yyvsp1 := yyvsp1 + 1
-	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
 		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
 	end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
 when 29 then
---|#line 180 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 180")
-end
-
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp4 := yyvsp4 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 30 then
---|#line 181 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 181")
-end
-
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 3
-	yyvsp1 := yyvsp1 -1
-	yyvsp4 := yyvsp4 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 31 then
---|#line 184 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 184")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			l_type := type
-			check l_type /= Void end
-			yyval4 := new_terminal (l_yyvs2.item (yyvsp2), l_type)
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
-end
-when 32 then
---|#line 188 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 188")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			l_type := type
-			check l_type /= Void end
-			yyval4 := new_terminal (l_yyvs2.item (yyvsp2), l_type)
-			l_yyvs3 := yyvs3
-			check l_yyvs3 /= Void end
-			set_token_id (yyval4, l_yyvs3.item (yyvsp3))
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -1
-	yyvsp3 := yyvsp3 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
-end
-when 33 then
---|#line 193 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 193")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			l_type := type
-			check l_type /= Void end
-			yyval4 := new_terminal (l_yyvs2.item (yyvsp2 - 1), l_type)
-			set_literal_string (yyval4, l_yyvs2.item (yyvsp2))
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -2
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
-end
-when 34 then
 --|#line 198 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 198")
 end
 
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			l_type := type
-			check l_type /= Void end
-			yyval4 := new_terminal (l_yyvs2.item (yyvsp2 - 1), l_type)
-			l_yyvs3 := yyvs3
-			check l_yyvs3 /= Void end
-			set_token_id (yyval4, l_yyvs3.item (yyvsp3))
-			set_literal_string (yyval4, l_yyvs2.item (yyvsp2))
+
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 2
+	yyvsp4 := yyvsp4 -1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 30 then
+--|#line 199 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 199")
+end
+
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -2
-	yyvsp3 := yyvsp3 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
+	yyvsp1 := yyvsp1 -1
+	yyvsp4 := yyvsp4 -1
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 35 then
---|#line 204 "pr_yacc_parser.y"
+when 31 then
+--|#line 202 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 204")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 202")
 end
 
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			l_type := type
-			check l_type /= Void end
-			yyval4 := new_char_terminal (l_yyvs2.item (yyvsp2), l_type)
-
+			yyval4 := new_terminal (yyvs2.item (yyvsp2), type)
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp4 := yyvsp4 + 1
 	yyvsp2 := yyvsp2 -1
-	l_yyvs4 := yyvs4
 	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
 		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
 	end
-	l_yyvs4.put (yyval4, yyvsp4)
+	yyvs4.put (yyval4, yyvsp4)
 end
-when 36 then
---|#line 210 "pr_yacc_parser.y"
+when 32 then
+--|#line 206 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 210")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 206")
 end
 
-
+			yyval4 := new_terminal (yyvs2.item (yyvsp2), type)
+			set_token_id (yyval4, yyvs3.item (yyvsp3))
+		
 if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 0
-	yyvsp1 := yyvsp1 + 1
-	l_yyvs1 := yyvs1
-	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
+	yyssp := yyssp - 2
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -1
+	yyvsp3 := yyvsp3 -1
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
 		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
 	end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs4.put (yyval4, yyvsp4)
 end
-when 37 then
+when 33 then
 --|#line 211 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 211")
 end
 
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp4 := yyvsp4 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 38 then
---|#line 212 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 212")
-end
-
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 3
-	yyvsp1 := yyvsp1 -1
-	yyvsp4 := yyvsp4 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 39 then
---|#line 215 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 215")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_left_terminal (l_yyvs2.item (yyvsp2), precedence)
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
-end
-when 40 then
---|#line 219 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 219")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_left_terminal (l_yyvs2.item (yyvsp2), precedence)
-			l_yyvs3 := yyvs3
-			check l_yyvs3 /= Void end
-			set_token_id (yyval4, l_yyvs3.item (yyvsp3))
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -1
-	yyvsp3 := yyvsp3 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
-end
-when 41 then
---|#line 224 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 224")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_left_terminal (l_yyvs2.item (yyvsp2 - 1), precedence)
-			set_literal_string (yyval4, l_yyvs2.item (yyvsp2))
-
+			yyval4 := new_terminal (yyvs2.item (yyvsp2 - 1), type)
+			set_literal_string (yyval4, yyvs2.item (yyvsp2))
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 + 1
 	yyvsp2 := yyvsp2 -2
-	l_yyvs4 := yyvs4
 	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
 		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
 	end
-	l_yyvs4.put (yyval4, yyvsp4)
+	yyvs4.put (yyval4, yyvsp4)
 end
-when 42 then
+when 34 then
+--|#line 216 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 216")
+end
+
+			yyval4 := new_terminal (yyvs2.item (yyvsp2 - 1), type)
+			set_token_id (yyval4, yyvs3.item (yyvsp3))
+			set_literal_string (yyval4, yyvs2.item (yyvsp2))
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 3
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -2
+	yyvsp3 := yyvsp3 -1
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
+		end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
+	end
+	yyvs4.put (yyval4, yyvsp4)
+end
+when 35 then
+--|#line 222 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 222")
+end
+
+			yyval4 := new_char_terminal (yyvs2.item (yyvsp2), type)
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -1
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
+		end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
+	end
+	yyvs4.put (yyval4, yyvsp4)
+end
+when 36 then
+--|#line 228 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 228")
+end
+
+
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 0
+	yyvsp1 := yyvsp1 + 1
+	if yyvsp1 >= yyvsc1 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
+		end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
+	end
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 37 then
 --|#line 229 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 229")
 end
 
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_left_terminal (l_yyvs2.item (yyvsp2 - 1), precedence)
-			l_yyvs3 := yyvs3
-			check l_yyvs3 /= Void end
-			set_token_id (yyval4, l_yyvs3.item (yyvsp3))
-			set_literal_string (yyval4, l_yyvs2.item (yyvsp2))
+
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 2
+	yyvsp4 := yyvsp4 -1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 38 then
+--|#line 230 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 230")
+end
+
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -2
-	yyvsp3 := yyvsp3 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
+	yyvsp1 := yyvsp1 -1
+	yyvsp4 := yyvsp4 -1
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 43 then
---|#line 235 "pr_yacc_parser.y"
+when 39 then
+--|#line 233 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 235")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 233")
 end
 
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_left_char_terminal (l_yyvs2.item (yyvsp2), precedence)
-
+			yyval4 := new_left_terminal (yyvs2.item (yyvsp2), precedence)
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp4 := yyvsp4 + 1
 	yyvsp2 := yyvsp2 -1
-	l_yyvs4 := yyvs4
 	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
 		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
 	end
-	l_yyvs4.put (yyval4, yyvsp4)
+	yyvs4.put (yyval4, yyvsp4)
 end
-when 44 then
---|#line 241 "pr_yacc_parser.y"
+when 40 then
+--|#line 237 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 241")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 237")
 end
 
-
+			yyval4 := new_left_terminal (yyvs2.item (yyvsp2), precedence)
+			set_token_id (yyval4, yyvs3.item (yyvsp3))
+		
 if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 0
-	yyvsp1 := yyvsp1 + 1
-	l_yyvs1 := yyvs1
-	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
+	yyssp := yyssp - 2
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -1
+	yyvsp3 := yyvsp3 -1
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
 		end
-	else
-		check l_yyvs1 /= Void end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
 	end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs4.put (yyval4, yyvsp4)
 end
-when 45 then
+when 41 then
 --|#line 242 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 242")
 end
 
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp4 := yyvsp4 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 46 then
---|#line 243 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 243")
-end
-
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 3
-	yyvsp1 := yyvsp1 -1
-	yyvsp4 := yyvsp4 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 47 then
---|#line 246 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 246")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_right_terminal (l_yyvs2.item (yyvsp2), precedence)
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
-end
-when 48 then
---|#line 250 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 250")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_right_terminal (l_yyvs2.item (yyvsp2), precedence)
-			l_yyvs3 := yyvs3
-			check l_yyvs3 /= Void end
-			set_token_id (yyval4, l_yyvs3.item (yyvsp3))
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -1
-	yyvsp3 := yyvsp3 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
-end
-when 49 then
---|#line 255 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 255")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_right_terminal (l_yyvs2.item (yyvsp2 - 1), precedence)
-			set_literal_string (yyval4, l_yyvs2.item (yyvsp2))
-
+			yyval4 := new_left_terminal (yyvs2.item (yyvsp2 - 1), precedence)
+			set_literal_string (yyval4, yyvs2.item (yyvsp2))
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 + 1
 	yyvsp2 := yyvsp2 -2
-	l_yyvs4 := yyvs4
 	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
 		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
 	end
-	l_yyvs4.put (yyval4, yyvsp4)
+	yyvs4.put (yyval4, yyvsp4)
 end
-when 50 then
+when 42 then
+--|#line 247 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 247")
+end
+
+			yyval4 := new_left_terminal (yyvs2.item (yyvsp2 - 1), precedence)
+			set_token_id (yyval4, yyvs3.item (yyvsp3))
+			set_literal_string (yyval4, yyvs2.item (yyvsp2))
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 3
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -2
+	yyvsp3 := yyvsp3 -1
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
+		end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
+	end
+	yyvs4.put (yyval4, yyvsp4)
+end
+when 43 then
+--|#line 253 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 253")
+end
+
+			yyval4 := new_left_char_terminal (yyvs2.item (yyvsp2), precedence)
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -1
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
+		end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
+	end
+	yyvs4.put (yyval4, yyvsp4)
+end
+when 44 then
+--|#line 259 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 259")
+end
+
+
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 0
+	yyvsp1 := yyvsp1 + 1
+	if yyvsp1 >= yyvsc1 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
+		end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
+	end
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 45 then
 --|#line 260 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 260")
 end
 
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_right_terminal (l_yyvs2.item (yyvsp2 - 1), precedence)
-			l_yyvs3 := yyvs3
-			check l_yyvs3 /= Void end
-			set_token_id (yyval4, l_yyvs3.item (yyvsp3))
-			set_literal_string (yyval4, l_yyvs2.item (yyvsp2))
+
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 2
+	yyvsp4 := yyvsp4 -1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 46 then
+--|#line 261 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 261")
+end
+
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -2
-	yyvsp3 := yyvsp3 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
+	yyvsp1 := yyvsp1 -1
+	yyvsp4 := yyvsp4 -1
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 51 then
---|#line 266 "pr_yacc_parser.y"
+when 47 then
+--|#line 264 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 266")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 264")
 end
 
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_right_char_terminal (l_yyvs2.item (yyvsp2), precedence)
-
+			yyval4 := new_right_terminal (yyvs2.item (yyvsp2), precedence)
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp4 := yyvsp4 + 1
 	yyvsp2 := yyvsp2 -1
-	l_yyvs4 := yyvs4
 	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
 		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
 	end
-	l_yyvs4.put (yyval4, yyvsp4)
+	yyvs4.put (yyval4, yyvsp4)
 end
-when 52 then
---|#line 272 "pr_yacc_parser.y"
+when 48 then
+--|#line 268 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 272")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 268")
 end
 
-
+			yyval4 := new_right_terminal (yyvs2.item (yyvsp2), precedence)
+			set_token_id (yyval4, yyvs3.item (yyvsp3))
+		
 if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 0
-	yyvsp1 := yyvsp1 + 1
-	l_yyvs1 := yyvs1
-	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
+	yyssp := yyssp - 2
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -1
+	yyvsp3 := yyvsp3 -1
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
 		end
-	else
-		check l_yyvs1 /= Void end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
 	end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs4.put (yyval4, yyvsp4)
 end
-when 53 then
+when 49 then
 --|#line 273 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 273")
 end
 
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp4 := yyvsp4 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 54 then
---|#line 274 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 274")
-end
-
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 3
-	yyvsp1 := yyvsp1 -1
-	yyvsp4 := yyvsp4 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 55 then
---|#line 277 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 277")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_nonassoc_terminal (l_yyvs2.item (yyvsp2), precedence)
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
-end
-when 56 then
---|#line 281 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 281")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_nonassoc_terminal (l_yyvs2.item (yyvsp2), precedence)
-			l_yyvs3 := yyvs3
-			check l_yyvs3 /= Void end
-			set_token_id (yyval4, l_yyvs3.item (yyvsp3))
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -1
-	yyvsp3 := yyvsp3 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
-end
-when 57 then
---|#line 286 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 286")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_nonassoc_terminal (l_yyvs2.item (yyvsp2 - 1), precedence)
-			set_literal_string (yyval4, l_yyvs2.item (yyvsp2))
-
+			yyval4 := new_right_terminal (yyvs2.item (yyvsp2 - 1), precedence)
+			set_literal_string (yyval4, yyvs2.item (yyvsp2))
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 + 1
 	yyvsp2 := yyvsp2 -2
-	l_yyvs4 := yyvs4
 	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
 		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
 	end
-	l_yyvs4.put (yyval4, yyvsp4)
+	yyvs4.put (yyval4, yyvsp4)
 end
-when 58 then
+when 50 then
+--|#line 278 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 278")
+end
+
+			yyval4 := new_right_terminal (yyvs2.item (yyvsp2 - 1), precedence)
+			set_token_id (yyval4, yyvs3.item (yyvsp3))
+			set_literal_string (yyval4, yyvs2.item (yyvsp2))
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 3
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -2
+	yyvsp3 := yyvsp3 -1
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
+		end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
+	end
+	yyvs4.put (yyval4, yyvsp4)
+end
+when 51 then
+--|#line 284 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 284")
+end
+
+			yyval4 := new_right_char_terminal (yyvs2.item (yyvsp2), precedence)
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -1
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
+		end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
+	end
+	yyvs4.put (yyval4, yyvsp4)
+end
+when 52 then
+--|#line 290 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 290")
+end
+
+
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 0
+	yyvsp1 := yyvsp1 + 1
+	if yyvsp1 >= yyvsc1 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
+		end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
+	end
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 53 then
 --|#line 291 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 291")
 end
 
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_nonassoc_terminal (l_yyvs2.item (yyvsp2 - 1), precedence)
-			l_yyvs3 := yyvs3
-			check l_yyvs3 /= Void end
-			set_token_id (yyval4, l_yyvs3.item (yyvsp3))
-			set_literal_string (yyval4, l_yyvs2.item (yyvsp2))
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 3
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -2
-	yyvsp3 := yyvsp3 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
-end
-when 59 then
---|#line 297 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 297")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_nonassoc_char_terminal (l_yyvs2.item (yyvsp2), precedence)
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	yyvsp4 := yyvsp4 + 1
-	yyvsp2 := yyvsp2 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
-end
-when 60 then
---|#line 303 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 303")
-end
-
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 0
-	yyvsp1 := yyvsp1 + 1
-	l_yyvs1 := yyvs1
-	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
-		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
-	end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 61 then
---|#line 304 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 304")
-end
-
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
-	yyvsp1 := yyvsp1 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
+	yyvsp4 := yyvsp4 -1
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 62 then
---|#line 305 "pr_yacc_parser.y"
+when 54 then
+--|#line 292 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 305")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 292")
 end
 
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 3
-	yyvsp1 := yyvsp1 -2
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 63 then
---|#line 308 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 308")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			l_type := type
-			check l_type /= Void end
-			yyval1 := new_nonterminal (l_yyvs2.item (yyvsp2), l_type)
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	yyvsp1 := yyvsp1 + 1
-	yyvsp2 := yyvsp2 -1
-	l_yyvs1 := yyvs1
-	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
-		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
-	end
-	l_yyvs1.put (yyval1, yyvsp1)
-end
-when 64 then
---|#line 314 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 314")
-end
-
-			report_no_rules_error
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 0
-	yyvsp1 := yyvsp1 + 1
-	l_yyvs1 := yyvs1
-	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
-		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
-	end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 65 then
---|#line 318 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 318")
-end
-
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 66 then
---|#line 319 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 319")
-end
-
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp1 := yyvsp1 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 67 then
---|#line 322 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 322")
-end
-
-			l_rule := rule
-			check l_rule /= Void end
-			process_rule (l_rule)
-			rule := Void
-			precedence_token := Void
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 4
-	yyvsp1 := yyvsp1 -3
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 68 then
---|#line 330 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 330")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			if is_terminal (l_yyvs2.item (yyvsp2)) then
-				report_lhs_symbol_token_error (l_yyvs2.item (yyvsp2))
-				l_rule := new_rule (new_dummy_variable)
-				rule := l_rule
-			else
-				l_rule := new_rule (new_variable (l_yyvs2.item (yyvsp2)))
-				rule := l_rule
-				if l_rule.lhs.rules.count > 1 then
-					report_rule_declared_twice_warning (l_yyvs2.item (yyvsp2))
-				end
-			end
-			precedence_token := Void
-			put_rule (l_rule)
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	yyvsp1 := yyvsp1 + 1
-	yyvsp2 := yyvsp2 -1
-	l_yyvs1 := yyvs1
-	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
-		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
-	end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 69 then
---|#line 346 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 346")
-end
-			l_rule := rule
-			check l_rule /= Void end
-			l_yyvs3 := yyvs3
-			check l_yyvs3 /= Void end
-			l_rule.set_line_nb (l_yyvs3.item (yyvsp3))
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	yyvsp1 := yyvsp1 + 1
-	yyvsp3 := yyvsp3 -1
-	l_yyvs1 := yyvs1
-	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
-		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
-	end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 70 then
---|#line 352 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 352")
-end
-
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 71 then
---|#line 353 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 353")
-end
-
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 3
-	yyvsp1 := yyvsp1 -2
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 72 then
---|#line 356 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 356")
-end
-
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 73 then
---|#line 357 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 357")
-end
-
-			l_rule := rule
-			check l_rule /= Void end
-			l_yyvs3 := yyvs3
-			check l_yyvs3 /= Void end
-			if l_yyvs3.item (yyvsp3) < 1 or l_yyvs3.item (yyvsp3) > l_rule.error_actions.count then
-				report_invalid_error_n_error (l_yyvs3.item (yyvsp3))
-			else
-				l_yyvs2 := yyvs2
-				check l_yyvs2 /= Void end
-				put_error_action (new_error_action (l_yyvs2.item (yyvsp2), l_yyvs3.item (yyvsp3 - 1)), l_yyvs3.item (yyvsp3), l_rule)
-			end
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 6
-	yyvsp1 := yyvsp1 -2
-	yyvsp3 := yyvsp3 -2
-	yyvsp2 := yyvsp2 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 74 then
---|#line 367 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 367")
-end
-
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 0
-	yyvsp1 := yyvsp1 + 1
-	l_yyvs1 := yyvs1
-	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
-		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
-	end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 75 then
---|#line 368 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 368")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			l_rule := rule
-			check l_rule /= Void end
-			put_symbol (new_symbol (l_yyvs2.item (yyvsp2)), l_rule)
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp2 := yyvsp2 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 76 then
---|#line 372 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 372")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			l_rule := rule
-			check l_rule /= Void end
-			put_symbol (new_char_token (l_yyvs2.item (yyvsp2)), l_rule)
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp2 := yyvsp2 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 77 then
---|#line 376 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 376")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			l_rule := rule
-			check l_rule /= Void end
-			put_symbol (new_string_token (l_yyvs2.item (yyvsp2)), l_rule)
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp2 := yyvsp2 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 78 then
---|#line 380 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 380")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			l_rule := rule
-			check l_rule /= Void end
-			put_action (new_action (l_yyvs2.item (yyvsp2)), l_rule)
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 2
-	yyvsp2 := yyvsp2 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 79 then
---|#line 384 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 384")
-end
-
-			if precedence_token /= Void then
-				report_prec_specified_twice_error
-			else
-				l_yyvs4 := yyvs4
-				check l_yyvs4 /= Void end
-				precedence_token := l_yyvs4.item (yyvsp4)
-			end
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 3
 	yyvsp1 := yyvsp1 -1
 	yyvsp4 := yyvsp4 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 80 then
---|#line 394 "pr_yacc_parser.y"
+when 55 then
+--|#line 295 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 394")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 295")
 end
 
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			if is_terminal (l_yyvs2.item (yyvsp2)) then
-				yyval4 := new_token (l_yyvs2.item (yyvsp2))
-			else
-				report_prec_not_token_error (l_yyvs2.item (yyvsp2))
-				yyval4 := new_char_token ("'a'")
-			end
-
+			yyval4 := new_nonassoc_terminal (yyvs2.item (yyvsp2), precedence)
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp4 := yyvsp4 + 1
 	yyvsp2 := yyvsp2 -1
-	l_yyvs4 := yyvs4
 	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
 		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
 	end
-	l_yyvs4.put (yyval4, yyvsp4)
+	yyvs4.put (yyval4, yyvsp4)
 end
-when 81 then
---|#line 403 "pr_yacc_parser.y"
+when 56 then
+--|#line 299 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 403")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 299")
 end
 
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			yyval4 := new_char_token (l_yyvs2.item (yyvsp2))
-
+			yyval4 := new_nonassoc_terminal (yyvs2.item (yyvsp2), precedence)
+			set_token_id (yyval4, yyvs3.item (yyvsp3))
+		
 if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
+	yyssp := yyssp - 2
 	yyvsp4 := yyvsp4 + 1
 	yyvsp2 := yyvsp2 -1
-	l_yyvs4 := yyvs4
-	if yyvsp4 >= yyvsc4 then
-		if l_yyvs4 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs4")
-			end
-			create l_yyspecial_routines4
-			yyspecial_routines4 := l_yyspecial_routines4
-			yyvsc4 := yyInitial_yyvs_size
-			l_yyvs4 := l_yyspecial_routines4.make (yyvsc4)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs4")
-			end
-			yyvsc4 := yyvsc4 + yyInitial_yyvs_size
-			l_yyspecial_routines4 := yyspecial_routines4
-			check l_yyspecial_routines4 /= Void end
-			l_yyvs4 := l_yyspecial_routines4.resize (l_yyvs4, yyvsc4)
-		end
-		yyvs4 := l_yyvs4
-	else
-		check l_yyvs4 /= Void end
-	end
-	l_yyvs4.put (yyval4, yyvsp4)
-end
-when 82 then
---|#line 409 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 409")
-end
-
-			l_rule := rule
-			check l_rule /= Void end
-			process_rule (l_rule)
-			l_rule := new_rule (l_rule.lhs)
-			rule := l_rule
-			precedence_token := Void
-			l_yyvs3 := yyvs3
-			check l_yyvs3 /= Void end
-			l_rule.set_line_nb (l_yyvs3.item (yyvsp3))
-			put_rule (l_rule)
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	yyvsp1 := yyvsp1 + 1
 	yyvsp3 := yyvsp3 -1
-	l_yyvs1 := yyvs1
-	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
 		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
 	end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs4.put (yyval4, yyvsp4)
 end
-when 83 then
---|#line 419 "pr_yacc_parser.y"
+when 57 then
+--|#line 304 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 419")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 304")
+end
+
+			yyval4 := new_nonassoc_terminal (yyvs2.item (yyvsp2 - 1), precedence)
+			set_literal_string (yyval4, yyvs2.item (yyvsp2))
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 2
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -2
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
+		end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
+	end
+	yyvs4.put (yyval4, yyvsp4)
+end
+when 58 then
+--|#line 309 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 309")
+end
+
+			yyval4 := new_nonassoc_terminal (yyvs2.item (yyvsp2 - 1), precedence)
+			set_token_id (yyval4, yyvs3.item (yyvsp3))
+			set_literal_string (yyval4, yyvs2.item (yyvsp2))
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 3
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -2
+	yyvsp3 := yyvsp3 -1
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
+		end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
+	end
+	yyvs4.put (yyval4, yyvsp4)
+end
+when 59 then
+--|#line 315 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 315")
+end
+
+			yyval4 := new_nonassoc_char_terminal (yyvs2.item (yyvsp2), precedence)
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -1
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
+		end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
+	end
+	yyvs4.put (yyval4, yyvsp4)
+end
+when 60 then
+--|#line 321 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 321")
 end
 
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 0
 	yyvsp1 := yyvsp1 + 1
-	l_yyvs1 := yyvs1
 	if yyvsp1 >= yyvsc1 then
-		if l_yyvs1 = Void then
-			debug ("GEYACC")
-				std.error.put_line ("Create yyvs1")
-			end
-			create l_yyspecial_routines1
-			yyspecial_routines1 := l_yyspecial_routines1
-			yyvsc1 := yyInitial_yyvs_size
-			l_yyvs1 := l_yyspecial_routines1.make (yyvsc1)
-		else
-			debug ("GEYACC")
-				std.error.put_line ("Resize yyvs1")
-			end
-			yyvsc1 := yyvsc1 + yyInitial_yyvs_size
-			l_yyspecial_routines1 := yyspecial_routines1
-			check l_yyspecial_routines1 /= Void end
-			l_yyvs1 := l_yyspecial_routines1.resize (l_yyvs1, yyvsc1)
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
 		end
-		yyvs1 := l_yyvs1
-	else
-		check l_yyvs1 /= Void end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
 	end
-	l_yyvs1.put_default (yyvsp1)
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 84 then
---|#line 420 "pr_yacc_parser.y"
+when 61 then
+--|#line 322 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 420")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 322")
 end
 
-
-if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
-end
-when 85 then
---|#line 421 "pr_yacc_parser.y"
-debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 421")
-end
-
-			l_yyvs2 := yyvs2
-			check l_yyvs2 /= Void end
-			last_grammar.set_eiffel_code (l_yyvs2.item (yyvsp2))
 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 2
+	yyvsp1 := yyvsp1 -1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 62 then
+--|#line 323 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 323")
+end
+
+
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 3
+	yyvsp1 := yyvsp1 -2
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 63 then
+--|#line 326 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 326")
+end
+
+			yyval1 := new_nonterminal (yyvs2.item (yyvsp2), type)
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvsp1 := yyvsp1 + 1
 	yyvsp2 := yyvsp2 -1
-	l_yyvs1 := yyvs1
-	check l_yyvs1 /= Void end
-	l_yyvs1.put_default (yyvsp1)
+	if yyvsp1 >= yyvsc1 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
+		end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
+	end
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 86 then
---|#line 427 "pr_yacc_parser.y"
+when 64 then
+--|#line 332 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 427")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 332")
 end
 
-l_yyvs2 := yyvs2
-check l_yyvs2 /= Void end
-yyval2 := l_yyvs2.item (yyvsp2)
+			report_no_rules_error
+		
 if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	l_yyvs2.put (yyval2, yyvsp2)
+	yyssp := yyssp - 0
+	yyvsp1 := yyvsp1 + 1
+	if yyvsp1 >= yyvsc1 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
+		end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
+	end
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 87 then
---|#line 429 "pr_yacc_parser.y"
+when 65 then
+--|#line 336 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 429")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 336")
 end
 
-l_yyvs2 := yyvs2
-check l_yyvs2 /= Void end
-yyval2 := l_yyvs2.item (yyvsp2)
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	l_yyvs2.put (yyval2, yyvsp2)
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 88 then
---|#line 431 "pr_yacc_parser.y"
+when 66 then
+--|#line 337 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 431")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 337")
 end
 
-l_yyvs2 := yyvs2
-check l_yyvs2 /= Void end
-yyval2 := l_yyvs2.item (yyvsp2)
+
 if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	l_yyvs2.put (yyval2, yyvsp2)
+	yyssp := yyssp - 2
+	yyvsp1 := yyvsp1 -1
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 89 then
---|#line 433 "pr_yacc_parser.y"
+when 67 then
+--|#line 340 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 433")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 340")
 end
 
-l_yyvs2 := yyvs2
-check l_yyvs2 /= Void end
-yyval2 := l_yyvs2.item (yyvsp2)
+			if {l_rule_0: like rule} rule then
+				process_rule (l_rule_0)
+			else
+				check False end
+			end
+			rule := Void
+			precedence_token := Void
+		
 if yy_parsing_status >= yyContinue then
-	yyssp := yyssp - 1
-	l_yyvs2.put (yyval2, yyvsp2)
+	yyssp := yyssp - 4
+	yyvsp1 := yyvsp1 -3
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 90 then
---|#line 435 "pr_yacc_parser.y"
+when 68 then
+--|#line 352 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 435")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 352")
 end
 
-l_yyvs2 := yyvs2
-check l_yyvs2 /= Void end
-yyval2 := l_yyvs2.item (yyvsp2)
+			if is_terminal (yyvs2.item (yyvsp2)) then
+				report_lhs_symbol_token_error (yyvs2.item (yyvsp2))
+				rule := new_rule (new_dummy_variable)
+			else
+				rule := new_rule (new_variable (yyvs2.item (yyvsp2)))
+				if {l_rule_4: like rule} rule then
+					if l_rule_4.lhs.rules.count > 1 then
+						report_rule_declared_twice_warning (yyvs2.item (yyvsp2))
+					end
+				else
+					check False end
+				end
+			end
+			precedence_token := Void
+			if {l_rule_3: like rule} rule then
+				put_rule (l_rule_3)
+			else
+				check False end
+			end
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	l_yyvs2.put (yyval2, yyvsp2)
+	yyvsp1 := yyvsp1 + 1
+	yyvsp2 := yyvsp2 -1
+	if yyvsp1 >= yyvsc1 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
+		end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
+	end
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 91 then
---|#line 437 "pr_yacc_parser.y"
+when 69 then
+--|#line 376 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 437")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 376")
 end
 
-l_yyvs2 := yyvs2
-check l_yyvs2 /= Void end
-yyval2 := l_yyvs2.item (yyvsp2)
+			if {l_rule_5: like rule} rule then
+				l_rule_5.set_line_nb (yyvs3.item (yyvsp3))
+			else
+				check False end
+			end
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	l_yyvs2.put (yyval2, yyvsp2)
+	yyvsp1 := yyvsp1 + 1
+	yyvsp3 := yyvsp3 -1
+	if yyvsp1 >= yyvsc1 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
+		end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
+	end
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 92 then
---|#line 439 "pr_yacc_parser.y"
+when 70 then
+--|#line 386 "pr_yacc_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 439")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 386")
 end
 
-l_yyvs2 := yyvs2
-check l_yyvs2 /= Void end
-yyval2 := l_yyvs2.item (yyvsp2)
+
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	l_yyvs2.put (yyval2, yyvsp2)
+	yyvs1.put (yyval1, yyvsp1)
 end
-when 93 then
+when 71 then
+--|#line 387 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 387")
+end
+
+
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 3
+	yyvsp1 := yyvsp1 -2
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 72 then
+--|#line 390 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 390")
+end
+
+
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 73 then
+--|#line 391 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 391")
+end
+
+			if {l_rule_6: like rule} rule then
+				if yyvs3.item (yyvsp3) < 1 or yyvs3.item (yyvsp3) > l_rule_6.error_actions.count then
+					report_invalid_error_n_error (yyvs3.item (yyvsp3))
+				else
+					put_error_action (new_error_action (yyvs2.item (yyvsp2), yyvs3.item (yyvsp3 - 1)), yyvs3.item (yyvsp3), l_rule_6)
+				end
+			else
+				check False end
+			end
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 6
+	yyvsp1 := yyvsp1 -2
+	yyvsp3 := yyvsp3 -2
+	yyvsp2 := yyvsp2 -1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 74 then
+--|#line 405 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 405")
+end
+
+
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 0
+	yyvsp1 := yyvsp1 + 1
+	if yyvsp1 >= yyvsc1 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
+		end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
+	end
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 75 then
+--|#line 406 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 406")
+end
+
+			put_symbol (new_symbol (yyvs2.item (yyvsp2)), rule)
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 2
+	yyvsp2 := yyvsp2 -1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 76 then
+--|#line 410 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 410")
+end
+
+			put_symbol (new_char_token (yyvs2.item (yyvsp2)), rule)
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 2
+	yyvsp2 := yyvsp2 -1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 77 then
+--|#line 414 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 414")
+end
+
+			put_symbol (new_string_token (yyvs2.item (yyvsp2)), rule)
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 2
+	yyvsp2 := yyvsp2 -1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 78 then
+--|#line 418 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 418")
+end
+
+			put_action (new_action (yyvs2.item (yyvsp2)), rule)
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 2
+	yyvsp2 := yyvsp2 -1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 79 then
+--|#line 422 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 422")
+end
+
+			if precedence_token /= Void then
+				report_prec_specified_twice_error
+			else
+				precedence_token := yyvs4.item (yyvsp4)
+			end
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 3
+	yyvsp1 := yyvsp1 -1
+	yyvsp4 := yyvsp4 -1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 80 then
+--|#line 432 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 432")
+end
+
+			if is_terminal (yyvs2.item (yyvsp2)) then
+				yyval4 := new_token (yyvs2.item (yyvsp2))
+			else
+				report_prec_not_token_error (yyvs2.item (yyvsp2))
+				yyval4 := new_char_token ("'a'")
+			end
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -1
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
+		end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
+	end
+	yyvs4.put (yyval4, yyvsp4)
+end
+when 81 then
 --|#line 441 "pr_yacc_parser.y"
 debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 441")
 end
 
-l_yyvs2 := yyvs2
-check l_yyvs2 /= Void end
-yyval2 := l_yyvs2.item (yyvsp2)
+			yyval4 := new_char_token (yyvs2.item (yyvsp2))
+		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
-	l_yyvs2.put (yyval2, yyvsp2)
+	yyvsp4 := yyvsp4 + 1
+	yyvsp2 := yyvsp2 -1
+	if yyvsp4 >= yyvsc4 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs4")
+		end
+		yyvsc4 := yyvsc4 + yyInitial_yyvs_size
+		yyvs4 := yyspecial_routines4.resize (yyvs4, yyvsc4)
+	end
+	yyvs4.put (yyval4, yyvsp4)
+end
+when 82 then
+--|#line 447 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 447")
+end
+
+			if {l_rule_1: like rule} rule then
+				process_rule (l_rule_1)
+				rule := new_rule (l_rule_1.lhs)
+			else
+				check False end
+			end
+				precedence_token := Void
+			if {l_rule_2: like rule} rule then
+				l_rule_2.set_line_nb (yyvs3.item (yyvsp3))
+				put_rule (l_rule_2)
+			else
+				check False end
+			end
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvsp1 := yyvsp1 + 1
+	yyvsp3 := yyvsp3 -1
+	if yyvsp1 >= yyvsc1 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
+		end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
+	end
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 83 then
+--|#line 465 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 465")
+end
+
+
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 0
+	yyvsp1 := yyvsp1 + 1
+	if yyvsp1 >= yyvsc1 then
+		debug ("GEYACC")
+			std.error.put_line ("Resize yyvs1")
+		end
+		yyvsc1 := yyvsc1 + yyInitial_yyvs_size
+		yyvs1 := yyspecial_routines1.resize (yyvs1, yyvsc1)
+	end
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 84 then
+--|#line 466 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 466")
+end
+
+
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 85 then
+--|#line 467 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 467")
+end
+
+			last_grammar.set_eiffel_code (yyvs2.item (yyvsp2))
+		
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 2
+	yyvsp2 := yyvsp2 -1
+	yyvs1.put (yyval1, yyvsp1)
+end
+when 86 then
+--|#line 473 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 473")
+end
+
+yyval2 := yyvs2.item (yyvsp2) 
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvs2.put (yyval2, yyvsp2)
+end
+when 87 then
+--|#line 475 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 475")
+end
+
+yyval2 := yyvs2.item (yyvsp2) 
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvs2.put (yyval2, yyvsp2)
+end
+when 88 then
+--|#line 477 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 477")
+end
+
+yyval2 := yyvs2.item (yyvsp2) 
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvs2.put (yyval2, yyvsp2)
+end
+when 89 then
+--|#line 479 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 479")
+end
+
+yyval2 := yyvs2.item (yyvsp2) 
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvs2.put (yyval2, yyvsp2)
+end
+when 90 then
+--|#line 481 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 481")
+end
+
+yyval2 := yyvs2.item (yyvsp2) 
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvs2.put (yyval2, yyvsp2)
+end
+when 91 then
+--|#line 483 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 483")
+end
+
+yyval2 := yyvs2.item (yyvsp2) 
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvs2.put (yyval2, yyvsp2)
+end
+when 92 then
+--|#line 485 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 485")
+end
+
+yyval2 := yyvs2.item (yyvsp2) 
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvs2.put (yyval2, yyvsp2)
+end
+when 93 then
+--|#line 487 "pr_yacc_parser.y"
+debug ("GEYACC")
+	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 487")
+end
+
+yyval2 := yyvs2.item (yyvsp2) 
+if yy_parsing_status >= yyContinue then
+	yyssp := yyssp - 1
+	yyvs2.put (yyval2, yyvsp2)
 end
 			else
 				debug ("GEYACC")
@@ -3153,7 +2104,7 @@ feature {NONE} -- Table templates
 
 feature {NONE} -- Semantic value stacks
 
-	yyvs1: ?SPECIAL [ANY]
+	yyvs1: SPECIAL [?ANY]
 			-- Stack for semantic values of type ANY
 
 	yyvsc1: INTEGER
@@ -3162,10 +2113,10 @@ feature {NONE} -- Semantic value stacks
 	yyvsp1: INTEGER
 			-- Top of semantic value stack `yyvs1'
 
-	yyspecial_routines1: ?KL_SPECIAL_ROUTINES [ANY]
+	yyspecial_routines1: KL_SPECIAL_ROUTINES [?ANY]
 			-- Routines that ought to be in SPECIAL [ANY]
 
-	yyvs2: ?SPECIAL [STRING]
+	yyvs2: SPECIAL [?STRING]
 			-- Stack for semantic values of type STRING
 
 	yyvsc2: INTEGER
@@ -3174,10 +2125,10 @@ feature {NONE} -- Semantic value stacks
 	yyvsp2: INTEGER
 			-- Top of semantic value stack `yyvs2'
 
-	yyspecial_routines2: ?KL_SPECIAL_ROUTINES [STRING]
+	yyspecial_routines2: KL_SPECIAL_ROUTINES [?STRING]
 			-- Routines that ought to be in SPECIAL [STRING]
 
-	yyvs3: ?SPECIAL [INTEGER]
+	yyvs3: SPECIAL [INTEGER]
 			-- Stack for semantic values of type INTEGER
 
 	yyvsc3: INTEGER
@@ -3186,10 +2137,10 @@ feature {NONE} -- Semantic value stacks
 	yyvsp3: INTEGER
 			-- Top of semantic value stack `yyvs3'
 
-	yyspecial_routines3: ?KL_SPECIAL_ROUTINES [INTEGER]
+	yyspecial_routines3: KL_SPECIAL_ROUTINES [INTEGER]
 			-- Routines that ought to be in SPECIAL [INTEGER]
 
-	yyvs4: ?SPECIAL [PR_TOKEN]
+	yyvs4: SPECIAL [?PR_TOKEN]
 			-- Stack for semantic values of type PR_TOKEN
 
 	yyvsc4: INTEGER
@@ -3198,10 +2149,10 @@ feature {NONE} -- Semantic value stacks
 	yyvsp4: INTEGER
 			-- Top of semantic value stack `yyvs4'
 
-	yyspecial_routines4: ?KL_SPECIAL_ROUTINES [PR_TOKEN]
+	yyspecial_routines4: KL_SPECIAL_ROUTINES [?PR_TOKEN]
 			-- Routines that ought to be in SPECIAL [PR_TOKEN]
 
-	yyvs5: ?SPECIAL [PR_TYPE]
+	yyvs5: SPECIAL [?PR_TYPE]
 			-- Stack for semantic values of type PR_TYPE
 
 	yyvsc5: INTEGER
@@ -3210,10 +2161,10 @@ feature {NONE} -- Semantic value stacks
 	yyvsp5: INTEGER
 			-- Top of semantic value stack `yyvs5'
 
-	yyspecial_routines5: ?KL_SPECIAL_ROUTINES [PR_TYPE]
+	yyspecial_routines5: KL_SPECIAL_ROUTINES [?PR_TYPE]
 			-- Routines that ought to be in SPECIAL [PR_TYPE]
 
-	yyvs6: ?SPECIAL [DS_ARRAYED_LIST [PR_TYPE]]
+	yyvs6: SPECIAL [?DS_ARRAYED_LIST [PR_TYPE]]
 			-- Stack for semantic values of type DS_ARRAYED_LIST [PR_TYPE]
 
 	yyvsc6: INTEGER
@@ -3222,7 +2173,7 @@ feature {NONE} -- Semantic value stacks
 	yyvsp6: INTEGER
 			-- Top of semantic value stack `yyvs6'
 
-	yyspecial_routines6: ?KL_SPECIAL_ROUTINES [DS_ARRAYED_LIST [PR_TYPE]]
+	yyspecial_routines6: KL_SPECIAL_ROUTINES [?DS_ARRAYED_LIST [PR_TYPE]]
 			-- Routines that ought to be in SPECIAL [DS_ARRAYED_LIST [PR_TYPE]]
 
 feature {NONE} -- Constants

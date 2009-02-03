@@ -189,7 +189,7 @@ feature -- Namespace mode
 
 feature {NONE} -- Namespaces
 
-	namespace_force_last (a_name: XM_EIFFEL_PARSER_NAME; a_string: STRING) is
+	namespace_force_last (a_name: ?XM_EIFFEL_PARSER_NAME; a_string: ?STRING) is
 			-- Force last namespace name component, or error.
 		require
 			a_name_not_void: a_name /= Void
@@ -473,7 +473,7 @@ feature {NONE} -- Factory
 
 feature {NONE} -- Encoding
 
-	apply_encoding (an_encoding: STRING) is
+	apply_encoding (an_encoding: ?STRING) is
 			-- Set encoding on current scanner.
 		require
 			not_void: an_encoding /= Void
@@ -487,7 +487,7 @@ feature {NONE} -- Encoding
 
 feature {NONE} -- DTD
 
-	set_element_repetition (a_node: XM_DTD_ELEMENT_CONTENT; a_value: STRING) is
+	set_element_repetition (a_node: ?XM_DTD_ELEMENT_CONTENT; a_value: ?STRING) is
 			-- Set repetition status of a node.
 		require
 			a_node_not_void: a_node /= Void
@@ -511,7 +511,7 @@ feature {NONE} -- DTD
 	Zero_or_more_repetition: STRING is "*"
 			-- Special symbol: Zero or more
 
-	element_name (a_name: STRING): XM_DTD_ELEMENT_CONTENT is
+	element_name (a_name: ?STRING): XM_DTD_ELEMENT_CONTENT is
 			-- New element content name node
 		require
 			a_name_not_void: a_name /= Void
@@ -521,7 +521,7 @@ feature {NONE} -- DTD
 			element_name_not_void: Result /= Void
 		end
 
-	on_attribute_declarations (ele_name: STRING; some_attributes: DS_LINEAR [XM_DTD_ATTRIBUTE_CONTENT]) is
+	on_attribute_declarations (ele_name: ?STRING; some_attributes: ?DS_LINEAR [XM_DTD_ATTRIBUTE_CONTENT]) is
 			-- Send all element declarations.
 		require
 			ele_not_void: ele_name /= Void
@@ -543,9 +543,10 @@ feature {NONE} -- DTD
 
 feature {NONE} -- Entities
 
-	new_literal_entity (a_name, a_value: STRING): XM_EIFFEL_ENTITY_DEF is
+	new_literal_entity (a_name, a_value: ?STRING): XM_EIFFEL_ENTITY_DEF is
 			-- New literal entity definition
 		require
+			a_name_not_void: a_name /= Void
 			a_value_not_void: a_value /= Void
 		do
 			create Result.make_literal (a_name, a_value)
@@ -553,7 +554,7 @@ feature {NONE} -- Entities
 			entity_not_void: Result /= Void
 		end
 
-	new_external_entity (a_value: XM_DTD_EXTERNAL_ID): XM_EIFFEL_ENTITY_DEF is
+	new_external_entity (a_value: ?XM_DTD_EXTERNAL_ID): XM_EIFFEL_ENTITY_DEF is
 			-- New external entity definition
 		require
 			a_value_not_void: a_value /= Void
@@ -565,7 +566,7 @@ feature {NONE} -- Entities
 
 feature {NONE} -- Entities
 
-	when_entity_declared (a_name: STRING; a_def: XM_EIFFEL_ENTITY_DEF) is
+	when_entity_declared (a_name: ?STRING; a_def: ?XM_EIFFEL_ENTITY_DEF) is
 			-- Entity has been declared.
 		require
 			a_name_not_void: a_name /= Void
@@ -588,7 +589,7 @@ feature {NONE} -- Entities
 			end
 		end
 
-	when_pe_entity_declared (a_name: STRING; in_def: XM_EIFFEL_ENTITY_DEF) is
+	when_pe_entity_declared (a_name: ?STRING; in_def: ?XM_EIFFEL_ENTITY_DEF) is
 			-- PE entity has been declared.
 		require
 			a_name_not_void: a_name /= Void
@@ -598,7 +599,7 @@ feature {NONE} -- Entities
 			debug ("xml_parser")
 				std.error.put_string ("PE entity declared: ")
 				std.error.put_string (a_name)
-				if {l_value: STRING} in_def.value then
+				if in_def /= Void and then {l_value: STRING} in_def.value then
 					std.error.put_string (" value: ")
 					std.error.put_string (l_value)
 				end
@@ -615,7 +616,7 @@ feature {NONE} -- Entities
 			end
 		end
 
-	entity_referenced_in_entity_value (a_name: STRING): ?STRING is
+	entity_referenced_in_entity_value (a_name: ?STRING): ?STRING is
 			-- Named parameter entity has been referenced in entity value
 		require
 			a_name_not_void: a_name /= Void
@@ -720,7 +721,7 @@ feature {NONE} -- Entities
 
 feature {NONE} -- DTD
 
-	when_external_dtd (a_system: XM_DTD_EXTERNAL_ID) is
+	when_external_dtd (a_system: ?XM_DTD_EXTERNAL_ID) is
 			-- Load external DTD from system name.
 		require
 			a_system_not_void: a_system /= Void
@@ -905,9 +906,10 @@ feature {NONE} -- Scanner entity processing
 
 feature {NONE} -- String mode
 
-	onstring_ascii (a_string: STRING): STRING is
+	onstring_ascii (a_string: ?STRING): STRING is
 			-- Incoming ascii string.
 		require
+			a_string_attached: a_string /= Void
 			ascii: unicode.is_ascii_string (a_string)
 		do
 			if is_string_mode_unicode then -- force all unicode
@@ -917,9 +919,10 @@ feature {NONE} -- String mode
 			end
 		end
 
-	onstring_utf8 (a_string: STRING): ?STRING is
+	onstring_utf8 (a_string: ?STRING): ?STRING is
 			-- Incoming UTF8 encoded string.
 		require
+			a_string_attached: a_string /= Void
 			not_ascii: not unicode.is_ascii_string (a_string)
 		do
 			if is_string_mode_ascii then

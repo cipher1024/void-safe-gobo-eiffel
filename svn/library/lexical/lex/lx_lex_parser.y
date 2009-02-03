@@ -213,7 +213,8 @@ Regular_expression: Series
 			regexp_count := old_regexp_counts.item
 			old_regexp_counts.remove
 			$$ := $1
-			$$.build_union ($4)
+			check $$ /= Void end
+			process_nfa_build_union ($$, $4)
 			process_regexp_or_series
 		}
 	;
@@ -249,7 +250,8 @@ Series: Series_singleton
 			singleton_count := old_singleton_counts.item
 			old_singleton_counts.remove
 			$$ := $1
-			$$.build_concatenation ($2)
+			check $$ /= Void end
+			process_nfa_build_concatenation ($$, $2)
 			process_singleton_series
 		}
 	;
@@ -271,18 +273,21 @@ Singleton: CHAR
 	| Singleton '*'
 		{
 			$$ := $1
+			check $$ /= Void end
 			$$.build_closure
 			process_singleton_star
 		}
 	| Singleton '+'
 		{
 			$$ := $1
+			check $$ /= Void end
 			$$.build_positive_closure
 			process_singleton_plus
 		}
 	| Singleton '?'
 		{
 			$$ := $1
+			check $$ /= Void end
 			$$.build_optional
 			process_singleton_optional
 		}
@@ -333,11 +338,13 @@ Singleton: CHAR
 Full_CCl: '[' CCl ']'
 		{
 			$$ := $2
+			check $$ /= Void end
 			character_classes.force ($$, $1)
 		}
 	| '[' '^' CCl  ']'
 		{
 			$$ := $3
+			check $$ /= Void end
 			$$.set_negated (True)
 			character_classes.force ($$, $1)
 		}

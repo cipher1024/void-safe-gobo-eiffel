@@ -95,7 +95,8 @@ Pattern_list: Series
 	| Pattern_list '|' Series
 		{
 			$$ := $1
-			$$.build_union ($3)
+			check $$ /= Void end
+			process_nfa_build_union ($$, $3)
 		}
 	;
 
@@ -106,7 +107,8 @@ Series: Singleton
 	| Series Singleton
 		{
 			$$ := $1
-			$$.build_concatenation ($2)
+			check $$ /= Void end
+			process_nfa_build_concatenation ($$, $2)
 		}
 	;
 
@@ -117,16 +119,19 @@ Singleton: CHAR
 	| STAR_PAREN Pattern_list ')'
 		{
 			$$ := $2
+			check $$ /= Void end
 			$$.build_closure
 		}
 	| '+' '(' Pattern_list ')'
 		{
 			$$ := $3
+			check $$ /= Void end
 			$$.build_positive_closure
 		}
 	| '?' '(' Pattern_list ')'
 		{
 			$$ := $3
+			check $$ /= Void end
 			$$.build_optional
 		}
 	| '@' '(' Pattern_list ')'
@@ -166,11 +171,13 @@ Singleton: CHAR
 Full_CCl: '[' CCl ']'
 		{
 			$$ := $2
+			check $$ /= Void end
 			character_classes.force ($$, $1)
 		}
 	| '[' '^' CCl  ']'
 		{
 			$$ := $3
+			check $$ /= Void end
 			$$.set_negated (True)
 			character_classes.force ($$, $1)
 		}

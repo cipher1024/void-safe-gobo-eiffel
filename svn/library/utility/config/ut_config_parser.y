@@ -218,7 +218,7 @@ feature -- Parsing
 
 feature -- Processing
 
-	process_include (a_filename: STRING) is
+	process_include (a_filename: ?STRING) is
 			-- Parse include file `a_filename'.
 			-- Do not allow more than 10 nested include files.
 		require
@@ -296,7 +296,7 @@ feature -- Status report
 			Result := ignored_level /= 0
 		end
 
-	is_defined (a_name: STRING): BOOLEAN is
+	is_defined (a_name: ?STRING): BOOLEAN is
 			-- Is `a_name' defined?
 		require
 			a_name_not_void: a_name/= Void
@@ -306,12 +306,12 @@ feature -- Status report
 
 feature -- Access
 
-	config_values: DS_HASH_TABLE [STRING, STRING]
+	config_values: DS_HASH_TABLE [?STRING, ?STRING]
 			-- Name/value pairs read from the config file so far
 
 feature -- Element change
 
-	define_value (a_value: STRING; a_name: STRING) is
+	define_value (a_value: ?STRING; a_name: ?STRING) is
 			-- Define `a_name' with `a_value'.
 		require
 			a_value_not_void: a_value /= Void
@@ -322,7 +322,7 @@ feature -- Element change
 			a_name_defined: is_defined (a_name)
 		end
 
-	undefine_value (a_name: STRING) is
+	undefine_value (a_name: ?STRING) is
 			-- Undefine `a_name'.
 		require
 			a_name_not_void: a_name /= Void

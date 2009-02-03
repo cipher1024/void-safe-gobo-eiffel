@@ -123,7 +123,7 @@ feature {NONE} -- Factory
 			no_action: Result.action = No_action
 		end
 
-	new_terminal (a_name: STRING; a_type: PR_TYPE): PR_TOKEN is
+	new_terminal (a_name: ?STRING; a_type: ?PR_TYPE): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %token <a_type> a_name
 		require
@@ -148,7 +148,7 @@ feature {NONE} -- Factory
 			type_set: Result.type = a_type
 		end
 
-	new_char_terminal (a_char: STRING; a_type: PR_TYPE): PR_TOKEN is
+	new_char_terminal (a_char: ?STRING; a_type: ?PR_TYPE): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %token <a_type> a_char
 		require
@@ -168,7 +168,7 @@ feature {NONE} -- Factory
 			type_set: Result.type = a_type
 		end
 
-	new_left_terminal (a_name: STRING; a_precedence: INTEGER): PR_TOKEN is
+	new_left_terminal (a_name: ?STRING; a_precedence: INTEGER): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %left a_name
 		require
@@ -189,7 +189,7 @@ feature {NONE} -- Factory
 			precedence_set: Result.precedence = a_precedence
 		end
 
-	new_left_char_terminal (a_char: STRING; a_precedence: INTEGER): PR_TOKEN is
+	new_left_char_terminal (a_char: ?STRING; a_precedence: INTEGER): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %left a_char
 		require
@@ -205,7 +205,7 @@ feature {NONE} -- Factory
 			precedence_set: Result.precedence = a_precedence
 		end
 
-	new_right_terminal (a_name: STRING; a_precedence: INTEGER): PR_TOKEN is
+	new_right_terminal (a_name: ?STRING; a_precedence: INTEGER): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %right a_name
 		require
@@ -226,7 +226,7 @@ feature {NONE} -- Factory
 			precedence_set: Result.precedence = a_precedence
 		end
 
-	new_right_char_terminal (a_char: STRING; a_precedence: INTEGER): PR_TOKEN is
+	new_right_char_terminal (a_char: ?STRING; a_precedence: INTEGER): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %right a_char
 		require
@@ -242,7 +242,7 @@ feature {NONE} -- Factory
 			precedence_set: Result.precedence = a_precedence
 		end
 
-	new_nonassoc_terminal (a_name: STRING; a_precedence: INTEGER): PR_TOKEN is
+	new_nonassoc_terminal (a_name: ?STRING; a_precedence: INTEGER): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %nonassoc a_name
 		require
@@ -263,7 +263,7 @@ feature {NONE} -- Factory
 			precedence_set: Result.precedence = a_precedence
 		end
 
-	new_nonassoc_char_terminal (a_char: STRING; a_precedence: INTEGER): PR_TOKEN is
+	new_nonassoc_char_terminal (a_char: ?STRING; a_precedence: INTEGER): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %nonassoc a_char
 		require
@@ -279,7 +279,7 @@ feature {NONE} -- Factory
 			precedence_set: Result.precedence = a_precedence
 		end
 
-	new_nonterminal (a_name: STRING; a_type: PR_TYPE): PR_VARIABLE is
+	new_nonterminal (a_name: ?STRING; a_type: ?PR_TYPE): PR_VARIABLE is
 			-- Nonterminal symbol declared as:
 			-- %type <a_type> a_name
 		require
@@ -302,7 +302,7 @@ feature {NONE} -- Factory
 			type_set: Result.type = a_type
 		end
 
-	new_token (a_name: STRING): PR_TOKEN is
+	new_token (a_name: ?STRING): PR_TOKEN is
 			-- Terminal symbol named `a_name';
 			-- Create a new symbol if it does not exist
 			-- yet, and add it to the list of tokens of
@@ -334,7 +334,7 @@ feature {NONE} -- Factory
 			token_not_void: Result /= Void
 		end
 
-	new_char_token (a_char: STRING): PR_TOKEN is
+	new_char_token (a_char: ?STRING): PR_TOKEN is
 			-- Terminal symbol associated with `a_char';
 			-- Create a new symbol if it does not exist
 			-- yet, and add it to the list of tokens of
@@ -429,7 +429,7 @@ feature {NONE} -- Factory
 			token_not_void: Result /= Void
 		end
 
-	new_string_token (a_string: STRING): PR_TOKEN is
+	new_string_token (a_string: ?STRING): PR_TOKEN is
 			-- Terminal symbol associated with `a_string';
 			-- Report an error if there is no token associated
 			-- with this string.
@@ -459,7 +459,7 @@ feature {NONE} -- Factory
 			token_not_void: Result /= Void
 		end
 
-	new_variable (a_name: STRING): PR_VARIABLE is
+	new_variable (a_name: ?STRING): PR_VARIABLE is
 			-- Nonterminal symbol named `a_name';
 			-- Create a new symbol if it does not exist
 			-- yet, and add it to the list of variables
@@ -509,7 +509,7 @@ feature {NONE} -- Factory
 			dummy_variable_not_void: Result /= Void
 		end
 
-	new_symbol (a_name: STRING): PR_SYMBOL is
+	new_symbol (a_name: ?STRING): PR_SYMBOL is
 			-- Symbol named `a_name'; Create a new nonterminal
 			-- symbol if it does not exist yet, and add it to
 			-- the list of variables of `last_grammar'.
@@ -544,7 +544,7 @@ feature {NONE} -- Factory
 			symbol_not_void: Result /= Void
 		end
 
-	new_type (a_name: STRING): PR_TYPE is
+	new_type (a_name: ?STRING): PR_TYPE is
 			-- Type named `a_name'; Create a new type if
 			-- it does not exist yet.
 		require
@@ -573,7 +573,7 @@ feature {NONE} -- Factory
 			type_not_void: Result /= Void
 		end
 
-	new_basic_type (a_name: STRING): PR_TYPE is
+	new_basic_type (a_name: ?STRING): PR_TYPE is
 			-- Basic type named `a_name'; Create a new type if
 			-- it does not exist yet.
 		require
@@ -602,7 +602,7 @@ feature {NONE} -- Factory
 			type_not_void: Result /= Void
 		end
 
-	new_generic_type (a_name: STRING; generics: DS_ARRAYED_LIST [PR_TYPE]): PR_TYPE is
+	new_generic_type (a_name: ?STRING; generics: ?DS_ARRAYED_LIST [PR_TYPE]): PR_TYPE is
 			-- Type named `a_name' with generic parameters `generics';
 			-- Create a new type if it does not exist yet.
 		require
@@ -636,7 +636,7 @@ feature {NONE} -- Factory
 			type_not_void: Result /= Void
 		end
 
-	new_anchored_type (a_name: STRING): PR_TYPE is
+	new_anchored_type (a_name: ?STRING): PR_TYPE is
 			-- Anchored type of  the form "like `a_name'";
 			-- Create a new type if it does not exist yet.
 		require
@@ -665,7 +665,7 @@ feature {NONE} -- Factory
 			type_not_void: Result /= Void
 		end
 
-	new_action (a_text: STRING): DP_COMMAND is
+	new_action (a_text: ?STRING): DP_COMMAND is
 			-- Action associated with `a_text'
 		require
 			a_text_not_void: a_text /= Void
@@ -675,7 +675,7 @@ feature {NONE} -- Factory
 			action_not_void: Result /= Void
 		end
 
-	new_error_action (a_text: STRING; a_line: INTEGER): PR_ERROR_ACTION is
+	new_error_action (a_text: ?STRING; a_line: INTEGER): PR_ERROR_ACTION is
 			-- Error action associated with `a_text'
 		require
 			a_text_not_void: a_text /= Void
@@ -715,7 +715,7 @@ feature {NONE} -- Implementation
 			last_grammar.put_rule (a_rule)
 		end
 
-	put_symbol (rhs: PR_SYMBOL; a_rule: PR_RULE) is
+	put_symbol (rhs: PR_SYMBOL; a_rule: ?PR_RULE) is
 			-- Add `rhs' to the right-hand-side part of `a_rule'.
 		require
 			rhs_not_void: rhs /= Void
@@ -740,7 +740,7 @@ feature {NONE} -- Implementation
 			inserted: a_rule.rhs.last = rhs
 		end
 
-	put_action (an_action: DP_COMMAND; a_rule: PR_RULE) is
+	put_action (an_action: DP_COMMAND; a_rule: ?PR_RULE) is
 			-- Set semantic action of `a_rule' to `an_action'.
 		require
 			an_action_not_void: an_action /= Void
@@ -829,7 +829,7 @@ feature {NONE} -- Implementation
 			token_id_set: a_token.token_id = an_id
 		end
 
-	set_literal_string (a_token: PR_TOKEN; a_string: STRING) is
+	set_literal_string (a_token: PR_TOKEN; a_string: ?STRING) is
 			-- Set `literal_string' of `a_token' to `a_string'.
 		require
 			a_token_not_void: a_token /= Void
@@ -980,7 +980,7 @@ feature {NONE} -- Access
 
 feature {NONE} -- Status report
 
-	is_terminal (a_name: STRING): BOOLEAN is
+	is_terminal (a_name: ?STRING): BOOLEAN is
 			-- Is there a terminal symbol named `a_name'?
 		require
 			a_name_not_void: a_name /= Void
@@ -1059,7 +1059,7 @@ feature {NONE} -- Error handling
 			not_successful: not successful
 		end
 
-	report_lhs_symbol_token_error (a_name: STRING) is
+	report_lhs_symbol_token_error (a_name: ?STRING) is
 			-- Report that the left-hand-side symbol `a_name'
 			-- is a token instead of a nonterminal symbol.
 		require
@@ -1114,7 +1114,7 @@ feature {NONE} -- Error handling
 			not_successful: not successful
 		end
 
-	report_prec_not_token_error (a_name: STRING) is
+	report_prec_not_token_error (a_name: ?STRING) is
 			-- Report that the symbol `a_name' specified
 			-- in the %prec clause is not a token.
 		require
@@ -1294,7 +1294,7 @@ feature {NONE} -- Error handling
 			not_successful: not successful
 		end
 
-	report_rule_declared_twice_warning (a_name: STRING) is
+	report_rule_declared_twice_warning (a_name: ?STRING) is
 			-- Report that the rule `a_name' has been
 			-- declared twice.
 		require

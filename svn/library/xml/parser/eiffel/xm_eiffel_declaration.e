@@ -15,7 +15,7 @@ class XM_EIFFEL_DECLARATION
 create
 
 	make
-	
+
 feature {NONE} -- Creation
 
 	make is
@@ -31,36 +31,36 @@ feature {NONE} -- Encoding
 	Default_version: STRING is "1.0"
 	Default_encoding: STRING is "utf-8"
 	Default_stand_alone: BOOLEAN is True
-			
+
 feature -- Attribute(s)
 
 	version: STRING
 			-- Version
-			
+
 	encoding: STRING
 			-- XML encoding.
-			
+
 	stand_alone: BOOLEAN
 			-- Standalone document?
 
 feature -- Setting
 
-	set_version (a: STRING) is
+	set_version (a: ?STRING) is
 			-- Set version.
 		require
 			not_void: a /= Void
 		do
 			version := a
 		end
-		
-	set_encoding (a: STRING) is
+
+	set_encoding (a: ?STRING) is
 			-- Set encoding
 		require
 			not_void: a /= Void
 		do
 			encoding := a
 		end
-	
+
 	set_stand_alone (a: BOOLEAN) is
 			-- Set stand alone status.
 		do
@@ -81,5 +81,5 @@ invariant
 
 	version_not_void: version /= Void
 	encoding_not_void: encoding /= Void
-		
+
 end

@@ -304,7 +304,7 @@ feature {NONE} -- Measurement
 			singleton_column_known: singleton_column >= 0
 		end
 
-	process_singleton_symbol_class (a_symbol_class: LX_SYMBOL_CLASS) is
+	process_singleton_symbol_class (a_symbol_class: ?LX_SYMBOL_CLASS) is
 			-- Update `singleton_{line,column,count}'.
 			-- Singleton: CCL_OP
 			-- Singleton: Full_CCl
@@ -501,7 +501,7 @@ feature {NONE} -- Factory
 			nfa_not_void: Result /= Void
 		end
 
-	new_symbol_class_nfa (symbols: LX_SYMBOL_CLASS): LX_NFA is
+	new_symbol_class_nfa (symbols: ?LX_SYMBOL_CLASS): LX_NFA is
 			-- New NFA made of two states and a symbol
 			-- class transition labeled `symbols'
 		require
@@ -581,7 +581,7 @@ feature {NONE} -- Factory
 			nfa_not_void: Result /= Void
 		end
 
-	new_nfa_from_character_class (a_character_class: LX_SYMBOL_CLASS): LX_NFA is
+	new_nfa_from_character_class (a_character_class: ?LX_SYMBOL_CLASS): LX_NFA is
 			-- New NFA with a transition labeled with `a_character_class'
 			-- (Sort symbols in `a_character_class' if necessary and
 			-- eventually register to `description.equiv_classes'.)
@@ -602,7 +602,7 @@ feature {NONE} -- Factory
 			nfa_not_void: Result /= Void
 		end
 
-	new_bounded_iteration_nfa (a_nfa: LX_NFA; i, j: INTEGER): LX_NFA is
+	new_bounded_iteration_nfa (a_nfa: ?LX_NFA; i, j: INTEGER): LX_NFA is
 			-- New NFA that matches whatever matched `a_nfa' from
 			-- `i' number of times to `j' number of times
 		require
@@ -630,7 +630,7 @@ feature {NONE} -- Factory
 			nfa_not_void: Result /= Void
 		end
 
-	new_unbounded_iteration_nfa (a_nfa: LX_NFA; i: INTEGER): LX_NFA is
+	new_unbounded_iteration_nfa (a_nfa: ?LX_NFA; i: INTEGER): LX_NFA is
 			-- New NFA that matches `i' or more occurrences of `a_nfa'
 		require
 			a_nfa_not_void: a_nfa /= Void
@@ -646,7 +646,7 @@ feature {NONE} -- Factory
 			nfa_not_void: Result /= Void
 		end
 
-	new_iteration_nfa (a_nfa: LX_NFA; i: INTEGER): LX_NFA is
+	new_iteration_nfa (a_nfa: ?LX_NFA; i: INTEGER): LX_NFA is
 			-- New NFA that matches whatever `a_nfa'
 			-- matched `i' number of times
 		require
@@ -665,7 +665,7 @@ feature {NONE} -- Factory
 
 feature {NONE} -- Implementation
 
-	push_start_condition (a_name: STRING; stack: LX_START_CONDITIONS) is
+	push_start_condition (a_name: ?STRING; stack: LX_START_CONDITIONS) is
 			-- Push start condition named `a_name' on top of `stack'.
 			-- Do nothing if that start condition is already in `stack'.
 		require
@@ -686,7 +686,25 @@ feature {NONE} -- Implementation
 			end
 		end
 
-	process_rule (a_nfa: LX_NFA) is
+	process_nfa_build_concatenation (a_nfa: LX_NFA; other: ?LX_NFA) is
+			-- Process `build_concatenation' on `a_nfa' with argument `other'
+		require
+			a_nfa_attached: a_nfa /= Void
+			other_attached: other /= Void
+		do
+			a_nfa.build_concatenation (other)
+		end
+
+	process_nfa_build_union (a_nfa: LX_NFA; other: ?LX_NFA) is
+			-- Process `build_union' on `a_nfa' with argument `other'	
+		require
+			a_nfa_attached: a_nfa /= Void
+			other_attached: other /= Void
+		do
+			a_nfa.build_union (other)
+		end
+
+	process_rule (a_nfa: ?LX_NFA) is
 			-- Process a rule.
 		require
 			a_nfa_not_void: a_nfa /= Void
@@ -718,7 +736,7 @@ feature {NONE} -- Implementation
 			end
 		end
 
-	process_bol_rule (a_nfa: LX_NFA) is
+	process_bol_rule (a_nfa: ?LX_NFA) is
 			-- Process a beginning-of-line rule.
 		require
 			a_nfa_not_void: a_nfa /= Void
@@ -839,7 +857,7 @@ feature {NONE} -- Implementation
 			end
 		end
 
-	append_character_to_string (a_char: INTEGER; a_string: LX_NFA): LX_NFA is
+	append_character_to_string (a_char: INTEGER; a_string: ?LX_NFA): LX_NFA is
 			-- Append character `a_char' at end of string `a_string'.
 		require
 			a_string_not_void: a_string /= Void
@@ -910,7 +928,7 @@ feature {NONE} -- Implementation
 			string_set: Result = a_string
 		end
 
-	append_character_to_character_class (a_char: INTEGER; a_character_class: LX_SYMBOL_CLASS): LX_SYMBOL_CLASS is
+	append_character_to_character_class (a_char: INTEGER; a_character_class: ?LX_SYMBOL_CLASS): LX_SYMBOL_CLASS is
 			-- Append character `a_char' to `a_character_class'.
 		require
 			a_character_class_not_void: a_character_class /= Void
@@ -938,7 +956,7 @@ feature {NONE} -- Implementation
 			character_class_set: Result = a_character_class
 		end
 
-	append_character_set_to_character_class (char1, char2: INTEGER; a_character_class: LX_SYMBOL_CLASS): LX_SYMBOL_CLASS is
+	append_character_set_to_character_class (char1, char2: INTEGER; a_character_class: ?LX_SYMBOL_CLASS): LX_SYMBOL_CLASS is
 			-- Append character set `char1'-`char2' to `a_character_class'.
 		require
 			a_character_class_not_void: a_character_class /= Void
@@ -986,7 +1004,7 @@ feature {NONE} -- Implementation
 			character_class_set: Result = a_character_class
 		end
 
-	append_trail_context_to_regexp (a_trail, a_regexp: LX_NFA): LX_NFA is
+	append_trail_context_to_regexp (a_trail, a_regexp: ?LX_NFA): LX_NFA is
 			-- Append trailing context `a_trail'
 			-- to regular expression `a_regexp'.
 		require
@@ -1010,7 +1028,7 @@ feature {NONE} -- Implementation
 			regexp_set: Result = a_regexp
 		end
 
-	append_eol_to_regexp (a_regexp: LX_NFA): LX_NFA is
+	append_eol_to_regexp (a_regexp: ?LX_NFA): LX_NFA is
 			-- Append end-of-line trailing context (i.e. "$")
 			-- to regular expression `a_regexp'.
 		require
@@ -1050,7 +1068,7 @@ feature {NONE} -- Implementation
 			dot_character_class_not_void: Result /= Void
 		end
 
-	set_action (a_text: STRING) is
+	set_action (a_text: ?STRING) is
 			-- Set pending rules' action using `a_text'.
 		require
 			a_text_not_void: a_text /= Void
@@ -1077,7 +1095,7 @@ feature {NONE} -- Implementation
 		require
 			equiv_classes_not_void: description.equiv_classes /= Void
 		local
-			cursor: DS_HASH_TABLE_CURSOR [LX_SYMBOL_CLASS, STRING]
+			cursor: DS_HASH_TABLE_CURSOR [LX_SYMBOL_CLASS, ?STRING]
 			equiv_classes: ?LX_EQUIVALENCE_CLASSES
 		do
 			equiv_classes := description.equiv_classes

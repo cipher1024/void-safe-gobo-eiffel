@@ -83,7 +83,7 @@ feature -- Status report
 
 feature -- Resizing
 
-	resize (an_array: ?SPECIAL [G]; n: INTEGER): SPECIAL [G] is
+	resize (an_array: SPECIAL [G]; n: INTEGER): SPECIAL [G] is
 			-- Resize `an_array' so that it contains `n' items.
 			-- Do not lose any previously entered items.
 			-- Note: the returned special object might be `an_array'
