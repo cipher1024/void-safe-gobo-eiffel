@@ -78,37 +78,13 @@ feature {NONE} -- Initialization
 		require
 			other_not_void: other /= Void
 		local
-			l_resolver: like resolver
-			l_input_buffer: like input_buffer
-			l_start_conditions: like start_conditions
-			l_character_entity: like character_entity
-			l_input_name: like input_name
-			l_yy_content: like yy_content
-			l_yy_accept: like yy_accept
-			l_yy_def: like yy_def
-			l_yy_base: like yy_base
-			l_yy_chk: like yy_chk
-			l_yy_nxt: like yy_nxt
 			l_external_id: like external_id
 			l_literal_name, l_value: ?STRING
 		do
-			-- FIXME:jfiat: most void-safe error mght be fixed
-			--				when compiler scan execution path to prove attached attribute is set
 			if other.is_external then
 				l_external_id := other.external_id
 				check l_external_id /= Void end -- implied by `other.is_external'
 				make_external (other.resolver, l_external_id)
-				l_resolver := resolver
-				l_input_buffer := input_buffer
-				l_start_conditions := start_conditions
-				l_character_entity := character_entity
-				l_input_name := input_name
-				l_yy_content := yy_content
-				l_yy_accept := yy_accept
-				l_yy_def := yy_def
-				l_yy_base := yy_base
-				l_yy_chk := yy_chk
-				l_yy_nxt := yy_nxt
 			else
 				l_literal_name := other.literal_name
 				l_value := other.value
@@ -117,29 +93,7 @@ feature {NONE} -- Initialization
 					l_value /= Void
 				end -- implied by `not other.is_external' and invariant `type', `value_not_void'
 				make_literal (l_literal_name, l_value)
-				l_resolver := resolver
-				l_input_buffer := input_buffer
-				l_start_conditions := start_conditions
-				l_character_entity := character_entity
-				l_input_name := input_name
-				l_yy_content := yy_content
-				l_yy_accept := yy_accept
-				l_yy_def := yy_def
-				l_yy_base := yy_base
-				l_yy_chk := yy_chk
-				l_yy_nxt := yy_nxt
 			end
-			start_conditions := l_start_conditions
-			resolver := l_resolver
-			input_buffer := l_input_buffer
-			character_entity := l_character_entity
-			input_name := l_input_name
-			yy_content := l_yy_content
-			yy_accept := l_yy_accept
-			yy_def := l_yy_def
-			yy_base := l_yy_base
-			yy_chk := l_yy_chk
-			yy_nxt := l_yy_nxt
 		ensure
 			is_external: is_external = other.is_external
 			is_literal: is_literal = other.is_literal

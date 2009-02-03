@@ -871,10 +871,7 @@ feature {NONE} -- Implementation
 				until
 					i < 1 or a_token /= Void
 				loop
-						--| FIXME:jfiat: dummy reverse assignment replacement ...
-					if {ot_token: PR_TOKEN} rhs.item (i) then
-						a_token := ot_token
-					end
+					a_token ?= rhs.item (i)
 					i := i - 1
 				end
 			end

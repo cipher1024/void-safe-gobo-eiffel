@@ -89,7 +89,6 @@ feature -- Resizing
 			-- Note: the returned special object might be `an_array'
 			-- or a newly created special object where items from
 			-- `an_array' have been copied to.
-			-- FIXME:jfiat: an_array should be declared at attached. (cf geyacc patch)
 		require
 			an_array_not_void: an_array /= Void
 			n_large_enough: n >= an_array.count

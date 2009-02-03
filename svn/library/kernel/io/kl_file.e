@@ -39,8 +39,6 @@ feature {NONE} -- Initialization
 			else
 				old_make (Empty_name)
 			end
-			string_name := name
-			-- FIXME:jfiat: check this !!!
 		end
 
 feature -- Access
@@ -280,7 +278,7 @@ feature -- Basic operations
 					end
 				end
 			else
-				check saved_string_name /= Void end
+				check saved_string_name /= Void end -- implied by rescued status
 				string_name := saved_string_name
 			end
 		rescue
