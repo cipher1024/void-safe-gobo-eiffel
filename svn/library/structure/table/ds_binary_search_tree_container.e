@@ -106,7 +106,7 @@ feature {NONE} -- Access
 			-- Default value otherwise
 			-- (Performance: O(height).)
 		local
-			l_node: like found_node
+			l_node: like root_node
 		do
 			search_node (k)
 			l_node := found_node
@@ -208,7 +208,7 @@ feature {NONE} -- Access
 	found_node: like root_node
 			-- Node used as result for `search_node' and `search_insert_position'
 
-	predecessor (v: like new_tree_node): ?like new_tree_node is
+	predecessor (v: like new_tree_node): like root_node is
 			-- Predecessor of `v' if it exists, Void otherwise
 			-- (Performance: O(height).)
 		require
@@ -332,14 +332,9 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER} -- Status report
 			-- Is `a_node' in current tree?
 		require
 			a_node_not_void: a_node /= Void
-		local
-			l_node: like root_node
 		do
-			l_node := root_node
-			if l_node /= Void then
-				debug
-					Result := are_nodes_in_same_tree (a_node, l_node)
-				end
+			if {l_node: like root_node} root_node then
+				Result := are_nodes_in_same_tree (a_node, l_node)
 			end
 		end
 
@@ -382,7 +377,7 @@ feature {NONE} -- Status report
 	is_first_node_correct: BOOLEAN is
 			-- Is the first node correctly set?
 		local
-			l_node, l_child: ?like new_tree_node
+			l_node, l_child: like root_node
 		do
 			l_node := root_node
 			if l_node = Void then
@@ -403,19 +398,19 @@ feature {NONE} -- Status report
 	is_last_node_correct: BOOLEAN is
 			-- Is the last node correctly set?
 		local
-			l_node, l_right_child: ?like new_tree_node
+			l_node, l_child: like root_node
 		do
 			l_node := root_node
 			if l_node = Void then
 				Result := last_node = Void
 			else
 				from
-					l_right_child := l_node.right_child
+					l_child := l_node.right_child
 				until
-					l_right_child = Void
+					l_child = Void
 				loop
-					l_node := l_right_child
-					l_right_child := l_node.right_child
+					l_node := l_child
+					l_child := l_node.right_child
 				end
 				Result := last_node = l_node
 			end
@@ -541,11 +536,8 @@ feature {DS_LINEAR_CURSOR} -- Cursor implementation
 
 	cursor_is_first (a_cursor: like new_cursor): BOOLEAN is
 			-- Is `a_cursor' on first item?
-		local
-			l_first_node: like first_node
 		do
-			l_first_node := first_node
-			if l_first_node /= Void then
+			if {l_first_node: like first_node} first_node then
 				Result := a_cursor.position = l_first_node
 			end
 		end
@@ -608,24 +600,23 @@ feature {DS_LINEAR_CURSOR} -- Cursor implementation
 			-- Move `after' if not found.
 		local
 			l_was_off: BOOLEAN
-			l_equality_tester: like equality_tester
+
 		do
 			if a_cursor.before then
 				a_cursor.forth
 				l_was_off := True
 			end
-			l_equality_tester := equality_tester
-			if l_equality_tester = Void then
+			if {l_equality_tester: like equality_tester} equality_tester then
 				from
 				until
-					a_cursor.after or else a_cursor.item = v
+					a_cursor.after or else l_equality_tester.test (a_cursor.item, v)
 				loop
 					a_cursor.forth
 				end
 			else
 				from
 				until
-					a_cursor.after or else l_equality_tester.test (a_cursor.item, v)
+					a_cursor.after or else a_cursor.item = v
 				loop
 					a_cursor.forth
 				end
@@ -653,11 +644,8 @@ feature {DS_BILINEAR_CURSOR} -- Cursor implementation
 
 	cursor_is_last (a_cursor: like new_cursor): BOOLEAN is
 			-- Is `a_cursor' on last item?
-		local
-			l_last_node: like last_node
 		do
-			l_last_node := last_node
-			if l_last_node /= Void then
+			if {l_last_node: like last_node} last_node then
 				Result := a_cursor.position = l_last_node
 			end
 		end
@@ -720,24 +708,22 @@ feature {DS_BILINEAR_CURSOR} -- Cursor implementation
 			-- Move `before' if not found.
 		local
 			l_was_off: BOOLEAN
-			l_equality_tester: like equality_tester
 		do
 			if a_cursor.after then
 				a_cursor.back
 				l_was_off := True
 			end
-			l_equality_tester := equality_tester
-			if l_equality_tester = Void then
+			if {l_equality_tester: like equality_tester} equality_tester then
 				from
 				until
-					a_cursor.before or else a_cursor.item = v
+					a_cursor.before or else l_equality_tester.test (a_cursor.item, v)
 				loop
 					a_cursor.back
 				end
 			else
 				from
 				until
-					a_cursor.before or else l_equality_tester.test (a_cursor.item, v)
+					a_cursor.before or else a_cursor.item = v
 				loop
 					a_cursor.back
 				end
@@ -790,7 +776,6 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER} -- Cursor implementation
 					Result := l_parent
 					if Result.left_child = v then
 						from
-							Result := l_parent
 							l_parent := Result.parent
 						until
 							l_parent = Void or else l_parent.right_child = Result
@@ -871,9 +856,9 @@ feature {NONE} -- Cursor movement
 			l_cursor: ?like new_cursor
 			l_previous_cursor: ?like new_cursor
 		do
+			l_internal_cursor := internal_cursor
+			check l_internal_cursor /= Void end
 			from
-				l_internal_cursor := internal_cursor
-				check l_internal_cursor /= Void end
 				if l_internal_cursor.position = a_last_position then
 					cursor_go_after (l_internal_cursor)
 				end
@@ -915,20 +900,20 @@ feature {NONE} -- Cursor movement
 	move_all_cursors_after is
 			-- Move `after' all cursors.
 		local
-			l_cursor: like internal_cursor
+			l_internal_cursor, l_cursor: like internal_cursor
 		do
+			l_internal_cursor := internal_cursor
+			check l_internal_cursor /= Void end -- FIXME:jfiat: no assertion precise it is not Void, potential bug in origin code
 			from
-				l_cursor := internal_cursor
-				check l_cursor /= Void end -- FIXME:jfiat: no assertion precise it is not Void, potential bug in origin code
-				if not l_cursor.off then
-					cursor_go_after (l_cursor)
+				if not l_internal_cursor.off then
+					cursor_go_after (l_internal_cursor)
 				end
-				l_cursor := l_cursor.next_cursor
+				l_cursor := l_internal_cursor.next_cursor
 			until
 				l_cursor = Void
 			loop
 				cursor_go_after (l_cursor)
-				l_cursor := l_cursor.next_cursor
+				l_cursor := l_internal_cursor.next_cursor
 			end
 		end
 
@@ -938,7 +923,7 @@ feature -- Iteration
 			-- Apply `an_action' to every item, from first to last.
 			-- (Semantics not guaranteed if `an_action' changes the structure.)
 		local
-			l_node: like first_node
+			l_node: like root_node
 		do
 			from
 				l_node := first_node
@@ -956,7 +941,7 @@ feature -- Iteration
 			-- (Semantics not guaranteed if `an_action' changes the structure.)
 		local
 			i: INTEGER
-			l_node: like first_node
+			l_node: like root_node
 		do
 			from
 				l_node := first_node
@@ -974,7 +959,7 @@ feature -- Iteration
 			-- Apply `an_action' to every item that satisfies `a_test', from first to last.
 			-- (Semantics not guaranteed if `an_action' or `a_test' change the structure.)
 		local
-			l_node: like first_node
+			l_node: like root_node
 		do
 			from
 				l_node := first_node
@@ -994,7 +979,7 @@ feature -- Iteration
 			-- (Semantics not guaranteed if `an_action' or `a_test' change the structure.)
 		local
 			i: INTEGER
-			l_node: like first_node
+			l_node: like root_node
 		do
 			from
 				l_node := first_node
@@ -1014,7 +999,7 @@ feature -- Iteration
 			-- Is `a_test' true for at least one item?
 			-- (Semantics not guaranteed if `a_test' changes the structure.)
 		local
-			l_node: like first_node
+			l_node: like root_node
 		do
 			from
 				l_node := first_node
@@ -1033,7 +1018,7 @@ feature -- Iteration
 			-- Is `a_test' true for all items?
 			-- (Semantics not guaranteed if `a_test' changes the structure.)
 		local
-			l_node: like first_node
+			l_node: like root_node
 		do
 			from
 				l_node := first_node
@@ -1058,7 +1043,7 @@ feature {NONE} -- Iteration
 		require
 			an_action_not_void: an_action /= Void
 		local
-			l_node: like first_node
+			l_node: like root_node
 		do
 			from
 				l_node := first_node
@@ -1078,7 +1063,7 @@ feature {NONE} -- Iteration
 			an_action_not_void: an_action /= Void
 			a_test_not_void: a_test /= Void
 		local
-			l_node: like first_node
+			l_node: like root_node
 		do
 			from
 				l_node := first_node
@@ -1098,7 +1083,7 @@ feature {NONE} -- Iteration
 		require
 			a_test_not_void: a_test /= Void
 		local
-			l_node: like first_node
+			l_node: like root_node
 		do
 			from
 				l_node := first_node
@@ -1119,7 +1104,7 @@ feature {NONE} -- Iteration
 		require
 			a_test_not_void: a_test /= Void
 		local
-			l_node: like first_node
+			l_node: like root_node
 		do
 			from
 				l_node := first_node
@@ -1630,8 +1615,8 @@ feature {NONE} -- Basic operation
 		local
 			l_grand_parent, l_parent: like parent_of_node
 			l_parent_is_left: BOOLEAN
-			l_child: ?like new_tree_node
-			b, c: ?like new_tree_node
+			l_child: like root_node
+			b, c: like root_node
 		do
 			l_parent := a_node.parent
 			check l_parent /= Void end
@@ -1699,8 +1684,8 @@ feature {NONE} -- Basic operation
 		local
 			l_grand_parent, l_parent: like parent_of_node
 			l_parent_is_left: BOOLEAN
-			l_child: ?like new_tree_node
-			b, c: ?like new_tree_node
+			l_child: like root_node
+			b, c: like root_node
 		do
 			l_parent := a_node.parent
 			check l_parent /= Void end
@@ -1757,8 +1742,8 @@ feature {NONE} -- Basic operation
 			-- (Performance: O(height).)
 		local
 			l_equality: BOOLEAN
-			l_first_node: like first_node
-			l_found_node: like found_node
+			l_first_node: like root_node
+			l_found_node: like root_node
 		do
 			if a_key = Void then
 				l_first_node := first_node

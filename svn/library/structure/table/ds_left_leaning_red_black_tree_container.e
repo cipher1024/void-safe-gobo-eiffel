@@ -59,6 +59,8 @@ feature {NONE} -- Element change
 			check l_node /= Void end -- implied by ... ?
 			if a_node /= l_node then
 				fix_up (a_node, l_node)
+				l_node := root_node
+				check l_node /= Void end -- implied by ... ?
 			end
 			l_node.set_is_red (False)
 		end
@@ -75,6 +77,8 @@ feature {NONE} -- Removal
 			l_node := root_node
 			check l_node /= Void end -- implied by ... ?
 			fix_up (a_node, l_node)
+			l_node := root_node
+			check l_node /= Void end -- implied by ... ?
 			l_node.set_is_red (False)
 		end
 
@@ -91,6 +95,8 @@ feature {NONE} -- Removal
 				l_not_found_node := not_found_node
 				check l_not_found_node /= Void end -- implied by ... ?
 				fix_up (l_not_found_node, l_node)
+				l_node := root_node
+				check l_node /= Void end -- implied by ... ?
 				l_node.set_is_red (False)
 			end
 		end
@@ -357,9 +363,9 @@ feature {NONE} -- Basic operation
 		require
 			a_node_not_void: a_node /= Void
 			a_node_is_red: a_node.is_red
---			left_child_not_void: a_node.left_child /= Void
+			left_child_not_void: a_node.left_child /= Void
 			left_child_is_black: {rl_left: like root_node} a_node.left_child and then rl_left.is_black
---			right_child_not_void: a_node.right_child /= Void
+			right_child_not_void: a_node.right_child /= Void
 			right_child_is_black: {rl_right: like root_node} a_node.right_child and then rl_right.is_black
 		local
 			l_node: like root_node
@@ -392,9 +398,9 @@ feature {NONE} -- Basic operation
 		require
 			a_node_not_void: a_node /= Void
 			a_node_is_red: a_node.is_red
---			left_child_not_void: a_node.left_child /= Void
+			left_child_not_void: a_node.left_child /= Void
 			left_child_is_black: {rl_left: like root_node} a_node.left_child and then rl_left.is_black
---			right_child_not_void: a_node.right_child /= Void
+			right_child_not_void: a_node.right_child /= Void
 			right_child_is_black: {rl_right: like root_node} a_node.right_child and then rl_right.is_black
 		local
 			l_node: like root_node
