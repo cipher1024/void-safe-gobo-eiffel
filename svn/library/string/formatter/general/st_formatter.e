@@ -57,12 +57,12 @@ feature -- Status report
 		require
 			a_format_not_void: a_format /= Void
 		do
-			if a_parameters = Void or else not ANY_ARRAY_.has (a_parameters, Void) then
+			if a_parameters = Void or else not ANY_ARRAY_.has_void (a_parameters) then
 				do_format_to (a_format, a_parameters, null_output_stream)
 				Result := not has_error
 			end
 		ensure
-			no_void_parameter: Result implies (a_parameters = Void or else not ANY_ARRAY_.has (a_parameters, Void))
+			no_void_parameter: Result implies (a_parameters = Void or else not ANY_ARRAY_.has_void (a_parameters))
 		end
 
 feature -- Formatting

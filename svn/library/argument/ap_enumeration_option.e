@@ -94,11 +94,9 @@ feature {AP_PARSER} -- Parser Interface
 			-- This option was found during parsing by `a_parser'.
 		local
 			error: AP_ERROR
-			l_last_option_parameter: ?STRING
 		do
 			Precursor (a_parser)
-			l_last_option_parameter := a_parser.last_option_parameter
-			if l_last_option_parameter /= Void then
+			if {l_last_option_parameter: STRING} a_parser.last_option_parameter then
 				if not possible_values.has (l_last_option_parameter) then
 					create error.make_invalid_parameter_error (Current, l_last_option_parameter)
 					a_parser.error_handler.report_error (error)

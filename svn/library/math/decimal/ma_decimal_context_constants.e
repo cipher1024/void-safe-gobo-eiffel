@@ -57,7 +57,7 @@ feature -- Constants: rounding modes
 	Round_half_even: INTEGER is 6
 			-- Rounding mode to round to nearest neighbor, where an equidistant value is rounded to the nearest even neighbor;
 			-- If the discarded digits represent greater than half (0.5 times) the value of a one in the next position then the result should be
-			-- rounded up (away from zero).  
+			-- rounded up (away from zero).
 			-- If they represent less than half, then the result should be rounded down.
 			-- Otherwise (they represent exactly half) the result is rounded down if its rightmost digit is even, or rounded up if its
 			-- rightmost digit is odd (to make an even digit).
@@ -174,7 +174,7 @@ feature -- Constants: support
 				"Round_half_down", "Round_half_even", "Round_unnecessary">>
 		ensure
 			round_word_not_void: Result /= Void
-			no_void_round_words: not ANY_ARRAY_.has (Result, Void)
+			no_void_round_words: not ANY_ARRAY_.has_void (Result)
 		end
 
 	signals: ARRAY [INTEGER] is
@@ -193,7 +193,7 @@ feature -- Constants: support
 				"lost_digits", "overflow", "rounded", "underflow", "subnormal">>
 		ensure
 			signal_words_not_void: Result /= Void
-			no_void_signal_words: not ANY_ARRAY_.has (Result, Void)
+			no_void_signal_words: not ANY_ARRAY_.has_void (Result)
 		end
 
 end

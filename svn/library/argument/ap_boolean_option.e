@@ -106,10 +106,8 @@ feature {AP_PARSER} -- Parser Interface
 			-- This option was found during parsing by `a_parser'.
 		local
 			error: AP_ERROR
-			l_last_option_parameter: ?STRING
 		do
-			l_last_option_parameter := a_parser.last_option_parameter
-			if l_last_option_parameter /= Void then
+			if {l_last_option_parameter: STRING} a_parser.last_option_parameter then
 				if true_strings.has (l_last_option_parameter) then
 					parameters.force_last (True)
 				elseif false_strings.has (l_last_option_parameter) then

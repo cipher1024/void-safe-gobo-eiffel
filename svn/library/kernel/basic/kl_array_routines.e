@@ -60,6 +60,34 @@ feature -- Status report
 			end
 		end
 
+	has_void (an_array: ARRAY [G]): BOOLEAN is
+			-- Does `Void' appear in `an_array' (use '=' for item comparison).
+			-- Reasons why we don't use ARRAY.has directly:
+			-- * `has' is not in ELKS ARRAY 2000.
+			-- * ISE may change this behavior with `compare_objects'.
+		require
+			an_array_not_void: an_array /= Void
+		local
+			i, nb: INTEGER
+		do
+			if {l_array: ARRAY [?G]} an_array then
+				from
+					i := l_array.lower
+					nb := l_array.upper
+				until
+					i > nb
+				loop
+					if l_array.item (i) = Void then
+						Result := True
+							-- Jump out of the loop.
+						i := nb + 1
+					else
+						i := i + 1
+					end
+				end
+			end
+		end
+
 feature -- Access
 
 	subarray (an_array: ARRAY [G]; start_pos, end_pos, min_index: INTEGER): ARRAY [G] is

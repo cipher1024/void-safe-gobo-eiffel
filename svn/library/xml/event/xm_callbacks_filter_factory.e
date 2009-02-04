@@ -129,7 +129,7 @@ feature -- Pipes
 		require
 			a_not_void: a /= Void
 			a_not_empty: a.count > 0
-			-- no_void_callbacks_filter: not a.has (Void)
+			-- no_void_callbacks_filter: not a.has_void
 		local
 			i, nb: INTEGER
 		do

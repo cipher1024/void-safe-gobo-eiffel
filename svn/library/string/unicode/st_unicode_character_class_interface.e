@@ -496,7 +496,7 @@ feature {NONE} -- Implementation
 		deferred
 		ensure
 			character_classes_not_void: Result /= Void
---			no_void_character_class: not Result.has (Void)
+--			no_void_character_class: not Result.has_void
 		end
 
 	decimal_values: SPECIAL [SPECIAL [ARRAY [INTEGER_8]]] is
@@ -504,7 +504,7 @@ feature {NONE} -- Implementation
 		deferred
 		ensure
 			decimal_values_not_void: Result /= Void
---			no_void_decimal_value: not Result.has (Void)
+--			no_void_decimal_value: not Result.has_void
 		end
 
 	upper_case_properties: SPECIAL [SPECIAL [ARRAY [BOOLEAN]]] is
@@ -512,7 +512,7 @@ feature {NONE} -- Implementation
 		deferred
 		ensure
 			upper_case_properties_not_void: Result /= Void
---			no_void_upper_case_property: not Result.has (Void)
+--			no_void_upper_case_property: not Result.has_void
 		end
 
 	lower_case_properties: SPECIAL [SPECIAL [ARRAY [BOOLEAN]]] is
@@ -520,7 +520,7 @@ feature {NONE} -- Implementation
 		deferred
 		ensure
 			lower_case_properties_not_void: Result /= Void
---			no_void_lower_case_property: not Result.has (Void)
+--			no_void_lower_case_property: not Result.has_void
 		end
 
 	alphabetic_properties: SPECIAL [SPECIAL [ARRAY [BOOLEAN]]] is
@@ -528,7 +528,7 @@ feature {NONE} -- Implementation
 		deferred
 		ensure
 			alphabetic_properties_not_void: Result /= Void
---			no_void_alphabetic_property: not Result.has (Void)
+--			no_void_alphabetic_property: not Result.has_void
 		end
 
 	math_properties: SPECIAL [SPECIAL [ARRAY [BOOLEAN]]] is
@@ -536,7 +536,7 @@ feature {NONE} -- Implementation
 		deferred
 		ensure
 			math_properties_not_void: Result /= Void
---			no_void_math_property: not Result.has (Void)
+--			no_void_math_property: not Result.has_void
 		end
 
 end

@@ -183,6 +183,7 @@ feature -- Input
 			-- Make result available in `last_entry'.
 		deferred
 		ensure then
+			last_entry_not_void: not end_of_input implies last_entry /= Void
 			last_entry_not_empty: not end_of_input implies ({ot_last_entry: like last_entry} last_entry and then ot_last_entry.count > 0)
 		end
 

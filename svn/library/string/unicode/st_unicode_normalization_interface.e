@@ -625,7 +625,7 @@ feature {NONE} -- Implementation
 		deferred
 		ensure
 			nfd_quick_check_array_not_void: Result /= Void
---			no_void_nfd_quick_check_array: not Result.has (Void)
+--			no_void_nfd_quick_check_array: not Result.has_void
 		end
 
 	nfc_quick_check_array: SPECIAL [SPECIAL [ARRAY [CHARACTER]]] is
@@ -633,7 +633,7 @@ feature {NONE} -- Implementation
 		deferred
 		ensure
 			nfc_quick_check_array_not_void: Result /= Void
---			no_void_nfc_quick_check_array: not Result.has (Void)
+--			no_void_nfc_quick_check_array: not Result.has_void
 		end
 
 	nfkd_quick_check_array: SPECIAL [SPECIAL [ARRAY [CHARACTER]]] is
@@ -641,7 +641,7 @@ feature {NONE} -- Implementation
 		deferred
 		ensure
 			nfkd_quick_check_array_not_void: Result /= Void
---			no_void_nfkd_quick_check_array: not Result.has (Void)
+--			no_void_nfkd_quick_check_array: not Result.has_void
 		end
 
 	nfkc_quick_check_array: SPECIAL [SPECIAL [ARRAY [CHARACTER]]] is
@@ -649,7 +649,7 @@ feature {NONE} -- Implementation
 		deferred
 		ensure
 			nfkc_quick_check_array_not_void: Result /= Void
---			no_void_nfkc_quick_check_array: not Result.has (Void)
+--			no_void_nfkc_quick_check_array: not Result.has_void
 		end
 
 	canonical_combining_class_properties: SPECIAL [SPECIAL [ARRAY [INTEGER_8]]] is
@@ -657,7 +657,7 @@ feature {NONE} -- Implementation
 		deferred
 		ensure
 			canonical_combining_class_properties_not_void: Result /= Void
---			no_void_canonical_combining_class_property: not Result.has (Void)
+--			no_void_canonical_combining_class_property: not Result.has_void
 		end
 
 	decomposition_type_properties: SPECIAL [SPECIAL [ARRAY [INTEGER_8]]] is
@@ -665,7 +665,7 @@ feature {NONE} -- Implementation
 		deferred
 		ensure
 			decomposition_type_properties_not_void: Result /= Void
---			no_void_decomposition_type_property: not Result.has (Void)
+--			no_void_decomposition_type_property: not Result.has_void
 		end
 
 	decomposition_mapping_properties: SPECIAL [SPECIAL [ARRAY [DS_ARRAYED_LIST [INTEGER]]]] is
