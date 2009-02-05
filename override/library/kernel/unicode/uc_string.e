@@ -1084,6 +1084,7 @@ feature -- Access
 			-- Index of first occurrence of `c' at or after `start_index';
 			-- 0 if none
 		require
+			c_attached: c /= Void
 			valid_start_index: start_index >= 1 and start_index <= count + 1
 		do
 			Result := index_of_item_code (c.code, start_index)
@@ -1779,6 +1780,7 @@ feature -- Element change
 
 	prepend_string (s: STRING) is
 			-- Prepend a copy of `s', if not void, at front.
+			-- FIXME:jfiat: `s' detachable or s /= Void useless?
 		do
 			if s /= Void then
 				prepend (s)
@@ -1864,6 +1866,7 @@ feature -- Element change
 
 	append_string (s: STRING) is
 			-- Append a copy of `s' at end.
+			-- FIXME:jfiat: `s' should be detachable here ... but due to inheritance ... we can not
 		do
 			if s /= Void then
 				append (s)
@@ -2377,6 +2380,8 @@ feature -- Element change
 	replace_substring_by_string (a_string: READABLE_STRING_8; start_index, end_index: INTEGER) is
 			-- Replace the substring from `start_index' to `end_index',
 			-- inclusive, with `a_string'.
+		require
+			a_string_attached: a_string /= Void
 		local
 			a_string_count: INTEGER
 			k, nb: INTEGER

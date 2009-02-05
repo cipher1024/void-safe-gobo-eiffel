@@ -59,7 +59,7 @@ feature -- Initialization
 
 feature -- Conversion
 
-	to_string_buffer (a_string: STRING): like STRING_BUFFER_TYPE is
+	to_string_buffer (a_string: STRING): !like STRING_BUFFER_TYPE is
 			-- String buffer filled with characters from `a_string'.
 			-- The string buffer and `a_string' may share internal
 			-- data. Use `make_from_string' if this is a concern.
@@ -76,7 +76,7 @@ feature -- Conversion
 
 feature -- Access
 
-	substring (a_buffer: like STRING_BUFFER_TYPE; s, e: INTEGER): STRING is
+	substring (a_buffer: !like STRING_BUFFER_TYPE; s, e: INTEGER): STRING is
 			-- New string made up of characters held in
 			-- `a_buffer' between indexes `s' and `e'
 		require
@@ -102,7 +102,7 @@ feature -- Measurement
 	lower: INTEGER is 1
 			-- Lower index
 
-	upper (a_buffer: like STRING_BUFFER_TYPE): INTEGER is
+	upper (a_buffer: !like STRING_BUFFER_TYPE): INTEGER is
 			-- Upper index
 		require
 			a_buffer_not_void: a_buffer /= Void
@@ -114,7 +114,7 @@ feature -- Measurement
 
 feature -- Element change
 
-	append_substring_to_string (a_buffer: like STRING_BUFFER_TYPE; s, e: INTEGER; a_string: STRING) is
+	append_substring_to_string (a_buffer: !like STRING_BUFFER_TYPE; s, e: INTEGER; a_string: STRING) is
 			-- Append string made up of characters held in `a_buffer'
 			-- between indexes `s' and `e' to `a_string'.
 		require
@@ -134,7 +134,7 @@ feature -- Element change
 			characters_set: s <= e implies a_string.substring (old (a_string.count) + 1, a_string.count).is_equal (substring (a_buffer, s, e))
 		end
 
-	copy_from_string (a_buffer: like STRING_BUFFER_TYPE; pos: INTEGER; a_string: STRING) is
+	copy_from_string (a_buffer: !like STRING_BUFFER_TYPE; pos: INTEGER; a_string: STRING) is
 			-- Copy characters of `a_string' to `a_buffer'
 			-- starting at position `pos'.
 		require
@@ -165,7 +165,7 @@ feature -- Element change
 			charaters_set: substring (a_buffer, pos, a_string.count + pos - 1).is_equal (a_string)
 		end
 
-	copy_from_stream (a_buffer: like STRING_BUFFER_TYPE; pos: INTEGER; a_stream: like INPUT_STREAM_TYPE; nb_char: INTEGER): INTEGER is
+	copy_from_stream (a_buffer: !like STRING_BUFFER_TYPE; pos: INTEGER; a_stream: like INPUT_STREAM_TYPE; nb_char: INTEGER): INTEGER is
 			-- Fill `a_buffer', starting at position `pos' with
 			-- at most `nb_char' characters read from `a_stream'.
 			-- Return the number of characters actually read.
@@ -183,7 +183,7 @@ feature -- Element change
 			nb_char_read_small_enough: Result <= nb_char
 		end
 
-	move_left (a_buffer: like STRING_BUFFER_TYPE; old_pos, new_pos: INTEGER; nb: INTEGER) is
+	move_left (a_buffer: !like STRING_BUFFER_TYPE; old_pos, new_pos: INTEGER; nb: INTEGER) is
 			-- Copy `nb' characters from `old_pos' to
 			-- `new_pos' in `a_buffer'.
 		require
@@ -212,7 +212,7 @@ feature -- Element change
 			end
 		end
 
-	move_right (a_buffer: like STRING_BUFFER_TYPE; old_pos, new_pos: INTEGER; nb: INTEGER) is
+	move_right (a_buffer: !like STRING_BUFFER_TYPE; old_pos, new_pos: INTEGER; nb: INTEGER) is
 			-- Copy `nb' characters from `old_pos' to
 			-- `new_pos' in `a_buffer'.
 		require
@@ -242,7 +242,7 @@ feature -- Element change
 
 feature -- Resizing
 
-	resize (a_buffer: like STRING_BUFFER_TYPE; n: INTEGER): like STRING_BUFFER_TYPE is
+	resize (a_buffer: !like STRING_BUFFER_TYPE; n: INTEGER): !like STRING_BUFFER_TYPE is
 			-- Resize `a_buffer' so that it contains `n' characters.
 			-- Do not lose any previously entered characters.
 			-- Note: the returned string buffer might be `a_buffer' or
