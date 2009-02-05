@@ -173,6 +173,8 @@ feature -- Comparison
 	order_is_equal (other: like Current): BOOLEAN is
 			-- Are current portion and `other' considered
 			-- equal according to the order relationship?
+		require
+			other_not_void: other /= Void
 		do
 			Result := is_state = other.is_state and width = other.width and count = other.count
 		ensure

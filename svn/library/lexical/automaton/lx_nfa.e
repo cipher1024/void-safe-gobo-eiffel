@@ -211,7 +211,7 @@ feature -- Comparison
 
 feature -- Setting
 
-	set_accepted_rule (a_rule: LX_RULE) is
+	set_accepted_rule (a_rule: ?LX_RULE) is
 			-- Make `final_state' be an accepting state
 			-- for `a_rule'.
 		do

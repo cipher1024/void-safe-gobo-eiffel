@@ -128,7 +128,7 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER} -- Access
 			-- Left most binary tree node;
 			-- The `key' of this node is less than the `key' of all other nodes in the tree.
 
-	successor (v: like new_tree_node): ?like new_tree_node is
+	successor (v: like new_tree_node): like root_node is
 			-- Successor of `v' if it exists, Void otherwise
 			-- (Performance: O(height).)
 		require
@@ -317,7 +317,7 @@ feature {NONE} -- Status report
 			end
 		end
 
-	key_comparator_settable (a_comparator: like key_comparator): BOOLEAN is
+	key_comparator_settable (a_comparator: ?like key_comparator): BOOLEAN is
 			-- Can `set_key_comparator' be called with `a_comparator'
 			-- as argument in current state of container?
 		do
@@ -496,6 +496,8 @@ feature {DS_CURSOR} -- Cursor implementation
 
 	cursor_key (a_cursor: like new_cursor): K is
 			-- Key at `a_cursor' position.
+		require
+			a_cursor_not_void: a_cursor /= Void
 		local
 			l_position: ?DS_BINARY_SEARCH_TREE_CONTAINER_NODE [G, K]
 		do
@@ -1356,7 +1358,7 @@ feature {NONE} -- Removal
 			a_successor_has_no_right_child: a_successor.right_child = Void
 		end
 
-	remove_childless_node (a_node: like new_tree_node): ?like new_tree_node is
+	remove_childless_node (a_node: like new_tree_node): ?like root_node is
 			-- Remove `a_node' from the tree and
 			-- return its successor.
 		require
@@ -1866,7 +1868,7 @@ feature {NONE} -- Implementation
 	root_node: ?DS_BINARY_SEARCH_TREE_CONTAINER_NODE [G, K]
 			-- Root node
 
-	parent_of_node (a_node: like new_tree_node): ?like new_tree_node is
+	parent_of_node (a_node: like new_tree_node): like root_node is
 			-- Parent of `a_node'
 		require
 			a_node_attached: a_node /= Void

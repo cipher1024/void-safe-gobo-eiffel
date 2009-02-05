@@ -54,7 +54,7 @@ feature -- Status report
 
 feature -- Conversion
 
-	to_any (an_any: ANY): ANY is
+	to_any (an_any: ?ANY): ?ANY is
 			-- Return `an_any';
 			-- This can be used to workaround VWEQ validy rule:
 			--    my_hashable := my_string
