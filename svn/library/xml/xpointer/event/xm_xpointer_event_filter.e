@@ -58,8 +58,8 @@ feature {NONE} -- Initialization
 			resolver_not_void: a_resolver /= Void
 		do
 			default_media_type := a_media_type
-			callbacks := a_callback
-			dtd_callbacks := a_dtd_callback
+			set_next_filter (a_callback)
+			set_next_dtd (a_dtd_callback)
 			if an_xpointer.count > 0 then
 				set_xpointer (an_xpointer)
 			else

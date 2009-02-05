@@ -43,7 +43,7 @@ feature -- Document
 	on_finish is
 			-- Forward to `next'.
 		do
-			attached_next.on_finish
+			next.on_finish
 		end
 
 	on_start is
@@ -51,7 +51,7 @@ feature -- Document
 		do
 			create context.make
 			attributes_make
-			attached_next.on_start
+			next.on_start
 		end
 
 feature -- Forwarding policy
@@ -95,6 +95,7 @@ feature -- Element
 				end
 			elseif is_xmlns (a_prefix) then
 					-- Prefix declaration.
+				check a_prefix /= Void end -- implied by `is_xmlns'
 				if l_context.shallow_has (a_prefix) then
 					on_error (Duplicate_namespace_declaration_error)
 				else
@@ -127,7 +128,7 @@ feature -- Element
 			if has_prefix (l_element_prefix) then
 				check l_element_prefix /= Void end -- implied by  `has_prefix'
 				if l_context.has (l_element_prefix) then
-					attached_next.on_start_tag (l_context.resolve (l_element_prefix),
+					next.on_start_tag (l_context.resolve (l_element_prefix),
 							l_element_prefix, l_element_local_part)
 					on_delayed_attributes
 				else
@@ -140,7 +141,7 @@ feature -- Element
 					on_error (error_msg)
 				end
 			else
-				attached_next.on_start_tag (l_context.resolve_default,
+				next.on_start_tag (l_context.resolve_default,
 						l_element_prefix, l_element_local_part)
 				on_delayed_attributes
 			end
@@ -154,6 +155,7 @@ feature -- Element
 		do
 			l_context := attached_context
 			if has_prefix (a_prefix) then
+				check a_prefix /= Void end -- implied by `has_prefix'
 				Precursor (l_context.resolve (a_prefix), a_prefix, a_local_part)
 			else
 				Precursor (l_context.resolve_default, a_prefix, a_local_part)
@@ -170,6 +172,7 @@ feature {NONE} -- Attribute events
 			l_attributes_local_part: like attributes_local_part
 			l_attributes_value: like attributes_value
 			l_context: like attached_context
+			l_prefix: ?STRING
 		do
 			from
 			until
@@ -185,29 +188,31 @@ feature {NONE} -- Attribute events
 				end -- implied by `not attributes_is_empty'
 
 				if has_prefix (l_attributes_prefix.item) then
+					l_prefix := l_attributes_prefix.item
+					check l_prefix /= Void end -- implied by `has_prefix'
 					-- Resolve the attribute's prefix if it has any.
 					l_context := attached_context
-					if l_context.has (l_attributes_prefix.item) then
-						attached_next.on_attribute (l_context.resolve (l_attributes_prefix.item),
-							l_attributes_prefix.item, l_attributes_local_part.item,
+					if l_context.has (l_prefix) then
+						next.on_attribute (l_context.resolve (l_prefix),
+							l_prefix, l_attributes_local_part.item,
 							l_attributes_value.item)
-					elseif is_xml (l_attributes_prefix.item) then
+					elseif is_xml (l_prefix) then
 							-- xml: prefix has implicit namespace
-						attached_next.on_attribute (Xml_prefix_namespace,
-							l_attributes_prefix.item,
+						next.on_attribute (Xml_prefix_namespace,
+							l_prefix,
 							l_attributes_local_part.item,
 							l_attributes_value.item)
-					elseif is_xmlns (l_attributes_prefix.item) then
+					elseif is_xmlns (l_prefix) then
 							-- xmlns: prefix has implicit namespace
-						attached_next.on_attribute (Xmlns_namespace,
-							l_attributes_prefix.item,
+						next.on_attribute (Xmlns_namespace,
+							l_prefix,
 							l_attributes_local_part.item,
 							l_attributes_value.item)
 					else
 						on_error (Undeclared_namespace_error)
 					end
 				else
-					attached_next.on_attribute (Unprefixed_attribute_namespace,
+					next.on_attribute (Unprefixed_attribute_namespace,
 						l_attributes_prefix.item, l_attributes_local_part.item,
 						l_attributes_value.item)
 				end
@@ -225,6 +230,7 @@ feature {NONE} -- Context
 
 	attached_context: !like context
 			-- Attached `context' for ease of void-safe usage
+			-- FIXME:jfiat: ease of conversion to void-safety
 		require
 			context_attached: context /= Void
 		local

@@ -47,14 +47,14 @@ feature -- Meta information
 	on_processing_instruction (a_name: STRING; a_content: STRING) is
 			-- Processing instruction.
 		do
-			attached_next.on_processing_instruction (shared_attached_string (a_name), shared_attached_string (a_content))
+			next.on_processing_instruction (shared_attached_string (a_name), shared_attached_string (a_content))
 		end
 
 	on_comment (a_content: STRING) is
 			-- Process comment.
 			-- Atomic: single comment produces single event
 		do
-			attached_next.on_comment (shared_attached_string (a_content))
+			next.on_comment (shared_attached_string (a_content))
 		end
 
 feature -- Tag
@@ -62,7 +62,7 @@ feature -- Tag
 	on_start_tag (a_namespace, a_prefix: ?STRING; a_local_part: STRING) is
 			-- Start of start tag.
 		do
-			attached_next.on_start_tag (shared_string (a_namespace),
+			next.on_start_tag (shared_string (a_namespace),
 				shared_string (a_prefix),
 				shared_attached_string (a_local_part))
 		end
@@ -70,7 +70,7 @@ feature -- Tag
 	on_attribute (a_namespace, a_prefix: ?STRING; a_local_part: STRING; a_value: STRING) is
 			-- Start of start tag.
 		do
-			attached_next.on_attribute (shared_string (a_namespace),
+			next.on_attribute (shared_string (a_namespace),
 				shared_string (a_prefix),
 				shared_attached_string (a_local_part),
 				shared_attached_string (a_value))
@@ -79,7 +79,7 @@ feature -- Tag
 	on_end_tag (a_namespace, a_prefix: ?STRING; a_local_part: STRING) is
 			-- End tag.
 		do
-			attached_next.on_end_tag (shared_string (a_namespace),
+			next.on_end_tag (shared_string (a_namespace),
 				shared_string (a_prefix),
 				shared_attached_string (a_local_part))
 		end
@@ -91,8 +91,7 @@ feature -- Content
 			-- NOT atomic: successive content may be different.
 			-- Default: forward event to 'next'.
 		do
-			check a_content /= Void end -- implied by inherit precondition FIXME:by_compiler
-			attached_next.on_content (shared_attached_string (a_content))
+			next.on_content (shared_attached_string (a_content))
 		end
 
 feature {NONE} -- Share
@@ -113,11 +112,9 @@ feature {NONE} -- Share
 		require
 			a_string_attached: a_string /= Void
 		local
-			l_strings: like strings
 			s: ?STRING
 		do
-			l_strings := strings
-			if l_strings /= Void then
+			if {l_strings: like strings} strings then
 				l_strings.search (a_string)
 				if l_strings.found then
 					s := l_strings.found_item

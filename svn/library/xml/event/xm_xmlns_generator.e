@@ -51,7 +51,7 @@ feature {NONE} -- Default element namespace handling
 			if not l_context.is_same_as_default (a_namespace) then
 					-- Change of default namespace, issue a declaration.
 				l_context.set_default (a_namespace)
-				attached_next.on_attribute (Xmlns_namespace, Void, Xmlns, a_namespace)
+				next.on_attribute (Xmlns_namespace, Void, Xmlns, a_namespace)
 			end
 		end
 
@@ -137,7 +137,6 @@ feature {NONE} -- Prefix handling
 	is_implicit (a_prefix: ?STRING): BOOLEAN is
 			-- Is this an implicit prefix? eg xml:
 		do
-			-- FIXME:jfiat: allow detachable, since nothing was preventing it in original code
 			Result := a_prefix /= Void and then STRING_.same_string (a_prefix, Xml_prefix)
 		end
 
@@ -149,7 +148,7 @@ feature -- Events
 			create context.make
 			reset_unique_prefix
 
-			attached_next.on_start
+			next.on_start
 		end
 
 	on_start_tag (a_namespace, a_prefix: ?STRING; a_local_part: STRING) is
@@ -162,10 +161,10 @@ feature -- Events
 			check l_context /= Void end -- implied by being in `on_start_tag'
 			l_context.on_start_element
 			if a_prefix = Void or else a_prefix.is_empty then
-				attached_next.on_start_tag (a_namespace, a_prefix, a_local_part)
+				next.on_start_tag (a_namespace, a_prefix, a_local_part)
 				on_default (a_namespace)
 			else
-				attached_next.on_start_tag (a_namespace,
+				next.on_start_tag (a_namespace,
 					handle_prefix (a_namespace, a_prefix),
 					a_local_part)
 			end
@@ -180,14 +179,14 @@ feature -- Events
 					-- Override preexisting xmlns declaration.
 			elseif STRING_.same_string (a_namespace, Default_namespace) then
 					-- Default namespace means unprefixed.
-				attached_next.on_attribute (Default_namespace, Void, a_local_part, a_value)
+				next.on_attribute (Default_namespace, Void, a_local_part, a_value)
 			elseif is_implicit (a_prefix) then
 					-- Implicit namespaces are not declared.
-				attached_next.on_attribute (a_namespace,
+				next.on_attribute (a_namespace,
 					a_prefix,
 					a_local_part, a_value)
 			else
-				attached_next.on_attribute (a_namespace,
+				next.on_attribute (a_namespace,
 					handle_prefix (a_namespace, a_prefix),
 					a_local_part, a_value)
 			end
@@ -202,9 +201,7 @@ feature -- Events
 		do
 			l_next := next
 			l_context := context
-			check
-				l_next /= Void and l_context /= Void
-			end -- implied by being in `on_start_tag_finish'
+			check l_context /= Void end -- implied by being in `on_start_tag_finish'
 			from
 				a_cursor := l_context.new_element_cursor
 				a_cursor.start
@@ -225,14 +222,14 @@ feature -- Events
 			l_context := context
 			check l_context /= Void	end -- implied by being in `on_start_tag_finish'			
 			l_context.on_end_element
-			attached_next.on_end_tag (a_namespace, a_prefix, a_local_part)
+			next.on_end_tag (a_namespace, a_prefix, a_local_part)
 		end
 
 	on_finish is
 		do
 			-- free context
 			create context.make
-			attached_next.on_finish
+			next.on_finish
 		end
 
 feature -- Events mode

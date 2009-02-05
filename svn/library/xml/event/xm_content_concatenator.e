@@ -41,12 +41,9 @@ feature {NONE} -- Content
 
 	flush_content is
 			-- Generate content event if there is pending content.
-		local
-			l_last_content: like last_content
 		do
-			l_last_content := last_content
-			if l_last_content /= Void and then l_last_content.count > 0 then
-				attached_next.on_content (l_last_content)
+			if {l_last_content: like last_content} last_content and then l_last_content.count > 0 then
+				next.on_content (l_last_content)
 			end
 			last_content := Void
 		end
@@ -56,14 +53,11 @@ feature -- Content
 	on_content (a_content: STRING) is
 			-- Aggregate content events so that two content events
 			-- never follow each other.
-		local
-			l_last_content: like last_content
 		do
-			l_last_content := last_content
-			if l_last_content = Void then
-				last_content := STRING_.cloned_string (a_content)
-			else
+			if {l_last_content: like last_content} last_content then
 				last_content := STRING_.appended_string (l_last_content, a_content)
+			else
+				last_content := STRING_.cloned_string (a_content)
 			end
 		end
 

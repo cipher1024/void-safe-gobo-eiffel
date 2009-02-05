@@ -68,7 +68,7 @@ feature {NONE} -- Initialization
 
 feature -- Encoding
 
-	is_valid_encoding (an_encoding: STRING): BOOLEAN is
+	is_valid_encoding (an_encoding: ?STRING): BOOLEAN is
 			-- Is this encoding known?
 		do
 			if an_encoding /= Void then
@@ -77,6 +77,8 @@ feature -- Encoding
 					or STRING_.same_case_insensitive (an_encoding, Encoding_utf_8)
 					or STRING_.same_case_insensitive (an_encoding, Encoding_utf_16)
 			end
+		ensure
+			an_encoding_attached_if_result_true: Result implies an_encoding /= Void
 		end
 
 	is_applicable_encoding (an_encoding: STRING): BOOLEAN is

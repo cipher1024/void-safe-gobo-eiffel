@@ -48,8 +48,8 @@ feature {NONE} -- Initalization
 			callbacks_not_void: a_callback /= Void
 			dtd_callbacks_not_void: a_dtd_callback /= Void
 		do
-			callbacks := a_callback
-			dtd_callbacks := a_dtd_callback
+			set_next_filter (a_callback)
+			set_next_dtd (a_dtd_callback)
 		end
 
 feature -- Tag

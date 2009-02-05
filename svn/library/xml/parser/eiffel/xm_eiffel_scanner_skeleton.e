@@ -140,15 +140,17 @@ feature {NONE} -- Input
 
 feature -- Encoding
 
-	is_applicable_encoding (an_encoding: STRING): BOOLEAN is
+	is_applicable_encoding (an_encoding: ?STRING): BOOLEAN is
 			-- Is this encoding known?
 		local
 			l_input_filter: like input_filter
 		do
 			l_input_filter := input_filter
 			check filter_set: l_input_filter /= Void end
-			Result := l_input_filter.is_valid_encoding (an_encoding)
-				and then l_input_filter.is_applicable_encoding (an_encoding)
+			if l_input_filter.is_valid_encoding (an_encoding) then
+				check an_encoding /= Void end -- implied by `is_valid_encoding'
+				Result := l_input_filter.is_applicable_encoding (an_encoding)
+			end
 		end
 
 	set_encoding (an_encoding: STRING) is

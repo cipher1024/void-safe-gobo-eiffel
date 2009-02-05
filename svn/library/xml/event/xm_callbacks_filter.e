@@ -25,8 +25,8 @@ inherit
 		-- implementation of default behaviour:
 		-- forwarding to 'next' processor in chain
 		rename
+			internal_callbacks as internal_next,
 			callbacks as next,
-			attached_callbacks as attached_next,
 			set_callbacks as set_next
 		end
 
@@ -40,11 +40,11 @@ feature {NONE} -- Initialization
 	make_null is
 			-- Next is null processor.
 		do
-			create {XM_CALLBACKS_NULL} next.make
+			set_next (create {XM_CALLBACKS_NULL}.make)
 		end
 
 invariant
 
-	next_not_void: next /= Void
+	next_not_void: internal_next /= Void
 
 end

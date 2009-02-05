@@ -68,7 +68,8 @@ feature {NONE} -- Initialization
 				-- Parser state:
 			in_external_dtd := False
 				-- Callbacks forwarding
-			create {XM_CALLBACKS_NULL} callbacks.make
+			set_callbacks (create {XM_CALLBACKS_NULL}.make)
+
 				-- Entities:
 			entities := new_entities_table
 			pe_entities := new_entities_table

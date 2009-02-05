@@ -49,7 +49,7 @@ feature -- Content
 			l_is_space_preserved := is_space_preserved
 			check l_is_space_preserved /= Void end -- implied by being in `on_content', then after `on_start'
 			if l_is_space_preserved.item then
-				attached_next.on_content (a_content)
+				next.on_content (a_content)
 			else
 				if in_content then
 					l_last_content := last_content
@@ -60,7 +60,7 @@ feature -- Content
 						l_last_content.append_string (a_content)
 					else
 							-- No tail whitespace, so can be processed now.
-						attached_next.on_content (l_last_content.item)
+						next.on_content (l_last_content.item)
 						create last_content.make (a_content)
 					end
 				else
@@ -107,7 +107,7 @@ feature {NONE} -- Content
 				normalize_content_tail
 				l_last_content := last_content
 				if l_last_content /= Void then
-					attached_next.on_content (l_last_content.item)
+					next.on_content (l_last_content.item)
 					last_content := Void
 				end
 			end

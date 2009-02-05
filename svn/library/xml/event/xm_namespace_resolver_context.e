@@ -69,22 +69,17 @@ feature -- Status report
 			definition: Result = context.is_empty
 		end
 
-	shallow_has (a_prefix: ?STRING): BOOLEAN is
+	shallow_has (a_prefix: STRING): BOOLEAN is
 			-- Is this prefix known at the current level?
 			-- (for duplicate declaration checks)
-			-- FIXME:jfiat ... a_prefix should not be detachable			
 		require
 			a_prefix_not_void: a_prefix /= Void
-		local
-			l_context: like context
 		do
-			l_context := context
-			Result := l_context /= Void and then l_context.count > 0 and then l_context.last.has (a_prefix)
+			Result := {l_context: like context} context and then l_context.count > 0 and then l_context.last.has (a_prefix)
 		end
 
-	has (a_prefix: ?STRING): BOOLEAN is
+	has (a_prefix: STRING): BOOLEAN is
 			-- Is this prefix known?
-			-- FIXME:jfiat ... a_prefix should not be detachable
 		require
 			a_prefix_not_void: a_prefix /= Void
 		local
@@ -111,9 +106,8 @@ feature -- Access
 			resoled_not_void: Result /= Void
 		end
 
-	resolve (a_prefix: ?STRING): STRING is
+	resolve (a_prefix: STRING): STRING is
 			-- Resolve a prefix.
-			-- FIXME:jfiat a_prefix should be attached
 		require
 			a_prefix_not_void: a_prefix /= Void
 		local

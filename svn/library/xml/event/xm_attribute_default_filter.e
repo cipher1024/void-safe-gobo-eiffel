@@ -402,7 +402,7 @@ feature {NONE} -- Tokens implementation
 			else
 				a_string := a_value
 			end
-			attached_next.on_attribute (a_ns, a_prefix, a_local, a_string)
+			next.on_attribute (a_ns, a_prefix, a_local, a_string)
 		end
 
 invariant

@@ -31,7 +31,7 @@ feature -- Meta
 	on_comment (a_content: STRING) is
 			-- Do not print comment.
 		do
-			attached_next.on_comment (a_content)
+			next.on_comment (a_content)
 		end
 
 feature {NONE} -- Escaped
