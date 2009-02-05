@@ -71,7 +71,7 @@ feature -- Status report
 		deferred
 		end
 
-	valid_unread_entry (an_entry: STRING): BOOLEAN is
+	valid_unread_entry (an_entry: ?STRING): BOOLEAN is
 			-- Can `an_entry' be put back in input stream?
 		do
 			Result := an_entry /= Void and then an_entry.count > 0

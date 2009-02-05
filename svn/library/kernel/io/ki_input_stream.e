@@ -110,7 +110,7 @@ feature -- Status report
 		deferred
 		end
 
-	valid_unread_item (an_item: G): BOOLEAN is
+	valid_unread_item (an_item: ?G): BOOLEAN is
 			-- Can `an_item' be put back in input stream?
 		deferred
 		end
