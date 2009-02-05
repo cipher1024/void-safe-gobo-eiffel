@@ -77,7 +77,7 @@ feature -- Status report
 			Result := an_entry /= Void and then an_entry.count > 0
 		ensure then
 			an_entry_not_void: Result implies an_entry /= Void
-			an_entry_not_empty: Result implies an_entry.count > 0
+			an_entry_not_empty: Result implies an_entry /= Void and then an_entry.count > 0
 		end
 
 feature -- Basic operations
