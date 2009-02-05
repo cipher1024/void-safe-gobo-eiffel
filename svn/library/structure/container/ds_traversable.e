@@ -82,7 +82,7 @@ feature {NONE} -- Cursor implementation
 
 	frozen attached_internal_cursor: like new_cursor is
 			-- Attached internal cursor
-			--| FIXME:jfiat
+			--| FIXME:jfiat: for ease of conversion. Rename as cursor ?
 		require
 			internal_cursor_attached: internal_cursor /= Void
 		local
