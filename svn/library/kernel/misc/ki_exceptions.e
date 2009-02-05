@@ -32,7 +32,7 @@ feature -- Status report
 		deferred
 		end
 
-	is_developer_exception_of_name (name: STRING): BOOLEAN is
+	is_developer_exception_of_name (name: ?STRING): BOOLEAN is
 			-- Is the last exception originally due to a developer
 			-- exception of name `name'?
 		deferred
@@ -47,7 +47,7 @@ feature -- Status report
 
 feature -- Status setting
 
-	raise (a_name: STRING) is
+	raise (a_name: ?STRING) is
 			-- Raise a developer exception of name `a_name'.
 		deferred
 		end
