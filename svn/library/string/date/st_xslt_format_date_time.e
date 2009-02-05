@@ -1391,6 +1391,8 @@ feature {NONE} -- Implementation
 				end
 				Result := a_name
 			end
+		ensure
+			Result_attached: Result /= Void
 		end
 
 	era (a_calendar_value: ST_XPATH_CALENDAR_VALUE; a_language, a_calendar, a_country: STRING): STRING is

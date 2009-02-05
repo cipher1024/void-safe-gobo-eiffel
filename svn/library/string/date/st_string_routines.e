@@ -23,6 +23,8 @@ feature -- Status report
 
 	is_all_whitespace (chars: STRING): BOOLEAN is
 			-- Does `chars' consist only of XML white-space characters?
+		require
+			chars_attached: chars /= Void
 		local
 			counter: INTEGER
 		do
@@ -58,4 +60,4 @@ feature -- Status report
 		end
 
 end
-	
+
