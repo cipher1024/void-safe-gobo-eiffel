@@ -308,6 +308,7 @@ feature {NONE} -- Measurement
 			-- Update `singleton_{line,column,count}'.
 			-- Singleton: CCL_OP
 			-- Singleton: Full_CCl
+			-- FIXME:jfiat: `a_symbol_class' should be attached, easier for geyacc																					
 		require
 			a_symbol_class_not_void: a_symbol_class /= Void
 		do
@@ -504,6 +505,7 @@ feature {NONE} -- Factory
 	new_symbol_class_nfa (symbols: ?LX_SYMBOL_CLASS): LX_NFA is
 			-- New NFA made of two states and a symbol
 			-- class transition labeled `symbols'
+			-- FIXME:jfiat: `symbols' should be attached, easier for geyacc															
 		require
 			symbols_not_void: symbols /= Void
 		do
@@ -585,6 +587,7 @@ feature {NONE} -- Factory
 			-- New NFA with a transition labeled with `a_character_class'
 			-- (Sort symbols in `a_character_class' if necessary and
 			-- eventually register to `description.equiv_classes'.)
+			-- FIXME:jfiat: `a_character_class' should be attached, easier for geyacc												
 		require
 			a_character_class_not_void: a_character_class /= Void
 		local
@@ -605,6 +608,7 @@ feature {NONE} -- Factory
 	new_bounded_iteration_nfa (a_nfa: ?LX_NFA; i, j: INTEGER): LX_NFA is
 			-- New NFA that matches whatever matched `a_nfa' from
 			-- `i' number of times to `j' number of times
+			-- FIXME:jfiat: `a_nfa' should be attached, easier for geyacc			
 		require
 			a_nfa_not_void: a_nfa /= Void
 		do
@@ -632,6 +636,7 @@ feature {NONE} -- Factory
 
 	new_unbounded_iteration_nfa (a_nfa: ?LX_NFA; i: INTEGER): LX_NFA is
 			-- New NFA that matches `i' or more occurrences of `a_nfa'
+			-- FIXME:jfiat: `a_nfa' should be attached, easier for geyacc									
 		require
 			a_nfa_not_void: a_nfa /= Void
 		do
@@ -649,6 +654,7 @@ feature {NONE} -- Factory
 	new_iteration_nfa (a_nfa: ?LX_NFA; i: INTEGER): LX_NFA is
 			-- New NFA that matches whatever `a_nfa'
 			-- matched `i' number of times
+			-- FIXME:jfiat: `a_nfa' should be attached, easier for geyacc									
 		require
 			a_nfa_not_void: a_nfa /= Void
 		do
@@ -668,6 +674,7 @@ feature {NONE} -- Implementation
 	push_start_condition (a_name: ?STRING; stack: LX_START_CONDITIONS) is
 			-- Push start condition named `a_name' on top of `stack'.
 			-- Do nothing if that start condition is already in `stack'.
+			-- FIXME:jfiat: `a_name' should be attached, easier for geyacc						
 		require
 			a_name_not_void: a_name /= Void
 			stack_not_void: stack /= Void
@@ -688,6 +695,7 @@ feature {NONE} -- Implementation
 
 	process_nfa_build_concatenation (a_nfa: LX_NFA; other: ?LX_NFA) is
 			-- Process `build_concatenation' on `a_nfa' with argument `other'
+			-- FIXME:jfiat: `other' should be attached, easier for geyacc
 		require
 			a_nfa_attached: a_nfa /= Void
 			other_attached: other /= Void
@@ -696,7 +704,8 @@ feature {NONE} -- Implementation
 		end
 
 	process_nfa_build_union (a_nfa: LX_NFA; other: ?LX_NFA) is
-			-- Process `build_union' on `a_nfa' with argument `other'	
+			-- Process `build_union' on `a_nfa' with argument `other'
+			-- FIXME:jfiat: `other' should be attached, easier for geyacc				
 		require
 			a_nfa_attached: a_nfa /= Void
 			other_attached: other /= Void
@@ -706,6 +715,7 @@ feature {NONE} -- Implementation
 
 	process_rule (a_nfa: ?LX_NFA) is
 			-- Process a rule.
+			-- FIXME:jfiat: `a_nfa' should be attached, easier for geyacc			
 		require
 			a_nfa_not_void: a_nfa /= Void
 			rule_not_void: rule /= Void
@@ -738,6 +748,7 @@ feature {NONE} -- Implementation
 
 	process_bol_rule (a_nfa: ?LX_NFA) is
 			-- Process a beginning-of-line rule.
+			-- FIXME:jfiat: `a_nfa' should be attached, easier for geyacc			
 		require
 			a_nfa_not_void: a_nfa /= Void
 			rule_not_void: rule /= Void
@@ -859,6 +870,7 @@ feature {NONE} -- Implementation
 
 	append_character_to_string (a_char: INTEGER; a_string: ?LX_NFA): LX_NFA is
 			-- Append character `a_char' at end of string `a_string'.
+			-- FIXME:jfiat: `a_string' should be attached, easier for geyacc																					
 		require
 			a_string_not_void: a_string /= Void
 		local
@@ -930,6 +942,7 @@ feature {NONE} -- Implementation
 
 	append_character_to_character_class (a_char: INTEGER; a_character_class: ?LX_SYMBOL_CLASS): LX_SYMBOL_CLASS is
 			-- Append character `a_char' to `a_character_class'.
+			-- FIXME:jfiat: `a_character_class' should be attached, easier for geyacc																		
 		require
 			a_character_class_not_void: a_character_class /= Void
 		do
@@ -1007,6 +1020,7 @@ feature {NONE} -- Implementation
 	append_trail_context_to_regexp (a_trail, a_regexp: ?LX_NFA): LX_NFA is
 			-- Append trailing context `a_trail'
 			-- to regular expression `a_regexp'.
+			-- FIXME:jfiat:arguments should be attached, easier for geyacc																					
 		require
 			a_trail_not_void: a_trail /= Void
 			a_regexp_not_void: a_regexp /= Void
@@ -1031,6 +1045,7 @@ feature {NONE} -- Implementation
 	append_eol_to_regexp (a_regexp: ?LX_NFA): LX_NFA is
 			-- Append end-of-line trailing context (i.e. "$")
 			-- to regular expression `a_regexp'.
+			-- FIXME:jfiat: `a_regexp' should be attached, easier for geyacc																					
 		require
 			a_regexp_not_void: a_regexp /= Void
 		do
@@ -1070,6 +1085,7 @@ feature {NONE} -- Implementation
 
 	set_action (a_text: ?STRING) is
 			-- Set pending rules' action using `a_text'.
+			-- FIXME:jfiat: `a_text' should be attached, easier for geyacc																					
 		require
 			a_text_not_void: a_text /= Void
 		local
