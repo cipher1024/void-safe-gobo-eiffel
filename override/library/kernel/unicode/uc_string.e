@@ -346,7 +346,6 @@ feature -- Initialization
 			-- existing string.
 			-- (Extended from ELKS 2001 STRING)
 		local
-			l_area: ?like area
 			n: INTEGER
 		do
 			reset_byte_index_cache
