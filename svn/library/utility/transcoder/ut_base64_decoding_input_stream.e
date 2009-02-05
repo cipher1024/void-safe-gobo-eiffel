@@ -56,6 +56,7 @@ feature -- Input
 			l_last_string := last_string
 			if l_last_string = Void then
 				create l_last_string.make (nb)
+				last_string := l_last_string
 			else
 				STRING_.wipe_out (l_last_string)
 			end
