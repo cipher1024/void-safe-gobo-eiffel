@@ -804,11 +804,11 @@ feature {NONE} -- Scanner implementation
 				-- If this is a PE entity reference, temporarily
 				-- switch scanner. Token is left for validation.
 			last_text := last_string_value
-			check last_text /= Void end -- implied by ... ?
 
 			--check for_all tokens_below: last_value is STRING end
 			inspect last_token
 			when DOCTYPE_PEREFERENCE, DOCTYPE_PEREFERENCE_UTF8 then
+				check last_text /= Void end -- implied by ... ?
 				if last_token = DOCTYPE_PEREFERENCE then
 					s := onstring_ascii (last_text)
 				elseif last_token = DOCTYPE_PEREFERENCE_UTF8 then
@@ -817,6 +817,7 @@ feature {NONE} -- Scanner implementation
 				check s /= Void end -- implied by ... ?
 				process_pe_entity (s)
 			when CONTENT_ENTITY, CONTENT_ENTITY_UTF8 then
+				check last_text /= Void end -- implied by ... ?			
 				if last_token = CONTENT_ENTITY  then
 					s := onstring_ascii (last_text)
 				elseif last_token = CONTENT_ENTITY_UTF8  then
@@ -825,6 +826,7 @@ feature {NONE} -- Scanner implementation
 				check s /= Void end -- implied by ... ?
 				process_entity (s)
 			when ATTRIBUTE_ENTITY, ATTRIBUTE_ENTITY_UTF8  then
+				check last_text /= Void end -- implied by ... ?				
 				if last_token = ATTRIBUTE_ENTITY then
 					s :=  onstring_ascii (last_text)
 				elseif last_token = ATTRIBUTE_ENTITY_UTF8 then
@@ -832,6 +834,7 @@ feature {NONE} -- Scanner implementation
 				end
 				check s /= Void end -- implied by ... ?
 				process_attribute_entity (s)
+			else
 			end
 		end
 

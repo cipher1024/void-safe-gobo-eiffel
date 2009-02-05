@@ -1446,7 +1446,6 @@ feature -- Parsing
 	process_on_doctype (a_name: ?STRING; an_id: ?XM_DTD_EXTERNAL_ID; has_internal_subset: BOOLEAN) is
 		require
 			a_name_attached: a_name /= Void
-			an_id_attached: an_id /= Void
  		do
 			on_doctype (a_name, an_id, has_internal_subset)
 		end
@@ -1472,7 +1471,7 @@ feature -- Parsing
 			a_string_not_void: a_string /= Void
 			other_not_void: other /= Void
 		do
-			Result := string_concat (a_string, other)
+			Result := STRING_.concat (a_string, other)
 		end
 
 	string_appended_string (a_string, other: ?STRING): STRING
@@ -1480,7 +1479,7 @@ feature -- Parsing
 			a_string_not_void: a_string /= Void
 			other_not_void: other /= Void
 		do
-			Result := string_appended_string (a_string, other)
+			Result := STRING_.appended_string (a_string, other)
 		end
 
 end
