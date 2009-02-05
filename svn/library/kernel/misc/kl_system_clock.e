@@ -19,6 +19,8 @@ inherit
 	C_DATE
 		rename
 			millisecond_now as millisecond
+		export
+			{NONE} all
 		undefine
 			default_create
 		end
@@ -32,9 +34,9 @@ feature {NONE} -- Initialization
 	make is
 			-- Create a new system clock.
 		do
-			make_utc 
-				--| FIXME:jfiat: mandatory for void-safety and otherwise needed for routines *_now might fail
-				--| why inherit from C_DATE, instead of being client of C_DATE?
+			create internal_item.make (0)
+				--| FIXME:jfiat: mandatory for void-safety.
+				--|              another solution would be to use a once per object C_DATE
 		end
 
 feature -- Access
