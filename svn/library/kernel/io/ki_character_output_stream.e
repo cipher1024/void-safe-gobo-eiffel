@@ -164,7 +164,7 @@ feature -- Output
 			-- of input is reached, and write these items to
 			-- current output stream.
 		local
-			a_string: ?STRING
+			l_string: ?STRING
 		do
 			if {a_character_input: KI_CHARACTER_INPUT_STREAM} an_input_stream then
 				from
@@ -174,9 +174,9 @@ feature -- Output
 				until
 					a_character_input.end_of_input
 				loop
-					a_string := a_character_input.last_string
-					check a_string_attached: a_string /= Void end
-					put_string (a_string)
+					l_string := a_character_input.last_string
+					check a_string_attached: l_string /= Void end
+					put_string (l_string)
 					a_character_input.read_string (512)
 				end
 			else

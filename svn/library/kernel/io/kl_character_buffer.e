@@ -42,18 +42,15 @@ feature {NONE} -- Initialization
 	make (n: INTEGER) is
 			-- Create a new character buffer being able
 			-- to contain `n' characters.
-		local
-			l_area: ?like area
 		do
 			if not operating_system.is_dotnet then
-				create l_area.make (n + 1)
-				l_area.set_count (n + 1)
-				as_special := l_area.area
+				create area.make (n + 1)
+				area.set_count (n + 1)
+				as_special := area.area
 			else
-				create l_area.make (n)
-				l_area.set_count (n)
+				create area.make (n)
+				area.set_count (n)
 			end
-			area := l_area
 		end
 
 feature -- Access

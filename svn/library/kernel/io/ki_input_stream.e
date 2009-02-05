@@ -52,7 +52,7 @@ feature -- Input
 			enough_space: (pos + nb - 1) <= a_buffer.count
 		local
 			i, end_pos: INTEGER
-			a_item: ?G
+			l_item: ?G
 		do
 			end_pos := pos + nb - 1
 			from
@@ -62,9 +62,9 @@ feature -- Input
 			loop
 				read
 				if not end_of_input then
-					a_item := last_item
-					check a_item /= Void end -- implied by `not end_of_input'
-					a_buffer.put (a_item, i)
+					l_item := last_item
+					check l_item /= Void end -- implied by `not end_of_input'
+					a_buffer.put (l_item, i)
 					i := i + 1
 				else
 					Result := i - pos - nb
