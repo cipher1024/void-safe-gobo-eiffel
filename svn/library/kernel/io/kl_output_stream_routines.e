@@ -24,7 +24,7 @@ inherit
 
 feature -- Initialization
 
-	make_file_open_write (a_filename: STRING): like OUTPUT_STREAM_TYPE is
+	make_file_open_write (a_filename: STRING): !like OUTPUT_STREAM_TYPE is
 			-- Create a new file object with `a_filename' as
 			-- file name and try to open it in write-only mode.
 			-- `is_open_write (Result)' is set to True
@@ -41,8 +41,12 @@ feature -- Initialization
 				create a_file.make (a_filename)
 				Result := a_file
 				a_file.open_write
-			elseif a_file /= Void and then not a_file.is_closed then
-				a_file.close
+			else
+				check a_file /= Void end
+				Result := a_file
+				if not a_file.is_closed then
+					a_file.close
+				end
 			end
 		ensure
 			file_not_void: Result /= Void
@@ -55,7 +59,7 @@ feature -- Initialization
 
 feature -- Status report
 
-	is_open_write (a_stream: like OUTPUT_STREAM_TYPE): BOOLEAN is
+	is_open_write (a_stream: !like OUTPUT_STREAM_TYPE): BOOLEAN is
 			-- Is `a_stream' open in write mode?
 		require
 			a_stream_void: a_stream /= Void
@@ -63,7 +67,7 @@ feature -- Status report
 			Result := a_stream.is_open_write
 		end
 
-	is_closed (a_stream: like OUTPUT_STREAM_TYPE): BOOLEAN is
+	is_closed (a_stream: !like OUTPUT_STREAM_TYPE): BOOLEAN is
 			-- Is `a_stream' closed?
 		require
 			a_stream_void: a_stream /= Void
@@ -73,7 +77,7 @@ feature -- Status report
 
 feature -- Status setting
 
-	close (a_stream: like OUTPUT_STREAM_TYPE) is
+	close (a_stream: !like OUTPUT_STREAM_TYPE) is
 			-- Close `a_stream' if it is closable,
 			-- let it open otherwise.
 		require
@@ -85,7 +89,7 @@ feature -- Status setting
 
 feature -- Element change
 
-	flush (a_stream: like OUTPUT_STREAM_TYPE) is
+	flush (a_stream: !like OUTPUT_STREAM_TYPE) is
 			-- Flush data of `a_stream' to disk.
 		require
 			a_stream_not_void: a_stream /= Void
