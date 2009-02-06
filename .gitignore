@@ -29,7 +29,6 @@ git/
 *.xhtml
 *.html
 *.dtd
-*.bat
 *.sh
 *.gec
 *.se
