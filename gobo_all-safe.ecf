@@ -28,7 +28,7 @@
 		<library name="gobo_pattern" location="gobo_pattern-safe.ecf" readonly="false"/>
 		<library name="gobo_regexp" location="gobo_regexp-safe.ecf" readonly="false"/>
 		<library name="gobo_string" location="gobo_string-safe.ecf" readonly="false"/>
-		<library name="gobo_structures" location="gobo_structures-safe.ecf" readonly="false"/>
+		<library name="gobo_structure" location="gobo_structure-safe.ecf" readonly="false"/>
 		<library name="gobo_time" location="gobo_time-safe.ecf" readonly="false"/>
 		<library name="gobo_utility" location="gobo_utility-safe.ecf" readonly="false"/>
 		<library name="gobo_xml" location="gobo_xml-safe.ecf" readonly="false"/>

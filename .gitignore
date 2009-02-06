@@ -10,6 +10,8 @@ svn/misc/
 svn/src/
 svn/test/
 svn/library/tools/
+src/
+test/
 _
 git/
 *.swp
@@ -34,7 +36,6 @@ git/
 *.se
 *.gelint
 *.hact
-*.ecf
 *.gif
 *.rnc
 *.rng

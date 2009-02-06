@@ -19,7 +19,7 @@
 		<setting name="dotnet_naming_convention" value="true"/>
 		<library name="eiffelbase" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
 		<library name="gobo_kernel" location="gobo_kernel-safe.ecf"/>
-		<library name="gobo_structures" location="gobo_structures-safe.ecf"/>
+		<library name="gobo_structure" location="gobo_structure-safe.ecf"/>
 		<library name="gobo_pattern" location="gobo_pattern-safe.ecf"/>
 		<library name="gobo_utility" location="gobo_utility-safe.ecf"/>
 		<library name="gobo_string" location="gobo_string-safe.ecf"/>

@@ -1,7 +1,7 @@
 setlocal
 @echo off
 set EC_CMD=ec -batch -melt -project_path safe-test
-set EC_CMD=%EC_CMD% -clean
+rem set EC_CMD=%EC_CMD% -clean
 set EC_CMD=%EC_CMD% -config
 set LOGTHIS=logs\
 mkdir logs
@@ -12,8 +12,8 @@ type %LOGTHIS%kernel
 echo.
 
 @echo Checking Structure
-%EC_CMD% gobo_structures-safe.ecf > %LOGTHIS%structures 2>&1
-type %LOGTHIS%structures
+%EC_CMD% gobo_structure-safe.ecf > %LOGTHIS%structure 2>&1
+type %LOGTHIS%structure
 echo. 
 
 @echo Checking Utility
