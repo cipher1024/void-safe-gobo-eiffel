@@ -1,7 +1,7 @@
 setlocal
 @echo off
 set EC_CMD=ec -batch -melt -project_path safe-test
-rem set EC_CMD=%EC_CMD% -clean
+set EC_CMD=%EC_CMD% -clean
 set EC_CMD=%EC_CMD% -config
 set LOGTHIS=logs\
 mkdir logs
