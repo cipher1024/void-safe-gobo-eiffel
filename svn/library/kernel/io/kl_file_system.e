@@ -108,8 +108,6 @@ feature -- File handling
 			-- KI_FILE_SYSTEM.pathname_from_file_system.)
 		local
 			a_file1, a_file2: like new_input_file
-			l_file1_last_string,
-			l_file2_last_string: ?STRING
 			done: BOOLEAN
 		do
 			a_file1 := new_input_file (a_filename1)
@@ -137,18 +135,11 @@ feature -- File handling
 							a_file1.close
 							a_file2.close
 							done := True
-						else
-							l_file1_last_string := a_file1.last_string
-							l_file2_last_string := a_file2.last_string
-							check 
-								l_file1_last_string /= Void  and l_file2_last_string /= Void 
-							end -- implied by `not a_file*.end_of_file'
-							if not l_file1_last_string.is_equal (l_file2_last_string) then
-								Result := False
-								a_file1.close
-								a_file2.close
-								done := True
-							end
+						elseif not (a_file1.last_string ~ a_file2.last_string) then
+							Result := False
+							a_file1.close
+							a_file2.close
+							done := True
 						end
 					end
 				else
@@ -212,8 +203,8 @@ feature -- File handling
 									-- do the comparison ourselves by hand character by character.
 								s1 := a_file1.last_string
 								s2 := a_file2.last_string
-								check 
-									s1 /= Void  and s2 /= Void 
+								check
+									s1 /= Void  and s2 /= Void
 								end -- implied by `not a_file*.end_of_file'
 								nb := s1.count
 								if s2.count /= nb then
