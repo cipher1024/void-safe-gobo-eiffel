@@ -108,6 +108,18 @@ feature -- Status report
 			Result := items.has (v)
 		end
 
+	has_void: BOOLEAN is
+			-- Does container include Void?
+		local
+			v: ?G
+		do
+			if {d: DS_TOPOLOGICAL_SORTER [?G]} Current then
+				Result := d.has (v)
+			end
+		ensure
+			not_empty: Result implies not is_empty
+		end
+
 	is_sorted: BOOLEAN is
 			-- Have items been sorted?
 		do
