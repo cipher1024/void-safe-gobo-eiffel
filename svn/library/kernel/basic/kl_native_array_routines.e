@@ -25,7 +25,7 @@ inherit
 
 feature -- Initialization
 
-	make (n: INTEGER): !like NATIVE_ARRAY_TYPE is
+	make (n: INTEGER): like NATIVE_ARRAY_TYPE is
 			-- Create a new native array being able to contain `n' items.
 		require
 			non_negative_n: n >= 0
@@ -41,7 +41,7 @@ feature -- Initialization
 
 feature -- Status report
 
-	valid_native_array (an_array: !like NATIVE_ARRAY_TYPE): BOOLEAN is
+	valid_native_array (an_array: like NATIVE_ARRAY_TYPE): BOOLEAN is
 			-- Make sure that the lower bound of `an_array' is zero.
 		require
 			an_array_not_void: an_array /= Void
@@ -51,7 +51,7 @@ feature -- Status report
 
 feature -- Resizing
 
-	resize (an_array: !like NATIVE_ARRAY_TYPE; old_size, new_size: INTEGER): !like NATIVE_ARRAY_TYPE is
+	resize (an_array: like NATIVE_ARRAY_TYPE; old_size, new_size: INTEGER): like NATIVE_ARRAY_TYPE is
 			-- Resize `an_array' so that it contains `n' items.
 			-- Do not lose any previously entered items.
 			-- Note: the returned native array  might be `an_array'

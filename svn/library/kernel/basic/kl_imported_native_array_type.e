@@ -21,9 +21,12 @@ obsolete
 
 feature -- Type anchors
 
-	NATIVE_ARRAY_TYPE: ?SPECIAL [G] is
+	NATIVE_ARRAY_TYPE: SPECIAL [G] is
 			-- Type anchor
+		require
+			do_not_call: False
 		do
+			Result := NATIVE_ARRAY_TYPE --| void-safety: this code should never be called.
 		end
 
 end

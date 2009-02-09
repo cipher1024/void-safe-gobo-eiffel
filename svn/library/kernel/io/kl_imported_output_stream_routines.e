@@ -28,9 +28,12 @@ feature -- Access
 
 feature -- Type anchors
 
-	OUTPUT_STREAM_TYPE: ?IO_MEDIUM is
+	OUTPUT_STREAM_TYPE: IO_MEDIUM is
 			-- Type anchor
+		require
+			do_not_call: False
 		do
+			Result := OUTPUT_STREAM_TYPE --| void-safety: this code should never be called.
 		end
 
 end

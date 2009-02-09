@@ -30,9 +30,12 @@ feature -- Access
 
 feature -- Type anchors
 
-	STRING_BUFFER_TYPE: ?STRING is
+	STRING_BUFFER_TYPE: STRING is
 			-- Type anchor
+		require
+			do_not_call: False
 		do
+			Result := STRING_BUFFER_TYPE --| void-safety: this code should never be called.			
 		end
 
 end

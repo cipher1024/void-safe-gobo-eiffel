@@ -24,7 +24,7 @@ inherit
 
 feature -- Initialization
 
-	make (n: INTEGER): !like FIXED_ARRAY_TYPE is
+	make (n: INTEGER): like FIXED_ARRAY_TYPE is
 			-- Create a new fixed array being able to contain `n' items.
 		require
 			non_negative_n: n >= 0
@@ -39,7 +39,7 @@ feature -- Initialization
 			count_set: Result.count = n
 		end
 
-	make_from_array (an_array: ARRAY [G]): !like FIXED_ARRAY_TYPE is
+	make_from_array (an_array: ARRAY [G]): like FIXED_ARRAY_TYPE is
 			-- Create a new fixed array with items from `an_array'.
 		require
 			an_array_not_void: an_array /= Void
@@ -57,7 +57,7 @@ feature -- Initialization
 
 feature -- Conversion
 
-	to_fixed_array (an_array: ARRAY [G]): !like FIXED_ARRAY_TYPE is
+	to_fixed_array (an_array: ARRAY [G]): like FIXED_ARRAY_TYPE is
 			-- Fixed array filled with items from `an_array'.
 			-- The fixed array and `an_array' may share internal
 			-- data. Use `make_from_array' if this is a concern.
@@ -74,7 +74,7 @@ feature -- Conversion
 
 feature -- Status report
 
-	has (an_array: !like FIXED_ARRAY_TYPE; v: G): BOOLEAN is
+	has (an_array: like FIXED_ARRAY_TYPE; v: G): BOOLEAN is
 			-- Does `v' appear in `an_array'?
 		require
 			an_array_not_void: an_array /= Void
@@ -91,7 +91,7 @@ feature -- Status report
 			end
 		end
 
-	valid_fixed_array (an_array: !like FIXED_ARRAY_TYPE): BOOLEAN is
+	valid_fixed_array (an_array: like FIXED_ARRAY_TYPE): BOOLEAN is
 			-- Make sure that the lower bound of `an_array' is zero.
 		require
 			an_array_not_void: an_array /= Void
@@ -101,7 +101,7 @@ feature -- Status report
 
 feature -- Resizing
 
-	resize (an_array: !like FIXED_ARRAY_TYPE; n: INTEGER): !like FIXED_ARRAY_TYPE is
+	resize (an_array: like FIXED_ARRAY_TYPE; n: INTEGER): like FIXED_ARRAY_TYPE is
 			-- Resize `an_array' so that it contains `n' items.
 			-- Do not lose any previously entered items.
 			-- Note: the returned fixed array  might be `an_array'
@@ -125,7 +125,7 @@ feature -- Resizing
 
 feature -- Removal
 
-	clear_all (an_array: !like FIXED_ARRAY_TYPE) is
+	clear_all (an_array: like FIXED_ARRAY_TYPE) is
 			-- Reset all items to default values.
 		require
 			an_array_not_void: an_array /= Void

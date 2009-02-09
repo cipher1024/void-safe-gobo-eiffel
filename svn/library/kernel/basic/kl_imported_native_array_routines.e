@@ -63,29 +63,44 @@ feature -- Access
 
 feature -- Type anchors
 
-	NATIVE_ANY_ARRAY_TYPE: ?SPECIAL [ANY] is
+	NATIVE_ANY_ARRAY_TYPE: SPECIAL [ANY] is
 			-- Type anchor
+		require
+			do_not_call: False
 		do
+			Result := NATIVE_ANY_ARRAY_TYPE --| void-safety: this code should never be called.
 		end
 
-	NATIVE_BOOLEAN_ARRAY_TYPE: ?SPECIAL [BOOLEAN] is
+	NATIVE_BOOLEAN_ARRAY_TYPE: SPECIAL [BOOLEAN] is
 			-- Type anchor
+		require
+			do_not_call: False
 		do
+			Result := NATIVE_BOOLEAN_ARRAY_TYPE --| void-safety: this code should never be called.
 		end
 
-	NATIVE_CHARACTER_ARRAY_TYPE: ?SPECIAL [CHARACTER] is
+	NATIVE_CHARACTER_ARRAY_TYPE: SPECIAL [CHARACTER] is
 			-- Type anchor
+		require
+			do_not_call: False
 		do
+			Result := NATIVE_CHARACTER_ARRAY_TYPE --| void-safety: this code should never be called.
 		end
 
-	NATIVE_INTEGER_ARRAY_TYPE: ?SPECIAL [INTEGER] is
+	NATIVE_INTEGER_ARRAY_TYPE: SPECIAL [INTEGER] is
 			-- Type anchor
+		require
+			do_not_call: False
 		do
+			Result := NATIVE_INTEGER_ARRAY_TYPE --| void-safety: this code should never be called.
 		end
 
-	NATIVE_STRING_ARRAY_TYPE: ?SPECIAL [STRING] is
+	NATIVE_STRING_ARRAY_TYPE: SPECIAL [STRING] is
 			-- Type anchor
+		require
+			do_not_call: False
 		do
+			Result := NATIVE_STRING_ARRAY_TYPE --| void-safety: this code should never be called.
 		end
 
 end
