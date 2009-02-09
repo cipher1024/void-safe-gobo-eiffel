@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-07-26 10:10:48 +0200 (Sat, 26 Jul 2008) $"
-	revision: "$Revision: 6456 $"
+	date: "$Date: 2009-02-08 16:21:06 +0100 (Sun, 08 Feb 2009) $"
+	revision: "$Revision: 6585 $"
 
 class KL_SYSTEM_CLOCK
 
@@ -34,9 +34,9 @@ feature {NONE} -- Initialization
 	make is
 			-- Create a new system clock.
 		do
+				-- There is an implicit invariant which
+				-- expects `internal_item' to be non-void.
 			create internal_item.make (0)
-				--| FIXME:jfiat: mandatory for void-safety.
-				--|              another solution would be to use a once per object C_DATE
 		end
 
 feature -- Access

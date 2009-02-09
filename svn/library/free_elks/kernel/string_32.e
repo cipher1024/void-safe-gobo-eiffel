@@ -6,8 +6,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-23 21:06:53 +0100 (Fri, 23 Jan 2009) $"
-	revision: "$Revision: 6576 $"
+	date: "$Date: 2009-02-07 16:50:43 +0100 (Sat, 07 Feb 2009) $"
+	revision: "$Revision: 6583 $"
 
 class
 	STRING_32
@@ -72,7 +72,7 @@ create
 convert
 	to_cil: {SYSTEM_STRING},
 	make_from_cil ({SYSTEM_STRING}),
-	as_string_8: {READABLE_STRING_8, STRING_8, ?STRING_8}
+	as_string_8: {READABLE_STRING_8, ?READABLE_STRING_8, STRING_8, ?STRING_8}
 
 feature -- Initialization
 
@@ -99,7 +99,7 @@ feature -- Initialization
 		local
 			l_count: INTEGER
 		do
-			c_string_provider.share_from_pointer (c_string)
+			c_string_provider.set_shared_from_pointer (c_string)
 				-- Resize string in case it is not big enough
 			l_count := c_string_provider.count
 			resize (l_count + 1)
@@ -125,7 +125,7 @@ feature -- Initialization
 			l_count: INTEGER
 		do
 			l_count := end_pos - start_pos + 1
-			c_string_provider.share_from_pointer_and_count (c_string + (start_pos - 1), l_count)
+			c_string_provider.set_shared_from_pointer_and_count (c_string + (start_pos - 1), l_count)
 				-- Resize string in case it is not big enough
 			resize (l_count + 1)
 			count := l_count
@@ -631,7 +631,7 @@ feature -- Element change
 			prepend (r.out)
 		end
 
-	prepend_string (s: READABLE_STRING_32)
+	prepend_string (s: ?READABLE_STRING_32)
 			-- Prepend a copy of `s', if not void, at front.
 		do
 			if s /= Void then
@@ -681,7 +681,7 @@ feature -- Element change
 			Result.append (s)
 		end
 
-	append_string (s: READABLE_STRING_32)
+	append_string (s: ?READABLE_STRING_32)
 			-- Append a copy of `s', if not void, at end.
 		do
 			if s /= Void then

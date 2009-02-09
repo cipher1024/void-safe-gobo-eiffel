@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel XML Library"
 	copyright: "Copyright (c) 2001, Andreas Leitner and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (ven., 26 janv. 2007) $"
-	revision: "$Revision: 5877 $"
+	date: "$Date: 2009-02-08 16:22:14 +0100 (Sun, 08 Feb 2009) $"
+	revision: "$Revision: 6586 $"
 
 class XM_PROCESSING_INSTRUCTION
 
@@ -45,6 +45,7 @@ feature {NONE} -- Initialization
 			-- Create a new processing instruction node,
 			-- and add it to parent.
 		require
+			a_parent_not_void: a_parent /= Void
 			a_target_not_void: a_target /= Void
 			a_data_not_void: a_data /= Void
 		do
@@ -52,7 +53,7 @@ feature {NONE} -- Initialization
 			data := a_data
 			a_parent.force_last (Current)
 		ensure
---			parent_set: parent = a_parent
+			parent_set: parent = a_parent
 			in_parent: a_parent.last = Current
 			target_set: target = a_target
 			data_set: data = a_data
@@ -70,7 +71,7 @@ feature {NONE} -- Initialization
 			data := a_data
 			a_parent.force_last (Current)
 		ensure
---			parent_set: parent = a_parent
+			parent_set: parent = a_parent
 			in_parent: a_parent.last = Current
 			target_set: target = a_target
 			data_set: data = a_data

@@ -6,8 +6,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 2005-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-02-07 16:50:43 +0100 (Sat, 07 Feb 2009) $"
+	revision: "$Revision: 6583 $"
 
 
 class EXECUTION_ENVIRONMENT
@@ -57,7 +57,7 @@ feature -- Access
 			ext := s.to_c
 			c_string := eif_getenv ($ext)
 			if c_string /= void_pointer then
-				create Result.make_from_c_pointer (c_string)
+				create Result.make_from_c (c_string)
 			end
 		end
 
@@ -94,7 +94,7 @@ feature -- Access
 			until
 				l_ptr = default_pointer
 			loop
-				l_curr_var := separated_variables (create {STRING}.make_from_c_pointer (l_ptr))
+				l_curr_var := separated_variables (create {STRING}.make_from_c (l_ptr))
 				if l_curr_var /= Void then
 					Result.force (l_curr_var.value, l_curr_var.key)
 				end

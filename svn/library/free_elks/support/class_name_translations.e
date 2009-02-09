@@ -13,8 +13,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 2005-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-02-07 16:50:43 +0100 (Sat, 07 Feb 2009) $"
+	revision: "$Revision: 6583 $"
 
 class CLASS_NAME_TRANSLATIONS
 
@@ -45,8 +45,8 @@ feature -- Initialization
 			cnt := class_translation_count
 			make (cnt)
 			from i := 0 until i = cnt loop
-				create o.make_from_c_pointer (class_translation_old (i))
-				create n.make_from_c_pointer (class_translation_new (i))
+				create o.make_from_c (class_translation_old (i))
+				create n.make_from_c (class_translation_new (i))
 				put (n, o)
 				i := i + 1
 			end

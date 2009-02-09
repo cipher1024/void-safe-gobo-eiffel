@@ -14,8 +14,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 1999-2006, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-26 20:29:45 +0100 (Sun, 26 Oct 2008) $"
-	revision: "$Revision: 6539 $"
+	date: "$Date: 2009-02-07 23:01:29 +0100 (Sat, 07 Feb 2009) $"
+	revision: "$Revision: 6584 $"
 
 class KL_EXECUTION_ENVIRONMENT
 
@@ -25,13 +25,6 @@ inherit
 		rename
 			value as variable_value
 		end
-
-
-
-
-
-	EXECUTION_ENVIRONMENT
-
 
 feature -- Access
 
@@ -58,7 +51,7 @@ feature -- Setting
 			a_variable_not_empty: a_variable.count > 0
 			a_value_not_void: a_value /= Void
 		do
-			put (STRING_.as_string (a_value), STRING_.as_string (a_variable))
+			environment_impl.put (STRING_.as_string (a_value), STRING_.as_string (a_variable))
 		ensure
 			-- This setting may fail on certain platforms, hence the
 			-- following commented postcondition:

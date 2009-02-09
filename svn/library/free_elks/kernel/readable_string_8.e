@@ -6,8 +6,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-23 21:06:53 +0100 (Fri, 23 Jan 2009) $"
-	revision: "$Revision: 6576 $"
+	date: "$Date: 2009-02-07 16:50:43 +0100 (Sat, 07 Feb 2009) $"
+	revision: "$Revision: 6583 $"
 
 deferred class
 	READABLE_STRING_8
@@ -82,28 +82,6 @@ feature {NONE} -- Initialization
 	make_from_c (c_string: POINTER)
 			-- Initialize from contents of `c_string',
 			-- a string created by some C function
---		obsolete
---			"Use `make_from_c_pointer' to create object and `from_c' to modify it."
-		require
-			c_string_exists: c_string /= default_pointer
-		local
-			l_count: INTEGER
-		do
-			c_string_provider.set_shared_from_pointer (c_string)
-			l_count := c_string_provider.count
-			if area = Void then
-				create area.make (l_count + 1)
-			elseif l_count >= area.count then
-				area := area.aliased_resized_area (l_count + 1)
-			end
-			count := l_count
-			internal_hash_code := 0
-			c_string_provider.read_substring_into_character_8_area (area, 1, l_count)
-		end
-
-	make_from_c_pointer (c_string: POINTER)
-			-- Create new instance from contents of `c_string',
-			-- a string created by some C function
 		require
 			c_string_exists: c_string /= default_pointer
 		local
@@ -115,6 +93,17 @@ feature {NONE} -- Initialization
 			count := l_count
 			internal_hash_code := 0
 			c_string_provider.read_substring_into_character_8_area (area, 1, l_count)
+		end
+
+	make_from_c_pointer (c_string: POINTER)
+			-- Create new instance from contents of `c_string',
+			-- a string created by some C function
+		obsolete
+			"Use `make_from_c' instead."
+		require
+			c_string_exists: c_string /= default_pointer
+		do
+			make_from_c (c_string)
 		end
 
 	make_from_cil (a_system_string: SYSTEM_STRING)

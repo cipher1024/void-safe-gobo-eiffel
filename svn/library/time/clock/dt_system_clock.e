@@ -4,12 +4,11 @@ indexing
 
 		"Local system clocks (precision to the millisecond)"
 
-	remark: "With SmartEiffel under Windows the millisecond part may be stuck to zero."
 	library: "Gobo Eiffel Time Library"
 	copyright: "Copyright (c) 2001-2004, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-09-28 20:36:52 +0200 (Sun, 28 Sep 2008) $"
-	revision: "$Revision: 6525 $"
+	date: "$Date: 2009-02-08 16:23:02 +0100 (Sun, 08 Feb 2009) $"
+	revision: "$Revision: 6587 $"
 
 class DT_SYSTEM_CLOCK
 

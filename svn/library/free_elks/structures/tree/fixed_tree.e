@@ -12,8 +12,8 @@ note
 	representation: recursive, array;
 	access: cursor, membership;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-02-07 16:50:43 +0100 (Sat, 07 Feb 2009) $"
+	revision: "$Revision: 6583 $"
 
 class FIXED_TREE [G] inherit
 
@@ -58,8 +58,9 @@ feature -- Initialization
 		require
 			valid_number_of_children: n >= 0
 		local
-			l_default: G
+			l_default: ?G
 		do
+			check l_default_attached: l_default /= Void end
 			arity := n
 			create fixed_list.make_filled (n)
 			replace (v)
