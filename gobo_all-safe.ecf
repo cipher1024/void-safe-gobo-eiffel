@@ -32,6 +32,7 @@
 		<library name="gobo_structure" location="gobo_structure-safe.ecf" readonly="false"/>
 		<library name="gobo_time" location="gobo_time-safe.ecf" readonly="false"/>
 		<library name="gobo_utility" location="gobo_utility-safe.ecf" readonly="false"/>
+		<!-- <library name="gobo_tools" location="gobo_tools-safe.ecf" readonly="false"/> -->
 		<library name="gobo_xml" location="gobo_xml-safe.ecf" readonly="false"/>
 		<assembly name="eiffelsoftware.runtime" location="$ISE_EIFFEL\studio\spec\$ISE_PLATFORM\lib\EiffelSoftware.Runtime.dll"/>
 	</target>
