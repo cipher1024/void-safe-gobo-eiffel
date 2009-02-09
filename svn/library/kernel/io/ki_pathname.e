@@ -34,6 +34,11 @@ inherit
 			is_equal
 		end
 
+	KL_IMPORTED_ARRAY_ROUTINES
+		undefine
+			is_equal
+		end
+
 feature -- Status report
 
 	is_relative: BOOLEAN is
@@ -155,7 +160,7 @@ feature -- Access
 			end
 		ensure
 			trailing_items_not_void: Result /= Void
---			no_void_item: not Result.has (Void)
+			no_void_item: not STRING_ARRAY_.has_void (Result)
 			no_empty_item: not Result.there_exists (agent {STRING}.is_empty)
 			count: Result.count = (a_pathname.count - count).max (0)
 		end
