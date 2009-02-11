@@ -79,23 +79,23 @@ feature -- Access
 		local
 			i, nb: INTEGER
 			a_lower_name: STRING
-			c: ?like start_condition
+			l_result: ?like start_condition
 		do
 			from
 				i := 1
 				nb := count
 				a_lower_name := a_name.as_lower
 			until
-				c /= Void or i > nb
+				l_result /= Void or i > nb
 			loop
-				c := item (i)
-				if not a_lower_name.is_equal (c.name.as_lower) then
-					c := Void
+				l_result := item (i)
+				if not a_lower_name.is_equal (l_result.name.as_lower) then
+					l_result := Void
 					i := i + 1
 				end
 			end
-			check c /= Void end -- implied by precondition `has_start_condition'
-			Result := c
+			check l_result /= Void end -- implied by precondition `has_start_condition'
+			Result := l_result
 		ensure
 			start_condition_not_void: Result /= Void
 		end
