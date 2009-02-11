@@ -157,12 +157,7 @@ feature -- Scanning
 					yy_goto := yyFind_action
 				when yyFind_action then
 						-- Find the action number.
-					if yyReject_or_variable_trail_context then
-						yy_state_count := yy_state_count - 1
-						yy_current_state := attached_yy_state_stack.item (yy_state_count)
-						yy_lp := yy_accept.item (yy_current_state)
-						yy_goto := yyFind_rule
-					else
+					if not yyReject_or_variable_trail_context then
 						yy_act := yy_accept.item (yy_current_state)
 							-- Do the garanteed-needed backing up
 							-- to figure out the match.
@@ -173,6 +168,12 @@ feature -- Scanning
 							yy_act := yy_accept.item (yy_current_state)
 						end
 						yy_goto := yyDo_action
+					else
+						yy_state_count := yy_state_count - 1
+						yy_current_state := attached_yy_state_stack.item (yy_state_count)
+						yy_lp := yy_accept.item (yy_current_state)
+						yy_goto := yyFind_rule
+
 					end
 				when yyFind_rule then
 						-- We branch here when backing up.
