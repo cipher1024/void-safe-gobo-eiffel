@@ -27,6 +27,8 @@
 			<file_rule>
 				<exclude>/unicode/uc_string.e$</exclude>
 				<exclude>/unicode/uc_character.e$</exclude>
+				<exclude>/misc/kl_comparable.e$</exclude>
+				<exclude>/misc/kl_numeric.e$</exclude>
 			</file_rule>
 			<!--
 			<file_rule>
