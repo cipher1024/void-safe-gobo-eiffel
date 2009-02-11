@@ -447,6 +447,7 @@ feature {NONE} -- Building
 					-- and "cap" for the list.
 				yy_accept_.put (j, i)
 				yy_accept_.put (j, i + 1)
+				yy_accept := yy_accept_
 				yy_acclist := yy_acclist_
 			else
 					-- Make room for the jam state accepting id
@@ -467,9 +468,9 @@ feature {NONE} -- Building
 				end
 					-- Add accepting id for jam state.
 				yy_accept_.put (0, i)
+				yy_accept := yy_accept_
 				yy_acclist := Void
 			end
-			yy_accept := yy_accept_
 		ensure
 			yy_accept_not_void: yy_accept /= Void
 		end
