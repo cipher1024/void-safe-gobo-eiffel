@@ -99,27 +99,27 @@ feature {NONE} -- Generation
 	print_token (a_token: PR_TOKEN; a_file: KI_TEXT_OUTPUT_STREAM) is
 			-- Print `a_token' to `a_file'.
 		local
-			s: ?STRING
-			n: STRING
+			a_token_literal_string: ?STRING
+			a_token_name: STRING
 		do
-			s := a_token.literal_string
-			if s /= Void then
+			a_token_literal_string := a_token.literal_string
+			if a_token_literal_string /= Void then
 				a_file.put_string ("<span class=%"literal_token%">")
-				inspect s.item (1)
+				inspect a_token_literal_string.item (1)
 				when '%"', '%'' then
-					print_escaped (s.substring (2, s.count - 1), a_file)
+					print_escaped (a_token_literal_string.substring (2, a_token_literal_string.count - 1), a_file)
 				else
-					print_escaped (s, a_file)
+					print_escaped (a_token_literal_string, a_file)
 				end
 			else
-				n := a_token.name
-				inspect n.item (1)
+				a_token_name := a_token.name
+				inspect a_token_name.item (1)
 				when '%"', '%'' then
 					a_file.put_string ("<span class=%"literal_token%">")
-					print_escaped (n.substring (2, n.count - 1), a_file)
+					print_escaped (a_token_name.substring (2, a_token_name.count - 1), a_file)
 				else
 					a_file.put_string ("<span class=%"token%">")
-					print_escaped (n, a_file)
+					print_escaped (a_token_name, a_file)
 				end
 			end
 			a_file.put_character (' ')

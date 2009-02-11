@@ -178,7 +178,9 @@ feature {NONE} -- Generation
 					a_symbol := a_rhs.item (i)
 					if {a_token: PR_TOKEN} a_symbol then
 						print_token (a_token, a_file)
-					elseif {a_variable: PR_VARIABLE} a_symbol and then a_variable.name.item (1) /= '@' then
+					elseif {a_variable: PR_VARIABLE} a_symbol and then 
+						a_variable.name.item (1) /= '@' 
+					then
 							-- Do not take internal rules into account.
 						print_variable (a_variable, a_file)
 					end
