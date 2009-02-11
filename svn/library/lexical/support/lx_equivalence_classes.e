@@ -96,7 +96,7 @@ feature -- Access
 			cell: ?DS_BILINKABLE [INTEGER]
 		do
 			cell := storage.item (symbol).left
-			check cell /= Void end -- implied by precondition valid_symbol
+			check cell /= Void end -- implied by precondition valid_symbol and not_representative
 			Result := cell.item
 		end
 
@@ -168,7 +168,7 @@ feature -- Element change
 				i > nb
 			loop
 				cell := storage.item (i)
-				check cell /= Void end
+				check cell /= Void end -- implied by `lower <= i < nb = upper'
 				if cell.left = Void then
 					from
 						j := j + 1
@@ -197,7 +197,7 @@ feature -- Element change
 			cell, left, right: ?DS_BILINKABLE [INTEGER]
 		do
 			cell := storage.item (symbol)
-			check cell /= Void end
+			check cell /= Void end -- implied by precondition `valid_symbol'
 			left := cell.left
 			right := cell.right
 			if left /= Void and right /= Void then
@@ -239,9 +239,8 @@ feature -- Element change
 				k > nb
 			loop
 				cell := storage.item (symbol_class.item (k))
-				check cell /= Void end
+				check cell /= Void end -- implied by `1 <= k <= nb = symbol_class.count < upper' and `valid_symbol_class'
 				old_cell := cell.left
-				check old_cell /= Void end
 				new_cell := cell
 				j := k + 1
 				from
@@ -293,6 +292,7 @@ feature -- Element change
 				end
 				if cell.left /= Void or else old_cell /= cell.left then
 					cell.forget_left
+					check old_cell /= Void end -- implied by ... ?
 					old_cell.forget_right
 				end
 				new_cell.forget_right
