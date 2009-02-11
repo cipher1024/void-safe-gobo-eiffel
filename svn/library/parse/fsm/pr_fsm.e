@@ -315,7 +315,7 @@ feature -- Setting
 				if all_before then
 						-- Try to find the start symbols/rules.
 					l_start_symbol := grammar.start_symbol
-					check l_start_symbol /= Void end
+					check l_start_symbol /= Void end -- implied by invariant `valid_grammar'
 					start_rules := l_start_symbol.rules
 					create start_positions.make (nb2)
 					from
@@ -469,7 +469,7 @@ feature -- Setting
 				if all_before then
 						-- Try to find the start symbols/rules.
 					l_start_symbol := grammar.start_symbol
-					check l_start_symbol /= Void end
+					check l_start_symbol /= Void end -- implied by invariant `valid_grammar'
 					start_rules := l_start_symbol.rules
 					create start_positions.make (nb2)
 					from
@@ -609,7 +609,7 @@ feature {NONE} -- Processing (nondeterministic)
 			a_variable: ?PR_VARIABLE
 		do
 			a_variable := grammar.start_symbol
-			check a_variable /= Void end
+			check a_variable /= Void end -- implied by invariant `valid_grammar' ?
 				-- States are indexed from 0.
 			create a_state.make (0, a_variable)
 			put_closure_positions (a_state, a_variable)
@@ -788,8 +788,8 @@ feature {NONE} -- Processing (nondeterministic)
 			loop
 				a_rule := rules.item (i)
 				if not a_rule.rhs.is_empty then
-					if {ot_variable: PR_VARIABLE} a_rule.rhs.first then
-						a_rule.lhs.firsts.force_last (ot_variable)
+					if {l_variable: PR_VARIABLE} a_rule.rhs.first then
+						a_rule.lhs.firsts.force_last (l_variable)
 					end
 				end
 				i := i - 1
@@ -819,7 +819,7 @@ feature {NONE} -- Processing (nondeterministic)
 			i, nb: INTEGER
 			a_code: INTEGER
 			state_list: ?DS_ARRAYED_LIST [PR_STATE]
-			r: ?like new_state
+			l_result: ?like new_state
 		do
 				-- The rule positions in `a_state' are sorted so
 				-- that we can compare states quickly.
@@ -833,11 +833,11 @@ feature {NONE} -- Processing (nondeterministic)
 					i := 1
 					nb := state_list.count
 				until
-					r /= Void or i > nb
+					l_result /= Void or i > nb
 				loop
-					r := state_list.item (i)
-					if not r.same_state (a_state) then
-						r := Void
+					l_result := state_list.item (i)
+					if not l_result.same_state (a_state) then
+						l_result := Void
 						i := i + 1
 					end
 				end
@@ -845,14 +845,14 @@ feature {NONE} -- Processing (nondeterministic)
 				create state_list.make (2)
 				cached_states.put_new (state_list, a_code)
 			end
-			if r = Void then
-				r := a_state
+			if l_result = Void then
+				l_result := a_state
 					-- States are indexed from 0.
-				r.set_id (states.count)
+				l_result.set_id (states.count)
 				states.put_last (a_state)
 				state_list.force_last (a_state)
 			end
-			Result := r
+			Result := l_result
 		ensure
 			new_state_not_void: Result /= Void
 			same_state: Result.same_state (a_state)
@@ -881,6 +881,7 @@ feature {NONE} -- Processing (deterministic)
 			state1, state2: PR_STATE
 			a_transition: PR_TRANSITION
 			a_symbol: PR_SYMBOL
+			a_variable: ?PR_VARIABLE
 			a_rule: PR_RULE
 		do
 			create reductions.make
@@ -905,9 +906,10 @@ feature {NONE} -- Processing (deterministic)
 					j < 1
 				loop
 					state2 := shifts.item (j)
-					if {a_variable1: PR_VARIABLE} state2.accessing_symbol then
+					a_variable ?= state2.accessing_symbol
+					if a_variable /= Void then
 						create a_transition.make (state1, state2)
-						a_variable1.put_transition (a_transition)
+						a_variable.put_transition (a_transition)
 						transitions.force_last (a_transition)
 					end
 					j := j - 1
@@ -936,71 +938,68 @@ feature {NONE} -- Processing (deterministic)
 							follows.force_last (a_token)
 						end
 					else
-						if {a_variable2: PR_VARIABLE} a_symbol then
-							if a_variable2.is_nullable then
-								a_transition.included_tokens.force_last (a_variable2.transition (state1))
-							end
-						else
-							check
-								a_variable2_not_void: False
-							end
+						a_variable ?= a_symbol
+						check
+							a_variable_not_void: a_variable /= Void
+						end
+						if a_variable.is_nullable then
+							a_transition.included_tokens.force_last (a_variable.transition (state1))
 						end
 					end
 					i := i - 1
 				end
-				if {a_variable: PR_VARIABLE} a_transition.symbol then
-					rules := a_variable.rules
-					i := rules.count
+				a_variable ?= a_transition.symbol
+				check a_variable /= Void end -- implied by ... ?
+				rules := a_variable.rules
+				i := rules.count
+				from
+				until
+					i < 1
+				loop
+					state1 := a_transition.source
+					visited_states.wipe_out
+					visited_states.put (state1)
+					a_rule := rules.item (i)
+					rhs := a_rule.rhs
+					nb := rhs.count
+					from
+						j := 1
+					until
+						j > nb
+					loop
+						state1 := state1.shift (rhs.item (j))
+						check
+							shift_not_void: state1 /= Void
+						end
+						visited_states.put (state1)
+						j := j + 1
+					end
+					if state1.lookahead_needed then
+						state1.put_transition (a_transition, a_rule)
+					end
+					j := rhs.count
+					visited_states.remove
 					from
 					until
-						i < 1
+						j < 1
 					loop
-						state1 := a_transition.source
-						visited_states.wipe_out
-						visited_states.put (state1)
-						a_rule := rules.item (i)
-						rhs := a_rule.rhs
-						nb := rhs.count
-						from
-							j := 1
-						until
-							j > nb
-						loop
-							state1 := state1.shift (rhs.item (j))
-							check
-								shift_not_void: state1 /= Void
-							end
-							visited_states.put (state1)
-							j := j + 1
-						end
-						if state1.lookahead_needed then
-							state1.put_transition (a_transition, a_rule)
-						end
-						j := rhs.count
-						visited_states.remove
-						from
-						until
-							j < 1
-						loop
-							if {a_variable4: PR_VARIABLE} rhs.item (j) then
-								state1 := visited_states.item
-								visited_states.remove
-								a_variable4.transition (state1).included_tokens.force_last (a_transition)
-								if not a_variable4.is_nullable then
-										-- Jump out of the loop.
-									j := 0
-								else
-									j := j - 1
-								end
-							else
+						a_variable ?= rhs.item (j)
+						if a_variable /= Void then
+							state1 := visited_states.item
+							visited_states.remove
+							a_variable.transition (state1).included_tokens.force_last (a_transition)
+							if not a_variable.is_nullable then
 									-- Jump out of the loop.
 								j := 0
+							else
+								j := j - 1
 							end
+						else
+								-- Jump out of the loop.
+							j := 0
 						end
-						i := i - 1
 					end
-				else
-					check should_not_occurs: False end
+					i := i - 1
 				end
 				transitions_cursor.forth
 			end
