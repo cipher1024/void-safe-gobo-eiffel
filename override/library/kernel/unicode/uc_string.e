@@ -65,16 +65,16 @@ inherit
 				share,
 				shared_with,
 				area,
-				old_is_empty,
 				mirror,
 				is_case_insensitive_equal,
 				valid_code,
 				to_string_32
-			{READABLE_STRING_8, READABLE_STRING_32}
-				area_lower
 			{ANY}
 				is_string_8,
-				valid_index
+				valid_index,
+				old_is_empty
+			{READABLE_STRING_8, READABLE_STRING_32}
+				area_lower
 			{NONE} all
 		undefine
 			is_greater,

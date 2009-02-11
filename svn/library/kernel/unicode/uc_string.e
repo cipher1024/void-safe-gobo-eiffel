@@ -349,7 +349,6 @@ feature -- Initialization
 			-- existing string.
 			-- (Extended from ELKS 2001 STRING)
 		local
-			l_area: ?like area
 			n: INTEGER
 		do
 			reset_byte_index_cache
@@ -1087,6 +1086,7 @@ feature -- Access
 			-- Index of first occurrence of `c' at or after `start_index';
 			-- 0 if none
 		require
+			c_attached: c /= Void
 			valid_start_index: start_index >= 1 and start_index <= count + 1
 		do
 			Result := index_of_item_code (c.code, start_index)
@@ -1782,6 +1782,7 @@ feature -- Element change
 
 	prepend_string (s: STRING) is
 			-- Prepend a copy of `s', if not void, at front.
+			-- FIXME:jfiat: `s' detachable or s /= Void useless?
 		do
 			if s /= Void then
 				prepend (s)
@@ -1867,6 +1868,7 @@ feature -- Element change
 
 	append_string (s: STRING) is
 			-- Append a copy of `s' at end.
+			-- FIXME:jfiat: `s' should be detachable here ... but due to inheritance ... we can not
 		do
 			if s /= Void then
 				append (s)
@@ -2380,6 +2382,8 @@ feature -- Element change
 	replace_substring_by_string (a_string: READABLE_STRING_8; start_index, end_index: INTEGER) is
 			-- Replace the substring from `start_index' to `end_index',
 			-- inclusive, with `a_string'.
+		require
+			a_string_attached: a_string /= Void
 		local
 			a_string_count: INTEGER
 			k, nb: INTEGER
@@ -2435,11 +2439,15 @@ feature -- Element change
 
 -- TODO: ISE 6.2 version because there is a flat Degree 3 error when using version from 6.4
 -- with the signature of `replace_substring' of the current class.
-	replace_substring_all (original, new: like Current) is
+	replace_substring_all (original, new: READABLE_STRING_8)
 			-- Replace every occurrence of `original' with `new'.
+		require
+			original_exists: original /= Void
+			new_exists: new /= Void
+			original_not_empty: not original.is_empty
 		local
 			l_first_pos, l_next_pos: INTEGER
-			l_orig_count, l_new_count, l_count: INTEGER
+			l_orig_count, l_new_count, l_new_lower, l_count: INTEGER
 			l_area, l_new_area: like area
 			l_offset: INTEGER
 			l_string_searcher: like string_searcher
@@ -2457,10 +2465,11 @@ feature -- Element change
 						from
 							l_area := area
 							l_new_area := new.area
+							l_new_lower := new.area_lower
 						until
 							l_first_pos = 0
 						loop
-							l_area.copy_data (l_new_area, 0, l_first_pos - 1, l_new_count)
+							l_area.copy_data (l_new_area, l_new_lower, l_first_pos - 1, l_new_count)
 							if l_first_pos + l_new_count <= l_count then
 								l_first_pos := l_string_searcher.substring_index_with_deltas (Current, original, l_first_pos + l_new_count, l_count)
 							else
@@ -2474,11 +2483,12 @@ feature -- Element change
 							l_next_pos := l_string_searcher.substring_index_with_deltas (Current, original, l_first_pos + l_orig_count, l_count)
 							l_area := area
 							l_new_area := new.area
+							l_new_lower := new.area_lower
 						until
 							l_next_pos = 0
 						loop
 								-- Copy new string into Current
-							l_area.copy_data (l_new_area, 0, l_first_pos - 1 - l_offset, l_new_count)
+							l_area.copy_data (l_new_area, l_new_lower, l_first_pos - 1 - l_offset, l_new_count)
 								-- Shift characters between `l_first_pos' and `l_next_pos'
 							l_area.overlapping_move (l_first_pos + l_orig_count - 1,
 								l_first_pos + l_new_count - 1 - l_offset, l_next_pos - l_first_pos - l_orig_count)
@@ -2492,7 +2502,7 @@ feature -- Element change
 						end
 							-- Perform final substitution:
 							-- Copy new string into Current
-						l_area.copy_data (l_new_area, 0, l_first_pos - 1 - l_offset, l_new_count)
+						l_area.copy_data (l_new_area, l_new_lower, l_first_pos - 1 - l_offset, l_new_count)
 							-- Shift characters between `l_first_pos' and the end of the string
 						l_area.overlapping_move (l_first_pos + l_orig_count - 1,
 							l_first_pos + l_new_count - 1 - l_offset, l_count + 1 - l_first_pos - l_orig_count)
