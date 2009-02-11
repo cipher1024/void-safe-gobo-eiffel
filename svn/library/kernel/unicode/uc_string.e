@@ -2441,10 +2441,6 @@ feature -- Element change
 -- with the signature of `replace_substring' of the current class.
 	replace_substring_all (original, new: READABLE_STRING_8)
 			-- Replace every occurrence of `original' with `new'.
-		require
-			original_exists: original /= Void
-			new_exists: new /= Void
-			original_not_empty: not original.is_empty
 		local
 			l_first_pos, l_next_pos: INTEGER
 			l_orig_count, l_new_count, l_new_lower, l_count: INTEGER
