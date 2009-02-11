@@ -62,7 +62,7 @@ CCL_CHAR			[^\\\n\]]|{ESC}
 							set_start_condition (FIRSTCCL)
 						end
 					else
-						check False end
+						check last_string_attached: False end
 					end
 					last_string := Void
 				}
