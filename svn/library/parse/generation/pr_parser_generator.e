@@ -313,8 +313,7 @@ feature {NONE} -- Generation
 			a_file_open_write: a_file.is_open_write
 		local
 			i, nb: INTEGER
-			eiffel_header: DS_ARRAYED_LIST [?STRING]
-			s: ?STRING
+			eiffel_header: DS_ARRAYED_LIST [STRING]
 		do
 			eiffel_header := machine.grammar.eiffel_header
 			nb := eiffel_header.count
@@ -323,9 +322,7 @@ feature {NONE} -- Generation
 			until
 				i > nb
 			loop
-				s := eiffel_header.item (i)
-				check s /= Void end -- implied by ... ?
-				a_file.put_string (s)
+				a_file.put_string (eiffel_header.item (i))
 				i := i + 1
 			end
 		end
