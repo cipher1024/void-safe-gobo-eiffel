@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-3-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-3-0 http://www.eiffel.com/developers/xml/configuration-1-3-0.xsd" name="xmloasis">
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-4-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-4-0 http://www.eiffel.com/developers/xml/configuration-1-4-0.xsd" name="xmloasis" uuid="5FA4C91E-1EE0-4117-B5C9-D0E445E0E545">
 	<target name="xmloasis">
 		<root class="XMLOASIS" feature="make"/>
 		<option trace="false" profile="false" debug="false" warning="true">
-			<assertions precondition="false" postcondition="false" check="false" invariant="false" loop="false"/>
+			<assertions/>
 		</option>
+		<setting name="automatic_backup" value="true"/>
 		<setting name="console_application" value="true"/>
-		<library name="base" location="${ISE_LIBRARY}/library/base/base.ecf" readonly="true"/>
-		<library name="time" location="${ISE_LIBRARY}/library/time/time.ecf" readonly="true"/>
-		<cluster name="ds_tester" location="${GOBO}/test/xml/oasis"/>
-		<cluster name="ds_testgen" location="TESTGEN"/>
-		<library name="gobo_test" location="${GOBO}/../gobo_test.ecf" />
-		<library name="gobo_kernel" location="${GOBO}/../gobo_kernel.ecf" />
-		<library name="gobo_structure" location="${GOBO}/../gobo_structure.ecf" />
-		<library name="gobo_utility" location="${GOBO}/../gobo_utility.ecf" />
-		<library name="gobo_pattern" location="${GOBO}/../gobo_pattern.ecf" />
-		<library name="gobo_xml" location="${GOBO}/../gobo_xml.ecf" />
+		<library name="base" location="${ISE_LIBRARY}\library\base\base.ecf" readonly="true"/>
+		<library name="gobo_kernel" location="${GOBO}\..\gobo_kernel.ecf"/>
+		<library name="gobo_pattern" location="${GOBO}\..\gobo_pattern.ecf"/>
+		<library name="gobo_structure" location="${GOBO}\..\gobo_structure.ecf"/>
+		<library name="gobo_test" location="${GOBO}\..\gobo_test.ecf"/>
+		<library name="gobo_utility" location="${GOBO}\..\gobo_utility.ecf"/>
+		<library name="gobo_xml" location="${GOBO}\..\gobo_xml.ecf"/>
+		<library name="time" location="${ISE_LIBRARY}\library\time\time.ecf" readonly="true"/>
+		<cluster name="ds_tester" location="${GOBO}\test\xml\oasis\"/>
+		<cluster name="ds_testgen" location="TESTGEN\"/>
 	</target>
 </system>
