@@ -62,9 +62,9 @@ feature -- Input
 			-- Read the next character in input file.
 			-- Make the result available in `last_character'.
 		do
-			if {a_buff: like character_buffer} character_buffer then
-				last_character := a_buff.item
-				character_buffer := a_buff.right
+			if {l_character_buffer: like character_buffer} character_buffer then
+				last_character := l_character_buffer.item
+				character_buffer := l_character_buffer.right
 			elseif old_end_of_file then
 				end_of_file := True
 			else
@@ -81,8 +81,8 @@ feature -- Input
 			a_cell: like character_buffer
 		do
 			create a_cell.make (a_character)
-			if {a_buff: like character_buffer} character_buffer then
-				a_cell.put_right (a_buff)
+			if {l_character_buffer: like character_buffer} character_buffer then
+				a_cell.put_right (l_character_buffer)
 			end
 			character_buffer := a_cell
 			last_character := a_character
@@ -135,20 +135,20 @@ feature -- Input
 			tmp_string: STRING
 			k, nb2: INTEGER
 			i: INTEGER
-			a_buff: like character_buffer
+			l_character_buffer: like character_buffer
 		do
 			from
 				j := pos
-				a_buff := character_buffer
+				l_character_buffer := character_buffer
 			until
-				i = nb or a_buff = Void
+				i = nb or l_character_buffer = Void
 			loop
 				i := i + 1
-				a_string.put (a_buff.item, j)
-				a_buff := a_buff.right
+				a_string.put (l_character_buffer.item, j)
+				l_character_buffer := l_character_buffer.right
 				j := j + 1
 			end
-			character_buffer := a_buff
+			character_buffer := l_character_buffer
 			if i < nb then
 				if not old_end_of_file then
 					if ANY_.same_types (a_string, dummy_string) then
