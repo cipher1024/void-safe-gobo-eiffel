@@ -126,6 +126,8 @@ feature {NONE} -- Factory
 	new_terminal (a_name: ?STRING; a_type: ?PR_TYPE): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %token <a_type> a_name
+			--| NOTE: `a_name, a_type' should be attached, 
+			--| but are detachable for easier use of geyacc in void-safe mode
 		require
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
@@ -151,6 +153,8 @@ feature {NONE} -- Factory
 	new_char_terminal (a_char: ?STRING; a_type: ?PR_TYPE): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %token <a_type> a_char
+			--| NOTE: `a_char, a_type' should be attached, 
+			--| but are detachable for easier use of geyacc in void-safe mode
 		require
 			a_char_not_void: a_char /= Void
 --			valid_char: (\'(.|\\(.|[0-7]{1,3}|x[0-9a-f]{1,2}))\').recognizes (a_char)
@@ -171,6 +175,8 @@ feature {NONE} -- Factory
 	new_left_terminal (a_name: ?STRING; a_precedence: INTEGER): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %left a_name
+			--| NOTE: `a_name, a_precedence' should be attached, 
+			--| but are detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
@@ -192,6 +198,8 @@ feature {NONE} -- Factory
 	new_left_char_terminal (a_char: ?STRING; a_precedence: INTEGER): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %left a_char
+			--| NOTE: `a_char, a_precedence' should be attached, 
+			--| but are detachable for easier use of geyacc in void-safe mode			
 		require
 			a_char_not_void: a_char /= Void
 --			valid_char: (\'(.|\\(.|[0-7]{1,3}|x[0-9a-f]{1,2}))\').recognizes (a_char)
@@ -208,6 +216,8 @@ feature {NONE} -- Factory
 	new_right_terminal (a_name: ?STRING; a_precedence: INTEGER): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %right a_name
+			--| NOTE: `a_name, a_precedence' should be attached, 
+			--| but are detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
@@ -229,6 +239,8 @@ feature {NONE} -- Factory
 	new_right_char_terminal (a_char: ?STRING; a_precedence: INTEGER): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %right a_char
+			--| NOTE: `a_char, a_precedence' should be attached, 
+			--| but are detachable for easier use of geyacc in void-safe mode			
 		require
 			a_char_not_void: a_char /= Void
 --			valid_char: (\'(.|\\(.|[0-7]{1,3}|x[0-9a-f]{1,2}))\').recognizes (a_char)
@@ -245,6 +257,8 @@ feature {NONE} -- Factory
 	new_nonassoc_terminal (a_name: ?STRING; a_precedence: INTEGER): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %nonassoc a_name
+			--| NOTE: `a_name, a_precedence' should be attached, 
+			--| but are detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
@@ -266,6 +280,8 @@ feature {NONE} -- Factory
 	new_nonassoc_char_terminal (a_char: ?STRING; a_precedence: INTEGER): PR_TOKEN is
 			-- Terminal symbol declared as:
 			--   %nonassoc a_char
+			--| NOTE: `a_char, a_precedence' should be attached, 
+			--| but are detachable for easier use of geyacc in void-safe mode			
 		require
 			a_char_not_void: a_char /= Void
 --			valid_char: (\'(.|\\(.|[0-7]{1,3}|x[0-9a-f]{1,2}))\').recognizes (a_char)
@@ -282,6 +298,8 @@ feature {NONE} -- Factory
 	new_nonterminal (a_name: ?STRING; a_type: ?PR_TYPE): PR_VARIABLE is
 			-- Nonterminal symbol declared as:
 			-- %type <a_type> a_name
+			--| NOTE: `a_name, a_type' should be attached, 
+			--| but are detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
@@ -307,6 +325,8 @@ feature {NONE} -- Factory
 			-- Create a new symbol if it does not exist
 			-- yet, and add it to the list of tokens of
 			-- `last_grammar'.
+			--| NOTE: `a_name' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
@@ -314,14 +334,14 @@ feature {NONE} -- Factory
 		local
 			lower_name: STRING
 			an_id: INTEGER
-			r: ?like new_token
+			l_result: ?like new_token
 		do
 			lower_name := a_name.as_lower
 			terminal_symbols.search (lower_name)
 			if terminal_symbols.found then
-				r := terminal_symbols.found_item
-				check r /= Void end -- implied by terminal_symbols.found
-				Result := r
+				l_result := terminal_symbols.found_item
+				check l_result /= Void end -- implied by terminal_symbols.found
+				Result := l_result
 			else
 					-- Tokens are indexed from 0, but token
 					-- of id 0 is reserved for EOF.
@@ -339,6 +359,8 @@ feature {NONE} -- Factory
 			-- Create a new symbol if it does not exist
 			-- yet, and add it to the list of tokens of
 			-- `last_grammar'.
+			--| NOTE: `a_char' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_char_not_void: a_char /= Void
 --			valid_char: (\'(.|\\(.|[0-7]{1,3}|x[0-9a-f]{1,2}))\').recognizes (a_char)
@@ -348,7 +370,7 @@ feature {NONE} -- Factory
 			c: CHARACTER
 			i, nb: INTEGER
 			an_id: INTEGER
-			r: ?like new_char_token
+			l_result: ?like new_char_token
 		do
 			if a_char.count = 3 then
 				a_code := a_char.item (2).code
@@ -413,9 +435,9 @@ feature {NONE} -- Factory
 			a_key := a_code.out
 			terminal_symbols.search (a_key)
 			if terminal_symbols.found then
-				r := terminal_symbols.found_item
-				check r /= Void end -- implied by `.found'
-				Result := r
+				l_result := terminal_symbols.found_item
+				check l_result /= Void end -- implied by `.found'
+				Result := l_result
 			else
 					-- Tokens are indexed from 0, but token
 					-- of id 0 is reserved for EOF.
@@ -433,18 +455,20 @@ feature {NONE} -- Factory
 			-- Terminal symbol associated with `a_string';
 			-- Report an error if there is no token associated
 			-- with this string.
+			--| NOTE: `a_string' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_string_not_void: a_string /= Void
 --			valid_string: (\"[^"\n]*\").recognizes (a_string)
 		local
 			an_id: INTEGER
-			r: ?like new_string_token
+			l_result: ?like new_string_token
 		do
 			terminal_symbols.search (a_string)
 			if terminal_symbols.found then
-				r := terminal_symbols.found_item
-				check r /= Void end
-				Result := r
+				l_result := terminal_symbols.found_item
+				check l_result /= Void end
+				Result := l_result
 			else
 				report_undefined_string_token_error (a_string)
 					-- Tokens are indexed from 0, but token
@@ -464,6 +488,8 @@ feature {NONE} -- Factory
 			-- Create a new symbol if it does not exist
 			-- yet, and add it to the list of variables
 			-- of `last_grammar'.
+			--| NOTE: `a_name' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
@@ -471,14 +497,14 @@ feature {NONE} -- Factory
 		local
 			lower_name: STRING
 			an_id: INTEGER
-			r: ?like new_variable
+			l_result: ?like new_variable
 		do
 			lower_name := a_name.as_lower
 			nonterminal_symbols.search (lower_name)
 			if nonterminal_symbols.found then
-				r := nonterminal_symbols.found_item
-				check r /= Void end -- proved by `.found'
-				Result := r
+				l_result := nonterminal_symbols.found_item
+				check l_result /= Void end -- proved by `.found'
+				Result := l_result
 			else
 					-- Variables are indexed from 0.
 				an_id := last_grammar.variables.count
@@ -513,6 +539,8 @@ feature {NONE} -- Factory
 			-- Symbol named `a_name'; Create a new nonterminal
 			-- symbol if it does not exist yet, and add it to
 			-- the list of variables of `last_grammar'.
+			--| NOTE: `a_name' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
@@ -520,18 +548,18 @@ feature {NONE} -- Factory
 			lower_name: STRING
 			a_variable: PR_VARIABLE
 			an_id: INTEGER
-			r: ?like new_symbol
+			l_result: ?like new_symbol
 		do
 			lower_name := a_name.as_lower
 			nonterminal_symbols.search (lower_name)
 			if nonterminal_symbols.found then
-				r := nonterminal_symbols.found_item
-				check r /= Void end -- implied by `nonterminal_symbols.found'
-				Result := r
+				l_result := nonterminal_symbols.found_item
+				check l_result /= Void end -- implied by `nonterminal_symbols.found'
+				Result := l_result
 			elseif terminal_symbols.has (lower_name) then
-				r := terminal_symbols.item (lower_name)
-				check r /= Void end -- implied by `nonterminal_symbols.has (lower_name)'
-				Result := r
+				l_result := terminal_symbols.item (lower_name)
+				check l_result /= Void end -- implied by `nonterminal_symbols.has (lower_name)'
+				Result := l_result
 			else
 					-- Variables are indexed from 0.
 				an_id := last_grammar.variables.count
@@ -547,20 +575,22 @@ feature {NONE} -- Factory
 	new_type (a_name: ?STRING): PR_TYPE is
 			-- Type named `a_name'; Create a new type if
 			-- it does not exist yet.
+			--| NOTE: `a_name' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
 		local
 			upper_name: STRING
 			an_id: INTEGER
-			r: ?like new_type
+			l_result: ?like new_type
 		do
 			upper_name := a_name.as_upper
 			types.search (upper_name)
 			if types.found then
-				r := types.found_item
-				check r /= Void end -- implied by `.found'
-				Result := r
+				l_result := types.found_item
+				check l_result /= Void end -- implied by `.found'
+				Result := l_result
 			else
 					-- Types are indexed from 1.
 					-- (0 used to be reserved for no-type)
@@ -576,20 +606,22 @@ feature {NONE} -- Factory
 	new_basic_type (a_name: ?STRING): PR_TYPE is
 			-- Basic type named `a_name'; Create a new type if
 			-- it does not exist yet.
+			--| NOTE: `a_name' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
 		local
 			upper_name: STRING
 			an_id: INTEGER
-			r: ?like new_basic_type
+			l_result: ?like new_basic_type
 		do
 			upper_name := a_name.as_upper
 			types.search (upper_name)
 			if types.found then
-				r := types.found_item
-				check r /= Void end -- implied by `.found'
-				Result := r
+				l_result := types.found_item
+				check l_result /= Void end -- implied by `.found'
+				Result := l_result
 			else
 					-- Types are indexed from 1.
 					-- (0 used to be reserved for no-type)
@@ -605,6 +637,8 @@ feature {NONE} -- Factory
 	new_generic_type (a_name: ?STRING; generics: ?DS_ARRAYED_LIST [PR_TYPE]): PR_TYPE is
 			-- Type named `a_name' with generic parameters `generics';
 			-- Create a new type if it does not exist yet.
+			--| NOTE: `a_name' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
@@ -612,7 +646,7 @@ feature {NONE} -- Factory
 		local
 			upper_name: STRING
 			an_id: INTEGER
-			r: ?like new_generic_type
+			l_result: ?like new_generic_type
 		do
 			if generics /= Void then
 					-- Types are indexed from 1.
@@ -622,9 +656,9 @@ feature {NONE} -- Factory
 				upper_name := Result.name.as_upper
 				types.search (upper_name)
 				if types.found then
-					r := types.found_item
-					check r /= Void end -- implied by `.found'
-					Result := r
+					l_result := types.found_item
+					check l_result /= Void end -- implied by `.found'
+					Result := l_result
 				else
 					types.force_new (Result, upper_name)
 					last_grammar.put_type (Result)
@@ -639,20 +673,22 @@ feature {NONE} -- Factory
 	new_anchored_type (a_name: ?STRING): PR_TYPE is
 			-- Anchored type of  the form "like `a_name'";
 			-- Create a new type if it does not exist yet.
+			--| NOTE: `a_name' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
 		local
 			lower_name: STRING
 			an_id: INTEGER
-			r: ?like new_anchored_type
+			l_result: ?like new_anchored_type
 		do
 			lower_name := a_name.as_lower
 			types.search (lower_name)
 			if types.found then
-				r := types.found_item
-				check r /= Void end -- implied by `.found'
-				Result := r
+				l_result := types.found_item
+				check l_result /= Void end -- implied by `.found'
+				Result := l_result
 			else
 					-- Types are indexed from 1.
 					-- (0 used to be reserved for no-type)
@@ -667,6 +703,8 @@ feature {NONE} -- Factory
 
 	new_action (a_text: ?STRING): DP_COMMAND is
 			-- Action associated with `a_text'
+			--| NOTE: `a_text' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_text_not_void: a_text /= Void
 		do
@@ -677,6 +715,8 @@ feature {NONE} -- Factory
 
 	new_error_action (a_text: ?STRING; a_line: INTEGER): PR_ERROR_ACTION is
 			-- Error action associated with `a_text'
+			--| NOTE: `a_text' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_text_not_void: a_text /= Void
 		do
@@ -717,6 +757,8 @@ feature {NONE} -- Implementation
 
 	put_symbol (rhs: PR_SYMBOL; a_rule: ?PR_RULE) is
 			-- Add `rhs' to the right-hand-side part of `a_rule'.
+			--| NOTE: `a_rule' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			rhs_not_void: rhs /= Void
 			a_rule_not_void: a_rule /= Void
@@ -742,6 +784,8 @@ feature {NONE} -- Implementation
 
 	put_action (an_action: DP_COMMAND; a_rule: ?PR_RULE) is
 			-- Set semantic action of `a_rule' to `an_action'.
+			--| NOTE: `a_rule' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			an_action_not_void: an_action /= Void
 			a_rule_not_void: a_rule /= Void
@@ -831,6 +875,8 @@ feature {NONE} -- Implementation
 
 	set_literal_string (a_token: PR_TOKEN; a_string: ?STRING) is
 			-- Set `literal_string' of `a_token' to `a_string'.
+			--| NOTE: `a_string' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_token_not_void: a_token /= Void
 			a_string_not_void: a_string /= Void
@@ -1059,6 +1105,8 @@ feature {NONE} -- Error handling
 	report_lhs_symbol_token_error (a_name: ?STRING) is
 			-- Report that the left-hand-side symbol `a_name'
 			-- is a token instead of a nonterminal symbol.
+			--| NOTE: `a_string' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 		local
@@ -1114,6 +1162,8 @@ feature {NONE} -- Error handling
 	report_prec_not_token_error (a_name: ?STRING) is
 			-- Report that the symbol `a_name' specified
 			-- in the %prec clause is not a token.
+			--| NOTE: `a_string' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 		local
@@ -1294,6 +1344,8 @@ feature {NONE} -- Error handling
 	report_rule_declared_twice_warning (a_name: ?STRING) is
 			-- Report that the rule `a_name' has been
 			-- declared twice.
+			--| NOTE: `a_string' should be attached, 
+			--| but is detachable for easier use of geyacc in void-safe mode			
 		require
 			a_name_not_void: a_name /= Void
 		local
