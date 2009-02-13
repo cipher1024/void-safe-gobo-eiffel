@@ -27,7 +27,7 @@ feature -- Status report
 			-- Are `s1' and `s2' considered equal?
 			-- Use case-insensitive comparison.
 		do
-			if s1 = s2 then
+			if s1 ~ s2 then
 				Result := True
 			elseif s1 = Void then
 				Result := False

@@ -38,8 +38,8 @@ feature -- Status report
 		local
 			v: ?G
 		do
-			if {d: DS_SEARCHABLE [?G]} Current then
-				Result := d.has (v)
+			if {l_current: DS_SEARCHABLE [?G]} Current then
+				Result := l_current.has (v)
 			end
 		ensure
 			not_empty: Result implies not is_empty
@@ -50,8 +50,8 @@ feature -- Status report
 			-- (Use `equality_tester''s comparison criterion
 			-- if not void, use `=' criterion otherwise.)
 		do
-			if {e: like equality_tester} equality_tester then
-				Result := e.test (v, u)
+			if {l_equality_tester: like equality_tester} equality_tester then
+				Result := l_equality_tester.test (v, u)
 			else
 				Result := (v = u)
 			end

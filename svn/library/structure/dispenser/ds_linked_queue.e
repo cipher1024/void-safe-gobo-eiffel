@@ -169,10 +169,9 @@ feature -- Duplication
 				if not other.is_empty then
 					from
 						old_cell := other.first_cell
-						check old_cell /= Void end -- implied by `not other.is_empty'
-						create new_cell.make (old_cell.item)
-						first_cell := new_cell
-						a_cell := new_cell
+						check old_cell_attached: old_cell /= Void end -- implied by `not other.is_empty'
+						create a_cell.make (old_cell.item)
+						first_cell := a_cell
 						old_cell := old_cell.right
 					until
 						old_cell = Void
@@ -204,7 +203,7 @@ feature -- Comparison
 				until
 					a_cell = Void
 				loop
-					check other_cell /= Void end -- implied by `a_cell /= Void' and `other.count = count'
+					check other_cell_attached: other_cell /= Void end -- implied by `a_cell /= Void' and `other.count = count'
 					if a_cell.item /= other_cell.item then
 						Result := False
 							-- Jump out of the loop.
@@ -222,19 +221,19 @@ feature -- Element change
 	put, force (v: G) is
 			-- Add `v' to back of queue.
 		local
-			a_cell: like last_cell
-			new_cell: like first_cell
+			a_cell: like first_cell
+			l_last_cell: like last_cell
 		do
-			create new_cell.make (v)
+			create a_cell.make (v)
 			if is_empty then
-				first_cell := new_cell
-				last_cell := new_cell
+				first_cell := a_cell
+				last_cell := a_cell
 				count := 1
 			else
-				a_cell := last_cell
-				check a_cell /= Void end -- implied by `not is_empty'
-				a_cell.put_right (new_cell)
-				last_cell := new_cell
+				l_last_cell := last_cell
+				check l_last_cell /= Void end -- implied by `not is_empty'
+				l_last_cell.put_right (a_cell)
+				last_cell := a_cell
 				count := count + 1
 			end
 		end
@@ -244,15 +243,16 @@ feature -- Element change
 			-- Add `other.first' first, etc.
 		local
 			a_cell, new_last, new_first: like first_cell
-			a_last_cell: like last_cell
 			other_cursor: DS_LINEAR_CURSOR [G]
+			l_last_cell: like last_cell
 		do
 			if not other.is_empty then
 				other_cursor := other.new_cursor
 				from
 					other_cursor.start
-					create new_first.make (other_cursor.item)
-					new_last := new_first
+					create a_cell.make (other_cursor.item)
+					new_first := a_cell
+					new_last := a_cell
 					other_cursor.forth
 				until
 					other_cursor.after
@@ -265,9 +265,9 @@ feature -- Element change
 				if is_empty then
 					first_cell := new_first
 				else
-					a_last_cell := last_cell
-					check a_last_cell /= Void end -- implied by `not is_empty'
-					a_last_cell.put_right (new_first)
+					l_last_cell := last_cell
+					check l_last_cell /= Void end -- implied by `not is_empty'
+					l_last_cell.put_right (new_first)
 				end
 				last_cell := new_last
 				count := count + other.count

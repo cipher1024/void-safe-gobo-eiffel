@@ -194,6 +194,6 @@ invariant
 
 	empty_constraint: initialized implies (is_empty implies off)
 	internal_cursor_not_void: initialized implies (internal_cursor /= Void)
-	valid_internal_cursor: initialized implies {ot_cursor: like internal_cursor} internal_cursor and then valid_cursor (ot_cursor)
+	valid_internal_cursor: initialized implies {l_cursor: like internal_cursor} internal_cursor and then valid_cursor (l_cursor)
 
 end
