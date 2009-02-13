@@ -170,22 +170,22 @@ feature -- Access
 			-- First item in list
 			-- (Performance: O(1).)
 		local
-			a_cell: like first_cell
+			l_first_cell: like first_cell
 		do
-			a_cell := first_cell
-			check a_cell /= Void end -- implied by precondition `not_empty'
-			Result := a_cell.item
+			l_first_cell := first_cell
+			check l_first_cell /= Void end -- implied by precondition `not_empty'
+			Result := l_first_cell.item
 		end
 
 	last: G is
 			-- Last item in list
 			-- (Performance: O(1).)
 		local
-			a_cell: like last_cell
+			l_last_cell: like last_cell
 		do
-			a_cell := last_cell
-			check a_cell /= Void end -- implied by precondition `not_empty'
-			Result := a_cell.item
+			l_last_cell := last_cell
+			check l_last_cell /= Void end -- implied by precondition `not_empty'
+			Result := l_last_cell.item
 		end
 
 	new_cursor: DS_LINKED_LIST_CURSOR [G] is
@@ -414,8 +414,7 @@ feature -- Duplication
 			-- Move all cursors `off' (unless `other = Current').
 			-- (Performance: O(other.count).)
 		local
-			a_cell: like first_cell
-			new_cell, new_last: like first_cell
+			a_cell, new_cell, new_last: like first_cell
 			old_cursor: ?like new_cursor
 		do
 			if other /= Current then
@@ -492,19 +491,18 @@ feature -- Element change
 			-- Do not move cursors.
 			-- (Performance: O(1).)
 		local
-			a_cell, old_cell: like first_cell
+			l_cell, old_cell: like first_cell
 		do
 			if is_empty then
-				create a_cell.make (v)
-				first_cell := a_cell
-				last_cell := a_cell
+				create first_cell.make (v)
+				last_cell := first_cell
 				count := 1
 			else
 				old_cell := first_cell
 				check old_cell /= Void end -- implied by `not is_empty'
-				create a_cell.make (v)
-				first_cell := a_cell
-				a_cell.put_right (old_cell)
+				create l_cell.make (v)
+				first_cell := l_cell
+				l_cell.put_right (old_cell)
 				count := count + 1
 			end
 		end
@@ -514,19 +512,18 @@ feature -- Element change
 			-- Do not move cursors.
 			-- (Performance: O(1).)
 		local
-			a_cell, old_cell: like first_cell
+			l_cell, old_cell: like first_cell
 		do
 			if is_empty then
-				create a_cell.make (v)
-				first_cell := a_cell
-				last_cell := a_cell
+				create first_cell.make (v)
+				last_cell := first_cell
 				count := 1
 			else
 				old_cell := last_cell
 				check old_cell /= Void end -- implied by `not is_empty'
-				create a_cell.make (v)
-				last_cell := a_cell
-				old_cell.put_right (a_cell)
+				create l_cell.make (v)
+				last_cell := l_cell
+				old_cell.put_right (l_cell)
 				count := count + 1
 			end
 		end
@@ -699,7 +696,7 @@ feature -- Element change
 			-- (Performance: O(other.count).)
 		local
 			other_cursor: DS_LINEAR_CURSOR [G]
-			fcell, lcell, new_cell: like first_cell
+			fcell, lcell, a_cell: like first_cell
 		do
 			if not other.is_empty then
 				from
@@ -711,18 +708,18 @@ feature -- Element change
 				until
 					other_cursor.after
 				loop
-					create new_cell.make (other_cursor.item)
-					lcell.put_right (new_cell)
-					lcell := new_cell
+					create a_cell.make (other_cursor.item)
+					lcell.put_right (a_cell)
+					lcell := a_cell
 					other_cursor.forth
 				end
 				if is_empty then
 					first_cell := fcell
 					last_cell := lcell
 				else
-					lcell := first_cell
-					check lcell /= Void end -- implied by `not is_empty'
-					lcell.put_right (lcell)
+					a_cell := first_cell
+					check a_cell /= Void end -- implied by `not is_empty'
+					lcell.put_right (a_cell)
 					first_cell := fcell
 				end
 				count := count + other.count
@@ -736,7 +733,7 @@ feature -- Element change
 			-- (Performance: O(other.count).)
 		local
 			other_cursor: DS_LINEAR_CURSOR [G]
-			fcell, lcell, new_cell, a_cell: like first_cell
+			fcell, lcell, a_cell: like first_cell
 		do
 			if not other.is_empty then
 				from
@@ -748,9 +745,9 @@ feature -- Element change
 				until
 					other_cursor.after
 				loop
-					create new_cell.make (other_cursor.item)
-					lcell.put_right (new_cell)
-					lcell := new_cell
+					create a_cell.make (other_cursor.item)
+					lcell.put_right (a_cell)
+					lcell := a_cell
 					other_cursor.forth
 				end
 				if is_empty then
@@ -1027,7 +1024,7 @@ feature -- Removal
 				old_right := a_cell.right
 				check old_right /= Void end -- implied by `i /= 1 and i /= count'
 				new_right := old_right.right
-				check new_right /= Void end -- implied by `j' from 2 to i < count starting from `first_cell'
+				check new_right /= Void end -- implied by `1 < j < i < count' starting from `first_cell'
 				move_all_cursors (old_right, new_right)
 				a_cell.put_right (new_right)
 				count := count - 1
@@ -1154,14 +1151,14 @@ feature -- Removal
 			elseif n /= 0 then
 				move_all_cursors_after
 				new_first := first_cell
-				check new_first /= Void end -- implied by `valid_n' and `count /= n'
+				check new_first /= Void end -- implied by `valid_n and count /= n and n /= 0'
 				from
 					i := 1
 				until
 					i > n
 				loop
 					new_first := new_first.right
-					check new_first /= Void end -- implied by `count /= n'
+					check new_first /= Void end -- implied by `count /= n and n /= 0 and i <= n'
 					i := i + 1
 				end
 				set_first_cell (new_first)
@@ -1253,7 +1250,7 @@ feature -- Removal
 					set_first_cell (current_cell)
 				else
 					a_cell := first_cell
-					check a_cell /= Void end -- implied by `n > 0'
+					check a_cell /= Void end -- implied by `n > 0' and precondition `valid_n'
 					from
 						i := 1
 					until
@@ -1547,7 +1544,6 @@ feature {NONE} -- Cursor movement
 				if a_cursor.current_cell = old_cell then
 					a_cursor.set_after
 					next_cursor := a_cursor.next_cursor
-					check new_cursor /= Void end -- implied by `a_cursor.current_cell /= old_cell' (note: old_cell = last_cell)
 					previous_cursor.set_next_cursor (next_cursor)
 					a_cursor.set_next_cursor (Void)
 					a_cursor := next_cursor
@@ -1601,11 +1597,11 @@ feature {DS_LINKED_LIST_CURSOR} -- Cursor implementation
 			-- Item at `a_cursor' position
 			-- (Performance: O(1).)
 		local
-			a_cell: like first_cell
+			l_current_cell: like first_cell
 		do
-			a_cell := a_cursor.current_cell
-			check a_cell /= Void end -- implied by precondition `a_cursor_not_off'
-			Result := a_cell.item
+			l_current_cell := a_cursor.current_cell
+			check l_current_cell /= Void end -- implied by precondition `a_cursor_not_off'
+			Result := l_current_cell.item
 		end
 
 	cursor_index (a_cursor: like new_cursor): INTEGER is
@@ -1709,15 +1705,15 @@ feature {DS_LINKED_LIST_CURSOR} -- Cursor implementation
 		local
 			was_off: BOOLEAN
 			new_after: BOOLEAN
-			a_cell, new_cell: like first_cell
+			l_current_cell, new_cell: like first_cell
 		do
 			if a_cursor.before then
 				was_off := True
 				new_cell := first_cell
 			else
-				a_cell := a_cursor.current_cell
-				check a_cell /= Void end -- implied by precondition `a_cursor_not_after' and `not a_cursor.before'
-				new_cell := a_cell.right
+				l_current_cell := a_cursor.current_cell
+				check l_current_cell /= Void end -- implied by precondition `a_cursor_not_after' and `not a_cursor.before'
+				new_cell := l_current_cell.right
 			end
 			new_after := (new_cell = Void)
 			a_cursor.set (new_cell, False, new_after)
@@ -1772,7 +1768,7 @@ feature {DS_LINKED_LIST_CURSOR} -- Cursor implementation
 			-- if not void, use `=' criterion otherwise.)
 			-- Move `after' if not found.
 		local
-			a_cell: ?like first_cell
+			a_cell: like first_cell
 			a_tester: like equality_tester
 			was_off, new_after: BOOLEAN
 		do
