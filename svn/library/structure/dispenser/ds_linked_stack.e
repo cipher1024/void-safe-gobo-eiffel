@@ -111,11 +111,11 @@ feature -- Access
 	item: G is
 			-- Item at top of stack
 		local
-			a_cell: like first_cell
+			l_first_cell: like first_cell
 		do
-			a_cell := first_cell
-			check a_cell /= Void end -- implied by precondition `not_empty'
-			Result := a_cell.item
+			l_first_cell := first_cell
+			check l_first_cell /= Void end -- implied by precondition `not_empty'
+			Result := l_first_cell.item
 		end
 
 feature -- Measurement
@@ -220,25 +220,24 @@ feature -- Element change
 	put, force (v: G) is
 			-- Push `v' on stack.
 		local
-			fcell, new_cell: like first_cell
+			a_cell: like first_cell
 		do
-			create new_cell.make (v)
-			fcell := first_cell
-			if fcell /= Void then
-				new_cell.put_right (fcell)
+			create a_cell.make (v)
+			if {l_first_cell: like first_cell} first_cell then
+				a_cell.put_right (l_first_cell)
 			end
-			first_cell := new_cell
+			first_cell := a_cell
 			count := count + 1
 		end
 
 	replace (v: G) is
 			-- Replace top item by `v'.
 		local
-			a_cell: like first_cell
+			l_first_cell: like first_cell
 		do
-			a_cell := first_cell
-			check a_cell /= Void end -- implied by inherited precondition `not_empty'
-			a_cell.put (v)
+			l_first_cell := first_cell
+			check l_first_cell /= Void end -- implied by inherited precondition `not_empty'
+			l_first_cell.put (v)
 		end
 
 	extend, append (other: DS_LINEAR [G]) is
@@ -253,8 +252,8 @@ feature -- Element change
 				from
 					other_cursor.start
 					create a_cell.make (other_cursor.item)
-					if {fcell: like first_cell} first_cell then
-						a_cell.put_right (fcell)
+					if {l_first_cell: like first_cell} first_cell then
+						a_cell.put_right (l_first_cell)
 					end
 					new_first := a_cell
 					other_cursor.forth
@@ -276,11 +275,11 @@ feature -- Removal
 	remove is
 			-- Remove top item from stack.
 		local
-			a_cell: like first_cell
+			l_first_cell: like first_cell
 		do
-			a_cell := first_cell
-			check a_cell /= Void end -- implied by inherited precondition `not_empty'
-			first_cell := a_cell.right
+			l_first_cell := first_cell
+			check l_first_cell /= Void end -- implied by inherited precondition `not_empty'
+			first_cell := l_first_cell.right
 			count := count - 1
 		end
 

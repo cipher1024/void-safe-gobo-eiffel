@@ -58,7 +58,7 @@ feature -- Element change
 			-- (Synonym of `a_cursor.put_left (v)'.)
 			-- (Performance: O(1).)
 		local
-			new_cell, old_cell, a_cell: like first_cell
+			l_cell, new_cell, old_cell: like first_cell
 		do
 			if a_cursor.after then
 				put_last (v)
@@ -68,9 +68,9 @@ feature -- Element change
 				old_cell := a_cursor.current_cell
 				check old_cell /= Void end -- implied by `not after'
 				create new_cell.make (v)
-				a_cell := old_cell.left
-				check a_cell /= Void end -- implied by `not after and not is_first'
-				a_cell.put_right (new_cell)
+				l_cell := old_cell.left
+				check l_cell /= Void end -- implied by `not after and not is_first'
+				l_cell.put_right (new_cell)
 				new_cell.put_right (old_cell)
 				count := count + 1
 			end
@@ -139,15 +139,15 @@ feature -- Removal
 			-- Move any cursors at this position `forth'.
 			-- (Performance: O(1).)
 		local
-			a_cell: like last_cell
+			l_last_cell: like last_cell
 		do
 			if count = 1 then
 				wipe_out
 			else
 				move_last_cursors_after
-				a_cell := last_cell
-				check a_cell /= Void end -- implied by precondition `not_empty'
-				set_last_cell (a_cell.left)
+				l_last_cell := last_cell
+				check l_last_cell /= Void end -- implied by precondition `not_empty'
+				set_last_cell (l_last_cell.left)
 				count := count - 1
 			end
 		end
@@ -158,7 +158,7 @@ feature -- Removal
 			-- (Synonym of `a_cursor.remove'.)
 			-- (Performance: O(1).)
 		local
-			a_cell, current_cell, new_right: like first_cell
+			l_cell, current_cell, new_right: like first_cell
 		do
 			if a_cursor.is_first then
 				remove_first
@@ -172,9 +172,9 @@ feature -- Removal
 				new_right := current_cell.right
 				check new_right /= Void end -- implied by `not is_last'
 				move_all_cursors (current_cell, new_right)
-				a_cell := current_cell.left
-				check a_cell /= Void end -- implied by `not is_first'
-				a_cell.put_right (new_right)
+				l_cell := current_cell.left
+				check l_cell /= Void end -- implied by `not is_first'
+				l_cell.put_right (new_right)
 				count := count - 1
 			end
 		end
@@ -228,7 +228,7 @@ feature -- Removal
 					i > n
 				loop
 					new_last := new_last.left
-					check new_last /= Void end -- implied by `i <= n < 0' and `valid_n'
+					check new_last /= Void end -- implied by `0 < i <= n' and `valid_n'
 					i := i + 1
 				end
 				set_last_cell (new_last)
@@ -262,8 +262,8 @@ feature -- Removal
 				until
 					i > n
 				loop
-					check new_left /= Void end -- implied by previous state `1 <= i < n' and `n /= 0'
 					new_left := new_left.left
+					check new_left /= Void end -- implied by previous state `1 <= i < n' and `n /= 0'
 					i := i + 1
 				end
 				if new_left = Void then
@@ -336,15 +336,15 @@ feature {DS_BILINKED_LIST_CURSOR} -- Cursor implementation
 			-- (Performance: O(1).)
 		local
 			was_off, new_before: BOOLEAN
-			a_cell, new_cell: like first_cell
+			l_current_cell, new_cell: like first_cell
 		do
 			if a_cursor.after then
 				was_off := True
 				new_cell := last_cell
 			else
-				a_cell := a_cursor.current_cell
-				check a_cell /= Void end -- implied by `not after' and precondition `a_cursor_not_before'
-				new_cell := a_cell.left
+				l_current_cell := a_cursor.current_cell
+				check l_current_cell /= Void end -- implied by `not after' and precondition `a_cursor_not_before'
+				new_cell :=	l_current_cell.left
 			end
 			new_before := (new_cell = Void)
 			a_cursor.set (new_cell, new_before, False)
@@ -440,7 +440,7 @@ feature {DS_BILINKED_LIST_CURSOR} -- Cursor implementation
 							j = i
 						loop
 							a_cell := a_cell.right
-							check a_cell /= Void end -- implied by `1 <= j < i < nb'
+							check a_cell /= Void end -- implied by `1 <= j < i <= k < nb'
 							j := j + 1
 						end
 					end
