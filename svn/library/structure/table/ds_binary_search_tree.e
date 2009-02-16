@@ -88,8 +88,8 @@ feature -- Element change
 			l_node := found_node
 			check
 				found: exact_insert_position_found
-				l_node /= Void
 			end
+			check l_node_attached: l_node /= Void end -- implied by previous assertion `found'
 			l_node.set_item (v)
 		end
 

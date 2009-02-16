@@ -64,7 +64,7 @@ feature -- Access
 			l_node: like first_node
 		do
 			l_node := first_node
-			check l_node /= Void end
+			check l_node /= Void end -- implied by precondition `not_empty'
 			Result := l_node.item
 		end
 
@@ -74,7 +74,7 @@ feature -- Access
 			l_node: like last_node
 		do
 			l_node := last_node
-			check l_node /= Void end
+			check l_node /= Void end -- implied by precondition `not_empty'
 			Result := l_node.item
 		end
 
@@ -97,7 +97,7 @@ feature {NONE} -- Access
 			l_node := found_node
 			check
 				found_node_not_void: l_node /= Void
-			end
+			end -- implied by precondition `has_key'
 			Result := l_node.item
 		end
 
@@ -124,7 +124,7 @@ feature {NONE} -- Access
 
 feature {DS_BINARY_SEARCH_TREE_CONTAINER} -- Access
 
-	first_node: ?like new_tree_node
+	first_node: like root_node
 			-- Left most binary tree node;
 			-- The `key' of this node is less than the `key' of all other nodes in the tree.
 
@@ -134,7 +134,7 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER} -- Access
 		require
 			v_not_void: v /= Void
 		local
-			l_child: ?like new_tree_node
+			l_child: like root_node
 			l_parent: like parent_of_node
 		do
 			l_child := v.right_child
