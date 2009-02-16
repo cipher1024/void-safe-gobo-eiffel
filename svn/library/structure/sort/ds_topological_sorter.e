@@ -130,13 +130,10 @@ feature -- Status report
 
 	has_cycle: BOOLEAN is
 			-- Has a cycle been detected?
-		local
-			l_cycle: like cycle
 		do
-			l_cycle := cycle
-			Result := (l_cycle /= Void and then not l_cycle.is_empty)
+			Result := ({l_cycle: like cycle} cycle and then not l_cycle.is_empty)
 		ensure
-			definition: Result = ({ot_cycle: like cycle} cycle and then not ot_cycle.is_empty)
+			definition: Result = ({el_cycle: like cycle} cycle and then not el_cycle.is_empty)
 		end
 
 	equality_tester_settable (a_tester: like equality_tester): BOOLEAN is
@@ -512,7 +509,7 @@ feature -- Sort
 			end
 		ensure
 			sorted: is_sorted
-			cycle: ({ot_sorted_items: like sorted_items} sorted_items and then ot_sorted_items.count /= count) implies has_cycle
+			cycle: ({el_sorted_items: like sorted_items} sorted_items and then el_sorted_items.count /= count) implies has_cycle
 		end
 
 feature {NONE} -- Implementation
@@ -537,6 +534,6 @@ invariant
 	successors_not_void: successors /= Void
 	successors_count: successors.count = items.count
 	successors_capacity: successors.capacity = items.capacity
-	has_cycle: has_cycle implies {ot_cycle: like cycle} cycle and then ot_cycle.count >= 2 and then ot_cycle.first = ot_cycle.last
+	has_cycle: has_cycle implies {l_cycle: like cycle} cycle and then l_cycle.count >= 2 and then l_cycle.first = l_cycle.last
 
 end

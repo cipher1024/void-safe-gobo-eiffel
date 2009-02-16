@@ -127,7 +127,7 @@ feature -- Status report
 
 feature {NONE} -- Setting
 
-	internal_set_key_comparator (a_tester: !like equality_tester) is
+	internal_set_key_comparator (a_tester: like equality_tester) is
 			-- Set `equality_tester' to `a_tester'.
 			-- (No "settable" precondition, to be used internally only.)
 		do

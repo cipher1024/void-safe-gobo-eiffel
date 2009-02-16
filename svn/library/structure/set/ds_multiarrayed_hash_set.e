@@ -59,8 +59,8 @@ feature {NONE} -- Implementation
 			-- if not Void, `v.hash_code' otherwise.
 		do
 			if v /= Void then
-				if {h_function: like hash_function} hash_function then
-					Result := h_function.hash_code (v) \\ modulus
+				if {l_hash_function: like hash_function} hash_function then
+					Result := l_hash_function.hash_code (v) \\ modulus
 				else
 					Result := v.hash_code \\ modulus
 				end
