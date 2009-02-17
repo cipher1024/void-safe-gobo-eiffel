@@ -268,7 +268,7 @@ feature {DS_MULTIARRAYED_SPARSE_TABLE_CURSOR} -- Implementation
 			if subitems /= Void then
 				l_result := subitems.item (i \\ chunk_size)
 			end
-			check l_result /= Void end -- FIXME:jfiat
+			check l_result /= Void end -- implied by preconditions and implementation
 			Result := l_result
 		end
 

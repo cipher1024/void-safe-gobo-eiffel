@@ -264,7 +264,7 @@ feature -- Iteration
 			-- (Semantics not guaranteed if `an_action' or `a_test' change the structure.)
 		local
 			i, j: INTEGER
-			l_item: like item_storage_item
+			l_item: G
 		do
 			from
 				i := 1

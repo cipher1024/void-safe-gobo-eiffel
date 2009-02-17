@@ -65,11 +65,8 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER, DS_BINARY_SEARCH_TREE_CONTAINER_NODE} 
 
 	height_of_left_child: INTEGER is
 			-- Height of the branch where `left_child' is seen as root node
-		local
-			l_left_child: like left_child
 		do
-			l_left_child := left_child
-			if l_left_child /= Void then
+			if {l_left_child: like left_child} left_child then
 				Result := l_left_child.height
 			end
 		ensure
@@ -79,11 +76,8 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER, DS_BINARY_SEARCH_TREE_CONTAINER_NODE} 
 
 	height_of_right_child: INTEGER is
 			-- Height of branch where `right_child' is seen as root node
-		local
-			l_right_child: like right_child
 		do
-			l_right_child := right_child
-			if l_right_child /= Void then
+			if {l_right_child: like right_child} right_child then
 				Result := l_right_child.height
 			end
 		ensure
@@ -170,12 +164,9 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER, DS_BINARY_SEARCH_TREE_CONTAINER_NODE} 
 			-- Set `left_child' to `a_child'.
 		require
 			a_child_orphan: a_child /= Void implies a_child.parent = Void
-		local
-			l_left_child: like left_child
 		do
 				-- The current child will not any more have `Current' as `parent'.
-			l_left_child := left_child
-			if l_left_child /= Void then
+			if {l_left_child: like left_child} left_child then
 				l_left_child.set_parent (Void)
 			end
 			left_child := a_child
@@ -184,7 +175,7 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER, DS_BINARY_SEARCH_TREE_CONTAINER_NODE} 
 			end
 		ensure
 			left_child_set: left_child = a_child
-			correct_parent: {ot_left_child: like left_child} left_child implies ot_left_child.parent = Current
+			correct_parent: {el_left_child: like left_child} left_child implies el_left_child.parent = Current
 			old_child_has_void_parent: ({old_left_child: like left_child} (old left_child)) implies old_left_child.parent = Void
 		end
 
@@ -192,12 +183,9 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER, DS_BINARY_SEARCH_TREE_CONTAINER_NODE} 
 			-- Set `right_child' to `a_child'.
 		require
 			a_child_orphan: a_child /= Void implies a_child.parent = Void
-		local
-			l_right_child: like right_child
 		do
 				-- The current child will not any more have `Current' as `parent'.
-			l_right_child := right_child
-			if l_right_child /= Void then
+			if {l_right_child: like right_child} right_child then
 				l_right_child.set_parent (Void)
 			end
 			right_child := a_child
@@ -206,7 +194,7 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER, DS_BINARY_SEARCH_TREE_CONTAINER_NODE} 
 			end
 		ensure
 			right_child_set: right_child = a_child
-			correct_parent: {ot_right_child: like right_child} right_child implies ot_right_child.parent = Current
+			correct_parent: {el_right_child: like right_child} right_child implies el_right_child.parent = Current
 			old_child_has_void_parent: ({old_right_child: like right_child} (old right_child)) implies old_right_child.parent = Void
 		end
 

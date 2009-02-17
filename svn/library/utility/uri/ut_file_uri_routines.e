@@ -35,7 +35,7 @@ feature -- Filename
 			Result := file_system.pathname_to_string (uri_to_pathname (a_uri))
 			if a_uri.has_path_base then
 				l_path_base_item := a_uri.path_base_item
-				check l_path_base_item /= Void end
+				check l_path_base_item /= Void end -- implied by `has_path_base'
 				Result := file_system.pathname (Result, uri_component_to_pathname (l_path_base_item))
 			end
 			debug ("file_uri")
@@ -85,7 +85,7 @@ feature -- Pathname
 			create Result.make
 			if a_uri.has_authority then
 				a_uri_authority_item := a_uri.authority_item
-				check a_uri_authority_item /= Void end --FIXME:jfiat: pretty similar to has_authority ...
+				check a_uri_authority_item /= Void end -- implied by `has_authority'
 				if not a_uri_authority_item.decoded.same_string (Localhost_authority) then
 					Result.set_hostname (a_uri.authority)
 				end

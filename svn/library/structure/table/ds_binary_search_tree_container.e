@@ -490,7 +490,7 @@ feature {DS_CURSOR} -- Cursor implementation
 			l_position: ?DS_BINARY_SEARCH_TREE_CONTAINER_NODE [G, K]
 		do
 			l_position := a_cursor.position
-			check l_position /= Void end --| FIXME:jfiat: why?
+			check l_position /= Void end -- implied by `a_cursor_not_off'
 			Result := l_position.item
 		end
 
@@ -502,7 +502,7 @@ feature {DS_CURSOR} -- Cursor implementation
 			l_position: ?DS_BINARY_SEARCH_TREE_CONTAINER_NODE [G, K]
 		do
 			l_position := a_cursor.position
-			check l_position /= Void end --| FIXME:jfiat: why?
+			check l_position /= Void end -- implied by ... ?
 			Result := l_position.key
 		end
 
@@ -686,7 +686,7 @@ feature {DS_BILINEAR_CURSOR} -- Cursor implementation
 				l_position := last_node
 				l_add_cursor := True
 			else
-				check l_position /= Void end -- FIXME:jfiat: potential bug here?
+				check l_position /= Void end -- implied by `a_cursor_not_before' and `not a_cursor.after'
 				l_position := predecessor_for_cursor (l_position)
 			end
 			if l_position = Void then
@@ -1251,7 +1251,7 @@ feature -- Removal
 			-- Remove the item with key `v'.
 			-- (Performance: O(height).)
 		local
-			l_node_for_removal: like found_node
+			l_node_for_removal: like root_node
 		do
 			is_removing := True
 			search_node_for_removal (v)
@@ -1332,11 +1332,11 @@ feature {NONE} -- Removal
 			a_successor_is_predecesor: a_successor.left_child = Void
 			a_successor_is_from_tree: is_node_in_tree (a_successor)
 		local
-			l_parent: like parent_of_node
-			l_child: ?like new_tree_node
+			l_parent: like root_node
+			l_child: like root_node
 		do
 			l_parent := a_successor.parent
-			check l_parent /= Void end
+			check l_parent /= Void end -- implied by precondition `a_successor_has_parent'
 			l_child := a_successor.right_child
 			a_successor.set_right_child (Void)
 			if a_successor = l_parent.left_child then
@@ -1358,7 +1358,7 @@ feature {NONE} -- Removal
 			a_successor_has_no_right_child: a_successor.right_child = Void
 		end
 
-	remove_childless_node (a_node: like new_tree_node): ?like root_node is
+	remove_childless_node (a_node: like new_tree_node): like root_node is
 			-- Remove `a_node' from the tree and
 			-- return its successor.
 		require
@@ -1367,7 +1367,7 @@ feature {NONE} -- Removal
 			a_node_has_no_right_child: a_node.right_child = Void
 			a_node_is_from_tree: is_node_in_tree (a_node)
 		local
-			l_parent: like parent_of_node
+			l_parent: like root_node
 		do
 			l_parent := a_node.parent
 			check l_parent /= Void end
@@ -1398,7 +1398,7 @@ feature {NONE} -- Removal
 			end
 		end
 
-	remove_node_with_left_child (a_node: like new_tree_node): ?like new_tree_node is
+	remove_node_with_left_child (a_node: like new_tree_node): like root_node is
 			-- Remove `a_node' from the tree and return
 			-- its successor.
 		require
@@ -1407,11 +1407,11 @@ feature {NONE} -- Removal
 			a_node_has_no_right_child: a_node.right_child = Void
 			a_node_is_from_tree: is_node_in_tree (a_node)
 		local
-			l_parent: like parent_of_node
-			l_child: ?like new_tree_node
+			l_parent: like root_node
+			l_child: like root_node
 		do
 			l_parent := a_node.parent
-			check l_parent /= Void end
+			check l_parent /= Void end -- implied by precondition `a_node_is_from_tree'
 			if a_node = last_node then
 				last_node := predecessor (a_node)
 			else
@@ -1489,8 +1489,8 @@ feature {NONE} -- Basic operation
 			a_node_parent_not_void: a_node.parent /= Void
 			a_node_is_left_child_of_parent: {rl_parent: like parent_of_node} a_node.parent and then rl_parent.left_child = a_node
 		local
-			l_parent, l_grand_parent: like parent_of_node
-			b: ?like new_tree_node
+			l_parent, l_grand_parent: like root_node
+			b: like root_node
 			l_parent_is_left: BOOLEAN
 		do
 			l_parent := a_node.parent
@@ -1553,12 +1553,12 @@ feature {NONE} -- Basic operation
 			a_node_parent_not_void: a_node.parent /= Void
 			a_node_is_right_child_of_parent: {rl_parent: like parent_of_node} a_node.parent and then rl_parent.right_child = a_node
 		local
-			l_parent, l_grand_parent: like parent_of_node
-			b: ?like new_tree_node
+			l_parent, l_grand_parent: like root_node
+			b: like root_node
 			l_parent_is_left: BOOLEAN
 		do
 			l_parent := a_node.parent
-			check l_parent /= Void end
+			check l_parent /= Void end -- implied by precondition `a_node_parent_not_void'
 			l_grand_parent := l_parent.parent
 			b := a_node.left_child
 				-- Prepare `l_grand_parent'
@@ -1615,16 +1615,16 @@ feature {NONE} -- Basic operation
 			a_node_parent_not_void: a_node.parent /= Void
 			a_node_left_child_not_void: a_node.left_child /= Void
 		local
-			l_grand_parent, l_parent: like parent_of_node
+			l_grand_parent, l_parent: like root_node
 			l_parent_is_left: BOOLEAN
 			l_child: like root_node
 			b, c: like root_node
 		do
 			l_parent := a_node.parent
-			check l_parent /= Void end
+			check l_parent /= Void end -- implied by `a_node_parent_not_void'
 			l_grand_parent := l_parent.parent
 			l_child := a_node.left_child
-			check l_child /= Void end
+			check l_child /= Void end -- implied by `a_node_left_child_not_void'
 			b := l_child.left_child
 			c := l_child.right_child
 				-- Prepare `l_grand_parent'.
@@ -1684,16 +1684,16 @@ feature {NONE} -- Basic operation
 			a_node_parent_not_void: a_node.parent /= Void
 			a_node_right_child_not_void: a_node.right_child /= Void
 		local
-			l_grand_parent, l_parent: like parent_of_node
+			l_grand_parent, l_parent: like root_node
 			l_parent_is_left: BOOLEAN
 			l_child: like root_node
 			b, c: like root_node
 		do
 			l_parent := a_node.parent
-			check l_parent /= Void end
+			check l_parent /= Void end -- implied by `a_node_parent_not_void'
 			l_grand_parent := l_parent.parent
 			l_child := a_node.right_child
-			check l_child /= Void end
+			check l_child /= Void end -- implied by `a_node_right_child_not_void'
 			b := l_child.left_child
 			c := l_child.right_child
 				-- Prepare `l_grand_parent'.
@@ -1744,12 +1744,10 @@ feature {NONE} -- Basic operation
 			-- (Performance: O(height).)
 		local
 			l_equality: BOOLEAN
-			l_first_node: like root_node
 			l_found_node: like root_node
 		do
 			if a_key = Void then
-				l_first_node := first_node
-				if l_first_node /= Void and then l_first_node.key = Void then
+				if {l_first_node: like first_node} first_node and then l_first_node.key = Void then
 					found_node := l_first_node
 				else
 					found_node := Void
@@ -1799,7 +1797,7 @@ feature {NONE} -- Basic operation
 		do
 			if a_key = Void then
 				l_first_node := first_node
-				check l_first_node /= Void end
+				check l_first_node /= Void end -- implied by `tree_not_empty'
 				found_node := l_first_node
 				if l_first_node.key = Void then
 					exact_insert_position_found := True
@@ -1850,9 +1848,9 @@ feature {NONE} -- Basic operation
 		ensure
 			result_not_void: found_node /= Void
 			no_left_child: insert_position_is_left and not exact_insert_position_found
-					implies {ot_found_node: like found_node} found_node and then ot_found_node.left_child = Void
+					implies {el_found_node: like found_node} found_node and then el_found_node.left_child = Void
 			no_right_child: not insert_position_is_left and not exact_insert_position_found
-					implies {ot2_found_node: like found_node} found_node and then ot2_found_node.right_child = Void
+					implies {el2_found_node: like found_node} found_node and then el2_found_node.right_child = Void
 		end
 
 	unset_found_node is
@@ -1880,15 +1878,15 @@ invariant
 
 	sorted: sorted
 	is_empty_iff_no_root_node: is_empty = (root_node = Void)
-	correct_count: {inv_root_node: like root_node} root_node implies count = inv_root_node.count
+	correct_count: {l_root_node: like root_node} root_node implies count = l_root_node.count
 	first_node_set: is_empty = (first_node = Void)
-	first_node_is_in_tree: not is_empty implies {inv_first_node: like first_node} first_node and then is_node_in_tree (inv_first_node)
-	first_node_has_no_predecessor: not is_empty implies {inv2_first_node: like first_node} first_node and then predecessor (inv2_first_node) = Void
+	first_node_is_in_tree: not is_empty implies {l_first_node: like first_node} first_node and then is_node_in_tree (l_first_node)
+	first_node_has_no_predecessor: not is_empty implies {l2_first_node: like first_node} first_node and then predecessor (l2_first_node) = Void
 	is_first_node_correct: is_first_node_correct
 	last_node_set: is_empty = (last_node = Void)
-	last_node_in_in_tree: not is_empty implies {inv_last_node: like last_node} last_node and then is_node_in_tree (inv_last_node)
-	last_node_has_no_successor: not is_empty implies {inv2_last_node: like last_node} last_node and then successor (inv2_last_node) = Void
+	last_node_in_in_tree: not is_empty implies {l_last_node: like last_node} last_node and then is_node_in_tree (l_last_node)
+	last_node_has_no_successor: not is_empty implies {l2_last_node: like last_node} last_node and then successor (l2_last_node) = Void
 	is_last_node_correct: is_last_node_correct
-	void_is_in_first_node: has_void implies {inv3_first_node: like first_node} first_node and then inv3_first_node.key = Void
+	void_is_in_first_node: has_void implies {l3_first_node: like first_node} first_node and then l3_first_node.key = Void
 
 end

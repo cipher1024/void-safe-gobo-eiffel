@@ -99,17 +99,17 @@ feature -- Input
 				create l_cells.make (512)
 				from
 					a_file.read_line
-					l_last_string := a_file.last_string
 				until
-					l_last_string = Void or a_file.end_of_input
+					a_file.end_of_input
+				loop
+					l_last_string := a_file.last_string
+					check l_last_string /= Void end -- implied by implementation.
 					--FIXME:jfiat: no postcondition ensure we reuse last_string,
 					--so we check on each loop
-				loop
 					read_row (l_last_string, l_cells)
 					a_action.call ([l_cells])
 					l_cells.wipe_out
 					a_file.read_line
-					l_last_string := a_file.last_string
 				end
 			end
 		end

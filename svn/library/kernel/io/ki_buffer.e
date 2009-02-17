@@ -26,7 +26,7 @@ feature -- Access
 				-- a bug with ISE Eiffel 5.1.5 and 5.2 in the generated
 				-- C code in finalized mode, and having this
 				-- routine effective is a workaround.
-			check r /= Void end -- fooled the compiler ...
+			check r /= Void end -- fooling the compiler ...
 			Result := r
 		end
 

@@ -823,7 +823,7 @@ feature {NONE} -- Implementation
 			eof_rules := description.eof_rules
 			nb := stack.count
 			l_rule := rule
-			check l_rule /= Void end
+			check l_rule /= Void end -- implied by ... ?
 
 			from
 				i := 1
@@ -1047,7 +1047,7 @@ feature {NONE} -- Implementation
 					-- Mark the first part of the rule as the accepting
 					-- "head" part of a trailing context rule.
 				l_rule := rule
-				check l_rule /= Void end
+				check l_rule /= Void end -- implied by ... ?
 				a_regexp.set_accepted_rule (l_rule)
 			end
 			Result := a_regexp

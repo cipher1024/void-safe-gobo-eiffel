@@ -130,7 +130,7 @@ feature -- Access
 							last_cached_zoned_date_string := a_formatted_date
 							create a_tz.make_named_hours_minutes ("Z", 0, 0)
 							l_date := last_cached_date
-							check l_date /= Void end
+							check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 							create last_cached_zoned_date.make (l_date, a_tz)
 						end
 					end
@@ -210,9 +210,9 @@ feature -- Access
 						if Result then
 							last_cached_date_time_string := a_formatted_date_time
 							l_date := last_cached_date
-							check l_date /= Void end
+							check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 							l_time := last_cached_time
-							check l_time /= Void end
+							check l_time /= Void end -- implied by `last_cached_time_not_void'
 							create l_date_time.make_from_date_time (l_date, l_time)
 							last_cached_date_time := l_date_time
 							if last_time_carry then
@@ -245,7 +245,7 @@ feature -- Access
 							last_cached_zoned_date_time_string := a_formatted_date_time
 							create a_tz.make_named_hours_minutes ("Z", 0, 0)
 							l_date_time := last_cached_date_time
-							check l_date_time /= Void end
+							check l_date_time /= Void end -- implied by invariant `last_cached_date_time_not_void'
 							create last_cached_zoned_date_time.make (l_date_time, a_tz)
 						end
 					end
@@ -282,7 +282,7 @@ feature -- Access
 													create a_tz.make_hours_minutes (an_hour, a_minute)
 												end
 												l_date_time := last_cached_date_time
-												check l_date_time /= Void end
+												check l_date_time /= Void end -- implied by invariant `last_cached_date_time_not_void'
 												create last_cached_zoned_date_time.make (l_date_time, a_tz)
 											end
 										end
@@ -387,7 +387,7 @@ feature -- Access
 							last_cached_zoned_time_string := a_formatted_time
 							create a_tz.make_named_hours_minutes ("Z", 0, 0)
 							l_time := last_cached_time
-							check l_time /= Void end
+							check l_time /= Void end -- implied by invariant `last_cached_time_not_void'
 							create last_cached_zoned_time.make (l_time, a_tz)
 						end
 					end
@@ -424,7 +424,7 @@ feature -- Access
 													create a_tz.make_hours_minutes (an_hour, a_minute)
 												end
 												l_time := last_cached_time
-												check l_time /= Void end
+												check l_time /= Void end -- implied by invariant `last_cached_time_not_void'
 												create last_cached_zoned_time.make (l_time, a_tz)
 											end
 										end
@@ -509,7 +509,7 @@ feature -- Access
 							last_cached_zoned_date_string := a_formatted_date
 							create a_tz.make_named_hours_minutes ("Z", 0, 0)
 							l_date := last_cached_date
-							check l_date /= Void end
+							check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 							create last_cached_zoned_date.make (l_date, a_tz)
 						end
 					end
@@ -546,7 +546,7 @@ feature -- Access
 													create a_tz.make_hours_minutes (an_hour, a_minute)
 												end
 												l_date := last_cached_date
-												check l_date /= Void end
+												check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 												create last_cached_zoned_date.make (l_date, a_tz)
 											end
 										end
@@ -619,7 +619,7 @@ feature -- Access
 							last_cached_zoned_date_string := a_formatted_date
 							create a_tz.make_named_hours_minutes ("Z", 0, 0)
 							l_date := last_cached_date
-							check l_date /= Void end
+							check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 							create last_cached_zoned_date.make (l_date, a_tz)
 						end
 					end
@@ -656,7 +656,7 @@ feature -- Access
 													create a_tz.make_hours_minutes (an_hour, a_minute)
 												end
 												l_date := last_cached_date
-												check l_date /= Void end
+												check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 												create last_cached_zoned_date.make (l_date, a_tz)
 											end
 										end
@@ -728,7 +728,7 @@ feature -- Access
 							last_cached_zoned_date_string := a_formatted_date
 							create a_tz.make_named_hours_minutes ("Z", 0, 0)
 							l_date := last_cached_date
-							check l_date /= Void end
+							check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 							create last_cached_zoned_date.make (l_date, a_tz)
 						end
 					end
@@ -765,7 +765,7 @@ feature -- Access
 													create a_tz.make_hours_minutes (an_hour, a_minute)
 												end
 												l_date := last_cached_date
-												check l_date /= Void end
+												check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 												create last_cached_zoned_date.make (l_date, a_tz)
 											end
 										end
@@ -833,7 +833,7 @@ feature -- Access
 							last_cached_zoned_date_string := a_formatted_date
 							create a_tz.make_named_hours_minutes ("Z", 0, 0)
 							l_date := last_cached_date
-							check l_date /= Void end
+							check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 							create last_cached_zoned_date.make (l_date, a_tz)
 						end
 					end
@@ -870,7 +870,7 @@ feature -- Access
 													create a_tz.make_hours_minutes (an_hour, a_minute)
 												end
 												l_date := last_cached_date
-												check l_date /= Void end
+												check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 												create last_cached_zoned_date.make (l_date, a_tz)
 											end
 										end
@@ -937,7 +937,7 @@ feature -- Access
 							last_cached_zoned_date_string := a_formatted_date
 							create a_tz.make_named_hours_minutes ("Z", 0, 0)
 							l_date := last_cached_date
-							check l_date /= Void end
+							check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 							create last_cached_zoned_date.make (l_date, a_tz)
 						end
 					end
@@ -974,7 +974,7 @@ feature -- Access
 													create a_tz.make_hours_minutes (an_hour, a_minute)
 												end
 												l_date := last_cached_date
-												check l_date /= Void end
+												check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 												create last_cached_zoned_date.make (l_date, a_tz)
 											end
 										end
@@ -1012,7 +1012,7 @@ feature -- Conversion
 				end
 				l_date := last_cached_date
 			end
-			check l_date /= Void end
+			check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 			Result := l_date
 		end
 
@@ -1032,7 +1032,7 @@ feature -- Conversion
 				end
 				l_date := last_cached_zoned_date
 			end
-			check l_date /= Void end
+			check l_date /= Void end -- implied by invariant `last_cached_zoned_date_not_void'
 			Result := l_date
 		end
 
@@ -1052,7 +1052,7 @@ feature -- Conversion
 				end
 				l_date_time := last_cached_date_time
 			end
-			check l_date_time /= Void end
+			check l_date_time /= Void end -- implied by invariant `last_cached_date_time_not_void'
 			Result := l_date_time
 		end
 
@@ -1072,7 +1072,7 @@ feature -- Conversion
 				end
 				l_date_time := last_cached_zoned_date_time
 			end
-			check l_date_time /= Void end
+			check l_date_time /= Void end -- implied by invariant `last_cached_zoned_date_time_not_void'
 			Result := l_date_time
 		end
 
@@ -1092,7 +1092,7 @@ feature -- Conversion
 				end
 				l_time := last_cached_time
 			end
-			check l_time /= Void end
+			check l_time /= Void end -- implied by invariant `last_cached_time_not_void'
 			Result := l_time
 		end
 
@@ -1112,7 +1112,7 @@ feature -- Conversion
 				end
 				l_time := last_cached_zoned_time
 			end
-			check l_time /= Void end
+			check l_time /= Void end -- implied by invariant `last_cached_zoned_time_not_void'
 			Result := l_time
 		end
 
@@ -1136,7 +1136,7 @@ feature -- Conversion
 				end
 				l_date := last_cached_date
 			end
-			check l_date /= Void end
+			check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 			Result := l_date
 		ensure
 			year_month_not_void: Result /= Void
@@ -1163,7 +1163,7 @@ feature -- Conversion
 				end
 				l_date := last_cached_zoned_date
 			end
-			check l_date /= Void end
+			check l_date /= Void end -- implied by invariant `last_cached_zoned_date_not_void'
 			Result := l_date
 		ensure
 			zoned_year_month_not_void: Result /= Void
@@ -1189,7 +1189,7 @@ feature -- Conversion
 				end
 				l_date := last_cached_date
 			end
-			check l_date /= Void end
+			check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 			Result := l_date
 		ensure
 			year_not_void: Result /= Void
@@ -1217,7 +1217,7 @@ feature -- Conversion
 				end
 				l_date := last_cached_zoned_date
 			end
-			check l_date /= Void end
+			check l_date /= Void end -- implied by invariant `last_cached_zoned_date_not_void'
 			Result := l_date
 		ensure
 			zoned_year_not_void: Result /= Void
@@ -1243,7 +1243,7 @@ feature -- Conversion
 				end
 				l_date := last_cached_date
 			end
-			check l_date /= Void end
+			check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 			Result := l_date
 		ensure
 			month_day_not_void: Result /= Void
@@ -1270,7 +1270,7 @@ feature -- Conversion
 				end
 				l_date := last_cached_zoned_date
 			end
-			check l_date /= Void end
+			check l_date /= Void end -- implied by invariant `last_cached_zoned_date_not_void'
 			Result := l_date
 		ensure
 			zoned_month_day_not_void: Result /= Void
@@ -1296,7 +1296,7 @@ feature -- Conversion
 				end
 				l_date := last_cached_date
 			end
-			check l_date /= Void end
+			check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 			Result := l_date
 		ensure
 			day_not_void: Result /= Void
@@ -1324,7 +1324,7 @@ feature -- Conversion
 				end
 				l_date := last_cached_zoned_date
 			end
-			check l_date /= Void end
+			check l_date /= Void end -- implied by invariant `last_cached_zoned_date_not_void'
 			Result := l_date
 		ensure
 			zoned_day_not_void: Result /= Void
@@ -1350,7 +1350,7 @@ feature -- Conversion
 				end
 				l_date := last_cached_date
 			end
-			check l_date /= Void end
+			check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 			Result := l_date
 		ensure
 			month_not_void: Result /= Void
@@ -1378,7 +1378,7 @@ feature -- Conversion
 				end
 				l_date := last_cached_zoned_date
 			end
-			check l_date /= Void end
+			check l_date /= Void end -- implied by invariant `last_cached_zoned_date_not_void'
 			Result := l_date
 		ensure
 			zoned_month_not_void: Result /= Void

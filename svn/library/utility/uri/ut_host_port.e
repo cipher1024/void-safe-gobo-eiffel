@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel Utility Library"
 	author: "Copyright (c) 2004, Franck Arnaud and others"
 	revision: "$Revision: 5067 $"
-	date: "$Date: 2005-07-13 22:10:52 +0200 (mer., 13 juil. 2005) $"
+	date: "$Date: 2005-07-13 22:10:52 +0200 (Wed, 13 Jul 2005) $"
 
 class UT_HOST_PORT
 
@@ -33,8 +33,7 @@ feature -- Setting
 			a_port: STRING
 		do
 			port := a_default_port
-			i := a_string.index_of (Port_separator, 1)
-			host := a_string
+			i := a_string.index_of (Port_separator, 1) 
 			if i /= 0 then
 				host := a_string.substring (1, i - 1)
 				a_port := a_string.substring (i + 1, a_string.count)
@@ -46,6 +45,8 @@ feature -- Setting
 						port := a_default_port
 					end
 				end
+			else
+				host := a_string
 			end
 		end
 

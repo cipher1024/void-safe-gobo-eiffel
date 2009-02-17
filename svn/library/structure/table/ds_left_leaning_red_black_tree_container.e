@@ -35,7 +35,7 @@ feature {NONE} -- Access
 			l_child: like root_node
 		do
 			l_child := v.right_child
-			check l_child /= Void end -- implied by ... ?
+			check l_child /= Void end -- implied by precondition `v_has_right_child'
 			Result := walk_left (l_child)
 		ensure then
 			result_is_red: Result.is_red
@@ -96,7 +96,7 @@ feature {NONE} -- Removal
 				check l_not_found_node /= Void end -- implied by ... ?
 				fix_up (l_not_found_node, l_node)
 				l_node := root_node
-				check l_node /= Void end -- implied by ... ?
+				check l_node /= Void end -- implied by previous `if l_node /= Void' and implementation of `fix_up' ?
 				l_node.set_is_red (False)
 			end
 		end
@@ -282,27 +282,27 @@ feature {NONE} -- Basic operation
 			a_node_is_from_tree: is_node_in_tree (a_node)
 		local
 			l_node: like root_node
-			r: like root_node
+			l_result: like root_node
 		do
 			from
-				r := a_node
-				l_node := r.left_child
+				l_result := a_node
+				l_node := l_result.left_child
 			invariant
-				result_not_void: r /= Void
-				result_is_node_2: r.is_red or else is_node_red (r.left_child) or else is_node_red (r.right_child)
-				l_node_set: l_node = r.left_child
+				result_not_void: l_result /= Void
+				result_is_node_2: l_result.is_red or else is_node_red (l_result.left_child) or else is_node_red (l_result.right_child)
+				l_node_set: l_node = l_result.left_child
 			until
 				l_node = Void
 			loop
 				if not l_node.is_red and not is_node_red (l_node.left_child) then
-					r := move_red_left (r)
-					check r /= Void end -- implied by condition
+					l_result := move_red_left (l_result)
+					check l_result /= Void end -- implied by condition
 				end
-				r := r.left_child
-				check r /= Void end -- implied by loop invariant
-				l_node := r.left_child
+				l_result := l_result.left_child
+				check l_result /= Void end -- implied by loop invariant
+				l_node := l_result.left_child
 			end
-			Result := r
+			Result := l_result
 		ensure
 			result_not_void: Result /= Void
 			result_is_in_same_tree: are_nodes_in_same_tree (Result, a_node)
@@ -382,12 +382,12 @@ feature {NONE} -- Basic operation
 
 				rotate_right (Result)
 				l_child := Result.right_child
-				check l_child /= Void end -- implied by ... ?
+				check l_child /= Void end -- implied by postcondition of `rotate_right'
 				set_colors_after_rotation (l_child)
 
 				rotate_left (Result)
 				l_child := Result.left_child
-				check l_child /= Void end -- implied by ... ?				
+				check l_child /= Void end -- implied by postcondition of `rotate_left'
 				set_colors_after_rotation (l_child)
 				flip_colors (Result)
 			end
@@ -408,12 +408,12 @@ feature {NONE} -- Basic operation
 			Result := a_node
 			l_node := Result.left_child
 			flip_colors (Result)
-			check l_node /= Void end -- implied by ... ?
+			check l_node /= Void end -- implied by postcondition of `flip_colors'
 			if is_node_red (l_node.left_child) then
 				Result := l_node
 				rotate_right (Result)
 				l_node := Result.right_child
-				check l_node /= Void end -- implied by ... ?				
+				check l_node /= Void end -- implied by postconditions of `rotate_right'
 				set_colors_after_rotation (l_node)
 				flip_colors (Result)
 			end

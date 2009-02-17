@@ -64,7 +64,7 @@ feature {NONE} -- Element change
 						else
 								-- Insert case 4.
 							l_node := insert_case_4 (l_node, l_grand_parent)
-							check l_node /= Void end -- implied by ... ?
+							check l_node /= Void end -- implied by postcondition of `insert_case_4'
 								-- Insert case 5.
 							l_grand_parent := l_node.grand_parent
 							check l_grand_parent /= Void end -- implied by ... ?							
@@ -359,7 +359,7 @@ feature {NONE} -- Implementation
 
 invariant
 
-	root_node_is_black: ({ot_root_node: like root_node} root_node and not is_removing) implies ot_root_node.is_black
+	root_node_is_black: ({l_root_node: like root_node} root_node and not is_removing) implies l_root_node.is_black
 	all_paths_have_same_number_of_black_nodes: all_paths_have_same_number_of_black_nodes
 
 end

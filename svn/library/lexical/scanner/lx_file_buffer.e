@@ -60,13 +60,12 @@ feature -- Element change
 			if not file.end_of_input then
 				file.read_string (16384)
 				l_last_string := file.last_string
-				check l_last_string /= Void end
-				l_content := l_last_string
+				check l_last_string /= Void end -- implied by implementation
+				content := l_last_string
 			else
 				end_of_file := True
-				l_content := ""
+				content := ""
 			end
-			content := l_content
 			index := 1
 		end
 

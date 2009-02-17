@@ -136,19 +136,14 @@ feature {NONE} -- Initialization
 			-- Make a copy of `other'.
 		require
 			other_not_void: other /= Void
-		local
-			l_coefficient: ?like coefficient
 		do
 			if not other.is_special then
 				make (other.count)
-				l_coefficient := coefficient
 				copy (other)
 			else
 				make_special (other.special)
-				l_coefficient := coefficient
 				is_negative := other.is_negative
 			end
-			coefficient := l_coefficient
 		ensure
 			special_copy: special = other.special
 			coefficient_copy: coefficient.is_equal (other.coefficient)
@@ -244,7 +239,6 @@ feature {NONE} -- Initialization
 		local
 			l_last_parsed: ?STRING
 		do
-			coefficient := special_coefficient -- FIXME:jfiat
 			if a_decimal_parser.error then
 				if a_context.is_extended then
 					make_nan
@@ -281,7 +275,7 @@ feature {NONE} -- Initialization
 					end
 					create {MA_DECIMAL_COEFFICIENT_IMP} coefficient.make ((a_context.digits + 1).max (a_decimal_parser.coefficient_count))
 					l_last_parsed := a_decimal_parser.last_parsed
-					check l_last_parsed /= Void end
+					check l_last_parsed /= Void end -- implied by `not a_decimal_parser.error'
 					coefficient.set_from_substring (l_last_parsed, a_decimal_parser.coefficient_begin, a_decimal_parser.coefficient_end)
 					clean_up (a_context)
 				end
@@ -694,7 +688,7 @@ feature -- Basic operations
 		do
 				--| TODO
 			check not_implemented: False end
-			check l_result /= Void end
+			check l_result /= Void end -- fooling compiler
 			Result := l_result
 		end
 
@@ -1420,7 +1414,7 @@ feature -- Basic operations
 						Result := minus_one
 					end
 				else
-					Result := zero -- FIXME
+					Result := zero -- FIXME:jfiat
 				end
 			else
 				create operand_a.make_copy (Current)
@@ -2299,7 +2293,7 @@ feature {MA_DECIMAL} -- Basic operations
 				if l_is_zero then
 					if l_was_rounded then
 						l_reason := ctx.reason
-						check l_reason /= Void end
+						check l_reason /= Void end -- implied by ... ?
 						ctx.signal (Signal_rounded, l_reason)
 					else
 						ctx.reset_flag (Signal_rounded)

@@ -626,7 +626,7 @@ feature {NONE} -- Compression
 					-- Check if the proto we've decided on as our best bet
 					-- is close enough to the state we want to match to
 					-- be usable.
-				check common_state /= Void end
+				check common_state /= Void end -- implied by ... ?
 				if min_diff * 100 > trans_nb * Acceptable_diff_percentage then
 						-- No good. If the state is homogeneous enough,
 						-- we make a template out of it. Otherwise, we
@@ -645,8 +645,8 @@ feature {NONE} -- Compression
 					end
 				else
 						-- Use the proto.
-					check proto /= Void end
-					check difference /= Void end
+					check proto /= Void end -- implied by ... ?
+					check difference /= Void end -- implied by ... ?
 					put_entry (state.id, proto.state_id, difference)
 						-- Move `proto' to the front of the proto queue.
 					l_protos.move_to_front (proto_cursor)
@@ -691,7 +691,7 @@ feature {NONE} -- Compression
 					-- Save it for later to fill in holes in tables.
 				min_label := transitions.minimum_label
 				target := transitions.target (min_label)
-				check target /= Void end
+				check target /= Void end -- implied by ... ?
 				create singleton.make (state_id, default_id, min_label, target.id)
 				l_singletons := singletons
 				check l_singletons /= Void end -- implied by singletons_not_void

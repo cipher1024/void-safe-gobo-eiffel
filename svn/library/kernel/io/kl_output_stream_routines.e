@@ -42,7 +42,7 @@ feature -- Initialization
 				Result := a_file
 				a_file.open_write
 			else
-				check a_file /= Void end
+				check a_file /= Void end -- implied by application's logic
 				Result := a_file
 				if not a_file.is_closed then
 					a_file.close

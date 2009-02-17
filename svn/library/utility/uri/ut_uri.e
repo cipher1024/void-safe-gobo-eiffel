@@ -182,7 +182,7 @@ feature -- Status report
 			Result := True
 			if has_path_base then
 				l_path_base_item := path_base_item
-				check l_path_base_item /= Void end -- FIXME:jfiat: similar to has_path_base
+				check l_path_base_item /= Void end -- implied by `has_path_base'
 				Result := not is_dot_dot (l_path_base_item) and not is_dot (l_path_base_item)
 			end
 			if path_items.count > 0 then
@@ -247,11 +247,8 @@ feature -- Status report
 
 	has_valid_scheme: BOOLEAN is
 			-- Is scheme set and containing valid characters?
-		local
-			l_scheme: like scheme
 		do
-			l_scheme := scheme
-			Result := l_scheme /= Void and then (not l_scheme.is_empty and Url_encoding.is_valid_scheme (l_scheme))
+			Result := {l_scheme: like scheme} scheme and then (not l_scheme.is_empty and Url_encoding.is_valid_scheme (l_scheme))
 		ensure
 			valid_scheme_not_void: Result implies scheme /= Void
 			valid_scheme_not_empty: Result implies {el_scheme: like scheme} scheme and then not el_scheme.is_empty
@@ -363,7 +360,7 @@ feature -- Components
 			end
 			if has_path_base then
 				l_path_base_item := path_base_item
-				check l_path_base_item /= Void end -- FIXME:jfiat: pretty similar to has_path_base
+				check l_path_base_item /= Void end -- implied by `has_path_base'
 				Result := STRING_.appended_string (Result, l_path_base_item.encoded)
 			end
 		ensure
@@ -385,7 +382,7 @@ feature -- Components
 			l_path_base_item: like path_base_item
 		do
 			l_path_base_item := path_base_item
-			check l_path_base_item /= Void end
+			check l_path_base_item /= Void end -- implied by precondition `has_path_base'
 			Result := l_path_base_item.encoded
 		ensure
 			path_base_not_void: Result /= Void
@@ -401,7 +398,7 @@ feature -- Components
 			l_query_item: like query_item
 		do
 			l_query_item := query_item
-			check l_query_item /= Void end
+			check l_query_item /= Void end -- implied by precondition `has_query'
 			Result := l_query_item.encoded
 		ensure
 			query_not_void: Result /= Void
@@ -417,11 +414,11 @@ feature -- Components
 			l_fragment_item: like fragment_item
 		do
 			l_fragment_item := fragment_item
-			check l_fragment_item /= Void end
+			check l_fragment_item /= Void end -- implied by precondition `has_fragment'
 			Result := l_fragment_item.encoded
 		ensure
 			fragment_not_void: Result /= Void
-			definition: {ot_fragment_item: like fragment_item} fragment_item and then STRING_.same_string (Result, ot_fragment_item.encoded)
+			definition: {el_fragment_item: like fragment_item} fragment_item and then STRING_.same_string (Result, el_fragment_item.encoded)
 			not_separator: not Result.has ('#')
 		end
 
@@ -504,7 +501,7 @@ feature -- If authority is <userinfo>@<host>:<port>
 		do
 				-- Scan for `userinfo'.
 			l_authority_item := authority_item
-			check l_authority_item /= Void end
+			check l_authority_item /= Void end -- implied by precondition `valid_authority'
 			p := l_authority_item.encoded.index_of ('@', 1)
 			user_info_present := p > 1
 			if user_info_present then
@@ -531,11 +528,11 @@ feature -- If authority is <userinfo>@<host>:<port>
 			l_host_port: like host_port
 		do
 			l_host_port := host_port
-			check l_host_port /= Void end
+			check l_host_port /= Void end -- implied by precondition `has_authority'
 			Result := l_host_port.host
 		ensure
 			host_not_void: Result /= Void
-			definition: {ot_host_port: like host_port} host_port and then host = ot_host_port.host
+			definition: {el_host_port: like host_port} host_port and then host = el_host_port.host
 		end
 
 	port: INTEGER is
@@ -546,10 +543,10 @@ feature -- If authority is <userinfo>@<host>:<port>
 			l_host_port: like host_port
 		do
 			l_host_port := host_port
-			check l_host_port /= Void end
+			check l_host_port /= Void end -- implied by precondition `has_authority'
 			Result := l_host_port.port
 		ensure
-			definition: {ot_host_port: like host_port} host_port and then port = ot_host_port.port
+			definition: {el_host_port: like host_port} host_port and then port = el_host_port.port
 		end
 
 feature {NONE} -- Parsed authority
@@ -709,7 +706,7 @@ feature {NONE} -- Update cached attributes
 			create Result.make_empty
 			if is_absolute then
 				l_scheme := scheme
-				check l_scheme /= Void end --| FIXME:jfiat: same as is_absolute
+				check l_scheme /= Void end -- implied by `is_absolute'
 				Result := STRING_.appended_string (Result, l_scheme)
 				Result.append_character (':')
 			end
@@ -1001,7 +998,7 @@ feature {NONE} -- Resolve a relative-path reference
 				-- Handle path base if relative.
 			if has_path_base then
 				l_path_base_item := path_base_item
-				check l_path_base_item /= Void end -- FIXME:jfiat: similar to has_path_base
+				check l_path_base_item /= Void end -- implied by `has_path_base'
 				if is_dot (l_path_base_item) or is_dot_dot (l_path_base_item) then
 					path_items.force_last (l_path_base_item)
 					path_base_item := Void
@@ -1090,7 +1087,7 @@ invariant
 	no_void_path_item: not path_items.has_void
 	-- no_empty_path_item: not path_items.has ("")
 		-- Contraints on parsed `authority'.
-	user_info_occurs_in_authority: {ot_user_info: like user_info} user_info implies STRING_.substring_index (authority, ot_user_info, 1) /= 0
-	host_occurs_in_authority: has_parsed_authority implies {ot_host_port: like host_port} host_port and then STRING_.substring_index (authority, ot_host_port.host, 1) /= 0
+	user_info_occurs_in_authority: {l_user_info: like user_info} user_info implies STRING_.substring_index (authority, l_user_info, 1) /= 0
+	host_occurs_in_authority: has_parsed_authority implies {l_host_port: like host_port} host_port and then STRING_.substring_index (authority, l_host_port.host, 1) /= 0
 
 end

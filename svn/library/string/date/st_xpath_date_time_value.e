@@ -97,11 +97,11 @@ feature -- Access
 		do
 			if zoned then
 				l_zoned_date_time := zoned_date_time
-				check l_zoned_date_time /= Void end
+				check l_zoned_date_time /= Void end -- implied by `zoned'
 				l_date := l_zoned_date_time.zoned_date.date
 			else
 				l_local_date_time := local_date_time
-				check l_local_date_time /= Void end
+				check l_local_date_time /= Void end -- implied by `not zoned'
 				l_date := l_local_date_time.date
 			end
 			Result := l_date
@@ -118,11 +118,11 @@ feature -- Access
 		do
 			if zoned then
 				l_zoned_date_time := zoned_date_time
-				check l_zoned_date_time /= Void end
+				check l_zoned_date_time /= Void end -- implied by `zoned'
 				l_time := l_zoned_date_time.zoned_time.time
 			else
 				l_local_date_time := local_date_time
-				check l_local_date_time /= Void end
+				check l_local_date_time /= Void end -- implied by `not zoned'
 				l_time := l_local_date_time.time
 			end
 			Result := l_time
