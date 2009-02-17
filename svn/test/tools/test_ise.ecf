@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-3-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-3-0 http://www.eiffel.com/developers/xml/configuration-1-3-0.xsd" name="xtools">
+	<target name="xtools">
+		<root class="XTOOLS" feature="make"/>
+		<option trace="false" profile="false" debug="false" warning="true">
+			<assertions precondition="false" postcondition="false" check="false" invariant="false" loop="false"/>
+		</option>
+
+		<setting name="console_application" value="true"/>
+		<library name="base" location="${ISE_LIBRARY}/library/base/base.ecf" readonly="true"/>
+		<library name="time" location="${ISE_LIBRARY}/library/time/time.ecf" readonly="true"/>
+		<library name="gobo_test" location="${GOBO}/../gobo_test.ecf" />
+		<library name="gobo_kernel" location="${GOBO}/../gobo_kernel.ecf" />
+		<library name="gobo_structure" location="${GOBO}/../gobo_structure.ecf" />
+		<library name="gobo_utility" location="${GOBO}/../gobo_utility.ecf" />
+		<library name="gobo_pattern" location="${GOBO}/../gobo_pattern.ecf" />
+		<library name="gobo_parse" location="${GOBO}/../gobo_parse.ecf" />
+		<library name="gobo_lexical" location="${GOBO}/../gobo_lexical.ecf" />
+		<library name="gobo_string" location="${GOBO}/../gobo_string.ecf" />
+		<library name="gobo_time" location="${GOBO}/../gobo_time.ecf" />
+		<library name="gobo_xml" location="${GOBO}/../gobo_xml.ecf" />
+
+		<cluster name="et_tester" location="${GOBO}/test/tools"/>
+		<cluster name="et_testgen" location="TESTGEN"/>
+		<cluster name="et_tools" location="${GOBO}/library/tools">
+			<cluster name="et_eiffel_eiffel" location="$|eiffel">
+				<cluster name="et_eiffel_ast" location="$|ast">
+					<cluster name="et_eiffel_agent" location="$|agent"/>
+					<cluster name="et_eiffel_assertion" location="$|assertion"/>
+					<cluster name="et_eiffel_class" location="$|class"/>
+					<cluster name="et_eiffel_constant" location="$|constant"/>
+					<cluster name="et_eiffel_expression" location="$|expression"/>
+					<cluster name="et_eiffel_feature" location="$|feature"/>
+					<cluster name="et_eiffel_group" location="$|group"/>
+					<cluster name="et_eiffel_instruction" location="$|instruction"/>
+					<cluster name="et_eiffel_misc" location="$|misc"/>
+					<cluster name="et_eiffel_name" location="$|name"/>
+					<cluster name="et_eiffel_type" location="$|type"/>
+				</cluster>
+				<cluster name="et_eiffel_compilation" location="$|compilation"/>
+				<cluster name="et_eiffel_dynamic" location="$|dynamic"/>
+				<cluster name="et_eiffel_error" location="$|error"/>
+				<cluster name="et_eiffel_generation" location="$|generation"/>
+				<cluster name="et_eiffel_parser" location="$|parser"/>
+				<cluster name="et_eiffel_processor" location="$|processor"/>
+			</cluster>
+			<cluster name="et_lace_lace" location="$|lace">
+				<cluster name="et_lace_ast" location="$|ast"/>
+				<cluster name="et_lace_error" location="$|error"/>
+				<cluster name="et_lace_parser" location="$|parser"/>
+			</cluster>
+			<cluster name="et_ecf_ecf" location="$|ecf">
+				<cluster name="et_ecf_ast" location="$|ast"/>
+				<cluster name="et_ecf_error" location="$|error"/>
+				<cluster name="et_ecf_parser" location="$|parser"/>
+			</cluster>
+			<cluster name="et_xace_xace" location="$|xace">
+				<cluster name="et_xace_ast" location="$|ast"/>
+				<cluster name="et_xace_error" location="$|error"/>
+				<cluster name="et_xace_generator" location="$|generator"/>
+				<cluster name="et_xace_parser" location="$|parser"/>
+				<cluster name="et_xace_support" location="$|support"/>
+			</cluster>
+		</cluster>
+	</target>
+</system>
