@@ -348,18 +348,15 @@ feature -- Initialization
 			-- Create empty string, or remove all characters from
 			-- existing string.
 			-- (Extended from ELKS 2001 STRING)
-		local
-			n: INTEGER
 		do
 			reset_byte_index_cache
 			count := 0
 			if suggested_capacity = 0 then
 					-- Make sure that the `area' is not shared.
-				n := 1
+				precursor (1)
 			else
-				n := suggested_capacity
+				precursor (suggested_capacity)
 			end
-			Precursor (n)
 			set_count (byte_capacity)
 			old_set_count (byte_capacity)
 			set_count (0)
@@ -676,6 +673,7 @@ feature -- Access
 		local
 			i, j, nb: INTEGER
 			a_code, a_code2: INTEGER
+			other_unicode: ?UC_STRING
 			k, z, end_index: INTEGER
 			found: BOOLEAN
 			other_count: INTEGER
@@ -692,7 +690,8 @@ feature -- Access
 					end_index := count - other_count + 1
 					if start_index <= end_index then
 						if count = byte_count then
-							if {other_unicode: UC_STRING} other then
+							other_unicode ?= other
+							if other_unicode /= Void then
 								nb := other_unicode.byte_count
 								from
 									k := start_index
@@ -758,8 +757,9 @@ feature -- Access
 							end
 						else
 							z := byte_index (start_index)
-							if {other_uc_string: UC_STRING} other then
-								nb := other_uc_string.byte_count
+							other_unicode ?= other
+							if other_unicode /= Void then
+								nb := other_unicode.byte_count
 								from
 									k := start_index
 								until
@@ -773,14 +773,14 @@ feature -- Access
 										i > nb
 									loop
 										a_code := item_code_at_byte_index (j)
-										a_code2 := other_uc_string.item_code_at_byte_index (i)
+										a_code2 := other_unicode.item_code_at_byte_index (i)
 										if a_code /= a_code2 then
 											found := False
 												-- Jump out of the loop.
 											i := nb + 1
 										else
 											j := next_byte_index (j)
-											i := other_uc_string.next_byte_index (i)
+											i := other_unicode.next_byte_index (i)
 										end
 									end
 									if found then
@@ -1884,6 +1884,8 @@ feature -- Element change
 			old_a_string_count: INTEGER
 			new_byte_count: INTEGER
 			new_count: INTEGER
+			a_utf8_string: ?UC_UTF8_STRING
+			a_uc_string: ?UC_STRING
 			b: BOOLEAN
 		do
 			if ANY_.same_types (a_string, dummy_string) then
@@ -1909,8 +1911,10 @@ feature -- Element change
 					append_substring (a_string, 1, a_string.count)
 				end
 			else
-				if {a_uc_string: UC_STRING} a_string then
-					if {a_utf8_string: UC_UTF8_STRING} a_string or ANY_.same_types (a_uc_string, dummy_uc_string) then
+				a_uc_string ?= a_string
+				if a_uc_string /= Void then
+					a_utf8_string ?= a_string
+					if a_utf8_string /= Void or ANY_.same_types (a_uc_string, dummy_uc_string) then
 							-- Because bytes are in linear order, we may move bytes.
 						if a_uc_string = Current then
 							new_byte_count := 2 * byte_count
@@ -2371,7 +2375,7 @@ feature -- Element change
 			end
 		end
 
-	replace_substring (a_string: READABLE_STRING_8; start_index, end_index: INTEGER) is
+	replace_substring (a_string: STRING; start_index, end_index: INTEGER) is
 			-- Replace the substring from `start_index' to `end_index',
 			-- inclusive, with `a_string'.
 			-- (ELKS 2001 STRING)
@@ -2379,7 +2383,7 @@ feature -- Element change
 			replace_substring_by_string (a_string, start_index, end_index)
 		end
 
-	replace_substring_by_string (a_string: READABLE_STRING_8; start_index, end_index: INTEGER) is
+	replace_substring_by_string (a_string: STRING; start_index, end_index: INTEGER) is
 			-- Replace the substring from `start_index' to `end_index',
 			-- inclusive, with `a_string'.
 		require
@@ -2439,7 +2443,7 @@ feature -- Element change
 
 -- TODO: ISE 6.2 version because there is a flat Degree 3 error when using version from 6.4
 -- with the signature of `replace_substring' of the current class.
-	replace_substring_all (original, new: READABLE_STRING_8)
+	replace_substring_all (original, new: like Current)
 			-- Replace every occurrence of `original' with `new'.
 		local
 			l_first_pos, l_next_pos: INTEGER
@@ -3523,6 +3527,7 @@ feature {NONE} -- Implementation
 			k, z: INTEGER
 			c: CHARACTER
 			a_code: INTEGER
+			a_utf8_string: ?UC_UTF8_STRING
 			a_uc_string: ?UC_STRING
 			l_string_8: ?STRING
 		do
@@ -3578,7 +3583,8 @@ feature {NONE} -- Implementation
 						j := j + 1
 					end
 				else
-					if {a_utf8_string: UC_UTF8_STRING} a_string then
+					a_utf8_string ?= a_string
+					if a_utf8_string /= Void then
 						k := i
 						j := a_utf8_string.byte_index (start_index)
 						nb := j + b - 1
@@ -3591,19 +3597,20 @@ feature {NONE} -- Implementation
 							j := j + 1
 						end
 					else
-						if {ot_uc_string: UC_STRING} a_string then
+						a_uc_string ?= a_string
+						if a_uc_string /= Void then
 							k := i
-							j := ot_uc_string.byte_index (start_index)
+							j := a_uc_string.byte_index (start_index)
 							nb := j + b - 1
 							from
 							until
 								j > nb
 							loop
-								a_code := ot_uc_string.item_code_at_byte_index (j)
+								a_code := a_uc_string.item_code_at_byte_index (j)
 								z := utf8.code_byte_count (a_code)
 								put_code_at_byte_index (a_code, z, k)
 								k := k + z
-								j := ot_uc_string.next_byte_index (j)
+								j := a_uc_string.next_byte_index (j)
 							end
 						else
 							k := i
