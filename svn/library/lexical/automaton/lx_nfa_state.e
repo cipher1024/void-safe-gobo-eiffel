@@ -142,7 +142,7 @@ feature -- Setting
 
 feature -- Status setting
 
-	set_accepted_rule (a_rule: LX_RULE) is
+	set_accepted_rule (a_rule: ?LX_RULE) is
 			-- Set `accepted_rule' to `a_rule'.
 		do
 			accepted_rule := a_rule
