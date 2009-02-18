@@ -149,7 +149,7 @@ feature -- Content
 					l_it_item_name := it.item.name
 					check l_it_item_name /= Void end --| should not be Void at this point
 					l_default_value := it.item.default_value
-					check l_default_value /= Void end -- implied by ... ?
+					check l_default_value /= Void end -- implied by being from an item contained by `defaults' (TO CHECK)
 					push_attribute (Void,
 						dtd_prefix (l_it_item_name),
 						dtd_local (l_it_item_name),
@@ -259,10 +259,7 @@ feature {NONE} -- Attribute queue
 			end
 		end
 
-	namespaces, names: ?DS_LIST [STRING]
-			-- Mean version of DS_ARRAYED_LIST [ATTRIBUTE_EVENT]
-
-	values: ?DS_LIST [STRING]
+	namespaces, names, values: ?DS_LIST [STRING]
 			-- Mean version of DS_ARRAYED_LIST [ATTRIBUTE_EVENT]
 
 feature {NONE} -- Content implementation
