@@ -1595,8 +1595,8 @@ feature {NONE} -- Basic operation
 			parent_correct: a_node.left_child = old (a_node.parent)
 			a_correct: {l_left_child: like root_node} a_node.left_child and then
 				l_left_child.left_child = old (left_child_of_parent_of_node (a_node))
-			b_correct: {l_left_child: like root_node} a_node.left_child and then
-				l_left_child.right_child = old (a_node.left_child)
+			b_correct: {l_left_child_2: like root_node} a_node.left_child and then
+				l_left_child_2.right_child = old (a_node.left_child)
 			c_correct: a_node.right_child = old (a_node.right_child)
 			root_node_corrected: (a_node = root_node) = old (a_node.parent = root_node)
 		end
