@@ -10,7 +10,7 @@ indexing
 	date: "$Date: 2007-01-26 19:55:25 +0100 (ven., 26 janv. 2007) $"
 	revision: "$Revision: 5877 $"
 
-class XM_FORWARD_CALLBACKS
+deferred class XM_FORWARD_CALLBACKS
 
 inherit
 
@@ -21,48 +21,27 @@ inherit
 
 feature -- Access
 
-	internal_callbacks: ?like callbacks
+	callbacks: XM_CALLBACKS
 			-- Callbacks event interface to which events are forwarded;
 			-- If void, a null callback is created on startup.
-			-- FIXME:jfiat ... could make this class deferred .. or using make_null creating the `callbacks'
-			--		so that `callbacks' could be attached.
-
-	callbacks: XM_CALLBACKS
-			-- Attached version of `callbacks'
-			--| for ease of conversion (FIXME:jfiat)
-		require
-			callbacks_set: internal_callbacks /= Void
-		local
-			c: like internal_callbacks
-		do
-			c := internal_callbacks
-			check c /= Void end -- implied by `callbacks_set'
-			Result := c
-		end
 
 feature -- Setting
 
-	set_callbacks (a_callbacks: !like internal_callbacks) is
+	set_callbacks (a_callbacks: like callbacks) is
 			-- Set `callbacks' to `a_callbacks'.
 		do
-			internal_callbacks := a_callbacks
+			callbacks := a_callbacks
 		ensure then
-			callbackes_set: internal_callbacks = a_callbacks
+			callbackes_set: callbacks = a_callbacks
 		end
 
 feature {NONE} -- Document
 
 	on_start is
 			-- Forward start.
-		local
-			c: like internal_callbacks
 		do
-			c := internal_callbacks
-			if c = Void then
-				create {XM_CALLBACKS_NULL} c.make
-				internal_callbacks := c
-			end
-			c.on_start
+			check callbacks_set: callbacks /= Void end
+			callbacks.on_start
 		end
 
 	on_finish is
@@ -132,5 +111,9 @@ feature {NONE} -- Content
 		do
 			callbacks.on_content (a_content)
 		end
+
+invariant
+
+	callbacks_attached: callbacks /= Void
 
 end

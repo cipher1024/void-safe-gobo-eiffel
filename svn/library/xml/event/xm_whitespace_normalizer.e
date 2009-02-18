@@ -154,7 +154,7 @@ feature {NONE} -- Content
 					-- Unchanged, no whitespace.
 			end
 		ensure
-			no_whitespace_at_head: in_content implies {ot_last_content: like last_content} last_content and then not is_space (ot_last_content.item.item_code (1))
+			no_whitespace_at_head: in_content implies {el_last_content: like last_content} last_content and then not is_space (el_last_content.item.item_code (1))
 		end
 
 	normalize_content_tail is
@@ -219,7 +219,7 @@ feature -- Events
 		do
 			end_content
 			l_is_space_preserved := is_space_preserved
-			check l_is_space_preserved /= Void end
+			check l_is_space_preserved /= Void end -- implied by `on_start' already called
 			l_is_space_preserved.force (l_is_space_preserved.item) -- Unchanged.
 			Precursor (a_namespace, a_prefix, a_local_part)
 		end
@@ -235,7 +235,7 @@ feature -- Events
 					and STRING_.same_string (Xml_space, a_local_part)
 				then
 					l_is_space_preserved := is_space_preserved
-					check l_is_space_preserved /= Void end
+					check l_is_space_preserved /= Void end -- implied by `on_start' already called
 						--Replace value for current element.
 					l_is_space_preserved.remove
 					l_is_space_preserved.force (STRING_.same_string (Xml_space_preserve, a_value))
@@ -251,7 +251,7 @@ feature -- Events
 		do
 			end_content
 			l_is_space_preserved := is_space_preserved
-			check l_is_space_preserved /= Void end
+			check l_is_space_preserved /= Void end -- implied by `on_start' already called
 			l_is_space_preserved.remove
 			Precursor (a_namespace, a_prefix, a_local_part)
 		end
@@ -265,6 +265,6 @@ feature -- Events
 
 invariant
 
-	last_content_not_empty: not {ot_last_content: like last_content} last_content or else ot_last_content.item.count > 0
+	last_content_not_empty: not {l_last_content: like last_content} last_content or else l_last_content.item.count > 0
 
 end

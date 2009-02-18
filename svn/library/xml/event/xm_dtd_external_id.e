@@ -57,7 +57,6 @@ feature -- Access
 
 	system_id: ?STRING
 			-- SYSTEM
-			-- FIXME:jfiat: check callers, since most of them do not check if system_id is attached
 
 	public_id: ?STRING
 			-- PUBLIC

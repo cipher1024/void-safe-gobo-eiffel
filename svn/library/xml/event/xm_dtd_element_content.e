@@ -145,12 +145,13 @@ feature -- Data
 	attached_items: !like items
 			-- List of subitems
 		require
-			not is_name
+			not_is_name: not is_name
+			items_attached: items /= Void
 		local
 			l_items: like items
 		do
 			l_items := items
-			check l_items /= Void end
+			check l_items /= Void end -- implied by preconditions
 			Result := l_items
 		ensure
 			Result /= Void

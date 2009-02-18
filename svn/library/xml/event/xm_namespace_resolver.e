@@ -49,7 +49,8 @@ feature -- Document
 	on_start is
 			-- Initialize document variables.
 		do
-			create context.make
+				--| Note: it might be better to move those 2 lines, into a redefined make_null, set_next
+			create internal_context.make
 			attributes_make
 			next.on_start
 		end
@@ -73,7 +74,7 @@ feature -- Element
 	on_start_tag (a_namespace, a_prefix: ?STRING; a_local_part: STRING) is
 			-- Process start of start tag.
 		do
-			attached_context.push
+			context.push
 			check empty_attributes: attributes_is_empty end
 				-- Save for when we can resolve it, event deferred.
 			element_prefix := a_prefix
@@ -83,9 +84,9 @@ feature -- Element
 	on_attribute (a_namespace, a_prefix: ?STRING; a_local_part: STRING; a_value: STRING) is
 			-- Process attribute.
 		local
-			l_context: like attached_context
+			l_context: like context
 		do
-			l_context := attached_context
+			l_context := context
 			if not has_prefix (a_prefix) and is_xmlns (a_local_part) then
 					-- Default declaration.
 				l_context.add_default (a_value)
@@ -119,11 +120,11 @@ feature -- Element
 			error_msg: STRING
 			l_element_prefix: like element_prefix
 			l_element_local_part: like element_local_part
-			l_context: like attached_context
+			l_context: like context
 		do
 			l_element_prefix := element_prefix
 			l_element_local_part := element_local_part
-			l_context := attached_context
+			l_context := context
 			check l_element_local_part /= Void end -- implied by being in `on_start_tag_finish', thus after `on_start_tag'
 			if has_prefix (l_element_prefix) then
 				check l_element_prefix /= Void end -- implied by  `has_prefix'
@@ -150,17 +151,14 @@ feature -- Element
 
 	on_end_tag (a_namespace, a_prefix: ?STRING; a_local_part: STRING) is
 			-- Process end tag.
-		local
-			l_context: like attached_context
 		do
-			l_context := attached_context
 			if has_prefix (a_prefix) then
 				check a_prefix /= Void end -- implied by `has_prefix'
-				Precursor (l_context.resolve (a_prefix), a_prefix, a_local_part)
+				Precursor (context.resolve (a_prefix), a_prefix, a_local_part)
 			else
-				Precursor (l_context.resolve_default, a_prefix, a_local_part)
+				Precursor (context.resolve_default, a_prefix, a_local_part)
 			end
-			l_context.pop
+			context.pop
 		end
 
 feature {NONE} -- Attribute events
@@ -169,52 +167,42 @@ feature {NONE} -- Attribute events
 			-- Resolve attributes.
 		local
 			l_attributes_prefix: like attributes_prefix
-			l_attributes_local_part: like attributes_local_part
-			l_attributes_value: like attributes_value
-			l_context: like attached_context
+			l_context: like context
 			l_prefix: ?STRING
 		do
 			from
+				l_context := context
 			until
 				attributes_is_empty
 			loop
 				l_attributes_prefix := attributes_prefix
-				l_attributes_local_part := attributes_local_part
-				l_attributes_value := attributes_value
-				check
-					l_attributes_prefix /= Void and
-					l_attributes_local_part /= Void and
-					l_attributes_value /= Void
-				end -- implied by `not attributes_is_empty'
-
-				if has_prefix (l_attributes_prefix.item) then
-					l_prefix := l_attributes_prefix.item
+				l_prefix := l_attributes_prefix.item
+				if has_prefix (l_prefix) then
 					check l_prefix /= Void end -- implied by `has_prefix'
 					-- Resolve the attribute's prefix if it has any.
-					l_context := attached_context
 					if l_context.has (l_prefix) then
 						next.on_attribute (l_context.resolve (l_prefix),
-							l_prefix, l_attributes_local_part.item,
-							l_attributes_value.item)
+							l_prefix, attributes_local_part.item,
+							attributes_value.item)
 					elseif is_xml (l_prefix) then
 							-- xml: prefix has implicit namespace
 						next.on_attribute (Xml_prefix_namespace,
 							l_prefix,
-							l_attributes_local_part.item,
-							l_attributes_value.item)
+							attributes_local_part.item,
+							attributes_value.item)
 					elseif is_xmlns (l_prefix) then
 							-- xmlns: prefix has implicit namespace
 						next.on_attribute (Xmlns_namespace,
 							l_prefix,
-							l_attributes_local_part.item,
-							l_attributes_value.item)
+							attributes_local_part.item,
+							attributes_value.item)
 					else
 						on_error (Undeclared_namespace_error)
 					end
 				else
 					next.on_attribute (Unprefixed_attribute_namespace,
-						l_attributes_prefix.item, l_attributes_local_part.item,
-						l_attributes_value.item)
+						attributes_prefix.item, attributes_local_part.item,
+						attributes_value.item)
 				end
 					-- Forth:
 				attributes_remove
@@ -223,20 +211,20 @@ feature {NONE} -- Attribute events
 
 feature {NONE} -- Context
 
-	context: ?XM_NAMESPACE_RESOLVER_CONTEXT
+	internal_context: ?like context
 			-- Context
 			-- FIXME:jfiat: why not creating the context on creation
 			-- this is not a big object, and this would help for void-safety
 
-	attached_context: !like context
+	context: XM_NAMESPACE_RESOLVER_CONTEXT
 			-- Attached `context' for ease of void-safe usage
 			-- FIXME:jfiat: ease of conversion to void-safety
 		require
-			context_attached: context /= Void
+			context_attached: internal_context /= Void
 		local
-			c: like context
+			c: like internal_context
 		do
-			c := context
+			c := internal_context
 			check c /= Void end
 			Result := c
 		end
@@ -274,67 +262,50 @@ feature {NONE} -- Attributes
 	attributes_make is
 			-- Intialize queue.
 		do
-			attributes_prefix := new_string_queue
-			attributes_local_part := new_string_queue
-			attributes_value := new_string_queue
+			--| Self initialazing attributes
+--			attributes_prefix := new_string_queue
+--			attributes_local_part := new_string_queue
+--			attributes_value := new_string_queue
 		end
 
 	attributes_force (a_prefix: ?STRING; a_local_part: STRING; a_value: STRING) is
 			-- Like attributes.force.
-		local
-			l_attributes_prefix: like attributes_prefix
-			l_attributes_local_part: like attributes_local_part
-			l_attributes_value: like attributes_value
 		do
-			l_attributes_prefix := attributes_prefix
-			l_attributes_local_part := attributes_local_part
-			l_attributes_value := attributes_value
-			check
-				l_attributes_prefix /= Void and
-				l_attributes_local_part /= Void and
-				l_attributes_value /= Void
-			end -- implied by `not attributes_is_empty'
-			l_attributes_prefix.force (a_prefix)
-			l_attributes_local_part.force (a_local_part)
-			l_attributes_value.force (a_value)
+			attributes_prefix.force (a_prefix)
+			attributes_local_part.force (a_local_part)
+			attributes_value.force (a_value)
 		end
 
 	attributes_remove is
 			-- Like attributes.remove.
 		require
 			not_empty: not attributes_is_empty
-		local
-			l_attributes_prefix: like attributes_prefix
-			l_attributes_local_part: like attributes_local_part
-			l_attributes_value: like attributes_value
 		do
-			l_attributes_prefix := attributes_prefix
-			l_attributes_local_part := attributes_local_part
-			l_attributes_value := attributes_value
-			check
-				l_attributes_prefix /= Void and
-				l_attributes_local_part /= Void and
-				l_attributes_value /= Void
-			end -- implied by `not attributes_is_empty'
-
-			l_attributes_prefix.remove
-			l_attributes_local_part.remove
-			l_attributes_value.remove
+			attributes_prefix.remove
+			attributes_local_part.remove
+			attributes_value.remove
 		end
 
 	attributes_is_empty: BOOLEAN is
 			-- Like attributes.is_empty.
-		local
-			l_attributes_prefix: like attributes_prefix
 		do
-			l_attributes_prefix := attributes_prefix
-			check l_attributes_prefix /= Void end -- implied by `not attributes_is_empty'
-			Result := l_attributes_prefix.is_empty
+			Result := attributes_prefix.is_empty
 		end
 
-	attributes_prefix: ?DS_QUEUE [?STRING]
-	attributes_local_part: ?DS_QUEUE [STRING]
-	attributes_value: ?DS_QUEUE [STRING]
+	attributes_prefix: DS_QUEUE [?STRING]
+		attribute
+			Result := new_string_queue
+		end
+
+	attributes_local_part: DS_QUEUE [STRING]
+		attribute
+			Result := new_string_queue
+		end
+
+	attributes_value: DS_QUEUE [STRING]
+		attribute
+			Result := new_string_queue
+		end
 
 feature {NONE} -- Error
 

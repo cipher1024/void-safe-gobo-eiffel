@@ -25,7 +25,6 @@ inherit
 		-- implementation of default behaviour:
 		-- forwarding to 'next' processor in chain
 		rename
-			internal_callbacks as internal_next,
 			callbacks as next,
 			set_callbacks as set_next
 		end
@@ -45,6 +44,6 @@ feature {NONE} -- Initialization
 
 invariant
 
-	next_not_void: internal_next /= Void
+	next_not_void: next /= Void
 
 end

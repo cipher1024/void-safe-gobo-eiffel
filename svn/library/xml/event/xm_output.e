@@ -31,7 +31,7 @@ feature -- Output
 			output_stream := Void
 		ensure
 			last_output_not_void: last_output /= Void
-			last_output_empty: {o: like last_output} last_output and then o.count = 0
+			last_output_empty: {l_last_output: like last_output} last_output and then l_last_output.count = 0
 		end
 
 	set_output_string (a_string: like last_output) is
@@ -74,12 +74,9 @@ feature -- Output
 
 	flush is
 			-- Flush `output_stream'.
-		local
-			s: like output_stream
 		do
-			s := output_stream
-			if s /= Void and then s.is_open_write then
-				s.flush
+			if {l_output_stream: like output_stream} output_stream and then l_output_stream.is_open_write then
+				l_output_stream.flush
 			end
 		end
 

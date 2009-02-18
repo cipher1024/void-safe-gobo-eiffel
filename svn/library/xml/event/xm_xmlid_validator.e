@@ -65,7 +65,7 @@ feature -- Events
 			l_ids: like ids
 		do
 			l_ids := ids
-			check l_ids /= Void end -- implied by ... ?
+			check l_ids /= Void end -- implied by `on_start' already called
 			if has_prefix (a_prefix) then
 				check a_prefix /= Void end -- implied by `has_prefix (a_prefix)'
 				if
@@ -101,7 +101,7 @@ feature {NONE} -- Implementation
 		local
 			last_start: INTEGER
 			i: INTEGER
-			r: ?STRING
+			l_result: ?STRING
 		do
 				-- Remove duplicate spaces
 			from
@@ -115,10 +115,10 @@ feature {NONE} -- Implementation
 				if is_space (an_id.item_code (i)) and is_space (an_id.item_code (i - 1)) then
 					if last_start > 0 then
 							-- There has been valid chars since last duplicate space
-						if r = Void then
-							create r.make_empty
+						if l_result = Void then
+							create l_result.make_empty
 						end
-						r := STRING_.appended_string (r, an_id.substring (last_start, i - 1))
+						l_result := STRING_.appended_string (l_result, an_id.substring (last_start, i - 1))
 						last_start := 0
 					end
 				else
@@ -132,27 +132,27 @@ feature {NONE} -- Implementation
 
 			if last_start = 1 then
 					-- no duplicate spaces
-				r := an_id
+				l_result := an_id
 			elseif last_start > 1 then
 					-- tail
-				check r /= Void end -- implied by implementation of previous loop
-				r := STRING_.appended_string (r, an_id.substring (last_start, an_id.count))
+				check l_result /= Void end -- implied by implementation of previous loop
+				l_result := STRING_.appended_string (l_result, an_id.substring (last_start, an_id.count))
 			else
 				check
 					no_leftovers: last_start = 0
 					ends_with_space: is_space (an_id.item_code (an_id.count))
 				end
-				check r /= Void end -- implied by implementation of previous loop
+				check l_result /= Void end -- implied by implementation of previous loop
 			end
 
 				-- Remove heading and trailing space
-			if not r.is_empty and then is_space (r.item_code (1)) then
-				r := r.substring (2, r.count)
+			if not l_result.is_empty and then is_space (l_result.item_code (1)) then
+				l_result := l_result.substring (2, l_result.count)
 			end
-			if not r.is_empty and then is_space (r.item_code (r.count)) then
-				r := r.substring (1, r.count - 1)
+			if not l_result.is_empty and then is_space (l_result.item_code (l_result.count)) then
+				l_result := l_result.substring (1, l_result.count - 1)
 			end
-			Result := r
+			Result := l_result
 		ensure
 			result_not_void: Result /= Void
 			fewer_or_equal_count: Result.count <= an_id.count
