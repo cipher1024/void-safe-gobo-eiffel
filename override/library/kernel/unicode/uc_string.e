@@ -247,7 +247,7 @@ inherit
 	KI_TEXT_OUTPUT_STREAM
 		rename
 			put_character as append_character,
-			put_string as append_string,
+			put_string as append,
 			put_substring as append_substring,
 			append as append_stream,
 			True_constant as stream_true_constant,
@@ -1057,8 +1057,8 @@ feature -- Access
 			-- (ELKS 2001 STRING)
 		do
 			create Result.make (byte_count + utf8.substring_byte_count (other, 1, other.count))
-			Result.append_string (Current)
-			Result.append_string (other)
+			Result.append (Current)
+			Result.append (other)
 		ensure then
 			final_unicode: Result.substring (count + 1, count + other.count).same_unicode_string (other)
 		end
@@ -1070,8 +1070,8 @@ feature -- Access
 			other_not_void: other /= Void
 		do
 			create Result.make (byte_count + utf8.substring_byte_count (other, 1, other.count))
-			Result.append_string (other)
-			Result.append_string (Current)
+			Result.append (other)
+			Result.append (Current)
 		ensure
 			prefixed_string_not_void: Result /= Void
 			prefixed_string_count: Result.count = other.count + count
@@ -1862,10 +1862,8 @@ feature -- Element change
 			unicode_appended: item_code (count) = c.code
 		end
 
-	append_string (s: STRING) is
+	append_string (s: ?READABLE_STRING_8) is
 			-- Append a copy of `s' at end.
-			--| FIXME:jfiat: `s' should be detachable here, but it is attached due to inheritance to KI_TEXT_OUTPUT_STREAM
-			--| So we might get rid of the if s /= Void then ...
 		do
 			if s /= Void then
 				append (s)
@@ -2348,7 +2346,7 @@ feature -- Element change
 			a_string_count := a_string.count
 			if a_string_count /= 0 then
 				if i = count + 1 then
-					append_string (a_string)
+					append (a_string)
 				else
 					if a_string = Current then
 						str := cloned_string
@@ -2398,7 +2396,7 @@ feature -- Element change
 				remove_substring (start_index, end_index)
 			else
 				if start_index = count + 1 then
-					append_string (a_string)
+					append (a_string)
 				else
 					if a_string = Current then
 						str := cloned_string
@@ -2615,7 +2613,7 @@ feature -- Output
 					else
 						Result.append_character ('%%')
 						Result.append_character ('/')
-						Result.append_string (c.code.out)
+						Result.append (c.code.out)
 						Result.append_character ('/')
 					end
 					i := i + 1
@@ -2634,7 +2632,7 @@ feature -- Output
 					else
 						Result.append_character ('%%')
 						Result.append_character ('/')
-						Result.append_string (a_code.out)
+						Result.append (a_code.out)
 						Result.append_character ('/')
 					end
 					i := next_byte_index (i)
@@ -3162,11 +3160,11 @@ feature -- Obsolete
 	append_uc_string (a_string: UC_STRING) is
 			-- Append a copy of `a_string' at end.
 		obsolete
-			"[011225] Use `append_string' instead."
+			"[011225] Use `append' instead."
 		require
 			a_string_not_void: a_string /= Void
 		do
-			append_string (a_string)
+			append (a_string)
 		end
 
 	append_unicode, append_uc_character (c: UC_CHARACTER) is
