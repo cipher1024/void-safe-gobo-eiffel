@@ -3652,7 +3652,7 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 853")
 end
 
-yyval7 := new_dtd_attribute_content; yyval7.set_enumeration_list (yyvs9.item (yyvsp9)) 
+yyval7 := new_dtd_attribute_content; set_enumeration_list (yyval7, yyvs9.item (yyvsp9)) 
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
 	yyvsp7 := yyvsp7 + 1
@@ -5484,6 +5484,14 @@ feature -- Parsing
 			other_not_void: other /= Void
 		do
 			Result := STRING_.appended_string (a_string, other)
+		end
+
+	set_enumeration_list (a_content: XM_DTD_ATTRIBUTE_CONTENT; a_list: ?DS_LIST [STRING])
+		require
+			a_content_attached: a_content /= Void
+			a_list_attached: a_list /= Void
+		do
+			a_content.set_enumeration_list (a_list)
 		end
 
 end

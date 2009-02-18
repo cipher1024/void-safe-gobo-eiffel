@@ -34,14 +34,14 @@ feature -- Formatting
 			-- Format `a_parameter' to `a_stream'.
 			-- (Use DS_CELL [POINTER] because in SE 2.1
 			-- POINTER does not conform to ANY.)
+		local
+			a_cell: ?DS_CELL [POINTER]
 		do
-			if {a_cell: DS_CELL [POINTER]} a_parameter then
-				pointer_format_to (a_cell.item, a_stream)
-			else
-				check
-					valid_parameter: False
-				end
-			end
+			a_cell ?= a_parameter
+			check
+				valid_parameter: a_cell /= Void
+			end -- implied by precondition `valid_parameter'
+			pointer_format_to (a_cell.item, a_stream)
 		end
 
 	pointer_format_to (a_parameter: POINTER; a_stream: KI_CHARACTER_OUTPUT_STREAM) is

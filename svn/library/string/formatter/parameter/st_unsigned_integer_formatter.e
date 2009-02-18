@@ -25,7 +25,7 @@ feature -- Status report
 	valid_parameter (a_parameter: ANY): BOOLEAN is
 			-- Is `a_parameter' a valid parameter for current formatter?
 		do
-			Result := {a_cell: DS_CELL [INTEGER]} a_parameter and then a_cell.item >= 0
+			Result := {l_cell: DS_CELL [INTEGER]} a_parameter and then l_cell.item >= 0
 		end
 
 feature -- Formatting

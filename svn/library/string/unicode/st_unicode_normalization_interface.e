@@ -110,19 +110,17 @@ feature -- Access
 		local
 			changed: DS_CELL [BOOLEAN]
 			a_decomposition: DS_ARRAYED_LIST [INTEGER]
-			l_nfd: ?like as_nfd
+			l_result: ?like as_nfd
 		do
-			if {ot_nfd: like as_nfd} a_source then
-				l_nfd := ot_nfd
-			end
-			if l_nfd = Void or else not l_nfd.is_empty then
+			l_result ?= a_source
+			if l_result = Void or else not l_result.is_empty then
 				create changed.make (False)
 				a_decomposition := decomposition (a_source, True, changed)
-				if changed.item or l_nfd = Void then
-					l_nfd := string_from_codes (a_decomposition)
+				if changed.item or l_result = Void then
+					l_result := string_from_codes (a_decomposition)
 				end
 			end
-			Result := l_nfd
+			Result := l_result
 		ensure
 			as_nfd_not_void: Result /= Void
 			is_nfd: is_nfd (Result)
@@ -155,19 +153,17 @@ feature -- Access
 		local
 			changed: DS_CELL [BOOLEAN]
 			a_decomposition: DS_ARRAYED_LIST [INTEGER]
-			l_nfkd: ?like as_nfkd
+			l_result: ?like as_nfkd
 		do
-			if {ot_nfkd: like as_nfkd} a_source then
-				l_nfkd := ot_nfkd
-			end
-			if l_nfkd = Void or else not l_nfkd.is_empty then
+			l_result ?= a_source
+			if l_result = Void or else not l_result.is_empty then
 				create changed.make (False)
 				a_decomposition := decomposition (a_source, False, changed)
-				if changed.item or l_nfkd = Void then
-					l_nfkd := string_from_codes (a_decomposition)
+				if changed.item or l_result = Void then
+					l_result := string_from_codes (a_decomposition)
 				end
 			end
-			Result := l_nfkd
+			Result := l_result
 		ensure
 			as_nfkd_not_void: Result /= Void
 			is_nfd: is_nfd (Result)

@@ -469,19 +469,15 @@ feature -- Compilation
 			-- at doing this.
 		require
 			compiled: is_compiled
-		local
-			l_internal_start_bits: like internal_start_bits
 		do
 				-- For an anchored pattern, or an unanchored pattern that has a first char, or a
 				-- multiline pattern that matches only at "line starts", no further processing at
 				-- present.
 			if not is_anchored and then first_character < 0 and then not is_startline then
-				l_internal_start_bits := internal_start_bits
-				if l_internal_start_bits = Void then
-					create l_internal_start_bits.make_empty
-					internal_start_bits := l_internal_start_bits
-				else
+				if {l_internal_start_bits: like internal_start_bits} internal_start_bits then
 					l_internal_start_bits.wipe_out
+				else
+					create internal_start_bits.make_empty
 				end
 				set_start_bits (0, is_caseless)
 			end
@@ -649,7 +645,7 @@ feature -- Debugging
 				if a_native_code then
 					a_position := i
 				else
-					check a_position_map /= Void end
+					check a_position_map /= Void end -- implied by `not a_native_code' and implementation
 					a_position := map_position (i, a_position_map)
 				end
 				STRING_FORMATTER_.put_left_padded_string (a_file, a_position.out, 3, ' ')
@@ -660,7 +656,7 @@ feature -- Debugging
 						if a_native_code then
 							a_position := byte_code.integer_item (i + 1)
 						else
-							check a_position_map /= Void end
+							check a_position_map /= Void end -- implied by `not a_native_code' and implementation
 							a_position := map_position (i + byte_code.integer_item (i + 1), a_position_map) - map_position (i, a_position_map)
 						end
 						STRING_FORMATTER_.put_left_padded_string (a_file, a_position.out, 3, ' ')
@@ -677,7 +673,7 @@ feature -- Debugging
 							if a_native_code then
 								a_position := byte_code.integer_item (i + 1)
 							else
-								check a_position_map /= Void end
+								check a_position_map /= Void end -- implied by `not a_native_code' and implementation
 								a_position := map_position (i + byte_code.integer_item (i + 1), a_position_map) - map_position (i, a_position_map)
 							end
 							STRING_FORMATTER_.put_left_padded_string (a_file, a_position.out, 3, ' ')
@@ -692,7 +688,7 @@ feature -- Debugging
 							if a_native_code then
 								a_position := byte_code.integer_item (i + 1)
 							else
-								check a_position_map /= Void end
+								check a_position_map /= Void end -- implied by `not a_native_code' and implementation
 								a_position := map_position (i, a_position_map) - map_position (i - byte_code.integer_item (i + 1), a_position_map)
 							end
 							STRING_FORMATTER_.put_left_padded_string (a_file, a_position.out, 3, ' ')
@@ -3159,7 +3155,7 @@ feature {NONE} -- Implementation
 			l_internal_start_bits: like internal_start_bits
 		do
 			l_internal_start_bits := internal_start_bits
-			check l_internal_start_bits /= Void end
+			check l_internal_start_bits /= Void end -- implied by precondition `internal_start_bits_attached'
 			from
 				success := True
 				caseless := a_caseless

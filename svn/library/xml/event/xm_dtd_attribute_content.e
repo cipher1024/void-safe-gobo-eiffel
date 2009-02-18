@@ -386,7 +386,7 @@ feature -- Enumeration
 			result_not_void: Result /= Void
 		end
 
-	set_enumeration_list (a_list: like enumeration_list) is
+	set_enumeration_list (a_list: like enumeration) is
 			-- Set enumeration type and associated list.
 		require
 			not_void: a_list /= Void

@@ -60,14 +60,14 @@ feature -- Formatting
 			-- Format `a_parameter' to `a_stream'.
 			-- (Use DS_CELL [DOUBLE] because in SE 2.1
 			-- DOUBLE does not conform to ANY.)
+		local
+			a_cell: ?DS_CELL [DOUBLE]
 		do
-			if {a_cell: DS_CELL [DOUBLE]} a_parameter then
-				double_format_to (a_cell.item, a_stream)
-			else
-				check
-					valid_parameter: False
-				end
-			end
+			a_cell ?= a_parameter
+			check
+				valid_parameter: a_cell /= Void
+			end -- implied by precondition `valid_parameter'
+			double_format_to (a_cell.item, a_stream)
 		end
 
 	double_format_to (a_parameter: DOUBLE; a_stream: KI_CHARACTER_OUTPUT_STREAM) is

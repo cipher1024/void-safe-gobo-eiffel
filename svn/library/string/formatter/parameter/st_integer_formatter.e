@@ -75,14 +75,14 @@ feature -- Formatting
 			-- Format `a_parameter' to `a_stream'.
 			-- (Use DS_CELL [INTEGER] because in SE 2.1
 			-- INTEGER does not conform to ANY.)
+		local
+			a_cell: ?DS_CELL [INTEGER]
 		do
-			if {a_cell: DS_CELL [INTEGER]} a_parameter then
-				integer_format_to (a_cell.item, a_stream)
-			else
-				check
-					valid_parameter: False
-				end
-			end
+			a_cell ?= a_parameter
+			check
+				valid_parameter: a_cell /= Void
+			end -- implied by precondition `valid_parameter'
+			integer_format_to (a_cell.item, a_stream)
 		end
 
 	integer_format_to (a_parameter: INTEGER; a_stream: KI_CHARACTER_OUTPUT_STREAM) is

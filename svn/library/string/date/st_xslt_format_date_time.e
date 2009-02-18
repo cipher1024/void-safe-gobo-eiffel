@@ -339,10 +339,10 @@ feature {NONE} -- Implementation
 				check_modifiers (a_result, some_modifiers, "1", False)
 				if a_result.item = Void then
 					l_numberer := selected_numberer (a_language)
-					check l_numberer /= Void end
+					check l_numberer /= Void end -- implied by precondition `language_not_empty and language_is_supported'
 					create l_number.make_from_integer (a_calendar_value.absolute_year)
 					l_primary_modifier := primary_modifier
-					check l_primary_modifier /= Void end
+					check l_primary_modifier /= Void end -- implied by ... ?
 					l_string := l_numberer.formatted_string (l_number, l_primary_modifier, 0, "", letter_attribute_value, ordinal_attribute_value)
 					if l_string.count < minimum_width then
 						if is_decimal_format then
@@ -382,14 +382,14 @@ feature {NONE} -- Implementation
 				check_modifiers (a_result, some_modifiers, "1", True)
 				if a_result.item = Void then
 					l_numberer := selected_numberer (a_language)
-					check l_numberer /= Void end
+					check l_numberer /= Void end -- implied by precondition `language_not_empty and language_is_supported'
 					l_integer := a_calendar_value.month
 					if is_name_modifier then
 						l_string := correctly_cased_name (l_numberer.month_name (l_integer, minimum_width, maximum_width))
 					else
 						create l_number.make_from_integer (l_integer)
 						l_primary_modifier := primary_modifier
-						check l_primary_modifier /= Void end
+						check l_primary_modifier /= Void end -- implied by ... ?
 						l_string := l_numberer.formatted_string (l_number, l_primary_modifier, 0, "", letter_attribute_value, ordinal_attribute_value)
 						if l_string.count < minimum_width then
 							if is_decimal_format then
@@ -432,10 +432,10 @@ feature {NONE} -- Implementation
 				check_modifiers (a_result, some_modifiers, "1", False)
 				if a_result.item = Void then
 					l_numberer := selected_numberer (a_language)
-					check l_numberer /= Void end
+					check l_numberer /= Void end -- implied by precondition `language_not_empty and language_is_supported'
 					create l_number.make_from_integer (a_calendar_value.day_in_month)
 					l_primary_modifier := primary_modifier
-					check l_primary_modifier /= Void end
+					check l_primary_modifier /= Void end -- implied by ... ?
 					l_string := l_numberer.formatted_string (l_number, l_primary_modifier, 0, "", letter_attribute_value, ordinal_attribute_value)
 					if l_string.count < minimum_width then
 						if is_decimal_format then
@@ -474,10 +474,10 @@ feature {NONE} -- Implementation
 				check_modifiers (a_result, some_modifiers, "1", False)
 				if a_result.item = Void then
 					l_numberer := selected_numberer (a_language)
-					check l_numberer /= Void end
+					check l_numberer /= Void end -- implied by precondition `language_not_empty and language_is_supported'
 					create l_number.make_from_integer (a_calendar_value.day_in_year)
 					l_primary_modifier := primary_modifier
-					check l_primary_modifier /= Void end
+					check l_primary_modifier /= Void end -- implied by ... ?
 					l_string := l_numberer.formatted_string (l_number, l_primary_modifier, 0, "", letter_attribute_value, ordinal_attribute_value)
 					if l_string.count < minimum_width then
 						if is_decimal_format then
@@ -521,14 +521,14 @@ feature {NONE} -- Implementation
 				check_modifiers (a_result, some_modifiers, "n", True)
 				if a_result.item = Void then
 					l_numberer := selected_numberer (a_language)
-					check l_numberer /= Void end
+					check l_numberer /= Void end -- implied by precondition `language_not_empty and language_is_supported'
 					l_iso_day_number := a_calendar_value.week_day_number
 					if is_name_modifier then
 						l_string := correctly_cased_name (l_numberer.day_name (l_iso_day_number, minimum_width, maximum_width))
 					else
 						create l_number.make_from_integer (week_day_number (l_iso_day_number, a_calendar, a_country))
 						l_primary_modifier := primary_modifier
-						check l_primary_modifier /= Void end
+						check l_primary_modifier /= Void end -- implied by ... ?
 						l_string := l_numberer.formatted_string (l_number, l_primary_modifier, 0, "", letter_attribute_value, ordinal_attribute_value)
 						if l_string.count < minimum_width then
 							if is_decimal_format then
@@ -571,11 +571,11 @@ feature {NONE} -- Implementation
 				check_modifiers (a_result, some_modifiers, "1", False)
 				if a_result.item = Void then
 					l_numberer := selected_numberer (a_language)
-					check l_numberer /= Void end
+					check l_numberer /= Void end -- implied by precondition `language_not_empty and language_is_supported'
 					create l_number.make_from_integer (a_calendar_value.week_in_year)
 						-- TODO: this is result in ISO calendar - adjust for others, if you can find out what they are!
 					l_primary_modifier := primary_modifier
-					check l_primary_modifier /= Void end
+					check l_primary_modifier /= Void end -- implied by ... ?
 					l_string := l_numberer.formatted_string (l_number, l_primary_modifier, 0, "", letter_attribute_value, ordinal_attribute_value)
 					if l_string.count < minimum_width then
 						if is_decimal_format then
@@ -618,10 +618,10 @@ feature {NONE} -- Implementation
 				check_modifiers (a_result, some_modifiers, "1", False)
 				if a_result.item = Void then
 					l_numberer := selected_numberer (a_language)
-					check l_numberer /= Void end
+					check l_numberer /= Void end -- implied by precondition `language_not_empty and language_is_supported'
 					create l_number.make_from_integer (a_calendar_value.week_in_month)
 					l_primary_modifier := primary_modifier
-					check l_primary_modifier /= Void end
+					check l_primary_modifier /= Void end -- implied by ... ?
 					l_string := l_numberer.formatted_string (l_number, l_primary_modifier, 0, "", letter_attribute_value, ordinal_attribute_value)
 					if l_string.count < minimum_width then
 						if is_decimal_format then
@@ -664,10 +664,10 @@ feature {NONE} -- Implementation
 				check_modifiers (a_result, some_modifiers, "1", False)
 				if a_result.item = Void then
 					l_numberer := selected_numberer (a_language)
-					check l_numberer /= Void end
+					check l_numberer /= Void end -- implied by precondition `language_not_empty and language_is_supported'
 					create l_number.make_from_integer (a_calendar_value.hour)
 					l_primary_modifier := primary_modifier
-					check l_primary_modifier /= Void end
+					check l_primary_modifier /= Void end -- implied by ... ?
 					l_string := l_numberer.formatted_string (l_number, l_primary_modifier, 0, "", letter_attribute_value, ordinal_attribute_value)
 					if l_string.count < minimum_width then
 						if is_decimal_format then
@@ -709,10 +709,10 @@ feature {NONE} -- Implementation
 				check_modifiers (a_result, some_modifiers, "1", False)
 				if a_result.item = Void then
 					l_numberer := selected_numberer (a_language)
-					check l_numberer /= Void end
+					check l_numberer /= Void end -- implied by precondition `language_not_empty and language_is_supported'
 					create l_number.make_from_integer (a_calendar_value.half_day_hour)
 					l_primary_modifier := primary_modifier
-					check l_primary_modifier /= Void end
+					check l_primary_modifier /= Void end -- implied by ... ?
 					l_string := l_numberer.formatted_string (l_number, l_primary_modifier, 0, "", letter_attribute_value, ordinal_attribute_value)
 					if l_string.count < minimum_width then
 						if is_decimal_format then
@@ -755,7 +755,7 @@ feature {NONE} -- Implementation
 						primary_modifier := "n"
 					end
 					l_numberer := selected_numberer (a_language)
-					check l_numberer /= Void end
+					check l_numberer /= Void end -- implied by precondition `language_not_empty and language_is_supported'
 					l_string := correctly_cased_name (l_numberer.half_day_name (a_calendar_value.minutes_in_day, minimum_width, maximum_width))
 					if not ANY_.same_types (a_result_string, l_string) then
 						l_string := new_unicode_string (l_string)
@@ -788,10 +788,10 @@ feature {NONE} -- Implementation
 				check_modifiers (a_result, some_modifiers, "01", False)
 				if a_result.item = Void then
 					l_numberer := selected_numberer (a_language)
-					check l_numberer /= Void end
+					check l_numberer /= Void end -- implied by precondition `language_not_empty and language_is_supported'
 					create l_number.make_from_integer (a_calendar_value.minute)
 					l_primary_modifier := primary_modifier
-					check l_primary_modifier /= Void end
+					check l_primary_modifier /= Void end -- implied by ... ?
 					l_string := l_numberer.formatted_string (l_number, l_primary_modifier, 0, "", letter_attribute_value, ordinal_attribute_value)
 					if l_string.count < minimum_width then
 						if is_decimal_format then
@@ -833,10 +833,10 @@ feature {NONE} -- Implementation
 				check_modifiers (a_result, some_modifiers, "01", False)
 				if a_result.item = Void then
 					l_numberer := selected_numberer (a_language)
-					check l_numberer /= Void end
+					check l_numberer /= Void end -- implied by precondition `language_not_empty and language_is_supported'
 					create l_number.make_from_integer (a_calendar_value.second)
 					l_primary_modifier := primary_modifier
-					check l_primary_modifier /= Void end
+					check l_primary_modifier /= Void end -- implied by ... ?
 					l_string := l_numberer.formatted_string (l_number, l_primary_modifier, 0, "", letter_attribute_value, ordinal_attribute_value)
 					if l_string.count < minimum_width then
 						if is_decimal_format then
@@ -878,10 +878,10 @@ feature {NONE} -- Implementation
 				check_modifiers (a_result, a_modifiers, "1", False)
 				if a_result.item = Void then
 					l_numberer := selected_numberer (a_language)
-					check l_numberer /= Void end
+					check l_numberer /= Void end -- implied by precondition `language_not_empty and language_is_supported'
 					create l_number.make_from_integer (a_calendar_value.millisecond)
 					l_primary_modifier := primary_modifier
-					check l_primary_modifier /= Void end
+					check l_primary_modifier /= Void end -- implied by ... ?
 					l_string := l_numberer.formatted_string (l_number, l_primary_modifier, 0, "", letter_attribute_value, ordinal_attribute_value)
 					if l_string.count < minimum_width then
 						l_string := appended_with_zeros (l_string)
@@ -1065,7 +1065,7 @@ feature {NONE} -- Implementation
 			l_primary_modifier: like primary_modifier
 		do
 			l_primary_modifier := primary_modifier
-			check l_primary_modifier /= Void end
+			check l_primary_modifier /= Void end -- implied by ... ?
 			Result := is_zeros_plus_one (l_primary_modifier) or (l_primary_modifier.count = 1 and then is_one (l_primary_modifier.item_code (1)))
 		end
 
@@ -1095,7 +1095,7 @@ feature {NONE} -- Implementation
 					a_message := STRING_.concat ("More than one comma present in '", some_modifiers)
 					a_message := STRING_.appended_string (a_message, "'")
 					a_result.put (create {ST_FORMAT_DATE_TIME_RESULT}.make_error (a_message, "XTDE1340"))
-					check a_result.item /= Void end
+					check a_result_item_attached: a_result.item /= Void end
 				else
 					if some_components.count = 2 then
 						a_modifier := some_components.item (1)
@@ -1151,7 +1151,7 @@ feature {NONE} -- Implementation
 				primary_modifier := a_default
 			end
 		ensure
-			primary_modifier_set: a_result.item = Void implies {ot_primary_modifier: like primary_modifier} primary_modifier and then not ot_primary_modifier.is_empty
+			primary_modifier_set: a_result.item = Void implies {el_primary_modifier: like primary_modifier} primary_modifier and then not el_primary_modifier.is_empty
 		end
 
 	set_primary_modifier (a_modifier: STRING; use_names: BOOLEAN) is
@@ -1322,15 +1322,15 @@ feature {NONE} -- Implementation
 			calendar_not_empty: a_calendar /= Void and then not a_calendar.is_empty
 			is_calendar_supported: is_calendar_supported (a_calendar)
 		local
-			n: ?STRING
+			l_result: ?STRING
 		do
 			if STRING_.same_string (a_calendar, Default_calendar) then
-				n := "Common Era"
+				l_result := "Common Era"
 			elseif STRING_.same_string (a_calendar, Ad_calendar) then
-				n := "Christian Era"
+				l_result := "Christian Era"
 			end
-			check n /= Void end --| enforce by precondition: is_calendar_supported (a_calendar)
-			Result := n
+			check l_result /= Void end --| enforce by precondition: is_calendar_supported (a_calendar)
+			Result := l_result
 		ensure
 			result_not_empty: Result /= Void and then not Result.is_empty
 		end

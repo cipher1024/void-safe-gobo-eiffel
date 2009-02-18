@@ -42,7 +42,7 @@ feature -- Access
 
 feature -- Setting
 
-	set_callbacks (a_callbacks: like internal_callbacks) is
+	set_callbacks (a_callbacks: !like internal_callbacks) is
 			-- Set `callbacks' to `a_callbacks'.
 		do
 			internal_callbacks := a_callbacks

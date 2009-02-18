@@ -117,13 +117,11 @@ feature {NONE} -- DTD implementation
 			a_name_not_void: a_name /= Void
 		local
 			it: DS_LINEAR_CURSOR [XM_DTD_ATTRIBUTE_CONTENT]
-			l_it_item_name: ?STRING
 		do
 			it := a_sub.new_cursor
 			from it.start until it.after loop
-				l_it_item_name := it.item.name
-				check l_it_item_name /= Void end -- should not be Void here FIXME:jfiat
-				if same_string (l_it_item_name, a_name) then
+				if {l_it_item_name: STRING} it.item.name and then
+					same_string (l_it_item_name, a_name) then
 					Result := True
 					it.go_after
 				else
@@ -151,7 +149,7 @@ feature -- Content
 					l_it_item_name := it.item.name
 					check l_it_item_name /= Void end --| should not be Void at this point
 					l_default_value := it.item.default_value
-					check l_default_value /= Void end -- implied by comments in default_value
+					check l_default_value /= Void end -- implied by ... ?
 					push_attribute (Void,
 						dtd_prefix (l_it_item_name),
 						dtd_local (l_it_item_name),
@@ -201,7 +199,7 @@ feature {NONE} -- Attribute queue
 				or a = Space_char.code
 		end
 
-	push_attribute (a_ns, a_prefix: ?STRING; a_local, a_value: STRING) is
+	push_attribute (a_ns, a_prefix: ?STRING; a_local: STRING; a_value: STRING) is
 			-- Push attributes, if attribute name already
 			-- in list overwrite the value.
 		local
@@ -261,7 +259,10 @@ feature {NONE} -- Attribute queue
 			end
 		end
 
-	namespaces, names, values: ?DS_LIST [STRING]
+	namespaces, names: ?DS_LIST [STRING]
+			-- Mean version of DS_ARRAYED_LIST [ATTRIBUTE_EVENT]
+
+	values: ?DS_LIST [STRING]
 			-- Mean version of DS_ARRAYED_LIST [ATTRIBUTE_EVENT]
 
 feature {NONE} -- Content implementation
@@ -362,7 +363,7 @@ feature {NONE} -- Tokens implementation
 			end
 		end
 
-	forward_attribute (a_ns, a_prefix: ?STRING; a_local, a_value: STRING) is
+	forward_attribute (a_ns, a_prefix: ?STRING; a_local: STRING; a_value: STRING) is
 			-- Push attributes, if attribute name already
 			-- in list overwrite the value.
 		require

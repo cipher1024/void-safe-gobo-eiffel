@@ -103,8 +103,8 @@ feature -- Formatting
 			valid_format_and_parameters: valid_format_and_parameters (a_format, a_parameters)
 		do
 			Result := STRING_.new_empty_string (a_format, a_format.count)
-			if {a_stream: KI_CHARACTER_OUTPUT_STREAM} ANY_.to_any (Result) then
-				do_format_to (a_format, a_parameters, a_stream)
+			if {l_stream: KI_CHARACTER_OUTPUT_STREAM} ANY_.to_any (Result) then
+				do_format_to (a_format, a_parameters, l_stream)
 			else
 				string_output_stream.set_string (Result)
 				do_format_to (a_format, a_parameters, string_output_stream)
@@ -112,7 +112,7 @@ feature -- Formatting
 			end
 		ensure
 			formatted_string_not_void: Result /= Void
-			same_type: Result /= Void implies ANY_.same_types (a_format, Result)
+			same_type: ANY_.same_types (a_format, Result)
 		end
 
 	format_single (a_format: STRING; a_parameter: ANY): STRING is
@@ -128,8 +128,8 @@ feature -- Formatting
 		do
 			single_parameter.put (a_parameter, 1)
 			Result := STRING_.new_empty_string (a_format, a_format.count)
-			if {a_stream: KI_CHARACTER_OUTPUT_STREAM} ANY_.to_any (Result) then
-				do_format_to (a_format, single_parameter, a_stream)
+			if {l_stream: KI_CHARACTER_OUTPUT_STREAM} ANY_.to_any (Result) then
+				do_format_to (a_format, single_parameter, l_stream)
 			else
 				string_output_stream.set_string (Result)
 				do_format_to (a_format, single_parameter, string_output_stream)
@@ -138,7 +138,7 @@ feature -- Formatting
 			single_parameter.put (Void, 1)
 		ensure
 			formatted_string_not_void: Result /= Void
-			same_type: Result /= Void implies ANY_.same_types (a_format, Result)
+			same_type: ANY_.same_types (a_format, Result)
 		end
 
 feature {NONE} -- Formatting
@@ -173,6 +173,7 @@ feature {NONE} -- Formatting
 			a_width_found: BOOLEAN
 			a_width: INTEGER
 			a_parameter: ?ANY
+			an_integer_parameter: ?DS_CELL [INTEGER]
 			no_more_precision: BOOLEAN
 			a_precision_found: BOOLEAN
 			a_precision: INTEGER
@@ -321,8 +322,10 @@ feature {NONE} -- Formatting
 								elseif j > nb2 then
 									set_error ("Not enough parameters")
 								else
-									if {ot_integer_parameter: DS_CELL [INTEGER]} a_parameters.item (j) then
-										a_width := ot_integer_parameter.item
+									a_parameter := a_parameters.item (j)
+									an_integer_parameter ?= a_parameter
+									if an_integer_parameter /= Void then
+										a_width := an_integer_parameter.item
 										if a_width < 0 then
 											set_error ("Width parameter must not be negative")
 											a_width := 0
@@ -389,8 +392,10 @@ feature {NONE} -- Formatting
 									elseif j > nb2 then
 										set_error ("Not enough parameters")
 									else
-										if {ot2_integer_parameter: DS_CELL [INTEGER]} a_parameters.item (j) then
-											a_precision := ot2_integer_parameter.item
+										a_parameter := a_parameters.item (j)
+										an_integer_parameter ?= a_parameter
+										if an_integer_parameter /= Void then
+											a_precision := an_integer_parameter.item
 											if a_precision < 0 then
 												set_error ("Precision parameter must not be negative")
 												a_precision := 0
@@ -447,7 +452,7 @@ feature {NONE} -- Formatting
 									set_error ("Not enough parameters")
 								else
 									a_parameter := a_parameters.item (j)
-									check a_parameter /= Void end
+									check a_parameter /= Void end -- implied by `i <= nb'
 									if a_formatter.valid_parameter (a_parameter) then
 										a_formatter.format_to (a_parameter, a_stream)
 									else

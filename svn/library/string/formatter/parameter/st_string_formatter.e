@@ -44,14 +44,14 @@ feature -- Formatting
 
 	format_to (a_parameter: ANY; a_stream: KI_CHARACTER_OUTPUT_STREAM) is
 			-- Format `a_parameter' to `a_stream'.
+		local
+			a_string: ?STRING
 		do
-			if {a_string: STRING} a_parameter then
-				string_format_to (a_string, a_stream)
-			else
-				check
-					valid_parameter: False
-				end
-			end
+			a_string ?= a_parameter
+			check
+				valid_parameter: a_string /= Void
+			end -- implied by precondition `valid_parameter'
+			string_format_to (a_string, a_stream)
 		end
 
 	string_format_to (a_parameter: STRING; a_stream: KI_CHARACTER_OUTPUT_STREAM) is

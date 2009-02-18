@@ -35,15 +35,13 @@ feature -- Formatting
 			-- (Use DS_CELL [CHARACTER] because in SE 2.1
 			-- CHARACTER does not conform to ANY.)
 		local
-
+			a_cell: ?DS_CELL [CHARACTER]
 		do
-			if {a_cell: DS_CELL [CHARACTER]} a_parameter then
-				character_format_to (a_cell.item, a_stream)
-			else
-				check
-					valid_parameter: False
-				end
-			end
+			a_cell ?= a_parameter
+			check
+				valid_parameter: a_cell /= Void
+			end -- implied by precondition `valid_parameter'
+			character_format_to (a_cell.item, a_stream)
 		end
 
 	character_format_to (a_parameter: CHARACTER; a_stream: KI_CHARACTER_OUTPUT_STREAM) is

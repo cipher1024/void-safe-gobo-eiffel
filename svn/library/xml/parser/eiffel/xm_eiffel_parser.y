@@ -851,7 +851,7 @@ att_tokenized_type: DOCTYPE_ATT_ID
 enumerated_type: notation_type
 		{ $$ := new_dtd_attribute_content; $$.set_notation }
 	| enumeration
-		{ $$ := new_dtd_attribute_content; $$.set_enumeration_list ($1) }
+		{ $$ := new_dtd_attribute_content; set_enumeration_list ($$, $1) }
 	;
 
 notation_type: DOCTYPE_ATT_NOTATION req_space group_start notation_type_trail DOCTYPE_GROUP_END
@@ -1480,6 +1480,14 @@ feature -- Parsing
 			other_not_void: other /= Void
 		do
 			Result := STRING_.appended_string (a_string, other)
+		end
+
+	set_enumeration_list (a_content: XM_DTD_ATTRIBUTE_CONTENT; a_list: ?DS_LIST [STRING])
+		require
+			a_content_attached: a_content /= Void
+			a_list_attached: a_list /= Void
+		do
+			a_content.set_enumeration_list (a_list)
 		end
 
 end

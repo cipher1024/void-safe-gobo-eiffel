@@ -167,7 +167,7 @@ feature -- Access
 													create a_tz.make_hours_minutes (an_hour, a_minute)
 												end
 												l_date := last_cached_date
-												check l_date /= Void end
+												check l_date /= Void end -- implied by invariant `last_cached_date_not_void'
 												create last_cached_zoned_date.make (l_date, a_tz)
 											end
 										end
