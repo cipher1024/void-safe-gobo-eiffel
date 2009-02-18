@@ -23,7 +23,6 @@ feature -- Access
 
 	callbacks: XM_CALLBACKS
 			-- Callbacks event interface to which events are forwarded;
-			-- If void, a null callback is created on startup.
 
 feature -- Setting
 

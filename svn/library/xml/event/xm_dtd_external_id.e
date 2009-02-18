@@ -126,7 +126,7 @@ feature -- Output
 				s.append_character (' ')
 			end
 			if s = Void then
-				create s.make_empty --| to satisfy postcondition Result /= Void FIXME:jfiat
+				create s.make_empty --| to satisfy postcondition Result /= Void
 			end
 			Result := s
 		end

@@ -959,7 +959,7 @@ feature -- Basic operations
 						end
 					end
 				else
-					Result := nan -- FIXME:jfiat
+					Result := nan
 				end
 			else
 				if is_zero or else other.is_zero then
@@ -1033,7 +1033,7 @@ feature -- Basic operations
 						Result.set_negative
 					end
 				else
-					Result := nan -- FIXME:jfiat
+					Result := nan
 				end
 			else
 				if other.is_zero then
@@ -1414,7 +1414,7 @@ feature -- Basic operations
 						Result := minus_one
 					end
 				else
-					Result := zero -- FIXME:jfiat
+					Result := nan
 				end
 			else
 				create operand_a.make_copy (Current)
@@ -1551,7 +1551,7 @@ feature {MA_DECIMAL} -- Basic operations
 					end
 				end
 			else
-				Result := infinity -- FIXME:jfiat
+				Result := nan
 			end
 		ensure
 			add_special_not_void: Result /= Void
@@ -1600,7 +1600,7 @@ feature {MA_DECIMAL} -- Basic operations
 					end
 				end
 			else
-				Result := infinity -- FIXME:jfiat
+				Result := nan
 			end
 		ensure
 			subtract_special_not_void: Result /= Void
@@ -2344,7 +2344,7 @@ feature {MA_DECIMAL} -- Basic operations
 						Result := negative_zero
 					end
 				else
-					Result := zero -- FIXME:jfiat
+					Result := nan
 				end
 			else
 				if other.is_zero then

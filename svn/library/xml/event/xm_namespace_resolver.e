@@ -21,7 +21,8 @@ inherit
 			on_start_tag,
 			on_attribute,
 			on_start_tag_finish,
-			on_end_tag
+			on_end_tag,
+			set_next
 		end
 
 	XM_MARKUP_CONSTANTS
@@ -38,6 +39,24 @@ create
 	make_null,
 	set_next
 
+feature -- Settings
+
+	set_next (a_next: like next) is
+			-- Set `next' to `a_next'.
+		do
+			Precursor {XM_CALLBACKS_FILTER} (a_next)
+
+			--| For void-safety purpose, attached attributes are set on creation
+			initialize_resolver
+		end
+
+	initialize_resolver is
+			-- Initialize or reset attributes of Current resolver
+		do
+			create context.make
+			attributes_make
+		end
+
 feature -- Document
 
 	on_finish is
@@ -49,9 +68,7 @@ feature -- Document
 	on_start is
 			-- Initialize document variables.
 		do
-				--| Note: it might be better to move those 2 lines, into a redefined make_null, set_next
-			create internal_context.make
-			attributes_make
+			initialize_resolver
 			next.on_start
 		end
 
@@ -211,23 +228,8 @@ feature {NONE} -- Attribute events
 
 feature {NONE} -- Context
 
-	internal_context: ?like context
-			-- Context
-			-- FIXME:jfiat: why not creating the context on creation
-			-- this is not a big object, and this would help for void-safety
-
 	context: XM_NAMESPACE_RESOLVER_CONTEXT
-			-- Attached `context' for ease of void-safe usage
-			-- FIXME:jfiat: ease of conversion to void-safety
-		require
-			context_attached: internal_context /= Void
-		local
-			c: like internal_context
-		do
-			c := internal_context
-			check c /= Void end
-			Result := c
-		end
+			-- Context
 
 feature {NONE} -- Context
 
@@ -262,10 +264,9 @@ feature {NONE} -- Attributes
 	attributes_make is
 			-- Intialize queue.
 		do
-			--| Self initialazing attributes
---			attributes_prefix := new_string_queue
---			attributes_local_part := new_string_queue
---			attributes_value := new_string_queue
+			attributes_prefix := new_string_queue
+			attributes_local_part := new_string_queue
+			attributes_value := new_string_queue
 		end
 
 	attributes_force (a_prefix: ?STRING; a_local_part: STRING; a_value: STRING) is
@@ -293,19 +294,10 @@ feature {NONE} -- Attributes
 		end
 
 	attributes_prefix: DS_QUEUE [?STRING]
-		attribute
-			Result := new_string_queue
-		end
 
 	attributes_local_part: DS_QUEUE [STRING]
-		attribute
-			Result := new_string_queue
-		end
 
 	attributes_value: DS_QUEUE [STRING]
-		attribute
-			Result := new_string_queue
-		end
 
 feature {NONE} -- Error
 

@@ -86,7 +86,10 @@ feature {NONE} -- Initialization
 		do
 			nb := other.count
 			make (nb)
-			check not_same: other /= Current end -- FIXME:jfiat can not use Current before
+			--| FIXME:jfiat: the following check assertion should be a Precondition
+			--| however, due to attached attribute, Current can not be used before this point.
+			check not_same: other /= Current end
+
 			count := nb
 			from
 				i := 1

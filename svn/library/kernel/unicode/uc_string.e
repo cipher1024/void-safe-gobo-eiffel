@@ -1780,9 +1780,8 @@ feature -- Element change
 			insert_string (s, 1)
 		end
 
-	prepend_string (s: STRING) is
+	prepend_string (s: ?STRING) is
 			-- Prepend a copy of `s', if not void, at front.
-			-- FIXME:jfiat: `s' detachable or s /= Void useless?
 		do
 			if s /= Void then
 				prepend (s)
@@ -1868,7 +1867,8 @@ feature -- Element change
 
 	append_string (s: STRING) is
 			-- Append a copy of `s' at end.
-			-- FIXME:jfiat: `s' should be detachable here ... but due to inheritance ... we can not
+			--| FIXME:jfiat: `s' should be detachable here, but it is attached due to inheritance to KI_TEXT_OUTPUT_STREAM
+			--| So we might get rid of the if s /= Void then ...
 		do
 			if s /= Void then
 				append (s)

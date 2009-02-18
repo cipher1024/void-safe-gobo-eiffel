@@ -175,7 +175,6 @@ Eiffel_type_list: -- Empty
 	| Eiffel_type
 		{
 			create $$.make (5)
-			check $$ /= Void end -- FIXME:jfiat
 			if {l_type_1: PR_TYPE} $1 then
 				$$.force_last (l_type_1)
 			else

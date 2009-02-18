@@ -1526,13 +1526,14 @@ feature {NONE} -- Basic operation
 				root_node := a_node
 			end
 		ensure
-			--FIXME:jfiat
---			grand_parent_correct: a_node.parent = old (a_node.parent.parent)
---			parent_correct: a_node.right_child = old (a_node.parent)
---			a_correct: a_node.left_child = old (a_node.left_child)
---			b_correct: a_node.right_child.left_child = old (a_node.right_child)
---			c_correct: a_node.right_child.right_child = old (a_node.parent.right_child)
---			root_node_corrected: (a_node = root_node) = old (a_node.parent = root_node)
+			grand_parent_correct: a_node.parent = old (grand_parent_of_node (a_node))
+			parent_correct: a_node.right_child = old (parent_of_node (a_node))
+			a_correct: a_node.left_child = old (a_node.left_child)
+			b_correct: {l_right_child: like root_node} a_node.right_child and then 
+				l_right_child.left_child = old (a_node.right_child)
+			c_correct: {l_right_child2: like root_node} a_node.right_child and then
+				l_right_child2.right_child = old (right_child_of_parent_of_node (a_node))
+			root_node_corrected: (a_node = root_node) = old (a_node.parent = root_node)
 		end
 
 	rotate_left (a_node: like new_tree_node) is
@@ -1590,13 +1591,14 @@ feature {NONE} -- Basic operation
 				root_node := a_node
 			end
 		ensure
-			--FIXME:jfiat
---			grand_parent_correct: a_node.parent = old (a_node.parent.parent)
---			parent_correct: a_node.left_child = old (a_node.parent)
---			a_correct: a_node.left_child.left_child = old (a_node.parent.left_child)
---			b_correct: a_node.left_child.right_child = old (a_node.left_child)
---			c_correct: a_node.right_child = old (a_node.right_child)
---			root_node_corrected: (a_node = root_node) = old (a_node.parent = root_node)
+			grand_parent_correct: a_node.parent = old (grand_parent_of_node (a_node))
+			parent_correct: a_node.left_child = old (a_node.parent)
+			a_correct: {l_left_child: like root_node} a_node.left_child and then
+				l_left_child.left_child = old (left_child_of_parent_of_node (a_node))
+			b_correct: {l_left_child: like root_node} a_node.left_child and then
+				l_left_child.right_child = old (a_node.left_child)
+			c_correct: a_node.right_child = old (a_node.right_child)
+			root_node_corrected: (a_node = root_node) = old (a_node.parent = root_node)
 		end
 
 	rotate_right_left (a_node: like new_tree_node) is
@@ -1660,13 +1662,14 @@ feature {NONE} -- Basic operation
 				root_node := l_child
 			end
 		ensure
-			--FIXME:jfiat
---			grand_parent_correct: a_node.parent.parent = old (a_node.parent.parent)
---			parent_correct: a_node.parent.left_child = old (a_node.parent)
---			a_correct: a_node.parent.left_child.left_child = old (a_node.parent.left_child)
---			b_correct: a_node.parent.left_child.right_child = old (a_node.left_child.left_child)
---			c_correct: a_node.left_child = old (a_node.left_child.right_child)
---			d_correct: a_node.right_child = old (a_node.right_child)
+			grand_parent_correct: grand_parent_of_node (a_node) = old (grand_parent_of_node (a_node))
+			parent_correct: left_child_of_parent_of_node (a_node) = old (a_node.parent)
+			a_correct: {l_parent_left_child: like root_node} left_child_of_parent_of_node (a_node) and then 
+				l_parent_left_child.left_child = old (left_child_of_parent_of_node (a_node))
+			b_correct: {l_parent_left_child_2: like root_node} left_child_of_parent_of_node (a_node) and then 
+				l_parent_left_child_2.right_child = old (left_child_of_left_child_of_node (a_node))
+			c_correct: a_node.left_child = old (right_child_of_left_child_of_node (a_node))
+			d_correct: a_node.right_child = old (a_node.right_child)
 		end
 
 	rotate_left_right (a_node: like new_tree_node) is
@@ -1729,13 +1732,14 @@ feature {NONE} -- Basic operation
 				root_node := l_child
 			end
 		ensure
-			--FIXME:jfiat
---			grand_parent_correct: a_node.parent.parent = old (a_node.parent.parent)
---			parent_correct: a_node.parent.right_child = old (a_node.parent)
---			a_correct: a_node.left_child = old (a_node.left_child)
---			b_correct: a_node.right_child = old (a_node.right_child.left_child)
---			c_correct: a_node.parent.right_child.left_child = old (a_node.right_child.right_child)
---			d_correct: a_node.parent.right_child.right_child = old (a_node.parent.right_child)
+			grand_parent_correct: grand_parent_of_node (a_node) = old (grand_parent_of_node (a_node))
+			parent_correct: right_child_of_parent_of_node (a_node) = old (a_node.parent)
+			a_correct: a_node.left_child = old (a_node.left_child)
+			b_correct: a_node.right_child = old (left_child_of_right_child_of_node (a_node))
+			c_correct: {l_parent_right_child: like root_node} right_child_of_parent_of_node (a_node) and then
+				l_parent_right_child.left_child = old (right_child_of_right_child_of_node (a_node))
+			d_correct: {l_parent_right_child_2: like root_node} right_child_of_parent_of_node (a_node) and then
+				l_parent_right_child_2.right_child = old (right_child_of_parent_of_node (a_node))
 		end
 
 	search_node, search_node_for_removal (a_key: ?K) is
@@ -1872,6 +1876,97 @@ feature {NONE} -- Implementation
 			a_node_attached: a_node /= Void
 		do
 			Result := a_node.parent
+		end
+
+	right_child_of_parent_of_node (a_node: like new_tree_node): like root_node is
+			-- `a_node.parent.right_child'
+		require
+			a_node_attached: a_node /= Void
+		local
+			l_node: like root_node
+		do
+			l_node := a_node.parent
+			if l_node /= Void then
+				Result := l_node.right_child
+			end
+		end
+
+	left_child_of_parent_of_node (a_node: like new_tree_node): like root_node is
+			-- `a_node.parent.left_child'
+		require
+			a_node_attached: a_node /= Void
+		local
+			l_node: like root_node
+		do
+			l_node := a_node.parent
+			if l_node /= Void then
+				Result := l_node.left_child
+			end
+		end
+
+	left_child_of_left_child_of_node (a_node: like new_tree_node): like root_node is
+			-- `a_node.left_child.left_child'
+		require
+			a_node_attached: a_node /= Void
+		local
+			l_node: like root_node
+		do
+			l_node := a_node.left_child
+			if l_node /= Void then
+				Result := l_node.left_child
+			end
+		end
+
+	right_child_of_left_child_of_node (a_node: like new_tree_node): like root_node is
+			-- `a_node.left_child.right_child'
+		require
+			a_node_attached: a_node /= Void
+		local
+			l_node: like root_node
+		do
+			l_node := a_node.left_child
+			if l_node /= Void then
+				Result := l_node.right_child
+			end
+		end
+
+	left_child_of_right_child_of_node (a_node: like new_tree_node): like root_node is
+			-- `a_node.right_child.left_child'
+		require
+			a_node_attached: a_node /= Void
+		local
+			l_node: like root_node
+		do
+			l_node := a_node.right_child
+			if l_node /= Void then
+				Result := l_node.left_child
+			end
+		end
+
+	right_child_of_right_child_of_node (a_node: like new_tree_node): like root_node is
+			-- `a_node.right_child.right_child'
+		require
+			a_node_attached: a_node /= Void
+		local
+			l_node: like root_node
+		do
+			l_node := a_node.right_child
+			if l_node /= Void then
+				Result := l_node.right_child
+			end
+		end
+
+	grand_parent_of_node (a_node: like new_tree_node): like root_node is
+			-- Grand parent of `a_node'
+		require
+			a_node_attached: a_node /= Void
+		local
+			l_node: like root_node
+		do
+			l_node := a_node.parent
+			if l_node /= Void then
+				Result := l_node.parent
+			end
 		end
 
 invariant
