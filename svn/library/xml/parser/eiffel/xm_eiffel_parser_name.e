@@ -371,8 +371,8 @@ feature -- Output
 					i := i + 1
 				end
 			else
-				Result := ""
-				--| FIXME:jfiat: fixed a potential bug, since out could be Void if count = 0
+					-- If nb = count = 0, ensure Result is not Void, to respect postcondition
+				create Result.make_empty
 			end
 		end
 

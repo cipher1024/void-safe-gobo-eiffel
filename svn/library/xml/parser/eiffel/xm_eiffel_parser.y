@@ -417,8 +417,10 @@ misc_trail: misc
 
 xml_decl: XMLDECLARATION_START version_info xml_decl_opt XMLDECLARATION_END
 		{ 
-			if {l_decl_3: XM_EIFFEL_DECLARATION} $3 then
-				l_decl_3.set_version ($2)
+			if {l_decl_3: XM_EIFFEL_DECLARATION} $3 and
+				{l_decl_version: STRING} $2
+			then
+				l_decl_3.set_version (l_decl_version)
 			else
 				check False end
 			end
@@ -437,15 +439,23 @@ xml_decl_opt: maybe_space
 	| req_space encoding_decl maybe_space
 		{ 
 			create $$.make 
-			$$.set_encoding ($2)
-			apply_encoding ($2)
+			if {l_decl_opt_encoding: STRING} $2 then
+				$$.set_encoding (l_decl_opt_encoding)
+				apply_encoding (l_decl_opt_encoding)
+			else
+				check False end
+			end
 		}
 	| req_space encoding_decl req_space sd_decl maybe_space
 		{ 
 			create $$.make;
-			$$.set_encoding ($2)
-			$$.set_stand_alone ($4) 
-			apply_encoding ($2)
+			if {l_decl_opt_encoding_2: STRING} $2 then
+				$$.set_encoding (l_decl_opt_encoding_2)
+				$$.set_stand_alone ($4) 
+				apply_encoding (l_decl_opt_encoding_2)
+			else
+				check False end
+			end
 		}
 	;
 

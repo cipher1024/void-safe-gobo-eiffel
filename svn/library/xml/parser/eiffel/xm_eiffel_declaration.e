@@ -45,7 +45,7 @@ feature -- Attribute(s)
 
 feature -- Setting
 
-	set_version (a: ?STRING) is
+	set_version (a: STRING) is
 			-- Set version.
 		require
 			not_void: a /= Void
@@ -53,7 +53,7 @@ feature -- Setting
 			version := a
 		end
 
-	set_encoding (a: ?STRING) is
+	set_encoding (a: STRING) is
 			-- Set encoding
 		require
 			not_void: a /= Void

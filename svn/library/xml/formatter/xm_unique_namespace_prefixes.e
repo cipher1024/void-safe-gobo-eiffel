@@ -273,7 +273,7 @@ feature {NONE} -- Implementation
 			end
 		ensure
 			result_not_void: Result /= Void
-			new_prefix: {ot_prefixes: like prefixes} prefixes and then not ot_prefixes.has (Result)
+			new_prefix: {el_prefixes: like prefixes} prefixes and then not el_prefixes.has (Result)
 		end
 
 	implicit_namespaces: DS_HASH_TABLE [XM_NAMESPACE, STRING] is
