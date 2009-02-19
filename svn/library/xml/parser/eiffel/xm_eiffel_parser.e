@@ -1499,7 +1499,7 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 386")
 end
 
-			if {l_decl_1: XM_EIFFEL_DECLARATION} yyvs11.item (yyvsp11) then
+			if attached yyvs11.item (yyvsp11) as l_decl_1 then
 				apply_encoding (l_decl_1.encoding)
 				l_decl_1.process (Current) -- event
 			else
@@ -1655,8 +1655,8 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'xm_eiffel_parser.y' at line 418")
 end
 
-			if {l_decl_3: XM_EIFFEL_DECLARATION} yyvs11.item (yyvsp11) and
-				{l_decl_version: STRING} yyvs4.item (yyvsp4 - 1)
+			if attached yyvs11.item (yyvsp11) as l_decl_3 and
+				attached yyvs4.item (yyvsp4 - 1) as l_decl_version
 			then
 				l_decl_3.set_version (l_decl_version)
 			else
@@ -1740,7 +1740,7 @@ debug ("GEYACC")
 end
 
 			create yyval11.make 
-			if {l_decl_opt_encoding: STRING} yyvs4.item (yyvsp4) then
+			if attached yyvs4.item (yyvsp4) as l_decl_opt_encoding then
 				yyval11.set_encoding (l_decl_opt_encoding)
 				apply_encoding (l_decl_opt_encoding)
 			else
@@ -1768,7 +1768,7 @@ debug ("GEYACC")
 end
 
 			create yyval11.make;
-			if {l_decl_opt_encoding_2: STRING} yyvs4.item (yyvsp4) then
+			if attached yyvs4.item (yyvsp4) as l_decl_opt_encoding_2 then
 				yyval11.set_encoding (l_decl_opt_encoding_2)
 				yyval11.set_stand_alone (yyvs10.item (yyvsp10)) 
 				apply_encoding (l_decl_opt_encoding_2)
@@ -2520,7 +2520,7 @@ end
 
 			yyval3 := new_name_set
 			check yyval3 /= Void end
-			if {s_tag_trail_1: XM_EIFFEL_PARSER_NAME} yyvs2.item (yyvsp2) then
+			if attached yyvs2.item (yyvsp2) as s_tag_trail_1 then
 				yyval3.force_new (s_tag_trail_1)
 			else 
 				check False end
@@ -2547,7 +2547,7 @@ end
 
 			yyval3 := yyvs3.item (yyvsp3)
 			check yyval3 /= Void end
-			if {s_tag_trail_3: XM_EIFFEL_PARSER_NAME} yyvs2.item (yyvsp2) then
+			if attached yyvs2.item (yyvsp2) as s_tag_trail_3 then
 				if (yyval3).has (s_tag_trail_3) then
 					force_error (Error_attribute_duplicate)
 				else
@@ -3373,7 +3373,7 @@ debug ("GEYACC")
 end
 
 			yyval8 := new_dtd_attribute_content_list; 
-			if {l_att_content_1: XM_DTD_ATTRIBUTE_CONTENT} yyvs7.item (yyvsp7) then
+			if attached yyvs7.item (yyvsp7) as l_att_content_1 then
 				yyval8.force_last (l_att_content_1) 
 			else
 				check False end
@@ -3400,7 +3400,7 @@ end
 
 			yyval8 := yyvs8.item (yyvsp8);
 			check yyval8 /= Void end; 
-			if {l_att_content_2: XM_DTD_ATTRIBUTE_CONTENT} yyvs7.item (yyvsp7) then
+			if attached yyvs7.item (yyvsp7) as l_att_content_2 then
 				yyval8.force_last (l_att_content_2) 
 			else
 				check False end
@@ -3420,7 +3420,7 @@ end
 			yyval7 := yyvs7.item (yyvsp7 - 1);
 			check yyval7 /= Void end; 
 			yyval7.set_name (yyvs4.item (yyvsp4)); 
-			if {l_att_def_6: XM_DTD_ATTRIBUTE_CONTENT} yyvs7.item (yyvsp7) then
+			if attached yyvs7.item (yyvsp7) as l_att_def_6 then
 				yyval7.copy_default (l_att_def_6) 
 			else
 				check False end
@@ -3741,7 +3741,7 @@ debug ("GEYACC")
 end
 
 			yyval9 := new_string_bilinked_list; 
-			if {l_trail_1: STRING} yyvs4.item (yyvsp4) then
+			if attached yyvs4.item (yyvsp4) as l_trail_1 then
 				yyval9.force_last (l_trail_1) 
 			else
 				check False end
@@ -3769,7 +3769,7 @@ end
 
 			yyval9 := yyvs9.item (yyvsp9);
 			check yyval9 /= Void end; 
-			if {l_trail_3: STRING} yyvs4.item (yyvsp4) then
+			if attached yyvs4.item (yyvsp4) as l_trail_3 then
 				yyval9.force_last (l_trail_3) 
 			else
 				check False end

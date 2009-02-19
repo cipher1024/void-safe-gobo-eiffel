@@ -106,7 +106,7 @@ feature -- Access
 	filename: STRING is
 			-- Name of file being parsed
 		do
-			if {file_buffer: YY_FILE_BUFFER} input_buffer then
+			if attached {YY_FILE_BUFFER} input_buffer as file_buffer then
 				Result := file_buffer.file.name
 			else
 				Result := "string"

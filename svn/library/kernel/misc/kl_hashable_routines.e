@@ -19,7 +19,7 @@ feature -- Access
 		require
 			an_any_not_void: an_any /= Void
 		do
-			if {hashable: HASHABLE} an_any then
+			if attached {HASHABLE} an_any as hashable then
 				Result := hashable.hash_code
 			else
 				Result := an_any.generating_type.hash_code

@@ -385,7 +385,7 @@ cdata_body_item: char_data
 
 prolog: xml_decl_misc doctype_decl_misc
 		{
-			if {l_decl_1: XM_EIFFEL_DECLARATION} $1 then
+			if attached $1 as l_decl_1 then
 				apply_encoding (l_decl_1.encoding)
 				l_decl_1.process (Current) -- event
 			else
@@ -417,8 +417,8 @@ misc_trail: misc
 
 xml_decl: XMLDECLARATION_START version_info xml_decl_opt XMLDECLARATION_END
 		{ 
-			if {l_decl_3: XM_EIFFEL_DECLARATION} $3 and
-				{l_decl_version: STRING} $2
+			if attached $3 as l_decl_3 and
+				attached $2 as l_decl_version
 			then
 				l_decl_3.set_version (l_decl_version)
 			else
@@ -439,7 +439,7 @@ xml_decl_opt: maybe_space
 	| req_space encoding_decl maybe_space
 		{ 
 			create $$.make 
-			if {l_decl_opt_encoding: STRING} $2 then
+			if attached $2 as l_decl_opt_encoding then
 				$$.set_encoding (l_decl_opt_encoding)
 				apply_encoding (l_decl_opt_encoding)
 			else
@@ -449,7 +449,7 @@ xml_decl_opt: maybe_space
 	| req_space encoding_decl req_space sd_decl maybe_space
 		{ 
 			create $$.make;
-			if {l_decl_opt_encoding_2: STRING} $2 then
+			if attached $2 as l_decl_opt_encoding_2 then
 				$$.set_encoding (l_decl_opt_encoding_2)
 				$$.set_stand_alone ($4) 
 				apply_encoding (l_decl_opt_encoding_2)
@@ -621,7 +621,7 @@ s_tag_trail: attribute
 		{
 			$$ := new_name_set
 			check $$ /= Void end
-			if {s_tag_trail_1: XM_EIFFEL_PARSER_NAME} $1 then
+			if attached $1 as s_tag_trail_1 then
 				$$.force_new (s_tag_trail_1)
 			else 
 				check False end
@@ -631,7 +631,7 @@ s_tag_trail: attribute
 		{
 			$$ := $1
 			check $$ /= Void end
-			if {s_tag_trail_3: XM_EIFFEL_PARSER_NAME} $3 then
+			if attached $3 as s_tag_trail_3 then
 				if ($$).has (s_tag_trail_3) then
 					force_error (Error_attribute_duplicate)
 				else
@@ -802,7 +802,7 @@ attlist_decl: DOCTYPE_ATTLIST req_space doctype_name maybe_space DOCTYPE_END
 attlist_decl_trail: att_def
 		{ 
 			$$ := new_dtd_attribute_content_list; 
-			if {l_att_content_1: XM_DTD_ATTRIBUTE_CONTENT} $1 then
+			if attached $1 as l_att_content_1 then
 				$$.force_last (l_att_content_1) 
 			else
 				check False end
@@ -812,7 +812,7 @@ attlist_decl_trail: att_def
 		{ 
 			$$ := $1;
 			check $$ /= Void end; 
-			if {l_att_content_2: XM_DTD_ATTRIBUTE_CONTENT} $2 then
+			if attached $2 as l_att_content_2 then
 				$$.force_last (l_att_content_2) 
 			else
 				check False end
@@ -825,7 +825,7 @@ att_def: req_space doctype_name req_space att_type req_space default_decl
 			$$ := $4;
 			check $$ /= Void end; 
 			$$.set_name ($2); 
-			if {l_att_def_6: XM_DTD_ATTRIBUTE_CONTENT} $6 then
+			if attached $6 as l_att_def_6 then
 				$$.copy_default (l_att_def_6) 
 			else
 				check False end
@@ -878,7 +878,7 @@ enumeration: group_start enumeration_trail group_end
 enumeration_trail: nm_token maybe_space
 		{ 
 			$$ := new_string_bilinked_list; 
-			if {l_trail_1: STRING} $1 then
+			if attached $1 as l_trail_1 then
 				$$.force_last (l_trail_1) 
 			else
 				check False end
@@ -888,7 +888,7 @@ enumeration_trail: nm_token maybe_space
 		{ 
 			$$ := $1;
 			check $$ /= Void end; 
-			if {l_trail_3: STRING} $3 then
+			if attached $3 as l_trail_3 then
 				$$.force_last (l_trail_3) 
 			else
 				check False end

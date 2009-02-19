@@ -56,7 +56,7 @@ feature -- Status report
 		local
 			i, nb: INTEGER
 		do
-			if {a_unicode: UC_STRING} a_string then
+			if attached {UC_STRING} a_string as a_unicode then
 				Result := a_unicode.is_ascii
 			else
 				Result := True

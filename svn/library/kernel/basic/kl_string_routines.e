@@ -71,7 +71,7 @@ feature -- Initialization
 			else
 				nb := s.count
 				create Result.make (nb)
-				if {uc_string: UC_STRING} s then
+				if attached {UC_STRING} s as uc_string then
 					nb := uc_string.byte_count
 					from
 						j := 1
@@ -386,7 +386,7 @@ feature -- Access
 			if ANY_.same_types (a_string, dummy_string) then
 				create Result.make (n)
 			else
-				if {uc_string: UC_STRING} a_string then
+				if attached {UC_STRING} a_string as uc_string then
 					Result := uc_string.new_empty_string (n)
 				else
 					Result := cloned_string (a_string)
@@ -407,7 +407,7 @@ feature -- Access
 		local
 			i, nb, a_code, a_high, a_low, a_surrogate: INTEGER
 		do
-			if {uc_string: UC_STRING} a_string then
+			if attached {UC_STRING} a_string as uc_string then
 				Result := uc_string.to_utf16_be
 			else
 				nb := a_string.count
@@ -452,7 +452,7 @@ feature -- Access
 		local
 			i, nb, a_code, a_high, a_low, a_surrogate: INTEGER
 		do
-			if {uc_string: UC_STRING} a_string then
+			if attached {UC_STRING} a_string as uc_string then
 				Result := uc_string.to_utf16_le
 			else
 				nb := a_string.count
@@ -497,7 +497,7 @@ feature -- Access
 		local
 			i, j, k, l, m, nb, a_code: INTEGER
 		do
-			if {uc_string: UC_STRING} a_string then
+			if attached {UC_STRING} a_string as uc_string then
 				Result := uc_string.to_utf32_be
 			else
 				nb := a_string.count
@@ -535,7 +535,7 @@ feature -- Access
 		local
 			i, j, k, l, m, nb, a_code: INTEGER
 		do
-			if {uc_string: UC_STRING} a_string then
+			if attached {UC_STRING} a_string as uc_string then
 				Result := uc_string.to_utf32_le
 			else
 				nb := a_string.count
@@ -642,7 +642,7 @@ feature -- Access
 							if ANY_.same_types (other, dummy_string) then
 								Result := a_string.substring_index (other, start_index)
 							else
-								if {other_unicode: UC_STRING} other then
+								if attached {UC_STRING} other as other_unicode then
 									nb := other_unicode.byte_count
 									max_code := Platform.Maximum_character_code
 									from
@@ -769,10 +769,10 @@ feature -- Access
 			a_string_not_void: a_string /= Void
 			other_not_void: other /= Void
 		do
-			if {uc_string: UC_STRING} a_string then
+			if attached {UC_STRING} a_string as uc_string then
 				Result := uc_string + other
 			else
-				if {other_uc_string: UC_STRING} other then
+				if attached {UC_STRING} other as other_uc_string then
 					Result := other_uc_string.prefixed_string (a_string)
 				else
 					Result := a_string + other
@@ -831,10 +831,10 @@ feature -- Comparison
 			if other = a_string then
 				Result := True
 			elseif other.count = a_string.count then
-				if {uc_string: UC_STRING} a_string then
+				if attached {UC_STRING} a_string as uc_string then
 					Result := uc_string.same_unicode_string (other)
 				else
-					if {other_uc_string: UC_STRING} other then
+					if attached {UC_STRING} other as other_uc_string then
 						Result := other_uc_string.same_unicode_string (a_string)
 					elseif ANY_.same_types (a_string, dummy_string) and ANY_.same_types (other, dummy_string) then
 						Result := elks_same_string (a_string, other)
@@ -1007,10 +1007,10 @@ feature -- Comparison
 					end
 				end
 			else
-				if {uc_string: UC_STRING} a_string then
+				if attached {UC_STRING} a_string as uc_string then
 					Result := uc_string.three_way_unicode_comparison (other)
 				else
-					if {other_uc_string: UC_STRING} other then
+					if attached {UC_STRING} other as other_uc_string then
 						Result := -other_uc_string.three_way_unicode_comparison (a_string)
 					else
 						nb1 := a_string.count
@@ -1192,11 +1192,11 @@ feature -- Element change
 			a_string_not_void: a_string /= Void
 			other_not_void: other /= Void
 		do
-			if {uc_string: UC_STRING} a_string then
+			if attached {UC_STRING} a_string as uc_string then
 				uc_string.append_string (other)
 				Result := uc_string
 			else
-				if {other_uc_string: UC_STRING} other then
+				if attached {UC_STRING} other as other_uc_string then
 					Result := concat (a_string, other)
 				else
 					a_string.append_string (other)
@@ -1236,11 +1236,11 @@ feature -- Element change
 			i: INTEGER
 			other_unicode: UC_STRING
 		do
-			if {uc_string: UC_STRING} a_string then
+			if attached {UC_STRING} a_string as uc_string then
 				uc_string.append_substring (other, s, e)
 				Result := uc_string
 			else
-				if {other_uc_string: UC_STRING} other then
+				if attached {UC_STRING} other as other_uc_string then
 					other_unicode := other_uc_string.new_empty_string (a_string.count + e - s + 1)
 					other_unicode.append_string (a_string)
 					other_unicode.append_substring (other, s, e)
@@ -1291,7 +1291,7 @@ feature -- Element change
 				a_string.replace_substring (other, start_index, end_index)
 				Result := a_string
 			else
-				if {uc_string: UC_STRING} a_string then
+				if attached {UC_STRING} a_string as uc_string then
 					uc_string.replace_substring_by_string (other, start_index, end_index)
 					Result := uc_string
 				else
@@ -1316,7 +1316,7 @@ feature -- Element change
 		local
 			i: INTEGER
 		do
-			if {uc_string: UC_STRING} a_string then
+			if attached {UC_STRING} a_string as uc_string then
 				uc_string.append_substring (other, s, e)
 			else
 				from
@@ -1451,7 +1451,7 @@ feature -- Conversion
 			if ANY_.same_types (a_string, dummy_string) then
 				Result := a_string
 			else
-				if {uc_string: UC_STRING} a_string then
+				if attached {UC_STRING} a_string as uc_string then
 					Result := uc_string.as_string
 				else
 					Result := a_string.string

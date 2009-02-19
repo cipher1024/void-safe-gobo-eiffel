@@ -735,7 +735,7 @@ feature {NONE} -- Processing (nondeterministic)
 					a_position := a_position.next
 					target.put_position (a_position)
 					if not a_position.after then
-						if {a_variable: PR_VARIABLE} a_position.symbol then
+						if attached {PR_VARIABLE} a_position.symbol as a_variable then
 							put_closure_positions (target, a_variable)
 						end
 					end
@@ -788,7 +788,7 @@ feature {NONE} -- Processing (nondeterministic)
 			loop
 				a_rule := rules.item (i)
 				if not a_rule.rhs.is_empty then
-					if {l_variable: PR_VARIABLE} a_rule.rhs.first then
+					if attached {PR_VARIABLE} a_rule.rhs.first as l_variable then
 						a_rule.lhs.firsts.force_last (l_variable)
 					end
 				end
@@ -933,7 +933,7 @@ feature {NONE} -- Processing (deterministic)
 					i < 1
 				loop
 					a_symbol := shifts.item (i).accessing_symbol
-					if {a_token: PR_TOKEN} a_symbol then
+					if attached {PR_TOKEN} a_symbol as a_token then
 						if not follows.has (a_token) then
 							follows.force_last (a_token)
 						end

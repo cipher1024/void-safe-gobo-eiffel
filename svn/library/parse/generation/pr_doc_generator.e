@@ -176,9 +176,9 @@ feature {NONE} -- Generation
 					i > nb
 				loop
 					a_symbol := a_rhs.item (i)
-					if {a_token: PR_TOKEN} a_symbol then
+					if attached {PR_TOKEN} a_symbol as a_token then
 						print_token (a_token, a_file)
-					elseif {a_variable: PR_VARIABLE} a_symbol and then 
+					elseif attached {PR_VARIABLE} a_symbol as a_variable and then 
 						a_variable.name.item (1) /= '@' 
 					then
 							-- Do not take internal rules into account.

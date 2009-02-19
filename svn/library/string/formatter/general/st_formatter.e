@@ -103,7 +103,7 @@ feature -- Formatting
 			valid_format_and_parameters: valid_format_and_parameters (a_format, a_parameters)
 		do
 			Result := STRING_.new_empty_string (a_format, a_format.count)
-			if {l_stream: KI_CHARACTER_OUTPUT_STREAM} ANY_.to_any (Result) then
+			if attached {KI_CHARACTER_OUTPUT_STREAM} ANY_.to_any (Result) as l_stream then
 				do_format_to (a_format, a_parameters, l_stream)
 			else
 				string_output_stream.set_string (Result)
@@ -128,7 +128,7 @@ feature -- Formatting
 		do
 			single_parameter.put (a_parameter, 1)
 			Result := STRING_.new_empty_string (a_format, a_format.count)
-			if {l_stream: KI_CHARACTER_OUTPUT_STREAM} ANY_.to_any (Result) then
+			if attached {KI_CHARACTER_OUTPUT_STREAM} ANY_.to_any (Result) as l_stream then
 				do_format_to (a_format, single_parameter, l_stream)
 			else
 				string_output_stream.set_string (Result)

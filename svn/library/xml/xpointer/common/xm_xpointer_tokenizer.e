@@ -179,7 +179,7 @@ feature {NONE} -- Implementation
 			internal_last_lexical_error := a_message
 		ensure
 			in_error: is_lexical_error
-			correct_error_value: {l_internal_last_lexical_error: STRING} internal_last_lexical_error
+			correct_error_value: attached internal_last_lexical_error as l_internal_last_lexical_error 
 					and then STRING_.same_string (l_internal_last_lexical_error, a_message)
 		end
 
@@ -222,7 +222,7 @@ feature {NONE} -- Implementation
 			end
 		ensure
 			whitespace_found_sets_token: was_whitespace_found implies current_token = Whitespace_token
-				and then {v: like current_token_value} current_token_value
+				and then attached current_token_value as v 
 				and then STRING_.same_string (v, whitespace)
 			whitespace_not_found_unsets_token: not was_whitespace_found implies current_token_value = Void
 			next_character_not_whitespace: is_input_stream_exhausted or else not whitespace.has (input.item (input_index))

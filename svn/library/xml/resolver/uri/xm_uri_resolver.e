@@ -33,10 +33,10 @@ feature -- Operation(s)
 		require
 			a_uri_not_void: a_uri /= Void
 			a_uri_absolute: a_uri.is_absolute
-			a_uri_scheme: {s: STRING} a_uri.scheme and then STRING_.same_string (scheme, s)
+			a_uri_scheme: attached a_uri.scheme as s and then STRING_.same_string (scheme, s)
 		deferred
 		ensure
-			stream_open_on_success: not has_error implies {st: like last_stream} last_stream and then st.is_open_read
+			stream_open_on_success: not has_error implies attached last_stream as st and then st.is_open_read
 		end
 
 feature -- Result

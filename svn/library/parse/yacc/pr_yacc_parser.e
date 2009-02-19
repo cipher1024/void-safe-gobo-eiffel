@@ -286,7 +286,7 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 71")
 end
 
-			if {l_decl_1: STRING} yyvs2.item (yyvsp2) then
+			if attached yyvs2.item (yyvsp2) as l_decl_1 then
 				last_grammar.eiffel_header.force_last (l_decl_1)
 			else
 				check False end
@@ -379,7 +379,7 @@ end
 			if start_symbol /= Void then
 				report_multiple_start_declarations_error
 			else
-				if {l_start_symbol_name: STRING} yyvs2.item (yyvsp2) then
+				if attached yyvs2.item (yyvsp2) as l_start_symbol_name then
 					create start_symbol.make (l_start_symbol_name, line_nb)
 				else
 					check False end
@@ -668,7 +668,7 @@ debug ("GEYACC")
 end
 
 			create yyval6.make (5)
-			if {l_type_1: PR_TYPE} yyvs5.item (yyvsp5) then
+			if attached yyvs5.item (yyvsp5) as l_type_1 then
 				yyval6.force_last (l_type_1)
 			else
 				check False end
@@ -695,7 +695,7 @@ end
 
 			yyval6 := yyvs6.item (yyvsp6)
 			check yyval6 /= Void end
-			if {l_type_3: PR_TYPE} yyvs5.item (yyvsp5) then
+			if attached yyvs5.item (yyvsp5) as l_type_3 then
 				yyval6.force_last (l_type_3)
 			else
 				check False end
@@ -1440,7 +1440,7 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 339")
 end
 
-			if {l_rule_0: like rule} rule then
+			if attached rule as l_rule_0 then
 				process_rule (l_rule_0)
 			else
 				check False end
@@ -1464,7 +1464,7 @@ end
 				rule := new_rule (new_dummy_variable)
 			else
 				rule := new_rule (new_variable (yyvs2.item (yyvsp2)))
-				if {l_rule_4: like rule} rule then
+				if attached rule as l_rule_4 then
 					if l_rule_4.lhs.rules.count > 1 then
 						report_rule_declared_twice_warning (yyvs2.item (yyvsp2))
 					end
@@ -1473,7 +1473,7 @@ end
 				end
 			end
 			precedence_token := Void
-			if {l_rule_3: like rule} rule then
+			if attached rule as l_rule_3 then
 				put_rule (l_rule_3)
 			else
 				check False end
@@ -1498,7 +1498,7 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 375")
 end
 
-			if {l_rule_5: like rule} rule then
+			if attached rule as l_rule_5 then
 				l_rule_5.set_line_nb (yyvs3.item (yyvsp3))
 			else
 				check False end
@@ -1557,7 +1557,7 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 390")
 end
 
-			if {l_rule_6: like rule} rule then
+			if attached rule as l_rule_6 then
 				if yyvs3.item (yyvsp3) < 1 or yyvs3.item (yyvsp3) > l_rule_6.error_actions.count then
 					report_invalid_error_n_error (yyvs3.item (yyvsp3))
 				else
@@ -1716,14 +1716,14 @@ debug ("GEYACC")
 	std.error.put_line ("Executing parser user-code from file 'pr_yacc_parser.y' at line 446")
 end
 
-			if {l_rule_1: like rule} rule then
+			if attached rule as l_rule_1 then
 				process_rule (l_rule_1)
 				rule := new_rule (l_rule_1.lhs)
 			else
 				check False end
 			end
 				precedence_token := Void
-			if {l_rule_2: like rule} rule then
+			if attached rule as l_rule_2 then
 				l_rule_2.set_line_nb (yyvs3.item (yyvsp3))
 				put_rule (l_rule_2)
 			else

@@ -212,7 +212,7 @@ feature -- Output
 		do
 
 
-			l_is_basic_type := {l_basic_type: PR_BASIC_TYPE} Current
+			l_is_basic_type := attached {PR_BASIC_TYPE} Current
 			print_indentation (indent, a_file)
 			a_file.put_string ("yyvs")
 			a_file.put_integer (id)
@@ -436,7 +436,7 @@ feature -- Output
 			a_file.put_string ("%T%T%Tyyval")
 			a_file.put_integer (id)
 			a_file.put_string (": ")
-			if not {l_basic_type: PR_BASIC_TYPE} Current then
+			if not attached {PR_BASIC_TYPE} Current then
 				a_file.put_string ("?")
 			end
 			a_file.put_string (name)

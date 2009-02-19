@@ -581,7 +581,7 @@ feature {NONE} -- Entities
 			debug ("xml_parser")
 				std.error.put_string ("Entity declared: ")
 				std.error.put_string (a_name)
-				if a_def /= Void and then {l_value: STRING} a_def.value then
+				if a_def /= Void and then attached a_def.value as l_value then
 					std.error.put_string (" value: ")
 					std.error.put_string (l_value)
 				end
@@ -606,7 +606,7 @@ feature {NONE} -- Entities
 			debug ("xml_parser")
 				std.error.put_string ("PE entity declared: ")
 				std.error.put_string (a_name)
-				if in_def /= Void and then {l_value: STRING} in_def.value then
+				if in_def /= Void and then attached in_def.value as l_value then
 					std.error.put_string (" value: ")
 					std.error.put_string (l_value)
 				end

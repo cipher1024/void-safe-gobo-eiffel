@@ -209,7 +209,7 @@ feature -- Status report
 				a_cursor.item.process (typer)
 				if
 --					typer.is_attribute and then --| Same as next condition
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then
+					attached typer.xml_attribute as l_xml_attribute and then
 					l_xml_attribute.has_qualified_name (a_uri, a_name)
 				then
 					Result := True
@@ -235,7 +235,7 @@ feature -- Status report
 				a_cursor.item.process (typer)
 				if
 					typer.is_attribute and then
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then -- FIXME:jfiat: same as `typer.is_attribute'
+					attached typer.xml_attribute as l_xml_attribute and then -- FIXME:jfiat: same as `typer.is_attribute'
 					attribute_same_name (l_xml_attribute, a_name)
 				then
 					Result := True
@@ -288,7 +288,7 @@ feature -- Access (from XM_COMPOSITE)
 				a_cursor.item.process (typer)
 				if
 					typer.is_element and then
-					{l_element: XM_ELEMENT} typer.element and then -- FIXME:jfiat: same as `typer.is_element'
+					attached typer.element as l_element and then -- FIXME:jfiat: same as `typer.is_element'
 					named_same_name (l_element, a_name)
 				then
 					Result := True
@@ -312,7 +312,7 @@ feature -- Access (from XM_COMPOSITE)
 				a_cursor.item.process (typer)
 				if
 --					typer.is_element and then --| Same as next condition
-					{l_element: XM_ELEMENT} typer.element and then
+					attached typer.element as l_element and then
 					l_element.has_qualified_name (a_uri, a_name)
 				then
 					Result := True
@@ -336,7 +336,7 @@ feature -- Access (from XM_COMPOSITE)
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
 				if typer.is_element and then
-					{l_element: XM_ELEMENT} typer.element and then -- FIXME:jfiat: same as `typer.is_element'
+					attached typer.element as l_element and then -- FIXME:jfiat: same as `typer.is_element'
 					named_same_name (l_element, a_name)
 				then
 					Result := l_element
@@ -388,7 +388,7 @@ feature -- Access
 				a_cursor.item.process (typer)
 				if
 					typer.is_attribute and then
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then -- FIXME:jfiat: same as `typer.is_attribute'
+					attached typer.xml_attribute as l_xml_attribute and then -- FIXME:jfiat: same as `typer.is_attribute'
 					attribute_same_name (l_xml_attribute, a_name)
 				then
 					Result := l_xml_attribute
@@ -418,7 +418,7 @@ feature -- Access
 				a_cursor.item.process (typer)
 				if
 					typer.is_attribute and then
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then -- FIXME:jfiat: same as `typer.is_attribute'				
+					attached typer.xml_attribute as l_xml_attribute and then -- FIXME:jfiat: same as `typer.is_attribute'				
 					l_xml_attribute.has_qualified_name (a_uri, a_name)
 				then
 					Result := l_xml_attribute
@@ -449,7 +449,7 @@ feature -- Access
 				a_cursor.item.process (typer)
 				if
 					typer.is_attribute and then
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then -- FIXME:jfiat: same as `typer.is_attribute'									
+					attached typer.xml_attribute as l_xml_attribute and then -- FIXME:jfiat: same as `typer.is_attribute'									
 					l_xml_attribute.is_namespace_declaration
 				then
 					Result.force_last (l_xml_attribute.namespace_declaration)
@@ -475,7 +475,7 @@ feature -- Access
 				a_cursor.item.process (typer)
 				if
 					typer.is_attribute and then
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute -- FIXME:jfiat: same as `typer.is_attribute'					
+					attached typer.xml_attribute as l_xml_attribute -- FIXME:jfiat: same as `typer.is_attribute'					
 				then
 					Result.force_last (l_xml_attribute)
 				end
@@ -542,7 +542,7 @@ feature -- Removal
 				a_cursor.item.process (typer)
 				if
 					typer.is_attribute and then
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then -- FIXME:jfiat: Same as `typer.is_attribute'
+					attached typer.xml_attribute as l_xml_attribute and then -- FIXME:jfiat: Same as `typer.is_attribute'
 					attribute_same_name (l_xml_attribute, a_name)
 				then
 					remove_at_cursor (a_cursor)
@@ -568,7 +568,7 @@ feature -- Removal
 				a_cursor.item.process (typer)
 				if
 --					typer.is_attribute and then --| Same as following condition
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then
+					attached typer.xml_attribute as l_xml_attribute and then
 					l_xml_attribute.has_qualified_name (a_uri, a_name)
 				then
 					remove_at_cursor (a_cursor)

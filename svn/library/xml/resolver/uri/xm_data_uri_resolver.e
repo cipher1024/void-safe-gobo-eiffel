@@ -141,7 +141,7 @@ feature {NONE} -- Implementation
 			-- Parse `a_uri' into parameters, media-type and data
 		require
 			data_uri: a_uri /= Void and then a_uri.is_opaque and then
-				{s: STRING} a_uri.scheme and then s.is_equal (scheme)
+				attached a_uri.scheme as s and then s.is_equal (scheme)
 			no_previous_error: not has_error
 		local
 			opaque_part: STRING

@@ -37,7 +37,7 @@ feature -- Status report
 	valid_parameter (a_parameter: ANY): BOOLEAN is
 			-- Is `a_parameter' a valid parameter for current formatter?
 		do
-			Result := {a_string: STRING} a_parameter
+			Result := attached {STRING} a_parameter
 		end
 
 feature -- Formatting

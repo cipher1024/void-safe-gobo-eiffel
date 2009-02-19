@@ -96,7 +96,7 @@ feature {AP_PARSER} -- Parser Interface
 			error: AP_ERROR
 		do
 			Precursor (a_parser)
-			if {l_last_option_parameter: STRING} a_parser.last_option_parameter then
+			if attached a_parser.last_option_parameter as l_last_option_parameter then
 				if not possible_values.has (l_last_option_parameter) then
 					create error.make_invalid_parameter_error (Current, l_last_option_parameter)
 					a_parser.error_handler.report_error (error)

@@ -109,7 +109,7 @@ feature -- Result
 		require
 			a_ns_not_void: a_ns /= Void
 			has: has_namespace (a_ns)
-			item_has_prefix: {rl_namespaces: like namespaces} namespaces and then
+			item_has_prefix: attached namespaces as rl_namespaces and then
 				rl_namespaces.has (a_ns.uri) implies rl_namespaces.item (a_ns.uri).has_prefix
 		local
 			s: ?STRING
@@ -176,7 +176,7 @@ feature {NONE} -- Implementation
 
 					if
 						a_namespace.has_prefix
-						and then {l_prefix: STRING} a_namespace.ns_prefix -- same as has_prefix ...
+						and then attached a_namespace.ns_prefix as l_prefix -- same as has_prefix ...
 						and then not l_prefixes.has (l_prefix)
 					then
 						register_namespace (a_namespace)
@@ -224,9 +224,9 @@ feature {NONE} -- Implementation
 			a_ns_not_void: a_ns /= Void
 			not_default_declaration: a_ns.has_prefix
 			namespaces_not_void: namespaces /= Void
-			not_known_namespace: {rl_namespaces: like namespaces} namespaces and then not rl_namespaces.has (a_ns.uri)
+			not_known_namespace: attached namespaces as rl_namespaces and then not rl_namespaces.has (a_ns.uri)
 			not_known_prefix: {rl_prefixes: like prefixes} prefixes
-					and then {rl_ns_prefix: STRING} a_ns.ns_prefix -- same as has_prefix ...
+					and then attached a_ns.ns_prefix as rl_ns_prefix -- same as has_prefix ...
 					and then not rl_prefixes.has (rl_ns_prefix)
 		local
 			l_namespaces: like namespaces
@@ -273,7 +273,7 @@ feature {NONE} -- Implementation
 			end
 		ensure
 			result_not_void: Result /= Void
-			new_prefix: {el_prefixes: like prefixes} prefixes and then not el_prefixes.has (Result)
+			new_prefix: attached prefixes as el_prefixes and then not el_prefixes.has (Result)
 		end
 
 	implicit_namespaces: DS_HASH_TABLE [XM_NAMESPACE, STRING] is

@@ -107,7 +107,7 @@ feature {AP_PARSER} -- Parser Interface
 		local
 			error: AP_ERROR
 		do
-			if {l_last_option_parameter: STRING} a_parser.last_option_parameter then
+			if attached a_parser.last_option_parameter as l_last_option_parameter then
 				if true_strings.has (l_last_option_parameter) then
 					parameters.force_last (True)
 				elseif false_strings.has (l_last_option_parameter) then

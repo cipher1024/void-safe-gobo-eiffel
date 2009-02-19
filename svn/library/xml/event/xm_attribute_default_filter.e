@@ -120,7 +120,7 @@ feature {NONE} -- DTD implementation
 		do
 			it := a_sub.new_cursor
 			from it.start until it.after loop
-				if {l_it_item_name: STRING} it.item.name and then
+				if attached it.item.name as l_it_item_name and then
 					same_string (l_it_item_name, a_name) then
 					Result := True
 					it.go_after

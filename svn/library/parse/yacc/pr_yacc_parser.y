@@ -70,7 +70,7 @@ Declarations: -- Empty
 
 Declaration: T_EIFFEL
 		{
-			if {l_decl_1: STRING} $1 then
+			if attached $1 as l_decl_1 then
 				last_grammar.eiffel_header.force_last (l_decl_1)
 			else
 				check False end
@@ -101,7 +101,7 @@ Declaration: T_EIFFEL
 			if start_symbol /= Void then
 				report_multiple_start_declarations_error
 			else
-				if {l_start_symbol_name: STRING} $2 then
+				if attached $2 as l_start_symbol_name then
 					create start_symbol.make (l_start_symbol_name, line_nb)
 				else
 					check False end
@@ -175,7 +175,7 @@ Eiffel_type_list: -- Empty
 	| Eiffel_type
 		{
 			create $$.make (5)
-			if {l_type_1: PR_TYPE} $1 then
+			if attached $1 as l_type_1 then
 				$$.force_last (l_type_1)
 			else
 				check False end
@@ -185,7 +185,7 @@ Eiffel_type_list: -- Empty
 		{
 			$$ := $1
 			check $$ /= Void end
-			if {l_type_3: PR_TYPE} $3 then
+			if attached $3 as l_type_3 then
 				$$.force_last (l_type_3)
 			else
 				check False end
@@ -338,7 +338,7 @@ Rules: -- Empty
 
 Rule: Lhs Colon Rhs_list ';'
 		{
-			if {l_rule_0: like rule} rule then
+			if attached rule as l_rule_0 then
 				process_rule (l_rule_0)
 			else
 				check False end
@@ -355,7 +355,7 @@ Lhs: Identifier
 				rule := new_rule (new_dummy_variable)
 			else
 				rule := new_rule (new_variable ($1))
-				if {l_rule_4: like rule} rule then
+				if attached rule as l_rule_4 then
 					if l_rule_4.lhs.rules.count > 1 then
 						report_rule_declared_twice_warning ($1)
 					end
@@ -364,7 +364,7 @@ Lhs: Identifier
 				end
 			end
 			precedence_token := Void
-			if {l_rule_3: like rule} rule then
+			if attached rule as l_rule_3 then
 				put_rule (l_rule_3)
 			else
 				check False end
@@ -374,7 +374,7 @@ Lhs: Identifier
 
 Colon: ':'
 		{
-			if {l_rule_5: like rule} rule then
+			if attached rule as l_rule_5 then
 				l_rule_5.set_line_nb ($1)
 			else
 				check False end
@@ -389,7 +389,7 @@ Rhs_list: Rhs_errors
 Rhs_errors: Rhs
 	| Rhs_errors T_ERROR '(' T_NUMBER ')' T_ACTION
 		{
-			if {l_rule_6: like rule} rule then
+			if attached rule as l_rule_6 then
 				if $4 < 1 or $4 > l_rule_6.error_actions.count then
 					report_invalid_error_n_error ($4)
 				else
@@ -445,14 +445,14 @@ Terminal: Identifier
 
 Bar: '|'
 		{
-			if {l_rule_1: like rule} rule then
+			if attached rule as l_rule_1 then
 				process_rule (l_rule_1)
 				rule := new_rule (l_rule_1.lhs)
 			else
 				check False end
 			end
 				precedence_token := Void
-			if {l_rule_2: like rule} rule then
+			if attached rule as l_rule_2 then
 				l_rule_2.set_line_nb ($1)
 				put_rule (l_rule_2)
 			else

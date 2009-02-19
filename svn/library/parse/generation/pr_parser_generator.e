@@ -298,7 +298,7 @@ feature {NONE} -- Generation
 				a_file.put_string ("%T")
 				a_file.put_string (a_type.last_value_name)
 				a_file.put_string (": ")
-				if not {l_basic_type: PR_BASIC_TYPE} a_type then
+				if not attached {PR_BASIC_TYPE} a_type as l_basic_type then
 					a_file.put_string ("?")
 				end
 				a_file.put_line (a_type.name)

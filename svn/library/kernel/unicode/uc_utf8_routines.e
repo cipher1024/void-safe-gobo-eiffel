@@ -295,7 +295,7 @@ feature -- Measurement
 						end
 					end
 				else
-					if {a_utf8: UC_UTF8_STRING} a_string then
+					if attached {UC_UTF8_STRING} a_string as a_utf8 then
 						if start_index = 1 and end_index = a_utf8.count then
 							Result := a_utf8.byte_count
 						else
@@ -391,7 +391,7 @@ feature -- Conversion
 		local
 			i, nb: INTEGER
 		do
-			if {uc_string: UC_STRING} a_string then
+			if attached {UC_STRING} a_string as uc_string then
 				Result := uc_string.to_utf8
 			else
 				nb := a_string.count

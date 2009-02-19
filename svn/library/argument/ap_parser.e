@@ -176,7 +176,7 @@ feature -- Status report
 			loop
 				l_option := options.item_for_iteration
 				if
-					{l_long_form: STRING} l_option.long_form and then
+					attached l_option.long_form as l_long_form and then
 					l_long_form.same_string (an_option)
 				then
 					check l_option.has_long_form end
@@ -361,7 +361,7 @@ feature -- Validity checks
 						Result := valid_short_form (l_option.short_form) and not short_set.has (l_option.short_form)
 						short_set.force_last (l_option.short_form)
 					end
-					if {l_option_long_form: STRING} l_option.long_form and Result then
+					if attached l_option.long_form as l_option_long_form and Result then
 						check l_option.has_long_form end
 						Result := valid_long_form (l_option_long_form) and not long_set.has (l_option_long_form)
 						long_set.force_last (l_option_long_form)
@@ -390,7 +390,7 @@ feature -- Validity checks
 						if aol.introduction_option.has_short_form then
 							Result := not has_short_option (aol.introduction_option.short_form)
 						end
-						if {l_long_form: STRING} aol.introduction_option.long_form and Result then
+						if attached aol.introduction_option.long_form as l_long_form and Result then
 							check aol.introduction_option.has_long_form end
 							Result := not has_long_option (l_long_form)
 						end
@@ -484,7 +484,7 @@ feature {NONE} -- Implementation
 		require
 			a_list_attached: a_list /= Void
 			a_list_not_off: not a_list.off
-			current_is_long_option: {rl_item: STRING} a_list.item_for_iteration and then
+			current_is_long_option: attached a_list.item_for_iteration as rl_item and then
 				rl_item.count >= 2 and then
 				(rl_item.item (1) = short_option_introduction and
 			 	rl_item.item (2) = long_option_introduction)
@@ -580,7 +580,7 @@ feature {NONE} -- Implementation
 		require
 			a_list_attached: a_list /= Void
 			a_list_not_off: not a_list.off
-			current_is_short_option: {rl_item: STRING} a_list.item_for_iteration and then
+			current_is_short_option: attached a_list.item_for_iteration as rl_item and then
 				rl_item.count > 1 and then
 				(rl_item.item (1) = short_option_introduction and
 				 rl_item.item (2) /= long_option_introduction)

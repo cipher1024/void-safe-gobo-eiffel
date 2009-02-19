@@ -443,7 +443,7 @@ feature -- Processing
 					until
 						token_found or j < 1
 					loop
-						if not {a_variable: PR_VARIABLE} rhs.item (j) then
+						if not attached {PR_VARIABLE} rhs.item (j) as a_variable then
 							token_found := True
 						elseif not a_variable.is_nullable then
 							a_list.put_last (a_variable)
@@ -635,7 +635,7 @@ feature {NONE} -- Processing
 						j < 1
 					loop
 						a_symbol := rhs.item (j)
-						if {variable2: PR_VARIABLE} a_symbol then
+						if attached {PR_VARIABLE} a_symbol as variable2 then
 							if not variable2.is_useful then
 								variable2.set_useful (True)
 								traverse_variable (variable2)

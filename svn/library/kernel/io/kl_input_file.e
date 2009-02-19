@@ -185,7 +185,7 @@ feature -- Input
 			-- in the input file, there is no guarantee that they
 			-- will all be read.)
 		do
-			if {char_buffer: KL_CHARACTER_BUFFER} a_buffer then
+			if attached {KL_CHARACTER_BUFFER} a_buffer as char_buffer then
 				Result := char_buffer.fill_from_stream (Current, pos, nb)
 			else
 				Result := precursor (a_buffer, pos, nb)

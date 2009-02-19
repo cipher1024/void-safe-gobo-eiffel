@@ -166,7 +166,7 @@ feature -- Output
 		local
 			l_string: ?STRING
 		do
-			if {a_character_input: KI_CHARACTER_INPUT_STREAM} an_input_stream then
+			if attached {KI_CHARACTER_INPUT_STREAM} an_input_stream as a_character_input then
 				from
 					if not a_character_input.end_of_input then
 						a_character_input.read_string (512)

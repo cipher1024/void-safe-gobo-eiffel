@@ -95,7 +95,7 @@ feature -- Element change
 			a_stream_not_void: a_stream /= Void
 			not_closed: not is_closed (a_stream)
 		do
-			if {a_file: FILE} a_stream then
+			if attached {FILE} a_stream as a_file then
 				a_file.flush
 			end
 		end

@@ -60,7 +60,7 @@ feature {AP_PARSER} -- Parser Interface
 		local
 			error: AP_ERROR
 		do
-			if {l_last_option_parameter: STRING} a_parser.last_option_parameter then
+			if attached a_parser.last_option_parameter as l_last_option_parameter then
 				if l_last_option_parameter.is_integer then
 					parameters.force_last (l_last_option_parameter.to_integer)
 				else
