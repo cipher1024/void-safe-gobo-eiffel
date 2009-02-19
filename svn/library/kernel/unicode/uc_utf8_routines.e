@@ -227,6 +227,7 @@ feature -- Measurement
 			valid_end_index: end_index <= a_string.count
 			meaningful_interval: start_index <= end_index + 1
 		local
+			a_utf8: ?UC_UTF8_STRING
 			a_uc_string: ?UC_STRING
 			s, e: INTEGER
 			i: INTEGER
@@ -295,7 +296,8 @@ feature -- Measurement
 						end
 					end
 				else
-					if {a_utf8: UC_UTF8_STRING} a_string then
+					a_utf8 ?= a_string
+					if a_utf8 /= Void then
 						if start_index = 1 and end_index = a_utf8.count then
 							Result := a_utf8.byte_count
 						else
@@ -389,9 +391,11 @@ feature -- Conversion
 		require
 			a_string_not_void: a_string /= Void
 		local
+			uc_string: ?UC_STRING
 			i, nb: INTEGER
 		do
-			if {uc_string: UC_STRING} a_string then
+			uc_string ?= a_string
+			if uc_string /= Void then
 				Result := uc_string.to_utf8
 			else
 				nb := a_string.count

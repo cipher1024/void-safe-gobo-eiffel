@@ -168,6 +168,7 @@ feature -- Status report
 			an_option_not_void: an_option /= Void
 		local
 			l_option: AP_OPTION
+			l_long_form: ?STRING
 		do
 			from
 				options.start
@@ -175,8 +176,9 @@ feature -- Status report
 				options.after
 			loop
 				l_option := options.item_for_iteration
+				l_long_form := l_option.long_form
 				if
-					{l_long_form: STRING} l_option.long_form and then
+					l_long_form /= Void and then
 					l_long_form.same_string (an_option)
 				then
 					check l_option.has_long_form end
@@ -342,6 +344,7 @@ feature -- Validity checks
 			l_option: AP_OPTION
 			long_set: DS_LINKED_LIST [STRING]
 			short_set: DS_LINKED_LIST [CHARACTER]
+			l_option_long_form: ?STRING
 		do
 			Result := True
 			create long_set.make
@@ -361,7 +364,8 @@ feature -- Validity checks
 						Result := valid_short_form (l_option.short_form) and not short_set.has (l_option.short_form)
 						short_set.force_last (l_option.short_form)
 					end
-					if {l_option_long_form: STRING} l_option.long_form and Result then
+					l_option_long_form := l_option.long_form
+					if l_option_long_form /= Void and Result then
 						check l_option.has_long_form end
 						Result := valid_long_form (l_option_long_form) and not long_set.has (l_option_long_form)
 						long_set.force_last (l_option_long_form)
@@ -375,6 +379,7 @@ feature -- Validity checks
 			-- Are all options correctly set up?
 		local
 			aol: AP_ALTERNATIVE_OPTIONS_LIST
+			l_long_form: ?STRING
 		do
 			if all_valid_short_and_long_form (options) then
 				Result := True
@@ -390,7 +395,8 @@ feature -- Validity checks
 						if aol.introduction_option.has_short_form then
 							Result := not has_short_option (aol.introduction_option.short_form)
 						end
-						if {l_long_form: STRING} aol.introduction_option.long_form and Result then
+						l_long_form := aol.introduction_option.long_form
+						if l_long_form /= Void and Result then
 							check aol.introduction_option.has_long_form end
 							Result := not has_long_option (l_long_form)
 						end

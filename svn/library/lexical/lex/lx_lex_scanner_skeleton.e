@@ -105,8 +105,11 @@ feature -- Access
 
 	filename: STRING is
 			-- Name of file being parsed
+		local
+			file_buffer: ?YY_FILE_BUFFER
 		do
-			if {file_buffer: YY_FILE_BUFFER} input_buffer then
+			file_buffer ?= input_buffer
+			if file_buffer /= Void then
 				Result := file_buffer.file.name
 			else
 				Result := "string"

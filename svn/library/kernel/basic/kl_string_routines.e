@@ -65,13 +65,15 @@ feature -- Initialization
 			s_not_void: s /= Void
 		local
 			i, j, nb: INTEGER
+			uc_string: ?UC_STRING
 		do
 			if ANY_.same_types (s, dummy_string) then
 				create Result.make_from_string (s)
 			else
 				nb := s.count
 				create Result.make (nb)
-				if {uc_string: UC_STRING} s then
+				uc_string ?= s
+				if uc_string /= Void then
 					nb := uc_string.byte_count
 					from
 						j := 1
@@ -382,11 +384,14 @@ feature -- Access
 		require
 			a_string_not_void: a_string /= Void
 			non_negative_n: n >= 0
+		local
+			uc_string: ?UC_STRING
 		do
 			if ANY_.same_types (a_string, dummy_string) then
 				create Result.make (n)
 			else
-				if {uc_string: UC_STRING} a_string then
+				uc_string ?= a_string
+				if uc_string /= Void then
 					Result := uc_string.new_empty_string (n)
 				else
 					Result := cloned_string (a_string)
@@ -406,8 +411,10 @@ feature -- Access
 			a_string_not_void: a_string /= Void
 		local
 			i, nb, a_code, a_high, a_low, a_surrogate: INTEGER
+			uc_string: ?UC_STRING
 		do
-			if {uc_string: UC_STRING} a_string then
+			uc_string ?= a_string
+			if uc_string /= Void then
 				Result := uc_string.to_utf16_be
 			else
 				nb := a_string.count
@@ -451,8 +458,10 @@ feature -- Access
 			a_string_not_void: a_string /= Void
 		local
 			i, nb, a_code, a_high, a_low, a_surrogate: INTEGER
+			uc_string: ?UC_STRING
 		do
-			if {uc_string: UC_STRING} a_string then
+			uc_string ?= a_string
+			if uc_string /= Void then
 				Result := uc_string.to_utf16_le
 			else
 				nb := a_string.count
@@ -496,8 +505,10 @@ feature -- Access
 			a_string_not_void: a_string /= Void
 		local
 			i, j, k, l, m, nb, a_code: INTEGER
+			uc_string: ?UC_STRING
 		do
-			if {uc_string: UC_STRING} a_string then
+			uc_string ?= a_string
+			if uc_string /= Void then
 				Result := uc_string.to_utf32_be
 			else
 				nb := a_string.count
@@ -534,8 +545,10 @@ feature -- Access
 			a_string_not_void: a_string /= Void
 		local
 			i, j, k, l, m, nb, a_code: INTEGER
+			uc_string: ?UC_STRING
 		do
-			if {uc_string: UC_STRING} a_string then
+			uc_string ?= a_string
+			if uc_string /= Void then
 				Result := uc_string.to_utf32_le
 			else
 				nb := a_string.count
@@ -622,6 +635,7 @@ feature -- Access
 		local
 			i, j, nb: INTEGER
 			a_code: INTEGER
+			other_unicode: ?UC_STRING
 			k, end_index: INTEGER
 			found: BOOLEAN
 			max_code: INTEGER
@@ -642,7 +656,8 @@ feature -- Access
 							if ANY_.same_types (other, dummy_string) then
 								Result := a_string.substring_index (other, start_index)
 							else
-								if {other_unicode: UC_STRING} other then
+								other_unicode ?= other
+								if other_unicode /= Void then
 									nb := other_unicode.byte_count
 									max_code := Platform.Maximum_character_code
 									from
@@ -768,12 +783,16 @@ feature -- Access
 		require
 			a_string_not_void: a_string /= Void
 			other_not_void: other /= Void
+		local
+			uc_string: ?UC_STRING
 		do
-			if {uc_string: UC_STRING} a_string then
+			uc_string ?= a_string
+			if uc_string /= Void then
 				Result := uc_string + other
 			else
-				if {other_uc_string: UC_STRING} other then
-					Result := other_uc_string.prefixed_string (a_string)
+				uc_string ?= other
+				if uc_string /= Void then
+					Result := uc_string.prefixed_string (a_string)
 				else
 					Result := a_string + other
 				end
@@ -826,16 +845,19 @@ feature -- Comparison
 			a_string_not_void: a_string /= Void
 			other_not_void: other /= Void
 		local
+			uc_string: ?UC_STRING
 			i, nb: INTEGER
 		do
 			if other = a_string then
 				Result := True
 			elseif other.count = a_string.count then
-				if {uc_string: UC_STRING} a_string then
+				uc_string ?= a_string
+				if uc_string /= Void then
 					Result := uc_string.same_unicode_string (other)
 				else
-					if {other_uc_string: UC_STRING} other then
-						Result := other_uc_string.same_unicode_string (a_string)
+					uc_string ?= other
+					if uc_string /= Void then
+						Result := uc_string.same_unicode_string (a_string)
 					elseif ANY_.same_types (a_string, dummy_string) and ANY_.same_types (other, dummy_string) then
 						Result := elks_same_string (a_string, other)
 					else
@@ -963,6 +985,7 @@ feature -- Comparison
 			a_string_not_void: a_string /= Void
 			other_not_void: other /= Void
 		local
+			uc_string: ?UC_STRING
 			i, nb, nb1, nb2: INTEGER
 			a1, a2: CHARACTER
 			c1, c2: INTEGER
@@ -1007,11 +1030,13 @@ feature -- Comparison
 					end
 				end
 			else
-				if {uc_string: UC_STRING} a_string then
+				uc_string ?= a_string
+				if uc_string /= Void then
 					Result := uc_string.three_way_unicode_comparison (other)
 				else
-					if {other_uc_string: UC_STRING} other then
-						Result := -other_uc_string.three_way_unicode_comparison (a_string)
+					uc_string ?= other
+					if uc_string /= Void then
+						Result := -uc_string.three_way_unicode_comparison (a_string)
 					else
 						nb1 := a_string.count
 						nb2 := other.count
@@ -1191,12 +1216,16 @@ feature -- Element change
 		require
 			a_string_not_void: a_string /= Void
 			other_not_void: other /= Void
+		local
+			uc_string: ?UC_STRING
 		do
-			if {uc_string: UC_STRING} a_string then
+			uc_string ?= a_string
+			if uc_string /= Void then
 				uc_string.append_string (other)
 				Result := uc_string
 			else
-				if {other_uc_string: UC_STRING} other then
+				uc_string ?= other
+				if uc_string /= Void then
 					Result := concat (a_string, other)
 				else
 					a_string.append_string (other)
@@ -1233,18 +1262,20 @@ feature -- Element change
 			e_small_enough: e <= other.count
 			valid_interval: s <= e + 1
 		local
+			uc_string: ?UC_STRING
 			i: INTEGER
-			other_unicode: UC_STRING
 		do
-			if {uc_string: UC_STRING} a_string then
+			uc_string ?= a_string
+			if uc_string /= Void then
 				uc_string.append_substring (other, s, e)
 				Result := uc_string
 			else
-				if {other_uc_string: UC_STRING} other then
-					other_unicode := other_uc_string.new_empty_string (a_string.count + e - s + 1)
-					other_unicode.append_string (a_string)
-					other_unicode.append_substring (other, s, e)
-					Result := other_unicode
+				uc_string ?= other
+				if uc_string /= Void then
+					uc_string := uc_string.new_empty_string (a_string.count + e - s + 1)
+					uc_string.append_string (a_string)
+					uc_string.append_substring (other, s, e)
+					Result := uc_string
 				else
 					from
 						i := s
@@ -1286,12 +1317,15 @@ feature -- Element change
 			valid_start_index: 1 <= start_index
 			valid_end_index: end_index <= a_string.count
 			meaningful_interval: start_index <= end_index + 1
+		local
+			uc_string: ?UC_STRING
 		do
 			if ANY_.same_types (a_string, other) then
 				a_string.replace_substring (other, start_index, end_index)
 				Result := a_string
 			else
-				if {uc_string: UC_STRING} a_string then
+				uc_string ?= a_string
+				if uc_string /= Void then
 					uc_string.replace_substring_by_string (other, start_index, end_index)
 					Result := uc_string
 				else
@@ -1314,9 +1348,11 @@ feature -- Element change
 			e_small_enough: e <= other.count
 			valid_interval: s <= e + 1
 		local
+			uc_string: ?UC_STRING
 			i: INTEGER
 		do
-			if {uc_string: UC_STRING} a_string then
+			uc_string ?= a_string
+			if uc_string /= Void then
 				uc_string.append_substring (other, s, e)
 			else
 				from
@@ -1447,11 +1483,14 @@ feature -- Conversion
 			-- of UC_STRING, return 'string (a_string)' otherwise.
 		require
 			a_string_not_void: a_string /= Void
+		local
+			uc_string: ?UC_STRING
 		do
 			if ANY_.same_types (a_string, dummy_string) then
 				Result := a_string
 			else
-				if {uc_string: UC_STRING} a_string then
+				uc_string ?= a_string
+				if uc_string /= Void then
 					Result := uc_string.as_string
 				else
 					Result := a_string.string

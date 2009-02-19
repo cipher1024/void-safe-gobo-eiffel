@@ -97,10 +97,13 @@ feature -- Input
 	read_character is
 			-- Read the next character in standard input file.
 			-- Make the result available in `last_character'.
+		local
+			l_character_buffer: like character_buffer
 		do
-			if {a_buff: like character_buffer} character_buffer then
-				last_character := a_buff.item
-				character_buffer := a_buff.right
+			l_character_buffer := character_buffer
+			if l_character_buffer /= Void then
+				last_character := l_character_buffer.item
+				character_buffer := l_character_buffer.right
 			elseif old_end_of_file then
 				end_of_file := True
 			else
@@ -115,10 +118,12 @@ feature -- Input
 			-- call to a read routine.
 		local
 			a_cell: like character_buffer
+			l_character_buffer: like character_buffer
 		do
 			create a_cell.make (a_character)
-			if {a_buff: like character_buffer} character_buffer then
-				a_cell.put_right (a_buff)
+			l_character_buffer := character_buffer
+			if l_character_buffer /= Void then
+				a_cell.put_right (l_character_buffer)
 			end
 			character_buffer := a_cell
 			last_character := a_character
@@ -314,8 +319,11 @@ feature -- Input
 			-- (Note that even if at least `nb' characters are available
 			-- in standard input file, there is no guarantee that they
 			-- will all be read.)
+		local
+			char_buffer: ?KL_CHARACTER_BUFFER
 		do
-			if {char_buffer: KL_CHARACTER_BUFFER} a_buffer then
+			char_buffer ?= a_buffer
+			if char_buffer /= Void then
 				Result := char_buffer.fill_from_stream (Current, pos, nb)
 			else
 				Result := precursor (a_buffer, pos, nb)

@@ -577,13 +577,18 @@ feature {NONE} -- Entities
 			-- Entity has been declared.
 		require
 			a_name_not_void: a_name /= Void
+		local
+			l_value: ?STRING
 		do
 			debug ("xml_parser")
 				std.error.put_string ("Entity declared: ")
 				std.error.put_string (a_name)
-				if a_def /= Void and then {l_value: STRING} a_def.value then
-					std.error.put_string (" value: ")
-					std.error.put_string (l_value)
+				if a_def /= Void then
+					l_value := a_def.value
+					if l_value /= Void then
+						std.error.put_string (" value: ")
+						std.error.put_string (l_value)
+					end
 				end
 				std.error.put_new_line
 			end
@@ -602,13 +607,17 @@ feature {NONE} -- Entities
 			a_name_not_void: a_name /= Void
 		local
 			a_def: XM_EIFFEL_PE_ENTITY_DEF
+			l_value: ?STRING
 		do
 			debug ("xml_parser")
 				std.error.put_string ("PE entity declared: ")
 				std.error.put_string (a_name)
-				if in_def /= Void and then {l_value: STRING} in_def.value then
-					std.error.put_string (" value: ")
-					std.error.put_string (l_value)
+				if in_def /= Void then
+					l_value := in_def.value	
+					if l_value /= Void then
+						std.error.put_string (" value: ")
+						std.error.put_string (l_value)
+					end
 				end
 				std.error.put_new_line
 			end

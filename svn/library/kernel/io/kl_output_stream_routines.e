@@ -94,8 +94,11 @@ feature -- Element change
 		require
 			a_stream_not_void: a_stream /= Void
 			not_closed: not is_closed (a_stream)
+		local
+			a_file: ?FILE
 		do
-			if {a_file: FILE} a_stream then
+			a_file ?= a_stream
+			if a_file /= Void then
 				a_file.flush
 			end
 		end

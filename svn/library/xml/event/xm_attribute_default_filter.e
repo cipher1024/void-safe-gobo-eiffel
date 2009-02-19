@@ -117,11 +117,12 @@ feature {NONE} -- DTD implementation
 			a_name_not_void: a_name /= Void
 		local
 			it: DS_LINEAR_CURSOR [XM_DTD_ATTRIBUTE_CONTENT]
+			l_it_item_name: ?STRING
 		do
 			it := a_sub.new_cursor
 			from it.start until it.after loop
-				if {l_it_item_name: STRING} it.item.name and then
-					same_string (l_it_item_name, a_name) then
+				l_it_item_name := it.item.name
+				if l_it_item_name /= Void and then same_string (l_it_item_name, a_name) then
 					Result := True
 					it.go_after
 				else

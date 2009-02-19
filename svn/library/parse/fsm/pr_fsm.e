@@ -699,6 +699,7 @@ feature {NONE} -- Processing (nondeterministic)
 			target: PR_STATE
 			a_symbol: PR_SYMBOL
 			a_symbol_id: INTEGER
+			a_variable: ?PR_VARIABLE
 			transitions: ARRAY [PR_STATE]
 			nb_transitions: INTEGER
 			shifts: DS_ARRAYED_LIST [PR_STATE]
@@ -735,7 +736,8 @@ feature {NONE} -- Processing (nondeterministic)
 					a_position := a_position.next
 					target.put_position (a_position)
 					if not a_position.after then
-						if {a_variable: PR_VARIABLE} a_position.symbol then
+						a_variable ?= a_position.symbol
+						if a_variable /= Void then
 							put_closure_positions (target, a_variable)
 						end
 					end
@@ -777,8 +779,8 @@ feature {NONE} -- Processing (nondeterministic)
 			rules: DS_ARRAYED_LIST [PR_RULE]
 			a_rule: PR_RULE
 			variables: DS_ARRAYED_LIST [PR_VARIABLE]
+			a_variable: ?PR_VARIABLE
 			flattener: DS_NESTED_LIST_FLATTENER [PR_RULE]
-			a_variable: PR_VARIABLE
 		do
 			rules := grammar.rules
 			i := rules.count
@@ -788,8 +790,9 @@ feature {NONE} -- Processing (nondeterministic)
 			loop
 				a_rule := rules.item (i)
 				if not a_rule.rhs.is_empty then
-					if {l_variable: PR_VARIABLE} a_rule.rhs.first then
-						a_rule.lhs.firsts.force_last (l_variable)
+					a_variable ?= a_rule.rhs.first
+					if a_variable /= Void then
+						a_rule.lhs.firsts.force_last (a_variable)
 					end
 				end
 				i := i - 1
@@ -882,6 +885,7 @@ feature {NONE} -- Processing (deterministic)
 			a_transition: PR_TRANSITION
 			a_symbol: PR_SYMBOL
 			a_variable: ?PR_VARIABLE
+			a_token: ?PR_TOKEN
 			a_rule: PR_RULE
 		do
 			create reductions.make
@@ -933,7 +937,8 @@ feature {NONE} -- Processing (deterministic)
 					i < 1
 				loop
 					a_symbol := shifts.item (i).accessing_symbol
-					if {a_token: PR_TOKEN} a_symbol then
+					a_token ?= a_symbol
+					if a_token /= Void then
 						if not follows.has (a_token) then
 							follows.force_last (a_token)
 						end

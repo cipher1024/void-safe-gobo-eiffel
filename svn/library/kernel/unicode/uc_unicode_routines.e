@@ -54,9 +54,11 @@ feature -- Status report
 		require
 			a_string_not_void: a_string /= Void
 		local
+			a_unicode: ?UC_STRING
 			i, nb: INTEGER
 		do
-			if {a_unicode: UC_STRING} a_string then
+			a_unicode ?= a_string
+			if a_unicode /= Void then
 				Result := a_unicode.is_ascii
 			else
 				Result := True

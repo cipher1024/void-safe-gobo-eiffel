@@ -99,8 +99,11 @@ feature -- Result
 			-- Is this namespace known (has an allocated prefix)?
 		require
 			a_ns_not_void: a_ns /= Void
+		local
+			l_namespaces: like namespaces
 		do
-			Result := {l_namespaces: like namespaces} namespaces
+			l_namespaces := namespaces
+			Result := l_namespaces /= Void
 				and then (l_namespaces.has (a_ns.uri) or implicit_namespaces.has (a_ns.uri))
 		end
 
@@ -160,6 +163,7 @@ feature {NONE} -- Implementation
 			a_candidate_namespace: XM_NAMESPACE
 			l_namespaces: like namespaces
 			l_prefixes: like prefixes
+			l_prefix: ?STRING
 		do
 			if a_namespace.uri.is_empty then
 				-- not a defined namespace
@@ -173,10 +177,10 @@ feature {NONE} -- Implementation
 
 					l_prefixes := prefixes
 					check l_prefixes /= Void end -- implied by `namespaces_not_void' and `namespaces_with_prefixes'
-
+					l_prefix := a_namespace.ns_prefix
 					if
 						a_namespace.has_prefix
-						and then {l_prefix: STRING} a_namespace.ns_prefix -- same as has_prefix ...
+						and then l_prefix /= Void -- same as has_prefix ...
 						and then not l_prefixes.has (l_prefix)
 					then
 						register_namespace (a_namespace)

@@ -267,6 +267,7 @@ feature {NONE} -- Generation
 			tokens: DS_ARRAYED_LIST [PR_TOKEN]
 			a_type: PR_TYPE
 			i, nb: INTEGER
+			l_basic_type: ?PR_BASIC_TYPE
 		do
 			a_file.put_line ("feature -- Last values")
 			a_file.put_new_line
@@ -298,7 +299,8 @@ feature {NONE} -- Generation
 				a_file.put_string ("%T")
 				a_file.put_string (a_type.last_value_name)
 				a_file.put_string (": ")
-				if not {l_basic_type: PR_BASIC_TYPE} a_type then
+				l_basic_type ?= a_type
+				if l_basic_type = Void then
 					a_file.put_string ("?")
 				end
 				a_file.put_line (a_type.name)

@@ -18,8 +18,11 @@ feature -- Access
 			-- Hash code value
 		require
 			an_any_not_void: an_any /= Void
+		local
+			hashable: ?HASHABLE
 		do
-			if {hashable: HASHABLE} an_any then
+			hashable ?= an_any
+			if hashable /= Void then
 				Result := hashable.hash_code
 			else
 				Result := an_any.generating_type.hash_code

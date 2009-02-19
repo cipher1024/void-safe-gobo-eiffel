@@ -209,10 +209,10 @@ feature -- Output
 			a_file_open_write: a_file.is_open_write
 		local
 			l_is_basic_type: BOOLEAN
+			l_basic_type: ?PR_BASIC_TYPE
 		do
-
-
-			l_is_basic_type := {l_basic_type: PR_BASIC_TYPE} Current
+			l_basic_type ?= Current
+			l_is_basic_type := l_basic_type /= Void
 			print_indentation (indent, a_file)
 			a_file.put_string ("yyvs")
 			a_file.put_integer (id)
@@ -432,11 +432,14 @@ feature -- Output
 		require
 			a_file_not_void: a_file /= Void
 			a_file_open_write: a_file.is_open_write
+		local
+			l_basic_type: ?PR_BASIC_TYPE
 		do
 			a_file.put_string ("%T%T%Tyyval")
 			a_file.put_integer (id)
 			a_file.put_string (": ")
-			if not {l_basic_type: PR_BASIC_TYPE} Current then
+			l_basic_type ?= Current
+			if l_basic_type = Void then
 				a_file.put_string ("?")
 			end
 			a_file.put_string (name)

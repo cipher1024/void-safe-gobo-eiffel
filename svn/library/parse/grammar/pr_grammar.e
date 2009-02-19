@@ -418,6 +418,7 @@ feature -- Processing
 			a_rule: PR_RULE
 			token_found, stop: BOOLEAN
 			lhs: PR_VARIABLE
+			a_variable: ?PR_VARIABLE
 			rhs: DS_ARRAYED_LIST [PR_SYMBOL]
 			a_list: DS_ARRAYED_LIST [PR_VARIABLE]
 			old_todo, todo, tmp: DS_ARRAYED_LIST [DS_ARRAYED_LIST [PR_VARIABLE]]
@@ -443,7 +444,8 @@ feature -- Processing
 					until
 						token_found or j < 1
 					loop
-						if not {a_variable: PR_VARIABLE} rhs.item (j) then
+						a_variable ?= rhs.item (j)
+						if a_variable = Void then
 							token_found := True
 						elseif not a_variable.is_nullable then
 							a_list.put_last (a_variable)
@@ -616,6 +618,7 @@ feature {NONE} -- Processing
 		local
 			rhs: DS_ARRAYED_LIST [PR_SYMBOL]
 			r: DS_ARRAYED_LIST [PR_RULE]
+			variable2: ?PR_VARIABLE
 			a_symbol: PR_SYMBOL
 			a_rule: PR_RULE
 			i, j: INTEGER
@@ -635,7 +638,8 @@ feature {NONE} -- Processing
 						j < 1
 					loop
 						a_symbol := rhs.item (j)
-						if {variable2: PR_VARIABLE} a_symbol then
+						variable2 ?= a_symbol
+						if variable2 /= Void then
 							if not variable2.is_useful then
 								variable2.set_useful (True)
 								traverse_variable (variable2)

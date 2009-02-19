@@ -165,8 +165,10 @@ feature -- Output
 			-- current output stream.
 		local
 			l_string: ?STRING
+			a_character_input: ?KI_CHARACTER_INPUT_STREAM
 		do
-			if {a_character_input: KI_CHARACTER_INPUT_STREAM} an_input_stream then
+			a_character_input ?= an_input_stream
+			if a_character_input /= Void then
 				from
 					if not a_character_input.end_of_input then
 						a_character_input.read_string (512)
@@ -180,7 +182,7 @@ feature -- Output
 					a_character_input.read_string (512)
 				end
 			else
-				Precursor (an_input_stream)
+				precursor (an_input_stream)
 			end
 		end
 

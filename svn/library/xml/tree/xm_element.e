@@ -202,14 +202,14 @@ feature -- Status report
 		local
 			a_cursor: DS_LINEAR_CURSOR [XM_NODE]
 			typer: XM_NODE_TYPER
+			l_xml_attribute: ?XM_ATTRIBUTE
 		do
 			create typer
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				if
---					typer.is_attribute and then --| Same as next condition
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then
+				l_xml_attribute := typer.xml_attribute
+				if typer.is_attribute and then l_xml_attribute /= Void and then 
 					l_xml_attribute.has_qualified_name (a_uri, a_name)
 				then
 					Result := True
@@ -228,14 +228,14 @@ feature -- Status report
 		local
 			a_cursor: DS_LINEAR_CURSOR [XM_NODE]
 			typer: XM_NODE_TYPER
+			l_xml_attribute: ?XM_ATTRIBUTE
 		do
 			create typer
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				if
-					typer.is_attribute and then
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then -- FIXME:jfiat: same as `typer.is_attribute'
+				l_xml_attribute := typer.xml_attribute
+				if typer.is_attribute and then l_xml_attribute /= Void and then 
 					attribute_same_name (l_xml_attribute, a_name)
 				then
 					Result := True
@@ -281,14 +281,14 @@ feature -- Access (from XM_COMPOSITE)
 		local
 			a_cursor: DS_LINEAR_CURSOR [XM_NODE]
 			typer: XM_NODE_TYPER
+			l_element: ?XM_ELEMENT
 		do
 			create typer
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				if
-					typer.is_element and then
-					{l_element: XM_ELEMENT} typer.element and then -- FIXME:jfiat: same as `typer.is_element'
+				l_element := typer.element 
+				if typer.is_element and then l_element /= Void and then 
 					named_same_name (l_element, a_name)
 				then
 					Result := True
@@ -305,14 +305,14 @@ feature -- Access (from XM_COMPOSITE)
 		local
 			a_cursor: DS_LINEAR_CURSOR [XM_NODE]
 			typer: XM_NODE_TYPER
+			l_element: ?XM_ELEMENT
 		do
 			create typer
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				if
---					typer.is_element and then --| Same as next condition
-					{l_element: XM_ELEMENT} typer.element and then
+				l_element := typer.element 
+				if typer.is_element and then l_element /= Void and then 
 					l_element.has_qualified_name (a_uri, a_name)
 				then
 					Result := True
@@ -330,13 +330,14 @@ feature -- Access (from XM_COMPOSITE)
 		local
 			a_cursor: DS_LINEAR_CURSOR [XM_NODE]
 			typer: XM_NODE_TYPER
+			l_element: ?XM_ELEMENT
 		do
 			create typer
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				if typer.is_element and then
-					{l_element: XM_ELEMENT} typer.element and then -- FIXME:jfiat: same as `typer.is_element'
+				l_element := typer.element 
+				if typer.is_element and then l_element /= Void and then 
 					named_same_name (l_element, a_name)
 				then
 					Result := l_element
@@ -354,16 +355,17 @@ feature -- Access (from XM_COMPOSITE)
 		local
 			a_cursor: DS_LINEAR_CURSOR [XM_NODE]
 			typer: XM_NODE_TYPER
-			elt: ?XM_ELEMENT
+			l_element: ?XM_ELEMENT
 		do
 			create typer
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				elt := typer.element
-				if elt /= Void and then elt.has_qualified_name (a_uri, a_name) then
-					check typer.is_element end
-					Result := elt
+				l_element := typer.element
+				if typer.is_element and then l_element /= Void and then 
+					l_element.has_qualified_name (a_uri, a_name) 
+				then
+					Result := l_element
 					a_cursor.go_after -- Jump out of the loop.
 				else
 					a_cursor.forth
@@ -381,14 +383,14 @@ feature -- Access
 		local
 			a_cursor: DS_LINEAR_CURSOR [XM_NODE]
 			typer: XM_NODE_TYPER
+			l_xml_attribute: ?XM_ATTRIBUTE
 		do
 			create typer
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				if
-					typer.is_attribute and then
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then -- FIXME:jfiat: same as `typer.is_attribute'
+				l_xml_attribute := typer.xml_attribute
+				if typer.is_attribute and then l_xml_attribute /= Void and then 
 					attribute_same_name (l_xml_attribute, a_name)
 				then
 					Result := l_xml_attribute
@@ -411,14 +413,14 @@ feature -- Access
 		local
 			a_cursor: DS_LINEAR_CURSOR [XM_NODE]
 			typer: XM_NODE_TYPER
+			l_xml_attribute: ?XM_ATTRIBUTE
 		do
 			create typer
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				if
-					typer.is_attribute and then
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then -- FIXME:jfiat: same as `typer.is_attribute'				
+				l_xml_attribute := typer.xml_attribute
+				if typer.is_attribute and then l_xml_attribute /= Void and then 
 					l_xml_attribute.has_qualified_name (a_uri, a_name)
 				then
 					Result := l_xml_attribute
@@ -441,17 +443,15 @@ feature -- Access
 		local
 			a_cursor: DS_LINEAR_CURSOR [XM_NODE]
 			typer: XM_NODE_TYPER
+			l_xml_attribute: ?XM_ATTRIBUTE
 		do
 			create typer
 			create Result.make
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				if
-					typer.is_attribute and then
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then -- FIXME:jfiat: same as `typer.is_attribute'									
-					l_xml_attribute.is_namespace_declaration
-				then
+				l_xml_attribute := typer.xml_attribute
+				if typer.is_attribute and then l_xml_attribute /= Void and then l_xml_attribute.is_namespace_declaration then
 					Result.force_last (l_xml_attribute.namespace_declaration)
 				end
 				a_cursor.forth
@@ -467,16 +467,15 @@ feature -- Access
 		local
 			a_cursor: DS_LINEAR_CURSOR [XM_NODE]
 			typer: XM_NODE_TYPER
+			l_xml_attribute: ?XM_ATTRIBUTE
 		do
 			create typer
 			create {DS_BILINKED_LIST [XM_ATTRIBUTE]} Result.make
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				if
-					typer.is_attribute and then
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute -- FIXME:jfiat: same as `typer.is_attribute'					
-				then
+				l_xml_attribute := typer.xml_attribute
+				if typer.is_attribute and then l_xml_attribute /= Void then
 					Result.force_last (l_xml_attribute)
 				end
 				a_cursor.forth
@@ -535,14 +534,14 @@ feature -- Removal
 		local
 			a_cursor: DS_LINKED_LIST_CURSOR [XM_NODE]
 			typer: XM_NODE_TYPER
+			l_xml_attribute: ?XM_ATTRIBUTE
 		do
 			create typer
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				if
-					typer.is_attribute and then
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then -- FIXME:jfiat: Same as `typer.is_attribute'
+				l_xml_attribute := typer.xml_attribute
+				if typer.is_attribute and then l_xml_attribute /= Void and then 
 					attribute_same_name (l_xml_attribute, a_name)
 				then
 					remove_at_cursor (a_cursor)
@@ -561,14 +560,14 @@ feature -- Removal
 		local
 			a_cursor: DS_LINKED_LIST_CURSOR [XM_NODE]
 			typer: XM_NODE_TYPER
+			l_xml_attribute: ?XM_ATTRIBUTE
 		do
 			create typer
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				if
---					typer.is_attribute and then --| Same as following condition
-					{l_xml_attribute: XM_ATTRIBUTE} typer.xml_attribute and then
+				l_xml_attribute := typer.xml_attribute
+				if typer.is_attribute and then l_xml_attribute /= Void and then
 					l_xml_attribute.has_qualified_name (a_uri, a_name)
 				then
 					remove_at_cursor (a_cursor)

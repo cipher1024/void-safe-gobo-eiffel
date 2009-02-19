@@ -1143,7 +1143,7 @@ feature {NONE} -- Implementation
 				cursor.forth
 			end
 		ensure
-			built: {ot_equiv_classes: LX_EQUIVALENCE_CLASSES} description.equiv_classes and then ot_equiv_classes.built
+			built: {el_equiv_classes: LX_EQUIVALENCE_CLASSES} description.equiv_classes and then el_equiv_classes.built
 		end
 
 	check_options is

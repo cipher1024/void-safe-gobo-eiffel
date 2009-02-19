@@ -164,7 +164,8 @@ feature {NONE} -- Generation
 			a_file_open_write: a_file.is_open_write
 		local
 			i, nb: INTEGER
-			a_symbol: PR_SYMBOL
+			a_token: ?PR_TOKEN
+			a_variable: ?PR_VARIABLE
 		do
 			if a_rhs.is_empty then
 				print_empty_rhs (a_file)
@@ -175,14 +176,15 @@ feature {NONE} -- Generation
 				until
 					i > nb
 				loop
-					a_symbol := a_rhs.item (i)
-					if {a_token: PR_TOKEN} a_symbol then
+					a_token ?= a_rhs.item (i)
+					if a_token /= Void then
 						print_token (a_token, a_file)
-					elseif {a_variable: PR_VARIABLE} a_symbol and then 
-						a_variable.name.item (1) /= '@' 
-					then
+					else
+						a_variable ?= a_rhs.item (i)
 							-- Do not take internal rules into account.
-						print_variable (a_variable, a_file)
+						if a_variable /= Void and then a_variable.name.item (1) /= '@' then
+							print_variable (a_variable, a_file)
+						end
 					end
 					i := i + 1
 				end

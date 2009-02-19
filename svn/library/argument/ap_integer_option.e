@@ -59,8 +59,10 @@ feature {AP_PARSER} -- Parser Interface
 			-- Record the occurrence of the option with `a_parameter'.
 		local
 			error: AP_ERROR
+			l_last_option_parameter: ?STRING
 		do
-			if {l_last_option_parameter: STRING} a_parser.last_option_parameter then
+			l_last_option_parameter := a_parser.last_option_parameter
+			if l_last_option_parameter /= Void then
 				if l_last_option_parameter.is_integer then
 					parameters.force_last (l_last_option_parameter.to_integer)
 				else
