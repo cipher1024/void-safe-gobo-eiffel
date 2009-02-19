@@ -41,10 +41,10 @@ feature -- Access
 	new_expat_parser: XM_PARSER is
 			-- New Expat XML parser
 		local
-			r: ?like new_expat_parser
+			l_result: ?like new_expat_parser
 		do
-			check r /= Void end
-			Result := r
+			check l_result /= Void end -- implied by nothing, fooling the compiler.
+			Result := l_result
 		ensure then
 			not_possible: False
 		end

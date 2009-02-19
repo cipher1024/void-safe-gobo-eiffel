@@ -476,6 +476,8 @@ feature {NONE} -- Encoding
 
 	apply_encoding (an_encoding: ?STRING) is
 			-- Set encoding on current scanner.
+			--| NOTE: `an_encoding' should be attached,
+			--| but is detachable for easier use of geyacc in void-safe mode		
 		require
 			not_void: an_encoding /= Void
 		do
@@ -546,6 +548,8 @@ feature {NONE} -- Entities
 
 	new_literal_entity (a_name, a_value: ?STRING): XM_EIFFEL_ENTITY_DEF is
 			-- New literal entity definition
+			--| NOTE: `a_name, a_value' should be attached,
+			--| but are detachable for easier use of geyacc in void-safe mode		
 		require
 			a_name_not_void: a_name /= Void
 			a_value_not_void: a_value /= Void
@@ -557,6 +561,8 @@ feature {NONE} -- Entities
 
 	new_external_entity (a_value: ?XM_DTD_EXTERNAL_ID): XM_EIFFEL_ENTITY_DEF is
 			-- New external entity definition
+			--| NOTE: `a_value' should be attached,
+			--| but is detachable for easier use of geyacc in void-safe mode		
 		require
 			a_value_not_void: a_value /= Void
 		do
@@ -814,7 +820,7 @@ feature {NONE} -- Scanner implementation
 				elseif last_token = DOCTYPE_PEREFERENCE_UTF8 then
 					s := onstring_utf8 (last_text)
 				end
-				check s /= Void end -- implied by ... ?
+				check s /= Void end -- implied by ... ? Note that `onstring_utf8' could return Void ..
 				process_pe_entity (s)
 			when CONTENT_ENTITY, CONTENT_ENTITY_UTF8 then
 				check last_text /= Void end -- implied by ... ?			
@@ -823,16 +829,16 @@ feature {NONE} -- Scanner implementation
 				elseif last_token = CONTENT_ENTITY_UTF8  then
 					s := onstring_utf8 (last_text)
 				end
-				check s /= Void end -- implied by ... ?
+				check s /= Void end -- implied by ... ? Note that `onstring_utf8' could return Void ..
 				process_entity (s)
 			when ATTRIBUTE_ENTITY, ATTRIBUTE_ENTITY_UTF8  then
 				check last_text /= Void end -- implied by ... ?				
 				if last_token = ATTRIBUTE_ENTITY then
-					s :=  onstring_ascii (last_text)
+					s := onstring_ascii (last_text)
 				elseif last_token = ATTRIBUTE_ENTITY_UTF8 then
 					s := onstring_utf8 (last_text)
 				end
-				check s /= Void end -- implied by ... ?
+				check s /= Void end -- implied by ... ? Note that `onstring_utf8' could return Void ..
 				process_attribute_entity (s)
 			else
 			end

@@ -80,7 +80,7 @@ feature -- Access
 			catalogs_not_disabled: not are_catalogs_disabled
 		local
 			an_fpi, another_fpi, a_debug_string: STRING
-			s: ?STRING
+			l_result: ?STRING
 		do
 			if debug_level > 2 then
 				a_debug_string := STRING_.concat ("PUBLIC ", a_public_id)
@@ -100,35 +100,36 @@ feature -- Access
 				an_fpi := urn_to_fpi (a_system_id)
 				if another_fpi.count > 0 then
 					if STRING_.same_string (an_fpi, another_fpi) then
-						s := resolved_fpi (an_fpi, False)
+						l_result := resolved_fpi (an_fpi, False)
 					else
 						debug_message (2, "SYSTEM id is a publicid URN, but differs from PUBLIC id", a_system_id)
-						s := resolved_fpi (another_fpi, False)
+						l_result := resolved_fpi (another_fpi, False)
 					end
 				else
-					s := resolved_fpi (an_fpi, False)
+					l_result := resolved_fpi (an_fpi, False)
 				end
-				if s = Void then
-					s := a_system_id
+				if l_result = Void then
+					l_result := a_system_id
 				end
 			else
 				an_fpi := another_fpi
 				if a_system_id.count = 0 then
-					s := resolved_fpi (an_fpi, False)
+					l_result := resolved_fpi (an_fpi, False)
+					check l_result /= Void end -- implied by ... ?
+					--| Should "if Result = Void then Result := a_system_id end" be added ?
 				else
-					s := resolved_fsi (a_system_id)
-					if s = Void then
+					l_result := resolved_fsi (a_system_id)
+					if l_result = Void then
 						if an_fpi.count > 0 then
-							s := resolved_fpi (an_fpi, True)
+							l_result := resolved_fpi (an_fpi, True)
 						end
-						if s = Void then
-							s := a_system_id
+						if l_result = Void then
+							l_result := a_system_id
 						end
 					end
 				end
 			end
-			check s /= Void end -- implied by ... ?
-			Result := s
+			Result := l_result
 		ensure
 			resulting_uri_reference_not_void: Result /= Void -- but may be the original SYSTEM id, which may be zero length
 		end
@@ -140,7 +141,7 @@ feature -- Access
 			catalogs_not_disabled: not are_catalogs_disabled
 		local
 			an_fpi: STRING
-			s: ?STRING
+			l_result: ?STRING
 		do
 			debug_message (3, "Resolving URI reference", a_uri_reference)
 
@@ -149,15 +150,15 @@ feature -- Access
 
 			if a_uri_reference.substring_index ("urn:publicid:", 1) = 1 then
 				an_fpi := urn_to_fpi (a_uri_reference)
-				s := resolved_fpi (an_fpi, False)
+				l_result := resolved_fpi (an_fpi, False)
+				check l_result /= Void end -- implied by ... ?
 			else
-				s := resolved_uri (a_uri_reference)
-				if s = Void then
-					s := a_uri_reference
+				l_result := resolved_uri (a_uri_reference)
+				if l_result = Void then
+					l_result := a_uri_reference
 				end
 			end
-			check s /= Void end -- implied by ... ?
-			Result := s
+			Result := l_result
 		ensure
 			resulting_uri_reference_not_void: Result /= Void -- but may be the original reference
 		end

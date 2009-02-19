@@ -21,7 +21,7 @@ feature -- Action(s)
 			a_system_not_void: a_system /= Void
 		deferred
 		ensure
-			stream_open_on_success: not has_error implies {ot_last_stream: like last_stream} last_stream and then ot_last_stream.is_open_read
+			stream_open_on_success: not has_error implies {el_last_stream: like last_stream} last_stream and then el_last_stream.is_open_read
 			--depth: not has_error implies resolve_depth = old resolve_depth + 1
 		end
 
@@ -34,7 +34,7 @@ feature -- Action(s)
 		do
 			resolve (a_system)
 		ensure
-			stream_open_on_success: not has_error implies {ot_last_stream: like last_stream} last_stream and then ot_last_stream.is_open_read
+			stream_open_on_success: not has_error implies {el_last_stream: like last_stream} last_stream and then el_last_stream.is_open_read
 			--depth: not has_error implies resolve_depth = old resolve_depth + 1
 		end
 
@@ -70,8 +70,8 @@ feature -- Result
 		require
 			has_error: has_error
 		deferred
-		--FIXME:jfiat: we can not make it attached in signature, because descendant redefine it into attribute,
-		-- 		which can not be attached by implementation
+			--| NOTE: we can not make it attached in signature, because descendant redefine it into attribute,
+			--| 	  which can not be attached by implementation
 		ensure
 			not_void: Result /= Void
 		end

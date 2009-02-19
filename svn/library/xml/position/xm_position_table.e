@@ -53,19 +53,19 @@ feature -- Access
 			has_node: has (a_node)
 		local
 			a_cursor: DS_LINKED_LIST_CURSOR [DS_PAIR [XM_POSITION, XM_NODE]]
-			r: ?like item
+			l_result: ?like item
 		do
 			a_cursor := table.new_cursor
 			from a_cursor.start until a_cursor.after loop
 				if a_cursor.item.second = a_node then
-					r := a_cursor.item.first
+					l_result := a_cursor.item.first
 					a_cursor.go_after -- Jump out of the loop.
 				else
 					a_cursor.forth
 				end
 			end
-			check r /= Void end -- implied by a_node_not_void + has_node
-			Result := r
+			check l_result /= Void end -- implied by preconditions `a_node_not_void' and `has_node'
+			Result := l_result
 		ensure
 			position_not_void: Result /= Void
 		end

@@ -384,7 +384,7 @@ feature -- Events
 					l_attribute_local_parts /= Void and
 					l_attribute_namespaces /= Void and
 					l_attribute_values /= Void
-				end -- implied by ... ?
+				end -- implied because `on_start' called and `not is_error'
 
 				l_attribute_namespaces.force_last (a_namespace)
 				l_attribute_local_parts.force_last (a_local_part)
@@ -579,7 +579,7 @@ feature {NONE} -- Implementation
 				l_attribute_local_parts /= Void and
 				l_attribute_namespaces /= Void and
 				l_attribute_values /= Void
-			end -- implied by precondition `attributes_available'
+			end -- implied by precondition `attributes_available' and invariant `attribute_triples'
 			from
 				a_cursor := l_attribute_local_parts.new_cursor; a_cursor.start
 			variant
@@ -652,7 +652,7 @@ feature {NONE} -- Implementation
 				l_attribute_local_parts /= Void and
 				l_attribute_namespaces /= Void and
 				l_attribute_values /= Void
-			end -- implied by precondition `attributes_available'
+			end -- implied by precondition `attributes_available' and invariant `attribute_triples'
 			from
 				a_cursor := l_attribute_local_parts.new_cursor; a_cursor.start
 			variant
@@ -743,7 +743,7 @@ feature {NONE} -- Implementation
 				l_attribute_local_parts /= Void and
 				l_attribute_namespaces /= Void and
 				l_attribute_values /= Void
-			end -- implied by precondition `attributes_available'
+			end -- implied by precondition `attributes_available' and invariant `attribute_triples'
 			from
 				a_cursor := l_attribute_local_parts.new_cursor
 				a_cursor.start
@@ -941,7 +941,7 @@ feature {NONE} -- Implementation
 				l_attribute_local_parts /= Void and
 				l_attribute_namespaces /= Void and
 				l_attribute_values /= Void
-			end -- implied by precondition `attributes_available'
+			end -- implied by precondition `attributes_available' and invariant `attribute_triples'
 			from
 				a_cursor := l_attribute_local_parts.new_cursor
 				a_cursor.start
@@ -1100,7 +1100,7 @@ feature {NONE} -- Implementation
 				l_attribute_local_parts /= Void and
 				l_attribute_namespaces /= Void and
 				l_attribute_values /= Void
-			end -- implied by precondition `attributes_available'
+			end -- implied by precondition `attributes_available' and invariant `attribute_triples'
 			from
 				a_cursor := l_attribute_local_parts.new_cursor; a_cursor.start
 			variant
@@ -2061,10 +2061,10 @@ invariant
 	base_uri_not_void: base_uri /= Void
 	system_id_not_void: system_id /= Void
 	mixed_mode: is_string_mode_mixed
-	attribute_triples: {il_attribute_namespaces: like attribute_namespaces} attribute_namespaces implies (
-		{il_attribute_local_parts: like attribute_local_parts} attribute_local_parts
-		and then {il_attribute_values: like attribute_values} attribute_values and then il_attribute_values.count = il_attribute_local_parts.count
-		and then il_attribute_local_parts.count = il_attribute_namespaces.count
+	attribute_triples: {l_attribute_namespaces: like attribute_namespaces} attribute_namespaces implies (
+		{l_attribute_local_parts: like attribute_local_parts} attribute_local_parts
+		and then {l_attribute_values: like attribute_values} attribute_values and then l_attribute_values.count = l_attribute_local_parts.count
+		and then l_attribute_local_parts.count = l_attribute_namespaces.count
 		)
 	system_entries_not_void: system_entries /= Void
 	uri_entries_not_void: uri_entries /= Void
