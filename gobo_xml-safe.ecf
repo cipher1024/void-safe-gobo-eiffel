@@ -34,7 +34,7 @@
 			</option>
 			<file_rule>
 				<exclude>/expat$</exclude>
-				<!-- excluded for now, FIXME -->
+				<!-- excluded for now, too much to do to convert to Void-Safe for now -->
 				<exclude>/xpath/</exclude>
 				<exclude>/xslt/</exclude>
 			</file_rule>
