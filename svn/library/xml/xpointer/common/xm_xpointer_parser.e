@@ -139,10 +139,10 @@ feature {NONE} -- Implementation
 			error_message := a_message; error_code := a_code
 			is_error := True
 		ensure
-			valid_error_message: {m: like error_message} error_message
-				and then STRING_.same_string (m, a_message)
-			valid_error_code: {c: like error_code} error_code
-				and then STRING_.same_string (c, a_code)
+			valid_error_message: {l_error_message: like error_message} error_message
+				and then STRING_.same_string (l_error_message, a_message)
+			valid_error_code: {l_error_code: like error_code} error_code
+				and then STRING_.same_string (l_error_code, a_code)
 			in_error: is_error
 		end
 
@@ -204,7 +204,7 @@ feature {NONE} -- Implementation
 				last_token := a_tokenizer.last_token
 			end
 		ensure
-			error_or_scheme_parsed: not is_error implies {ot_current_scheme_name: like current_scheme_name} current_scheme_name and then is_qname (ot_current_scheme_name)
+			error_or_scheme_parsed: not is_error implies {el_current_scheme_name: like current_scheme_name} current_scheme_name and then is_qname (el_current_scheme_name)
 				and then current_scheme_data /= Void
 		end
 
@@ -246,15 +246,15 @@ feature {NONE} -- Implementation
 				current_scheme_name := a_name
 			end
 		ensure
-			error_or_lexical_qname: not is_error implies {ot_current_scheme_name: like current_scheme_name} current_scheme_name
-				and then is_qname (ot_current_scheme_name)
+			error_or_lexical_qname: not is_error implies {el_current_scheme_name: like current_scheme_name} current_scheme_name
+				and then is_qname (el_current_scheme_name)
 		end
 
 	store_current_scheme is
 			-- Store current parsed scheme.
 		require
 			no_previous_error: not is_error
-			lexical_qname: {ot_current_scheme_name: like current_scheme_name} current_scheme_name and then is_qname (ot_current_scheme_name)
+			lexical_qname: {l_current_scheme_name: like current_scheme_name} current_scheme_name and then is_qname (l_current_scheme_name)
 			good_data: current_scheme_data /= Void
 		local
 			l_name: like current_scheme_name
@@ -271,7 +271,7 @@ feature {NONE} -- Implementation
 invariant
 
 	possible_error: is_error implies error_message /= Void and then error_code /= Void
-	shorthand_not_void: is_shorthand implies {ot_shorthand: like shorthand} shorthand and then is_ncname (ot_shorthand)
+	shorthand_not_void: is_shorthand implies {l_shorthand: like shorthand} shorthand and then is_ncname (l_shorthand)
 	scheme_data_correct_length: scheme_sequence /= Void and then scheme_data /= Void
 		and then scheme_sequence.count = scheme_data.count
 

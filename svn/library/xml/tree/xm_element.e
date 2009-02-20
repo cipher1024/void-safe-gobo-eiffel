@@ -33,7 +33,7 @@ inherit
 
 create
 
-	make,
+	make, make_without_parent,
 	make_last,
 	make_root,
 	make_child
@@ -48,11 +48,23 @@ feature {NONE} -- Initialization
 			a_ns_not_void: a_ns /= Void
 		do
 			parent := a_parent
+			make_without_parent (a_name, a_ns)
+		ensure
+			parent_set: parent = a_parent
+			name_set: name = a_name
+			ns_prefix_set: namespace = a_ns
+		end
+
+	make_without_parent (a_name: like name; a_ns: like namespace) is
+			-- Create a new child element, without attaching to any parent.
+		require
+			a_name_not_void: a_name /= Void
+			a_ns_not_void: a_ns /= Void
+		do
 			name := a_name
 			namespace := a_ns
 			list_make
 		ensure
-			parent_set: parent = a_parent
 			name_set: name = a_name
 			ns_prefix_set: namespace = a_ns
 		end
@@ -209,7 +221,7 @@ feature -- Status report
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
 				l_xml_attribute := typer.xml_attribute
-				if typer.is_attribute and then l_xml_attribute /= Void and then 
+				if typer.is_attribute and then l_xml_attribute /= Void and then
 					l_xml_attribute.has_qualified_name (a_uri, a_name)
 				then
 					Result := True
@@ -235,7 +247,7 @@ feature -- Status report
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
 				l_xml_attribute := typer.xml_attribute
-				if typer.is_attribute and then l_xml_attribute /= Void and then 
+				if typer.is_attribute and then l_xml_attribute /= Void and then
 					attribute_same_name (l_xml_attribute, a_name)
 				then
 					Result := True
@@ -287,8 +299,8 @@ feature -- Access (from XM_COMPOSITE)
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				l_element := typer.element 
-				if typer.is_element and then l_element /= Void and then 
+				l_element := typer.element
+				if typer.is_element and then l_element /= Void and then
 					named_same_name (l_element, a_name)
 				then
 					Result := True
@@ -311,8 +323,8 @@ feature -- Access (from XM_COMPOSITE)
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				l_element := typer.element 
-				if typer.is_element and then l_element /= Void and then 
+				l_element := typer.element
+				if typer.is_element and then l_element /= Void and then
 					l_element.has_qualified_name (a_uri, a_name)
 				then
 					Result := True
@@ -336,8 +348,8 @@ feature -- Access (from XM_COMPOSITE)
 			a_cursor := new_cursor
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
-				l_element := typer.element 
-				if typer.is_element and then l_element /= Void and then 
+				l_element := typer.element
+				if typer.is_element and then l_element /= Void and then
 					named_same_name (l_element, a_name)
 				then
 					Result := l_element
@@ -362,8 +374,8 @@ feature -- Access (from XM_COMPOSITE)
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
 				l_element := typer.element
-				if typer.is_element and then l_element /= Void and then 
-					l_element.has_qualified_name (a_uri, a_name) 
+				if typer.is_element and then l_element /= Void and then
+					l_element.has_qualified_name (a_uri, a_name)
 				then
 					Result := l_element
 					a_cursor.go_after -- Jump out of the loop.
@@ -390,7 +402,7 @@ feature -- Access
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
 				l_xml_attribute := typer.xml_attribute
-				if typer.is_attribute and then l_xml_attribute /= Void and then 
+				if typer.is_attribute and then l_xml_attribute /= Void and then
 					attribute_same_name (l_xml_attribute, a_name)
 				then
 					Result := l_xml_attribute
@@ -420,7 +432,7 @@ feature -- Access
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
 				l_xml_attribute := typer.xml_attribute
-				if typer.is_attribute and then l_xml_attribute /= Void and then 
+				if typer.is_attribute and then l_xml_attribute /= Void and then
 					l_xml_attribute.has_qualified_name (a_uri, a_name)
 				then
 					Result := l_xml_attribute
@@ -541,7 +553,7 @@ feature -- Removal
 			from a_cursor.start until a_cursor.after loop
 				a_cursor.item.process (typer)
 				l_xml_attribute := typer.xml_attribute
-				if typer.is_attribute and then l_xml_attribute /= Void and then 
+				if typer.is_attribute and then l_xml_attribute /= Void and then
 					attribute_same_name (l_xml_attribute, a_name)
 				then
 					remove_at_cursor (a_cursor)

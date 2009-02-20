@@ -103,9 +103,9 @@ feature -- Status report
 			equal: Result implies is_equal (other)
 			same_prefix: Result implies
 				(ns_prefix = other.ns_prefix or else (
-					{ot_ns_prefix: like ns_prefix} ns_prefix
-					and then {ot_other_ns_prefix: like ns_prefix} other.ns_prefix
-					and then STRING_.same_string (ot_ns_prefix, ot_other_ns_prefix))
+					{el_ns_prefix: like ns_prefix} ns_prefix
+					and then {el_other_ns_prefix: like ns_prefix} other.ns_prefix
+					and then STRING_.same_string (el_ns_prefix, el_other_ns_prefix))
 					)
 		end
 
@@ -118,7 +118,7 @@ feature -- Status report
 			l_ns_prefix := ns_prefix
 			Result := (l_ns_prefix /= Void and then l_ns_prefix.count > 0)
 		ensure
-			definition: Result = ({ot_ns_prefix: like ns_prefix} ns_prefix and then ot_ns_prefix.count > 0)
+			definition: Result = ({el_ns_prefix: like ns_prefix} ns_prefix and then el_ns_prefix.count > 0)
 		end
 
 invariant

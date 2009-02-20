@@ -73,11 +73,11 @@ feature -- Shortcuts
 		require
 			error: error.has_error
 		local
-			e: ?STRING
+			l_last_error: ?STRING
 		do
-			e := error.last_error
-			check e /= Void end -- implied by precondition `error'
-			Result := e
+			l_last_error := error.last_error
+			check l_last_error /= Void end -- implied by precondition `error'
+			Result := l_last_error
 		ensure
 			last_error_not_void: Result /= Void
 		end

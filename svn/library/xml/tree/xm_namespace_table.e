@@ -65,12 +65,12 @@ feature -- Access
 		require
 			has_default: has_default
 		local
-			s: ?STRING
+			l_found_item: like found_item
 		do
 			search (Default_namespace)
-			s := found_item
-			check s /= Void end -- implied by `has_default'
-			Result := s
+			l_found_item := found_item
+			check l_found_item /= Void end -- implied by `has_default'
+			Result := l_found_item
 		end
 
 feature -- Element change
@@ -92,7 +92,7 @@ feature -- Element change
 			from a_cursor.start until a_cursor.after loop
 				a_namespace := a_cursor.item
 				l_ns_prefix := a_namespace.ns_prefix
-				check l_ns_prefix /= Void end -- implied by ??? FIXME:jfiat
+				check l_ns_prefix /= Void end -- implied by ... ?
 				force (a_namespace.uri, l_ns_prefix)
 				a_cursor.forth
 			end

@@ -184,7 +184,7 @@ feature -- Result
 			l_last_resolver: like last_resolver
 		do
 			l_last_resolver := last_resolver
-			check l_last_resolver /= Void end
+			check l_last_resolver /= Void end -- implied by precondition `not_error'
 			Result := l_last_resolver.last_stream
 		end
 
@@ -244,7 +244,7 @@ feature -- Result
 			l_last_resolver: like last_resolver
 		do
 			l_last_resolver := last_resolver
-			check l_last_resolver /= Void end
+			check l_last_resolver /= Void end -- implied by ... ?
 			Result := l_last_resolver.has_media_type
 		end
 
@@ -254,7 +254,7 @@ feature -- Result
 			l_last_resolver: like last_resolver
 		do
 			l_last_resolver := last_resolver
-			check l_last_resolver /= Void end
+			check l_last_resolver /= Void end -- implied by precondition `has_media_type'
 			Result := l_last_resolver.last_media_type
 		end
 

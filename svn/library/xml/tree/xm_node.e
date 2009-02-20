@@ -76,7 +76,7 @@ feature -- Status report
 				Result := 1
 			else
 				l_parent := parent
-				check l_parent /= Void end -- implied by `is_root_node'
+				check l_parent /= Void end -- implied by `not is_root_node'
 				Result := l_parent.level + 1
 			end
 		ensure
@@ -101,7 +101,7 @@ feature -- Status report
 				Result := True
 			else
 				l_parent := parent
-				check l_parent /= Void end -- implied by `is_root_node'
+				check l_parent /= Void end -- implied by `not is_root_node'
 				Result := l_parent.first = Current
 			end
 		ensure
@@ -118,7 +118,7 @@ feature -- Status report
 				Result := True
 			else
 				l_parent := parent
-				check l_parent /= Void end -- implied by `is_root_node'
+				check l_parent /= Void end -- implied by `not is_root_node'
 				Result := l_parent.last = Current
 			end
 		ensure

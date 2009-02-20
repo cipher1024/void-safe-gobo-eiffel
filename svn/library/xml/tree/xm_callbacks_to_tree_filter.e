@@ -90,7 +90,7 @@ feature -- Element
 			l_document := document
 			check
 				document_not_void: l_document /= Void
-			end
+			end -- implied by `on_start' already called.
 			l_current_element := current_element
 			if l_current_element = Void then
 					-- This is the first element in the document.
@@ -147,7 +147,7 @@ feature -- Element
 				open_composite_exists: l_current_element /= Void
 			end
 			l_parent := l_current_element.parent
-			check l_parent /= Void end
+			check l_parent /= Void end -- implied by `on_start' called, and `document' is the root parent
 			if l_parent.is_root_node then
 				current_element := Void
 			else
@@ -235,12 +235,11 @@ feature {NONE} -- Implementation (position)
 			l_last_position_table: like last_position_table
 			l_source_parser: like source_parser
 		do
-			l_last_position_table := last_position_table
-			if l_last_position_table /= Void then
-				check is_position_table_enabled end
-				check is_position_table_enabled implies source_parser /= Void end
+			if is_position_table_enabled then
+				l_last_position_table := last_position_table
+				check l_last_position_table /= Void end -- implied by `is_position_table_enabled'
 				l_source_parser := source_parser
-				check l_source_parser /= Void end --| set when setting last_position_table
+				check l_source_parser /= Void end -- implied by being set when setting `last_position_table' in `enable_position_table'
 				l_last_position_table.put (l_source_parser.position, a_node)
 			end
 		end

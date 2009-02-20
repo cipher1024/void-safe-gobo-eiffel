@@ -31,8 +31,11 @@ feature -- Status report
 	has_prefix: BOOLEAN is
 			-- Has a prefix been used to define the namespace?
 			-- (It could also be that the namespace used was the default namespace)
+		local
+			l_ns_prefix: like ns_prefix
 		do
-			Result := {l_ns_prefix: like ns_prefix} ns_prefix and then l_ns_prefix.count > 0
+			l_ns_prefix := ns_prefix
+			Result := (l_ns_prefix /= Void and then l_ns_prefix.count > 0)
 		ensure
 			definition: Result = ({el_ns_prefix: like ns_prefix} ns_prefix and then el_ns_prefix.count > 0)
 		end
@@ -43,9 +46,7 @@ feature -- Status report
 			other_not_void: other /= Void
 		do
 			Result := ((not has_namespace) and (not other.has_namespace))
-				or (({l_namespace: like namespace} namespace and {l_other_namespace: like namespace} other.namespace)
-					and then l_namespace.is_equal (l_other_namespace))
---				or ((has_namespace and other.has_namespace) and then namespace.is_equal (other.namespace))				
+				or ((has_namespace and other.has_namespace) and then namespace ~ other.namespace)
 		ensure
 			equal_namespaces: Result implies (((not has_namespace) and (not other.has_namespace))
 				or else namespace.is_equal (other.namespace))

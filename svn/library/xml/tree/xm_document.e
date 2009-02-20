@@ -18,14 +18,14 @@ inherit
 		redefine
 			root_node
 		end
-
+		
 create
 
 	make,
 	make_with_root_named
 
 feature {NONE} -- Initialization
-
+	
 	make is
 			-- Create root node.
 		do
@@ -39,15 +39,15 @@ feature {NONE} -- Initialization
 			not_void: a_name /= Void
 			not_empty: a_name.count > 0
 		local
-			e: like root_element
+			l_root_element: like root_element
 		do
-			create e.make (Current, a_name, a_ns)
-			--| FIXME:jfiat maybe create an XM_ELEMENT without any parent, and initialize it later would help.
-			internal_root_element := e
+			create l_root_element.make_without_parent (a_name, a_ns)
+			root_element := l_root_element
+			l_root_element.set_parent (Current)
 			list_make
-			force_last (e)
+			force_last (l_root_element)
 		ensure
-			root_element_name_set: {r: like root_element} root_element and then r.name = a_name
+			root_element_name_set: root_element.name = a_name
 		end
 
 	Default_name: STRING is "root"
@@ -116,26 +116,12 @@ feature -- Access
 
 	root_element: XM_ELEMENT
 			-- Root element of current document
-		local
-			elt: like internal_root_element
-		do
-			elt := internal_root_element
-			check elt /= Void end
-			Result := elt
-		ensure
-			Result_not_void: Result /= Void
-		end
 
 	root_node: XM_DOCUMENT is
 			-- Root node.
 		do
 			Result := Current
 		end
-
-feature {NONE} -- Access
-
-	internal_root_element: ?like root_element
-			-- Cached value of root element of current document
 
 feature -- Setting
 
@@ -145,11 +131,11 @@ feature -- Setting
 			an_element_not_void: an_element /= Void
 		do
 			remove_previous_root_element
-			internal_root_element := an_element
+			root_element := an_element
 			force_last (an_element)
 		ensure
-			root_element_set: root_element = an_element
 			root_element_parent: an_element.parent = Current
+			root_element_set: root_element = an_element
 			last_set: last = root_element
 		end
 
@@ -159,16 +145,14 @@ feature {NONE} -- Implementation
 			-- Remove previous root element from composite:
 		local
 			a_cursor: like new_cursor
-			r: like root_element
 		do
-			r := root_element
 			from
 				a_cursor := new_cursor
 				a_cursor.start
 			until
 				a_cursor.after
 			loop
-				if a_cursor.item = r then
+				if a_cursor.item = root_element then
 					a_cursor.remove
 					a_cursor.go_after
 				else
@@ -176,7 +160,7 @@ feature {NONE} -- Implementation
 				end
 			end
 		end
-
+		
 feature -- Access
 
 	element_by_name (a_name: STRING): ?XM_ELEMENT is
@@ -190,7 +174,7 @@ feature -- Access
 		ensure then
 			root_element: has_element_by_name (a_name) implies Result = root_element
 		end
-
+		
 	element_by_qualified_name (a_uri: STRING; a_name: STRING): ?XM_ELEMENT is
 			-- Root element, if name matches, Void otherwise.
 		do
@@ -200,7 +184,7 @@ feature -- Access
 		ensure then
 			root_element: has_element_by_qualified_name (a_uri, a_name) implies Result = root_element
 		end
-
+		
 	has_element_by_name (a_name: STRING): BOOLEAN is
 			-- Has current node at least one direct child
 			-- element with the name `a_name'?
@@ -211,7 +195,7 @@ feature -- Access
 		ensure then
 			definition: Result = same_string (root_element.name, a_name)
 		end
-
+		
 	has_element_by_qualified_name (a_uri: STRING; a_name: STRING): BOOLEAN is
 			-- Is this the qualified name of the root element?
 		do
@@ -226,7 +210,7 @@ feature -- Text
 			-- Nothing to do in document.
 		do
 		end
-
+		
 feature -- Processing
 
 	process (a_processor: XM_NODE_PROCESSOR) is
@@ -234,9 +218,9 @@ feature -- Processing
 		do
 			a_processor.process_document (Current)
 		end
-
+		
 	process_to_events (a_filter: XM_CALLBACKS) is
-			-- Traverse the document and issue events
+			-- Traverse the document and issue events 
 			-- on event consumer.
 		require
 			a_filter_not_void: a_filter /= Void
@@ -248,8 +232,8 @@ feature -- Processing
 		end
 
 invariant
-
+	
 	root_element_not_void: root_element /= Void
 	--single_element: elements.count = 1
-
+	
 end

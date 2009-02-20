@@ -63,10 +63,10 @@ feature -- Result
 			-- File matching stream.
 
 	last_error: ?STRING
-			-- Error
+			-- Last error.
 
 	has_error: BOOLEAN is
-			-- Is there an error?
+			-- Is there an error.
 		do
 			Result := last_error /= Void
 		end
