@@ -278,7 +278,7 @@ feature -- Document
 				else
 					ok_to_filter := are_media_type_ignored
 					if not ok_to_filter then
-						l_media_type := media_type --| Should not be needed to reaccess attribute, but let's be safe
+						l_media_type := media_type
 						if l_media_type /= Void then
 							if has_media_type (l_media_type) then
 								ok_to_filter := True
@@ -408,7 +408,7 @@ feature -- Tag
 		do
 			if is_filtering and (not is_shorthand_found or is_shorthand_element) then
 				l_namespace_bindings := namespace_bindings
-				check l_namespace_bindings /= Void end -- implied by previous condition
+				check l_namespace_bindings /= Void end -- implied by `on_start_tag' already called and previous condition
 				if a_namespace = Void and a_prefix = Void and STRING_.same_string (Xmlns, a_local_part) then
 					l_namespace_bindings.bind ("", a_value)
 				elseif a_namespace = Void and a_prefix /= Void and then STRING_.same_string (Xmlns, a_prefix) then
@@ -472,7 +472,7 @@ feature -- Tag
 					l_pending_attribute_values /= Void and
 					l_pending_attribute_local_parts /= Void and
 					l_pending_attribute_prefixes /= Void
-				end -- implied by `not is_error'
+				end -- implied by `on_start_tag' already called and `not is_error'
 
 				if is_shorthand_found then
 					is_forwarding := True
@@ -506,7 +506,7 @@ feature -- Tag
 		do
 			if is_shorthand_element then
 				l_namespace_bindings_stack := namespace_bindings_stack
-				check l_namespace_bindings_stack /= Void end -- implied by the fact is_shorthand_found can be True only if `is_filtering'  FIXME:jfiat
+				check l_namespace_bindings_stack /= Void end -- implied by the fact is_shorthand_found can be True only if `is_filtering'
 				l_namespaces := l_namespace_bindings_stack.item
 				from
 					l_namespace_bindings_stack.remove
@@ -644,7 +644,7 @@ invariant
 	resolver_not_void: resolver /= Void
 	xpointer_error: is_error implies error_message /= Void
 	attribute_types_not_void: is_filtering implies attribute_types /= Void
-	acceptable_media_types: is_filtering implies {ot_acceptable_media_types: like acceptable_media_types} acceptable_media_types and then ot_acceptable_media_types.equality_tester = media_type_tester
+	acceptable_media_types: is_filtering implies {l_acceptable_media_types: like acceptable_media_types} acceptable_media_types and then l_acceptable_media_types.equality_tester = media_type_tester
 	namespace_bindings_stack_not_void: is_filtering implies namespace_bindings_stack /= Void
 	is_error_with_message: is_error implies error_message /= Void
 
