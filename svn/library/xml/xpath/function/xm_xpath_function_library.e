@@ -15,7 +15,7 @@ deferred class XM_XPATH_FUNCTION_LIBRARY
 inherit
 
 	ANY -- For SE 2.x, so that `is_equal' is exported
-	
+
 	XM_XPATH_SHARED_NAME_POOL
 		export {NONE} all end
 
@@ -25,7 +25,7 @@ inherit
 		-- In all cases, an arity value of -1 means ignore the arity
 		-- In all cases, if `is_restricted' is set to `True', then
 		--  only functions allowed within xsl:use-when are considered.
-	
+
 		-- The creation procedure MUST allocate name codes for all
 		--  functions in the library, if they are not already allocated,
 		--  as the expression parser will not bother to call
@@ -40,14 +40,14 @@ inherit
 feature -- Access
 
 	is_function_available (a_fingerprint, an_arity: INTEGER; is_restricted: BOOLEAN): BOOLEAN is
-			-- Does `a_fingerprint' represent an available function with `an_arity'? 
+			-- Does `a_fingerprint' represent an available function with `an_arity'?
 		require
 			valid_arity: an_arity > -2
 			strictly_positive_fingerprint: a_fingerprint > 0
 		deferred
 		end
 
-	last_bound_function: XM_XPATH_EXPRESSION
+	last_bound_function: ?XM_XPATH_EXPRESSION
 			-- Last function bound by `bind_function'
 
 feature -- Element change

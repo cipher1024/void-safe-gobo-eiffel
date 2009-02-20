@@ -53,7 +53,7 @@ feature -- Access
 	slot_manager: XM_XPATH_SLOT_MANAGER
 			-- Slot manager
 
-	variables: ARRAY [XM_XPATH_VALUE]
+	variables: ARRAY [?XM_XPATH_VALUE]
 			-- Local variables
 
 feature -- Element change
@@ -119,4 +119,4 @@ invariant
 	variables_not_void: variables /= Void
 
 end
-	
+

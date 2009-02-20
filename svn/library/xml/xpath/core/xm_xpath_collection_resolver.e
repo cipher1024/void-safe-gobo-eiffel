@@ -28,7 +28,7 @@ feature -- Status report
 			-- Does `Current' support registering scheme resolvers?
 		deferred
 		end
-	
+
 	was_error: BOOLEAN is
 			-- Was last call to `resolve' in error?
 		do
@@ -36,8 +36,8 @@ feature -- Status report
 		ensure
 			error: Result implies last_error /= Void
 		end
-	
-	last_collection: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE] is
+
+	last_collection: ?XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE] is
 			-- Last collection retrieved by `resolve'
 		require
 			no_error: not was_error
@@ -46,7 +46,7 @@ feature -- Status report
 			iterator_at_start: Result /= Void and then Result.before
 		end
 
-	last_error: XM_XPATH_ERROR_VALUE is
+	last_error: ?XM_XPATH_ERROR_VALUE is
 			-- Last error set by `resolve'
 		deferred
 		ensure
@@ -56,7 +56,7 @@ feature -- Status report
 		end
 
 feature -- Element change
-	
+
 	resolve (a_uri: UT_URI; a_context: XM_XPATH_CONTEXT) is
 			-- Resolve `a_uri' to a sequence of nodes.
 		require

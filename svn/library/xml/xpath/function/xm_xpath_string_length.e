@@ -87,7 +87,7 @@ feature -- Status setting
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations.
 		do
 			use_context_item_as_default
@@ -96,7 +96,7 @@ feature -- Optimization
 
 feature -- Evaluation
 
-	evaluate_item (a_result: DS_CELL [XM_XPATH_ITEM]; a_context: XM_XPATH_CONTEXT) is
+	evaluate_item (a_result: DS_CELL [?XM_XPATH_ITEM]; a_context: ?XM_XPATH_CONTEXT) is
 			-- Evaluate as a single item to `a_result'.
 		local
 			l_atomic_value: XM_XPATH_ATOMIC_VALUE

@@ -64,7 +64,7 @@ feature -- Status report
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations
 		do
 			if arguments.count = 1 then
@@ -76,7 +76,7 @@ feature -- Optimization
 
 feature -- Evaluation
 
-	evaluate_item (a_result: DS_CELL [XM_XPATH_ITEM]; a_context: XM_XPATH_CONTEXT) is
+	evaluate_item (a_result: DS_CELL [?XM_XPATH_ITEM]; a_context: ?XM_XPATH_CONTEXT) is
 			-- Evaluate as a single item to `a_result'.
 		local
 			l_date_value: XM_XPATH_DATE_VALUE
@@ -116,7 +116,7 @@ feature -- Evaluation
 			end
 		end
 
-	pre_evaluate (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
+	pre_evaluate (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
 			-- Pre-evaluate `Current' at compile time.
 		do
 			a_replacement.put (Current)

@@ -67,12 +67,12 @@ feature -- Status report
 					create Result.make_string_sequence
 			when 2 then
 				create Result.make_single_node
-			end	
+			end
 		end
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations
 		do
 			Precursor (a_replacement)
@@ -84,14 +84,14 @@ feature -- Optimization
 
 feature -- Evaluation
 
-	create_iterator (a_context: XM_XPATH_CONTEXT) is
+	create_iterator (a_context: ?XM_XPATH_CONTEXT) is
 			-- Create iterator over values of a sequence.
 		local
 			l_idrefs: DS_ARRAYED_LIST [STRING]
 			l_node: XM_XPATH_NODE
 			l_splitter: ST_SPLITTER
 			l_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ITEM]
-			l_result: DS_CELL [XM_XPATH_ITEM]
+			l_result: DS_CELL [?XM_XPATH_ITEM]
 		do
 			last_iterator := Void
 			create l_result.make (Void)
@@ -128,16 +128,16 @@ feature -- Evaluation
 						" the tree being searched must be one whose root is a document node", Xpath_errors_uri, "FODC0001", Dynamic_error)
 				end
 			end
-		end	
+		end
 
-	create_node_iterator (a_context: XM_XPATH_CONTEXT) is
+	create_node_iterator (a_context: ?XM_XPATH_CONTEXT) is
 			-- Create iterator over nodes of a sequence.
 		local
 			l_idrefs: DS_ARRAYED_LIST [STRING]
 			l_node: XM_XPATH_NODE
 			l_splitter: ST_SPLITTER
 			l_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ITEM]
-			l_result: DS_CELL [XM_XPATH_ITEM]
+			l_result: DS_CELL [?XM_XPATH_ITEM]
 		do
 			last_node_iterator := Void
 			create l_result.make (Void)
@@ -176,7 +176,7 @@ feature -- Evaluation
 			end
 		end
 
-	pre_evaluate (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
+	pre_evaluate (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
 			-- Pre-evaluate `Current' at compile time.
 		do
 			a_replacement.put (Current)
@@ -184,10 +184,10 @@ feature -- Evaluation
 
 feature {XM_XPATH_FUNCTION_CALL} -- Local
 
-	check_arguments (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
+	check_arguments (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
 			-- Check arguments during parsing, when all the argument expressions have been read.
 		local
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 		do
 			Precursor (a_replacement, a_context)
 			if a_replacement.item = Void then
@@ -220,4 +220,4 @@ feature {XM_XPATH_EXPRESSION} -- Restricted
 		end
 
 end
-	
+

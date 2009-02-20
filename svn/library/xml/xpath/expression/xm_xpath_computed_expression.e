@@ -41,7 +41,7 @@ inherit
 		export {NONE} all end
 
 feature -- Access
-	
+
 	is_computed_expression: BOOLEAN is
 			-- Is `Current' a computed expression?
 		do
@@ -115,11 +115,11 @@ feature -- Access
 
 			-- Default implementation returns an empty list;
 			-- Suitable for an expression without sub-expressions.
-			
+
 			create Result.make_default
 			Result.set_equality_tester (expression_tester)
 		end
-	
+
 	container: XM_XPATH_EXPRESSION_CONTAINER is
 			-- Containing parent
 		do
@@ -275,7 +275,7 @@ feature -- Status setting
 		ensure
 			computed: are_intrinsic_dependencies_computed
 		end
-			
+
 	compute_dependencies is
 			-- Compute dependencies on context.
 			-- This default implementation computes them as
@@ -319,7 +319,7 @@ feature -- Status setting
 			intrinsic_computed: are_intrinsic_dependencies_computed
 			computed: are_dependencies_computed
 		end
- 
+
 	reset_static_properties is
 			-- Re-compute all static properties.
 		require
@@ -349,26 +349,26 @@ feature -- Status setting
 				error_value.set_location (l_id, line_number)
 			end
 		end
-			
+
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations
 		do
 			-- do nothing
 			a_replacement.put (Current)
 		end
 
-	promote (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
+	promote (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
 			-- Promote this subexpression.
 		do
 			-- do nothing
 			a_replacement.put (Current)
 		end
-	
+
 feature -- Evaluation
 
-	evaluate_item (a_result: DS_CELL [XM_XPATH_ITEM]; a_context: XM_XPATH_CONTEXT) is
+	evaluate_item (a_result: DS_CELL [?XM_XPATH_ITEM]; a_context: ?XM_XPATH_CONTEXT) is
 			-- Evaluate as a single item to `a_result'.
 		do
 			create_iterator (a_context)
@@ -386,10 +386,10 @@ feature -- Evaluation
 			end
 		end
 
-	evaluate_as_string (a_context: XM_XPATH_CONTEXT) is
+	evaluate_as_string (a_context: ?XM_XPATH_CONTEXT) is
 			-- Evaluate `Current' as a String
 		local
-			l_result: DS_CELL [XM_XPATH_ITEM]
+			l_result: DS_CELL [?XM_XPATH_ITEM]
 		do
 			create l_result.make (Void)
 			evaluate_item (l_result, a_context)
@@ -405,13 +405,13 @@ feature -- Evaluation
 			end
 		end
 
-	create_iterator (a_context: XM_XPATH_CONTEXT) is
+	create_iterator (a_context: ?XM_XPATH_CONTEXT) is
 			-- Iterator over the values of a sequence
 		local
-			l_result: DS_CELL [XM_XPATH_ITEM]
+			l_result: DS_CELL [?XM_XPATH_ITEM]
 		do
 			create l_result.make (Void)
-			
+
 			-- The value of every expression can be regarded as a sequence, s
 			--  so this routine is supported for all expressions.
 			-- This default implementation handles iteration for expressions that
@@ -427,19 +427,19 @@ feature -- Evaluation
 			elseif l_result.item.is_error then
 				create {XM_XPATH_INVALID_ITERATOR} last_iterator.make (l_result.item.error_value)
 			elseif l_result.item.is_node then
-				create {XM_XPATH_SINGLETON_NODE_ITERATOR} last_iterator.make (l_result.item.as_node) 
+				create {XM_XPATH_SINGLETON_NODE_ITERATOR} last_iterator.make (l_result.item.as_node)
 			else
-				create {XM_XPATH_SINGLETON_ITERATOR [XM_XPATH_ITEM]} last_iterator.make (l_result.item) 
+				create {XM_XPATH_SINGLETON_ITERATOR [XM_XPATH_ITEM]} last_iterator.make (l_result.item)
 			end
 		end
-	
-	create_node_iterator (a_context: XM_XPATH_CONTEXT) is
+
+	create_node_iterator (a_context: ?XM_XPATH_CONTEXT) is
 			-- Create an iterator over a node sequence.
 		local
-			l_result: DS_CELL [XM_XPATH_ITEM]
+			l_result: DS_CELL [?XM_XPATH_ITEM]
 		do
 			create l_result.make (Void)
-				
+
 			-- The value of every expression can be regarded as a sequence, s
 			--  so this routine is supported for all expressions.
 			-- This default implementation handles iteration for expressions that
@@ -455,14 +455,14 @@ feature -- Evaluation
 			elseif l_result.item.is_error then
 				create {XM_XPATH_INVALID_NODE_ITERATOR} last_node_iterator.make (l_result.item.error_value)
 			else
-				create {XM_XPATH_SINGLETON_NODE_ITERATOR} last_node_iterator.make (l_result.item.as_node) 
-			end		
+				create {XM_XPATH_SINGLETON_NODE_ITERATOR} last_node_iterator.make (l_result.item.as_node)
+			end
 		end
 
 	generate_events (a_context: XM_XPATH_CONTEXT) is
 			-- Execute `Current' completely, writing results to the current `XM_XPATH_RECEIVER'.
 		local
-			l_result: DS_CELL [XM_XPATH_ITEM]
+			l_result: DS_CELL [?XM_XPATH_ITEM]
 			l_error_value: XM_XPATH_ERROR_VALUE
 		do
 			if is_evaluate_supported then
@@ -507,7 +507,7 @@ feature -- Evaluation
 			end
 		end
 
-	processed_eager_evaluation (a_context: XM_XPATH_CONTEXT): XM_XPATH_VALUE is
+	processed_eager_evaluation (a_context: ?XM_XPATH_CONTEXT): XM_XPATH_VALUE is
 			-- Eager evaluation via `generate_events'
 		do
 			check
@@ -701,11 +701,11 @@ feature {XM_XPATH_CLOSURE} -- Restricted
 		end
 
 feature {NONE} -- Implementation
-	
-	parent: XM_XPATH_EXPRESSION_CONTAINER
+
+	parent: ?XM_XPATH_EXPRESSION_CONTAINER
 			-- Containing parent
 
-	cached_slots_used: DS_ARRAYED_LIST [INTEGER]
+	cached_slots_used: ?DS_ARRAYED_LIST [INTEGER]
 			-- Cached result of `slots_used'
 
 	line_number_mask: INTEGER is
@@ -723,4 +723,4 @@ invariant
 		parent_not_current: parent /= Void implies not (ANY_.same_objects (Current, parent))
 
 end
-	
+

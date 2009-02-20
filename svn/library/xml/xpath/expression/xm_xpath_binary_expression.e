@@ -52,9 +52,9 @@ feature -- Access
 	operator: INTEGER
 			-- The operation, as a token number
 
-	first_operand, second_operand: XM_XPATH_EXPRESSION
+	first_operand, second_operand: ?XM_XPATH_EXPRESSION
 			-- The two operands
-	
+
 	is_binary_expression: BOOLEAN is
 			-- Is `Current' a binary expression?
 		do
@@ -138,10 +138,10 @@ feature -- Status report
 
 feature -- Optimization	
 
-	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations
 		local
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			first_operand.simplify (l_replacement)
@@ -163,11 +163,11 @@ feature -- Optimization
 			end
 		end
 
-	check_static_type (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
+	check_static_type (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
 			-- Perform static type-checking of `Current' and its subexpressions.
 		local
-			l_result: DS_CELL [XM_XPATH_ITEM]
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_result: DS_CELL [?XM_XPATH_ITEM]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			first_operand.check_static_type (l_replacement, a_context, a_context_item_type)
@@ -209,11 +209,11 @@ feature -- Optimization
 			end
 		end
 
-	optimize (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
+	optimize (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
 			-- Perform optimization of `Current' and its subexpressions.
 		local
-			l_result: DS_CELL [XM_XPATH_ITEM]
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_result: DS_CELL [?XM_XPATH_ITEM]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			first_operand.optimize (l_replacement, a_context, a_context_item_type)
@@ -229,7 +229,7 @@ feature -- Optimization
 					set_second_operand (l_replacement.item)
 
 					-- If both operands are known, [[and result is a singleton??]], pre-evaluate the expression
-					
+
 					if first_operand.is_value and not first_operand.depends_upon_implicit_timezone
 						and second_operand.is_value and not second_operand.depends_upon_implicit_timezone
 						and not cardinality_allows_many then
@@ -246,17 +246,17 @@ feature -- Optimization
 							a_replacement.put (Current)
 						end
 					else
-						a_replacement.put (Current)						
+						a_replacement.put (Current)
 					end
 				end
 			end
 		end
 
-	promote (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
+	promote (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
 			-- Promote this subexpression.
 		local
 			l_promotion: XM_XPATH_EXPRESSION
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 		do
 			a_offer.accept (Current)
 			l_promotion := a_offer.accepted_expression
@@ -343,4 +343,4 @@ invariant
 	second_operand: initialized implies second_operand /= Void
 
 end
-	
+

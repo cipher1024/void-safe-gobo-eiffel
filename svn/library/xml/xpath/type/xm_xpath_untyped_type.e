@@ -22,7 +22,7 @@ inherit
 create
 
 	make
-	
+
 feature {NONE} -- Initialization
 
 	make is
@@ -43,7 +43,7 @@ feature -- Access
 
 	matches_item (a_item: XM_XPATH_ITEM; a_treat_uri_as_string: BOOLEAN): BOOLEAN is
 			-- Does `a_item' conform to `Current'?
-		
+
 		do
 			Result := is_same_type (a_item.item_type)
 		end
@@ -87,7 +87,7 @@ feature -- Comparison
 		end
 
 feature -- Conversion
-	
+
 	conventional_name: STRING is
 			-- Representation of this type name for use in error messages
 		do
@@ -95,4 +95,4 @@ feature -- Conversion
 		end
 
 end
-	
+

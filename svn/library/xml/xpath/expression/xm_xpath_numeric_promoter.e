@@ -59,7 +59,7 @@ feature -- Access
 		do
 			Result := Current
 		end
-	
+
 	item_type: XM_XPATH_ITEM_TYPE is
 			-- Determine the data type of the expression, if possible
 		do
@@ -83,17 +83,17 @@ feature -- Comparison
 		do
 			if other.is_numeric_promoter then
 				other_promoter := other.as_numeric_promoter
-				Result := base_expression.same_expression (other_promoter.base_expression) 
+				Result := base_expression.same_expression (other_promoter.base_expression)
 					and then other_promoter.required_type = required_type
 			end
 		end
-	
+
 feature -- Optimization	
-	
-	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
+
+	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations.
 		local
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			base_expression.simplify (l_replacement)
@@ -116,10 +116,10 @@ feature -- Optimization
 			end
 		end
 
-	check_static_type (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
+	check_static_type (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
 			-- Perform static type-checking of `Current' and its subexpressions.
 		local
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			base_expression.check_static_type (l_replacement, a_context, a_context_item_type)
@@ -133,10 +133,10 @@ feature -- Optimization
 			end
 		end
 
-	optimize (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
+	optimize (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
 			-- Perform optimization of `Current' and its subexpressions.
 		local
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			base_expression.optimize (l_replacement, a_context, a_context_item_type)
@@ -152,7 +152,7 @@ feature -- Optimization
 
 feature -- Evaluation
 
-	evaluate_item (a_result: DS_CELL [XM_XPATH_ITEM]; a_context: XM_XPATH_CONTEXT) is
+	evaluate_item (a_result: DS_CELL [?XM_XPATH_ITEM]; a_context: ?XM_XPATH_CONTEXT) is
 			-- Evaluate as a single item to `a_result'.
 		do
 			base_expression.evaluate_item (a_result, a_context)
@@ -166,7 +166,7 @@ feature -- Evaluation
 			end
 		end
 
-	create_iterator (a_context: XM_XPATH_CONTEXT) is
+	create_iterator (a_context: ?XM_XPATH_CONTEXT) is
 			-- An iterator over the values of a sequence
 		local
 			an_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ITEM]
@@ -179,11 +179,11 @@ feature -- Evaluation
 				create {XM_XPATH_MAPPING_ITERATOR} last_iterator.make (an_iterator, Current, Void)
 			end
 		end
-	
-	map (a_item: XM_XPATH_ITEM; a_context: XM_XPATH_CONTEXT) is
+
+	map (a_item: XM_XPATH_ITEM; a_context: ?XM_XPATH_CONTEXT) is
 			-- Map `an_item' to a sequence
 		local
-			l_result: DS_CELL [XM_XPATH_ITEM]
+			l_result: DS_CELL [?XM_XPATH_ITEM]
 		do
 			if a_item.is_error then
 				create last_mapped_item.make_item (a_item)
@@ -198,7 +198,7 @@ feature -- Evaluation
 		end
 
 feature {XM_XPATH_EXPRESSION} -- Restricted
-	
+
 	display_operator: STRING is
 			-- Format `operator' for display
 		do
@@ -207,7 +207,7 @@ feature {XM_XPATH_EXPRESSION} -- Restricted
 
 feature {NONE} -- Implementation
 
-	promote_number (a_result: DS_CELL [XM_XPATH_ITEM]) is
+	promote_number (a_result: DS_CELL [?XM_XPATH_ITEM]) is
 			-- Promote of `an_atomic_value'.
 		require
 			a_result_not_void: a_result /= Void

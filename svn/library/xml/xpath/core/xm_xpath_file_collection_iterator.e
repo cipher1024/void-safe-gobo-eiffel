@@ -21,7 +21,7 @@ inherit
 
 	XM_XPATH_ERROR_TYPES
 		export {NONE} all end
-	
+
 	UT_SHARED_URL_ENCODING
 		export {NONE} all end
 
@@ -51,7 +51,7 @@ feature {NONE} -- Initialization
 
 feature -- Access
 
-	item: XM_XPATH_NODE
+	item: ?XM_XPATH_NODE
 			-- Value or node at the current position
 
 feature -- Status report
@@ -76,7 +76,7 @@ feature -- Cursor movement
 				if position <= size then
 					a_file_name := entries.item (position)
 					if not Url_encoding.has_excluded_characters (a_file_name) then
-						
+
 						-- for now, we just ignore errors, continuing around the loop
 
 						create a_file_uri.make_resolve (base_uri, a_file_name)
@@ -130,4 +130,4 @@ invariant
 	saved_context_not_void: saved_context /= Void
 
 end
-	
+

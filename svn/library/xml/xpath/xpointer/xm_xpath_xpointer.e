@@ -80,7 +80,7 @@ feature -- Access
 			end
 		end
 
-	value: XM_XPATH_VALUE
+	value: ?XM_XPATH_VALUE
 			-- Evaluation result;
 			-- Usually a node sequence, but can be more general
 			-- (For instance, the xpointer scheme includes points and ranges).
@@ -172,14 +172,14 @@ feature -- Element change
 		ensure
 			scheme_registered: is_registered (a_scheme.expanded_name) and then registered_schemes.item (a_scheme.expanded_name) = a_scheme
 		end
-	
+
 feature {NONE} -- Implementation
 
 	registered_schemes: DS_HASH_TABLE [XM_XPATH_XPOINTER_SCHEME, STRING]
 			-- Registered scheme processors, indexed by expanded-name
 
 	namespace_bindings: XM_XPOINTER_NAMESPACE_CONTEXT
-	
+
 invariant
 
 	registered_schemes_not_void: registered_schemes /= Void

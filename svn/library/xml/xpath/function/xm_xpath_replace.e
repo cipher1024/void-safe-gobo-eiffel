@@ -72,7 +72,7 @@ feature -- Status report
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations
 		local
 			n: INTEGER
@@ -92,7 +92,7 @@ feature -- Optimization
 		
 feature -- Evaluation
 
-	evaluate_item (a_result: DS_CELL [XM_XPATH_ITEM]; a_context: XM_XPATH_CONTEXT) is
+	evaluate_item (a_result: DS_CELL [?XM_XPATH_ITEM]; a_context: ?XM_XPATH_CONTEXT) is
 			-- Evaluate as a single item to `a_result'.
 		local
 			l_input_string, l_pattern_string, l_flags_string: STRING
@@ -182,7 +182,7 @@ feature {NONE} -- Implementation
 	any_captures: BOOLEAN
 			-- Were any captured-substring replacement requests detected.
 
-	check_replacement_string (a_result: DS_CELL [XM_XPATH_ITEM]) is
+	check_replacement_string (a_result: DS_CELL [?XM_XPATH_ITEM]) is
 			-- Check `replacement_string' conforms to required format.
 			-- Captured-substring replacement syntax is modified for pcre -
 			--  i.e. $n is replaced by \n\ .
@@ -281,7 +281,7 @@ feature {NONE} -- Implementation
 			end
 		end
 			
-	evaluate_replacement (a_result: DS_CELL [XM_XPATH_ITEM]; a_input_string: STRING) is
+	evaluate_replacement (a_result: DS_CELL [?XM_XPATH_ITEM]; a_input_string: STRING) is
 			-- Ensure subject and replacement strings are same type, then evaluate.
 		require
 			a_result_not_void: a_result /= Void
@@ -315,7 +315,7 @@ feature {NONE} -- Implementation
 		end
 
 
-	fetch_regular_expression (a_result: DS_CELL [XM_XPATH_ITEM]; a_pattern_string, a_flags_string: STRING) is
+	fetch_regular_expression (a_result: DS_CELL [?XM_XPATH_ITEM]; a_pattern_string, a_flags_string: STRING) is
 			-- Fetch regular expression.
 		require
 			a_result_not_void: a_result /= Void
@@ -346,7 +346,7 @@ feature {NONE} -- Implementation
 			regexp_set: a_result.item = Void implies regexp /= Void
 		end
 
-	fetch_replacement_string  (a_result: DS_CELL [XM_XPATH_ITEM]; a_context: XM_XPATH_CONTEXT) is
+	fetch_replacement_string  (a_result: DS_CELL [?XM_XPATH_ITEM]; a_context: ?XM_XPATH_CONTEXT) is
 			-- Fetch replacement string.
 		require
 			a_result_not_void: a_result /= Void

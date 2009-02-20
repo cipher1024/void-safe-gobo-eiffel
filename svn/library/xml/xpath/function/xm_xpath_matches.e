@@ -74,7 +74,7 @@ feature -- Status report
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations
 		local
 			n: INTEGER
@@ -90,10 +90,10 @@ feature -- Optimization
 				end
 			end
 		end
-		
+
 feature -- Evaluation
 
-	evaluate_item (a_result: DS_CELL [XM_XPATH_ITEM]; a_context: XM_XPATH_CONTEXT) is
+	evaluate_item (a_result: DS_CELL [?XM_XPATH_ITEM]; a_context: ?XM_XPATH_CONTEXT) is
 			-- Evaluate as a single item to `a_result'.
 		local
 			l_input_string: STRING
@@ -129,7 +129,7 @@ feature {NONE} -- Implementation
 	regexp: RX_PCRE_REGULAR_EXPRESSION
 			-- Regular expression
 
-	compile_regexp (a_result: DS_CELL [XM_XPATH_ITEM]; a_context: XM_XPATH_CONTEXT) is
+	compile_regexp (a_result: DS_CELL [?XM_XPATH_ITEM]; a_context: XM_XPATH_CONTEXT) is
 			-- Compile and execute `regexp' at evaluation time
 		require
 			a_result_not_void: a_result /= Void
@@ -190,6 +190,6 @@ feature {NONE} -- Implementation
 			regexp_not_void: a_result.item = Void implies regexp /= Void
 			error: a_result.item /= Void implies a_result.item.is_error
 		end
-	
+
 end
-	
+

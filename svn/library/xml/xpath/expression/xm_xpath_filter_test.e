@@ -39,11 +39,11 @@ feature -- Access
 	base_iterator: XM_XPATH_SEQUENCE_ITERATOR [G]
 			-- The underlying iterator
 
-	error_value: XM_XPATH_ERROR_VALUE is
+	error_value: ?XM_XPATH_ERROR_VALUE is
 			-- Error value
 		deferred
 		end
-	
+
 feature -- Status report
 
 	is_error: BOOLEAN is

@@ -178,7 +178,7 @@ feature {NONE} -- Implementation
 	last_parsed_duration: STRING
 			-- Last sucessfully parsed duration
 
-	last_cached_duration: DT_DATE_TIME_DURATION
+	last_cached_duration: ?DT_DATE_TIME_DURATION
 			-- Cached result from sucessfull call to `is_duration', `is_months_duration' or `is_seconds_duration'
 
 	is_negative: BOOLEAN
@@ -286,7 +286,7 @@ feature {NONE} -- Implementation
 			duration_not_void: a_duration /= Void
 		local
 			a_string: STRING
-			an_index, a_time_designator: INTEGER			
+			an_index, a_time_designator: INTEGER
 		do
 			if a_duration.is_empty then
 				Result := any_designator_found
@@ -325,7 +325,7 @@ feature {NONE} -- Implementation
 			duration_not_void: a_duration /= Void
 		local
 			a_string: STRING
-			an_index: INTEGER			
+			an_index: INTEGER
 		do
 			if a_duration.is_empty then
 				Result := any_designator_found
@@ -341,7 +341,7 @@ feature {NONE} -- Implementation
 					if Result then
 						current_month := a_string.to_integer
 						if is_negative then current_month := 0 - current_month end
-						create last_cached_duration.make (current_year, current_month, 0, 0, 0, 0)					
+						create last_cached_duration.make (current_year, current_month, 0, 0, 0, 0)
 					end
 				end
 			end
@@ -353,7 +353,7 @@ feature {NONE} -- Implementation
 			duration_not_void: a_duration /= Void
 		local
 			a_string: STRING
-			an_index: INTEGER			
+			an_index: INTEGER
 		do
 			if a_duration.is_empty then
 				Result := any_designator_found
@@ -384,7 +384,7 @@ feature {NONE} -- Implementation
 			duration_not_void: a_duration /= Void
 		local
 			a_string: STRING
-			an_index: INTEGER			
+			an_index: INTEGER
 		do
 			if a_duration.is_empty then
 				Result := any_designator_found
@@ -418,7 +418,7 @@ feature {NONE} -- Implementation
 			duration_not_void: a_duration /= Void
 		local
 			a_string: STRING
-			an_index: INTEGER			
+			an_index: INTEGER
 		do
 			if a_duration.is_empty then
 				Result := any_designator_found
@@ -500,6 +500,6 @@ feature {NONE} -- Implementation
 invariant
 
 	last_parsed_duration_not_void: last_parsed_duration /= Void
-	
+
 end
-	
+

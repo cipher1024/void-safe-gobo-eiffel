@@ -24,7 +24,7 @@ inherit
 
 feature -- Access
 
-	item: G is
+	item: ?G is
 			-- Value or node at the current position
 		require
 			not_in_error: not is_error
@@ -36,10 +36,10 @@ feature -- Access
 			-- The position of the current item;
 			-- This will be zero after creation of the iterator
 
-	error_value: XM_XPATH_ERROR_VALUE
+	error_value: ?XM_XPATH_ERROR_VALUE
 			-- Last error
 
-	last_realized_value: XM_XPATH_VALUE
+	last_realized_value: ?XM_XPATH_VALUE
 			-- Result from calling `realize'
 
 	last_position: INTEGER is
@@ -55,12 +55,12 @@ feature -- Access
 	reverse_iterator: XM_XPATH_SEQUENCE_ITERATOR [G] is
 			-- Iterator over same sequence as `Current', but in reverse order
 		require
-			reversible_iterator: is_reversible_iterator			
+			reversible_iterator: is_reversible_iterator
 		do
 		ensure
 			reverse_iterator_not_void: Result /= Void
 		end
-	
+
 feature -- Status report
 
 	before: BOOLEAN is
@@ -181,7 +181,7 @@ feature -- Cursor movement
 			not_before: not is_error implies not before
 			error_free: is_invulnerable implies not is_error
 		end
-			
+
 	forth is
 			-- Move to next position
 		require
@@ -275,4 +275,4 @@ invariant
 	off_or_valid_item: not is_error and then not off implies item /= Void
 
 end
-	
+

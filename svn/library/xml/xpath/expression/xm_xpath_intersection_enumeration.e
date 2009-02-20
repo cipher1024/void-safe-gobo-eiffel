@@ -53,7 +53,7 @@ feature {NONE} -- Initialization
 		end
 
 feature -- Access
-	
+
 	item: XM_XPATH_NODE
 			-- Value or node at the current position
 
@@ -137,7 +137,7 @@ feature -- Cursor movement
 						item := Void
 					else
 						second_node := second_iterator.item
-					end					
+					end
 				end
 			end
 		end
@@ -161,12 +161,12 @@ feature {NONE} -- Implementation
 	comparer: XM_XPATH_GLOBAL_ORDER_COMPARER
 			-- Comparer
 
-	first_node: XM_XPATH_NODE
+	first_node: ?XM_XPATH_NODE
 			-- Last inspected node from `first_iterator'
-	
-	second_node: XM_XPATH_NODE
+
+	second_node: ?XM_XPATH_NODE
 			-- Last inspected node from `second_iterator'
-	
+
 invariant
 
 	first_iterator_not_void: first_iterator /= Void

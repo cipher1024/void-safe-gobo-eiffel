@@ -129,7 +129,7 @@ feature {NONE} -- Implementation
 	context: XM_XPATH_CONTEXT
 			-- Dynamic context
 
-	child_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE]
+	child_iterator: ?XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE]
 			-- Iterator over current child
 
 	child_index: INTEGER

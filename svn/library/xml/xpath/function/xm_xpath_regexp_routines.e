@@ -33,11 +33,11 @@ feature {NONE} -- Implementation
 
 	is_empty_match_ok: BOOLEAN
 			-- Is matching the empty string OK?
-	
-	regexp_cache_entry: XM_XPATH_REGEXP_CACHE_ENTRY
+
+	regexp_cache_entry: ?XM_XPATH_REGEXP_CACHE_ENTRY
 			-- Cached regular expression
 
-	regexp_error_value: XM_XPATH_ERROR_VALUE
+	regexp_error_value: ?XM_XPATH_ERROR_VALUE
 			-- Possible error set by `try_to_compile'
 
 	tolerate_empty_string_match is
@@ -90,6 +90,6 @@ feature {NONE} -- Implementation
 				end
 			end
 		end
-	
+
 end
-	
+

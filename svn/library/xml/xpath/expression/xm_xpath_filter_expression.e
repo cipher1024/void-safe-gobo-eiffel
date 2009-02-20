@@ -179,12 +179,12 @@ feature -- Status setting
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations
 		local
 			l_boolean_value: XM_XPATH_BOOLEAN_VALUE
 			l_is_last_expression: XM_XPATH_IS_LAST_EXPRESSION
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			base_expression.simplify (l_replacement)
@@ -235,12 +235,12 @@ feature -- Optimization
 			end
 		end
 	
-	check_static_type (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
+	check_static_type (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
 			-- Perform static type-checking of `Current' and its subexpressions.
 		local
 			l_position_range: XM_XPATH_POSITION_RANGE
 			l_min, l_max: INTEGER
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			base_expression.check_static_type (l_replacement, a_context, a_context_item_type)
@@ -285,10 +285,10 @@ feature -- Optimization
 			end
 		end
 
-	optimize (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
+	optimize (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
 			-- Perform optimization of `Current' and its subexpressions.
 		local
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 			l_position_range: XM_XPATH_POSITION_RANGE
 			l_min, l_max: INTEGER
 		do
@@ -335,11 +335,11 @@ feature -- Optimization
 			end
 		end
 
-	promote (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
+	promote (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
 			-- Promote this subexpression.
 		local
 			l_promotion: XM_XPATH_EXPRESSION
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 		do
 			a_offer.accept (Current)
 			l_promotion := a_offer.accepted_expression
@@ -372,7 +372,7 @@ feature -- Optimization
 
 feature -- Evaluation
 
-	create_iterator (a_context: XM_XPATH_CONTEXT) is
+	create_iterator (a_context: ?XM_XPATH_CONTEXT) is
 			-- Create an iterator over the values of a sequence
 		local
 			l_position_range: XM_XPATH_POSITION_RANGE
@@ -429,7 +429,7 @@ feature -- Evaluation
 			end
 		end
 
-	create_node_iterator (a_context: XM_XPATH_CONTEXT) is
+	create_node_iterator (a_context: ?XM_XPATH_CONTEXT) is
 			-- Create an iterator over a node sequence
 		local
 			l_position_range: XM_XPATH_POSITION_RANGE
@@ -581,7 +581,7 @@ feature {NONE} -- Implementation
 
 	
 	create_constant_value_iterator (a_number: XM_XPATH_NUMERIC_VALUE; a_base_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ITEM];
-											  a_context: XM_XPATH_CONTEXT) is
+											  a_context: ?XM_XPATH_CONTEXT) is
 			-- Create an iterator over a constant numeric value
 		require
 			base_iterator_before: a_base_iterator /= void and then not a_base_iterator.is_error and then a_base_iterator.before
@@ -622,7 +622,7 @@ feature {NONE} -- Implementation
 			end
 		end
 
-	optimize_positional_filter (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
+	optimize_positional_filter (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
 			-- Determine whether the filter might depend on position.
 		require
 			context_not_void: a_context /= Void
@@ -633,7 +633,7 @@ feature {NONE} -- Implementation
 			l_expression, l_third_expression: XM_XPATH_EXPRESSION
 			l_filter, l_other_filter: XM_XPATH_FILTER_EXPRESSION
 			l_boolean_filter: XM_XPATH_BOOLEAN_EXPRESSION
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 		do
 			filter_is_positional := is_positional_filter (filter)
 			is_singleton_boolean_filter := filter.cardinality_exactly_one and filter.item_type.is_same_type (type_factory.boolean_type)
@@ -670,8 +670,8 @@ feature {NONE} -- Implementation
 			end
 		end
 
-	promote_sub_expressions  (a_replacement: DS_CELL [XM_XPATH_EXPRESSION];
-		a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is				
+	promote_sub_expressions  (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION];
+		a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is				
 			-- This causes them to be evaluated once, outside the path  expression.
 		require
 			not_in_error: not is_error
@@ -682,7 +682,7 @@ feature {NONE} -- Implementation
 		local
 			l_offer: XM_XPATH_PROMOTION_OFFER
 			l_let_expression: XM_XPATH_LET_EXPRESSION
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
 		do
 			create l_offer.make (Focus_independent, Void, Current, False, base_expression.context_document_nodeset)
 			create l_replacement.make (Void)

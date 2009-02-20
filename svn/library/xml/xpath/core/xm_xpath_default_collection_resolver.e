@@ -45,7 +45,7 @@ feature {NONE} -- Initialization
 			create a_file_resolver.make (a_configuration)
 			register_scheme (a_file_resolver)
 		end
-		
+
 feature -- Status report
 
 	supports_registering_schemes: BOOLEAN is
@@ -54,14 +54,14 @@ feature -- Status report
 			Result := True
 		end
 
-	last_collection: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE]
+	last_collection: ?XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE]
 			-- Last collection retrieved by `resolve'
 
-	last_error: XM_XPATH_ERROR_VALUE
+	last_error: ?XM_XPATH_ERROR_VALUE
 			-- Last error set by `resolve'
 
 feature -- Element change
-	
+
 	resolve (a_uri: UT_URI; a_context: XM_XPATH_CONTEXT) is
 			-- Resolve `a_uri' to a sequence of nodes.
 		local
