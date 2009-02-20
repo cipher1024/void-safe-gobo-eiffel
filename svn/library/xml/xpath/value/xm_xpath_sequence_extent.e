@@ -107,7 +107,7 @@ feature {NONE} -- Initialization
 			-- Create from a list of items.
 		require
 			list_not_void: a_list /= Void
-			no_void_items: not a_list.has_void
+			no_void_items: not a_list.has (Void)
 		do
 			make_value
 			make_from_linear (a_list)
@@ -254,7 +254,7 @@ feature -- Status report
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations.
 		local
 			l_count: INTEGER
@@ -280,7 +280,7 @@ feature -- Optimization
 	reduce is
 			-- Reduce a value to its simplest form.
 		local
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			simplify (l_replacement)
@@ -301,7 +301,7 @@ feature -- Optimization
 
 feature -- Evaluation
 
-	calculate_effective_boolean_value (a_context: ?XM_XPATH_CONTEXT) is
+	calculate_effective_boolean_value (a_context: XM_XPATH_CONTEXT) is
 			-- Effective boolean value
 		local
 			l_item: XM_XPATH_ITEM
@@ -324,7 +324,7 @@ feature -- Evaluation
 			end
 		end
 
-	create_iterator (a_context: ?XM_XPATH_CONTEXT) is
+	create_iterator (a_context: XM_XPATH_CONTEXT) is
 			-- An iterator over the values of a sequence
 		do
 			if count = 0 then
@@ -336,7 +336,7 @@ feature -- Evaluation
 			end
 		end
 
-	create_node_iterator (a_context: ?XM_XPATH_CONTEXT) is
+	create_node_iterator (a_context: XM_XPATH_CONTEXT) is
 			-- Create an iterator over a node sequence
 		do
 			last_node_iterator := node_iterator (False)

@@ -8,10 +8,10 @@ indexing
 	library: "Gobo Eiffel XSLT Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (ven., 26 janv. 2007) $"
+	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
 	revision: "$Revision: 5877 $"
 
-deferred class XM_XSLT_PROCEDURE
+class XM_XSLT_PROCEDURE
 
 feature -- Access
 

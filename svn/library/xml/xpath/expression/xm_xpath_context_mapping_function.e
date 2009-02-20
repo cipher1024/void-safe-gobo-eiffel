@@ -10,14 +10,14 @@ indexing
 	library: "Gobo Eiffel XPath Library"
 	copyright: "Copyright (c) 2007, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-10-28 18:04:32 +0100 (dim., 28 oct. 2007) $"
+	date: "$Date: 2007-10-28 18:04:32 +0100 (Sun, 28 Oct 2007) $"
 	revision: "$Revision: 6152 $"
 
 deferred class XM_XPATH_CONTEXT_MAPPING_FUNCTION
 
 feature -- Access
 
-	last_mapped_sequence: ?XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ITEM]
+	last_mapped_sequence: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ITEM]
 			-- Result from `map'
 
 feature -- Evaluation

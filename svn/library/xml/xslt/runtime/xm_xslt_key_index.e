@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XSLT Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (ven., 26 janv. 2007) $"
+	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
 	revision: "$Revision: 5877 $"
 
 class XM_XSLT_KEY_INDEX
@@ -33,10 +33,10 @@ feature {NONE} -- Initialization
 		do
 			is_under_construction := True
 		end
-
+		
 feature -- Access
 
-	map: ?DS_HASH_TABLE [DS_ARRAYED_LIST [XM_XPATH_NODE], XM_XPATH_ATOMIC_VALUE]
+	map: DS_HASH_TABLE [DS_ARRAYED_LIST [XM_XPATH_NODE], XM_XPATH_ATOMIC_VALUE]
 			-- Map of atomic-valued key-values to node lists
 
 feature -- Status report
@@ -50,7 +50,7 @@ feature -- Status report
 		end
 
 feature -- Status report
-
+	
 	is_under_construction: BOOLEAN
 			-- Is this index under construction?
 			-- (used to detatct circular key definitions)
@@ -60,4 +60,4 @@ invariant
 	not_under_construction: not is_under_construction implies map /= Void
 
 end
-
+	

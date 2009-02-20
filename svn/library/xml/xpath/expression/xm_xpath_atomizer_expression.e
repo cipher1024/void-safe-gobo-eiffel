@@ -128,12 +128,12 @@ feature -- Status report
 
 feature -- Optimization	
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations
 		local
 			l_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ITEM]
 			l_finished: BOOLEAN
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			base_expression.simplify (l_replacement)
@@ -180,10 +180,10 @@ feature -- Optimization
 			end
 		end
 
-	check_static_type (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
+	check_static_type (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
 			-- Perform static type-checking of `Current' and its subexpressions.
 		local
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			is_always_untyped := a_context.configuration.are_all_nodes_untyped
 			create l_replacement.make (Void)
@@ -204,7 +204,7 @@ feature -- Optimization
 
 feature -- Evaluation
 
-	evaluate_item (a_result: DS_CELL [?XM_XPATH_ITEM]; a_context: ?XM_XPATH_CONTEXT) is
+	evaluate_item (a_result: DS_CELL [XM_XPATH_ITEM]; a_context: XM_XPATH_CONTEXT) is
 			-- Evaluate as a single item to `a_result'.
 		local
 			l_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ATOMIC_VALUE]
@@ -231,7 +231,7 @@ feature -- Evaluation
 			end
 		end
 
-	create_iterator (a_context: ?XM_XPATH_CONTEXT) is
+	create_iterator (a_context: XM_XPATH_CONTEXT) is
 			-- Iterator over the values of a sequence
 		local
 			l_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ITEM]
@@ -245,7 +245,7 @@ feature -- Evaluation
 			end
 		end
 
-	create_node_iterator (a_context: ?XM_XPATH_CONTEXT) is
+	create_node_iterator (a_context: XM_XPATH_CONTEXT) is
 			-- Create an iterator over a node sequence.
 		do
 			-- pre-condition is never met

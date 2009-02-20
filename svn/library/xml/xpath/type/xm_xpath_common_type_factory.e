@@ -42,7 +42,7 @@ feature -- Access
 	types_created: BOOLEAN
 			-- Have all types been created yet?
 
-	schema_type (a_fingerprint: INTEGER): ?XM_XPATH_SCHEMA_TYPE is
+	schema_type (a_fingerprint: INTEGER): XM_XPATH_SCHEMA_TYPE is
 			-- Schema type with fingerprint of `a_fingerprint'
 		do
 			if type_map.has (a_fingerprint) then

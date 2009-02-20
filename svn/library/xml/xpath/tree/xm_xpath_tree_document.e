@@ -11,9 +11,9 @@ indexing
 	revision: "$Revision: 6339 $"
 
 class XM_XPATH_TREE_DOCUMENT
-
+	
 inherit
-
+	
 	XM_XPATH_DOCUMENT
 		undefine
 			document_element, next_sibling, previous_sibling, has_child_nodes,
@@ -95,7 +95,7 @@ feature -- Access
 		do
 			Result := Void
 		end
-
+	
 	next_sibling: XM_XPATH_NODE is
 			-- The next sibling of this node;
 			-- If there is no such node, return `Void'
@@ -156,7 +156,7 @@ feature -- Access
 		ensure then
 			all_elements_cached: element_list.has (a_fingerprint)
 		end
-
+		
 	unparsed_entity_system_id (an_entity_name: STRING): STRING is
 			-- System identifier of an unparsed external entity
 		local
@@ -239,7 +239,7 @@ feature -- Access
 		do
 			Result := attribute_idref_table.new_iterator (some_idrefs)
 		end
-
+	
 feature -- Status report
 
 	is_line_numbering: BOOLEAN is
@@ -351,16 +351,16 @@ feature -- Duplication
 
 feature {NONE} -- Implementation
 
-	element_list: ?DS_HASH_TABLE [DS_ARRAYED_LIST [XM_XPATH_TREE_ELEMENT], INTEGER]
+	element_list: DS_HASH_TABLE [DS_ARRAYED_LIST [XM_XPATH_TREE_ELEMENT], INTEGER]
 			-- Lists of elements with the same name.
 
-	entity_table: ?DS_HASH_TABLE [DS_ARRAYED_LIST [STRING], STRING]
+	entity_table: DS_HASH_TABLE [DS_ARRAYED_LIST [STRING], STRING]
 		-- Maps unparsed entity names to their URI/PUBLIC-ID pairs
 
-	cached_id_table: ?like id_table
+	cached_id_table: like id_table
 			-- Cache for `id_table'
 
-	cached_attribute_idref_table: ?like attribute_idref_table
+	cached_attribute_idref_table: like attribute_idref_table
 			-- Cache for `attribute_idref_table'
 
 	attribute_idref_table: XM_XPATH_TREE_ATTRIBUTE_IDREF_TABLE is
@@ -426,10 +426,10 @@ feature {NONE} -- Implementation
 	system_id_map: XM_XPATH_SYSTEM_ID_MAP
 			-- Maps element or processing-instruction sequence numbers to system-ids
 
-	line_number_map: ?XM_XPATH_LINE_NUMBER_MAP
+	line_number_map: XM_XPATH_LINE_NUMBER_MAP
 			-- Maps sequence numbers to line numbers
 
-	closing_line_number_map: ?DS_HASH_TABLE [INTEGER, INTEGER]
+	closing_line_number_map: DS_HASH_TABLE [INTEGER, INTEGER]
 			-- Maps sequence numbers to closing line numbers
 
 invariant
@@ -438,4 +438,4 @@ invariant
 	system_id_map: system_id_map /= Void
 
 end
-
+	

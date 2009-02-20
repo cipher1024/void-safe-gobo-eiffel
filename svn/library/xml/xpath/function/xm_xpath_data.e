@@ -59,7 +59,7 @@ feature -- Status report
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations.
 		local
 			l_atomizer: XM_XPATH_ATOMIZER_EXPRESSION
@@ -81,6 +81,6 @@ feature {XM_XPATH_EXPRESSION} -- Restricted
 		do
 			set_cardinality_zero_or_more
 		end
-
+		
 end
-
+	

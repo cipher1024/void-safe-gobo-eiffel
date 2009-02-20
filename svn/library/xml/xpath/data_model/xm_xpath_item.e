@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XPath Library"
 	copyright: "Copyright (c) 2003, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-04-05 21:24:10 +0200 (sam., 05 avr. 2008) $"
+	date: "$Date: 2008-04-05 21:24:10 +0200 (Sat, 05 Apr 2008) $"
 	revision: "$Revision: 6339 $"
 
 deferred class XM_XPATH_ITEM
@@ -15,7 +15,7 @@ deferred class XM_XPATH_ITEM
 inherit
 
 	ANY -- required by SE 2.1b1
-
+	
 	XM_XPATH_TYPE
 		export {NONE} all end
 
@@ -66,11 +66,11 @@ feature -- Access
 			type_name_not_void: Result /= Void
 		end
 
-	error_value: ?XM_XPATH_ERROR_VALUE is
+	error_value: XM_XPATH_ERROR_VALUE is
 			-- Error value
 		deferred
 		end
-
+	
 feature -- Status report
 
 	is_error: BOOLEAN is
@@ -89,7 +89,7 @@ feature -- Status report
 		do
 			Result := False
 		end
-
+	
 	is_function_package: BOOLEAN is
 			-- Is `Current' an XSLT function call package??
 		do
@@ -107,7 +107,7 @@ feature -- Status report
 		do
 			Result := False
 		end
-
+	
 	is_untyped_atomic: BOOLEAN is
 			-- Is `Current' an untyped atomic value?
 		do
@@ -197,7 +197,7 @@ feature -- Status setting
 		end
 
 feature -- Conversion
-
+	
 	as_item_value: XM_XPATH_VALUE is
 			-- `Current' seen as a value
 		require
@@ -224,7 +224,7 @@ feature -- Conversion
 		ensure
 			same_object: ANY_.same_objects (Result, Current)
 		end
-
+	
 	as_element: XM_XPATH_ELEMENT is
 			-- `Current' seen as an element
 		require
@@ -373,4 +373,4 @@ invariant
 	floats_are_numeric: is_float_value implies is_numeric_value
 
 end
-
+	

@@ -10,19 +10,19 @@ indexing
 	library: "Gobo Eiffel XPath Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (ven., 26 janv. 2007) $"
+	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
 	revision: "$Revision: 5877 $"
 
 deferred class XM_XPATH_MAPPING_FUNCTION
 
 feature -- Access
 
-	last_mapped_item: ?XM_XPATH_MAPPED_ITEM
+	last_mapped_item: XM_XPATH_MAPPED_ITEM
 			-- Result from `map'
 
 feature -- Evaluation
 
-	map (an_item: XM_XPATH_ITEM; a_context: ?XM_XPATH_CONTEXT) is
+	map (an_item: XM_XPATH_ITEM; a_context: XM_XPATH_CONTEXT) is
 			-- Map `an_item' to a sequence
 		require
 			item_not_void: an_item /= Void

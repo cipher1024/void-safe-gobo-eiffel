@@ -7,13 +7,13 @@ indexing
 	library: "Gobo Eiffel XSLT Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-12-28 23:18:20 +0100 (ven., 28 déc. 2007) $"
+	date: "$Date: 2007-12-28 23:18:20 +0100 (Fri, 28 Dec 2007) $"
 	revision: "$Revision: 6242 $"
 
 class XM_XSLT_TEXT_COMPARER
 
 inherit
-
+	
 	KL_PART_COMPARATOR [XM_XPATH_ITEM]
 
 
@@ -32,7 +32,7 @@ feature {NONE} -- Initialiaztion
 		ensure
 			comparer_set: comparer = a_comparer
 		end
-
+	
 	make_from_collator (a_collator: ST_COLLATOR) is
 			-- Establish invariant
 		require
@@ -42,34 +42,29 @@ feature {NONE} -- Initialiaztion
 		ensure
 			collator_set: collator = a_collator
 		end
-
+	
 feature -- Comparison
 
 	less_than (u, v: XM_XPATH_ITEM): BOOLEAN is
 			-- Is `u' considered less than `v'?
 		local
 			s1, s2: STRING
-			l_collator: like collator
-			l_comparer: like comparer
 		do
-			l_collator := collator
-			if l_collator /= Void then
+			if collator /= Void then
 				s1 := u.string_value
 				s2 := v.string_value
-				Result := l_collator.less_than (s1, s2)
+				Result := collator.less_than (s1, s2)
 			else
-				l_comparer := comparer
-				check l_comparer /= Void end -- implied by collector = Void and invariant `collator_or_comparer'
-				Result := l_comparer.less_than (u, v)
+				Result := comparer.less_than (u, v)
 			end
 		end
 
 feature {NONE} -- Implementation
 
-	collator: ?ST_COLLATOR
+	collator: ST_COLLATOR
 			-- Collator used to perform string comparisons
 
-	comparer: ?KL_PART_COMPARATOR [XM_XPATH_ITEM]
+	comparer: KL_PART_COMPARATOR [XM_XPATH_ITEM]
 			-- Comparator used to perform string comparisons
 
 invariant

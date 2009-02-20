@@ -36,9 +36,9 @@ create
 
 feature {NONE} -- Initialization
 
-	make (an_executable: XM_XSLT_EXECUTABLE; a_select_expression: ?XM_XPATH_EXPRESSION; a_level, a_hash_code: INTEGER; a_count_pattern, a_from_pattern: ?XM_XSLT_PATTERN;
-		a_value_expression, a_format, a_grouping_size, a_grouping_separator, a_letter_value, an_ordinal, a_language: ?XM_XPATH_EXPRESSION;
-		a_formatter: ?XM_XSLT_NUMBER_FORMATTER;	a_numberer: ?ST_XSLT_NUMBERER; a_variables_in_patterns, a_backwards: BOOLEAN) is
+	make (an_executable: XM_XSLT_EXECUTABLE; a_select_expression: XM_XPATH_EXPRESSION; a_level, a_hash_code: INTEGER; a_count_pattern, a_from_pattern: XM_XSLT_PATTERN;
+		a_value_expression, a_format, a_grouping_size, a_grouping_separator, a_letter_value, an_ordinal, a_language: XM_XPATH_EXPRESSION;
+		a_formatter: XM_XSLT_NUMBER_FORMATTER;	a_numberer: ST_XSLT_NUMBERER; a_variables_in_patterns, a_backwards: BOOLEAN) is
 			-- Establish invariant.
 		require
 			executable_not_void: an_executable /= Void
@@ -125,7 +125,7 @@ feature -- Access
 			if from_pattern /= Void then
 				create l_bridge.make (from_pattern, Current)
 				Result.put_last (l_bridge)
-			end
+			end			
 		end
 
 feature -- Status report
@@ -157,7 +157,7 @@ feature -- Optimization
 	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations.
 		local
-			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]		
 		do
 			create l_replacement.make (Void)
 			if select_expression /= Void then
@@ -317,7 +317,7 @@ feature -- Optimization
 			end
 			if a_replacement.item = Void then
 				a_replacement.put (Current)
-			end
+			end			
 		end
 
 	optimize (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
@@ -400,7 +400,7 @@ feature -- Optimization
 			end
 			if a_replacement.item = Void then
 				a_replacement.put (Current)
-			end
+			end			
 		end
 
 	promote (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
@@ -513,9 +513,9 @@ feature -- Evaluation
 			if not transformer.is_error then
 				calculate_ordinal (a_context)
 				if atomic_vector = Void and then format = Void and then group_size = 0 and then language = Void then
-
+					
 					-- fast path for the simple case
-
+					
 					l_receiver.notify_characters (value.out, 0)
 				else
 					if numberer = Void then
@@ -572,40 +572,40 @@ feature {XM_XPATH_EXPRESSION} -- Restricted
 
 feature {NONE} -- Implementation
 
-	select_expression: ?XM_XPATH_EXPRESSION
+	select_expression: XM_XPATH_EXPRESSION
 			-- Selected node
 
 	level: INTEGER
 			-- Level
 
-	count_pattern: ?XM_XSLT_PATTERN
+	count_pattern: XM_XSLT_PATTERN
 			-- Nodes which are to be counted
 
-	from_pattern: ?XM_XSLT_PATTERN
+	from_pattern: XM_XSLT_PATTERN
 			-- Node from which counting is to be started
 
-	value_expression: ?XM_XPATH_EXPRESSION
+	value_expression: XM_XPATH_EXPRESSION
 			-- Supplied value
 
-	format: ?XM_XPATH_EXPRESSION
+	format: XM_XPATH_EXPRESSION
 			-- Format for formatted number
 
-	grouping_size, grouping_separator: ?XM_XPATH_EXPRESSION
+	grouping_size, grouping_separator: XM_XPATH_EXPRESSION
 			-- Grouping parameters
 
-	letter_value: ?XM_XPATH_EXPRESSION
+	letter_value: XM_XPATH_EXPRESSION
 		-- Letter value
 
-	ordinal: ?XM_XPATH_EXPRESSION
+	ordinal: XM_XPATH_EXPRESSION
 			-- Ordinal marker
 
-	language: ?XM_XPATH_EXPRESSION
+	language: XM_XPATH_EXPRESSION
 			-- Language
 
-	formatter: ?XM_XSLT_NUMBER_FORMATTER
+	formatter: XM_XSLT_NUMBER_FORMATTER
 			-- Formatter
 
-	numberer: ?ST_XSLT_NUMBERER
+	numberer: ST_XSLT_NUMBERER
 			-- Numberer
 
 	has_variables_in_patterns: BOOLEAN
@@ -617,19 +617,19 @@ feature {NONE} -- Implementation
 	value: INTEGER_64
 			-- Value of number
 
-	atomic_vector: ?DS_ARRAYED_LIST [XM_XPATH_ATOMIC_VALUE]
+	atomic_vector: DS_ARRAYED_LIST [XM_XPATH_ATOMIC_VALUE]
 			-- Sequence of atoms to be used as place marker to be formatted
 
-	transformer: ?XM_XSLT_TRANSFORMER
+	transformer: XM_XSLT_TRANSFORMER
 			-- Transformer
 
 	group_size: INTEGER
 			-- Group size set by `calculate_group_size'
 
-	group_separator: ?STRING
+	group_separator: STRING
 			-- Group separator
 
-	ordinal_value: ?STRING
+	ordinal_value: STRING
 			-- Ordinal
 
 	set_select_expression (a_select_expression: XM_XPATH_EXPRESSION) is
@@ -637,8 +637,8 @@ feature {NONE} -- Implementation
 		do
 			if select_expression /= a_select_expression then
 				select_expression := a_select_expression
-				if a_select_expression /= Void then
-					adopt_child_expression (a_select_expression)
+				if select_expression /= Void then
+					adopt_child_expression (select_expression)
 					reset_static_properties
 				end
 			end
@@ -744,7 +744,7 @@ feature {NONE} -- Implementation
 			set: letter_value = a_letter_value
 		end
 
-
+	
 	calculate_ordinal (a_context: XM_XSLT_EVALUATION_CONTEXT) is
 			-- Calculate `ordinal_value'
 		require
@@ -1025,7 +1025,7 @@ feature {NONE} -- Implementation
 	last_single_number: INTEGER_64
 			-- Result from `calculate_single_number' or `calculate_any_number'
 
-	calculate_single_number (a_node: XM_XPATH_NODE; a_count_pattern, a_from_pattern: XM_XSLT_PATTERN; a_context: XM_XSLT_EVALUATION_CONTEXT) is
+	calculate_single_number (a_node: XM_XPATH_NODE; a_count_pattern, a_from_pattern: XM_XSLT_PATTERN; a_context: XM_XSLT_EVALUATION_CONTEXT) is 
 			-- One plus the number of previous siblings
 			--  of the nearest ancestor-or-self, that match `count_pattern'.
 		require
@@ -1076,7 +1076,7 @@ feature {NONE} -- Implementation
 						end
 					end
 					if last_single_number = -1 then
-
+						
 						-- We've found the ancestor to count from
 
 						already_checked := a_count.is_node_test
@@ -1187,7 +1187,7 @@ feature {NONE} -- Implementation
 
 	multi_level_number: DS_ARRAYED_LIST [XM_XPATH_ATOMIC_VALUE]
 			-- Result from `calculate_multi_level_number'
-
+	
 	calculate_multi_level_number (a_node: XM_XPATH_NODE; a_context: XM_XSLT_EVALUATION_CONTEXT) is
 			-- Hirerarchic position of `a_node'
 		require

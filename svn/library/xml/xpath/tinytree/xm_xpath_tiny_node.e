@@ -315,7 +315,7 @@ feature -- Element change
 	
 feature {NONE} -- Implementation
 	
-	cached_parent_node: ?XM_XPATH_TINY_COMPOSITE_NODE
+	cached_parent_node: XM_XPATH_TINY_COMPOSITE_NODE
 			-- Cached parent node
 				
 	created_ancestor_axis_iterator (a_node_test: XM_XPATH_NODE_TEST): XM_XPATH_AXIS_ITERATOR [XM_XPATH_NODE] is

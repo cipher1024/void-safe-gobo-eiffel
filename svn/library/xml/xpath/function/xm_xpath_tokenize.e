@@ -69,7 +69,7 @@ feature -- Status report
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations
 		local
 			n: INTEGER
@@ -86,7 +86,7 @@ feature -- Optimization
 				end
 			end
 		end
-
+		
 feature -- Evaluation
 
 	create_iterator (a_context: XM_XPATH_CONTEXT) is
@@ -95,7 +95,7 @@ feature -- Evaluation
 			l_item: XM_XPATH_ITEM
 			l_input_string, l_pattern_string, l_flags_string, l_key: STRING
 			l_regexp_cache_entry: like regexp_cache_entry
-			l_result: DS_CELL [?XM_XPATH_ITEM]
+			l_result: DS_CELL [XM_XPATH_ITEM]
 		do
 			last_iterator := Void
 			create l_result.make (Void)
@@ -180,4 +180,4 @@ feature {XM_XPATH_EXPRESSION} -- Restricted
 		end
 
 end
-
+	

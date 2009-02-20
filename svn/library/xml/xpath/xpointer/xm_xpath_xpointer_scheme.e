@@ -23,7 +23,7 @@ feature -- Access
 			expanded_name_not_empty: Result /= Void and then Result.count > 0
 		end
 
-	value: ?XM_XPATH_VALUE is
+	value: XM_XPATH_VALUE is
 			-- Result of last call to `evaluate'
 		deferred
 		ensure
@@ -50,10 +50,10 @@ feature -- Status report
 		ensure
 			error_value_set: Result implies value /= Void and then value.is_error
 		end
-
+			
 	evaluated: BOOLEAN
 			-- Has `evaluate' been called since creation?
-
+		
 feature -- Element change
 
 	evaluate (a_resource: XM_XPATH_DOCUMENT; a_namespace_context: XM_XPOINTER_NAMESPACE_CONTEXT; some_data: STRING) is
@@ -69,4 +69,4 @@ feature -- Element change
 		end
 
 end
-
+	

@@ -67,7 +67,7 @@ feature -- Access
 		do
 			Result ?= ANY_.to_any (Current)
 		end
-
+	
 feature -- Status report
 
 	after: BOOLEAN is
@@ -107,7 +107,7 @@ feature {NONE} -- Implementation
 	base_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ITEM]
 			-- The underlying iterator
 
-	results: ?like base_iterator
+	results: like base_iterator
 			-- An iterator that delivers the results
 
 	mapping_function: XM_XPATH_NODE_MAPPING_FUNCTION
@@ -160,7 +160,7 @@ feature {NONE} -- Implementation
 						finished := True
 					elseif not base_iterator.after then
 						next_source := base_iterator.item
-
+						
 						-- Call the supplied mapping function
 
 						mapping_function.map_nodes (next_source, context)

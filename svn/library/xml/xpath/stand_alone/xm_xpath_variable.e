@@ -8,7 +8,7 @@ indexing
 	library: "Gobo Eiffel XPath Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-03-28 06:27:14 +0100 (ven., 28 mars 2008) $"
+	date: "$Date: 2008-03-28 06:27:14 +0100 (Fri, 28 Mar 2008) $"
 	revision: "$Revision: 6326 $"
 
 class XM_XPATH_VARIABLE
@@ -27,20 +27,17 @@ create {XM_XPATH_STAND_ALONE_CONTEXT}
 
 feature {NONE} -- Initialization
 
-	make (a_qname: STRING; an_initial_value: ?XM_XPATH_VALUE) is
+	make (a_qname: STRING; an_initial_value: XM_XPATH_VALUE) is
 			-- Establish invariant.
 		require
 			valid_name: a_qname /= Void and then is_qname (a_qname)
-		local
-			l_value: like value
 		do
 			variable_name := a_qname
 			if an_initial_value /= Void then
-				l_value := an_initial_value
+				value := an_initial_value
 			else
-				create {XM_XPATH_EMPTY_SEQUENCE} l_value.make
+				create {XM_XPATH_EMPTY_SEQUENCE} value.make
 			end
-			value := l_value
 		ensure
 			name_set: variable_name = a_qname
 			value_set: an_initial_value /= Void implies value = an_initial_value
@@ -58,7 +55,7 @@ feature -- Access
 		do
 			create Result.make_any_sequence
 		end
-
+	
 	variable_fingerprint: INTEGER is
 			-- Fingerprint of variable name from name pool;
 			-- Not used.

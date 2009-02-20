@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XML Library"
 	copyright: "Copyright (c) 2003, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-04-05 21:24:10 +0200 (sam., 05 avr. 2008) $"
+	date: "$Date: 2008-04-05 21:24:10 +0200 (Sat, 05 Apr 2008) $"
 	revision: "$Revision: 6339 $"
 
 deferred class XM_XPATH_NODE
@@ -48,7 +48,7 @@ inherit
 		export {NONE} all end
 
 		-- This class represents a node in gexslt's object model.
-		-- It combines the features of the XPath data model,
+		-- It combines the features of the XPath data model, 
 		--  with some of the features from the W3C's dom::Node (for convenience),
 		--  along with additional features to make life easier.
 
@@ -67,7 +67,7 @@ feature -- Access
 		ensure
 			strictly_positive_sequence_number: Result /= Void and then Result.is_positive
 		end
-
+	
 	document_number: INTEGER is
 			-- Uniquely identifies the owning document.
 		deferred
@@ -122,7 +122,7 @@ feature -- Access
 			parent_may_be_void: True
 			not_current_node: Result /= Void implies not is_same_node (Result)
 		end
-
+	
 	root: XM_XPATH_NODE is
 			-- The root node for `Current';
 			-- This is not necessarily a Document node.
@@ -153,7 +153,7 @@ feature -- Access
 				Result := fingerprint_from_name_code (l_name_code)
 			end
 		end
-
+	
 	name_code: INTEGER is
 			-- Name code this node - used in displaying names
 		require
@@ -264,7 +264,7 @@ feature -- Access
 				Result := l_iterator.item
 			end
 		end
-
+	
 	next_sibling: XM_XPATH_NODE is
 			-- The next sibling of this node;
 			-- If there is no such node, return `Void'.
@@ -279,7 +279,7 @@ feature -- Access
 				Result := l_iterator.item
 			end
 		end
-
+	
 	document_element: XM_XPATH_ELEMENT is
 			-- The top-level element;
 			-- If the document is not well-formed
@@ -302,7 +302,7 @@ feature -- Access
 				end
 			end
 		end
-
+	
 	typed_value: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ATOMIC_VALUE] is
 			-- Typed value
 		local
@@ -325,7 +325,7 @@ feature -- Access
 		ensure
 			atomized_value_not_void: Result /= Void
 		end
-
+			
 	type_name: STRING is
 			-- Type name for diagnostic purposes
 		do
@@ -380,7 +380,7 @@ feature -- Access
 			invulnerable: Result.is_invulnerable
 		end
 
-	generated_id: ?STRING
+	generated_id: STRING
 			-- Unique identifier (across all documents)
 
 	 is_ancestor_or_self (a_node: XM_XPATH_NODE): BOOLEAN is
@@ -403,7 +403,7 @@ feature -- Access
 				end
 			end
 		end
-
+	 
 feature -- Comparison
 
 	is_same_node (a_other: XM_XPATH_NODE): BOOLEAN is
@@ -436,7 +436,7 @@ feature -- Status report
 	is_error: BOOLEAN
 			-- Has item failed evaluation?
 
-	error_value: ?XM_XPATH_ERROR_VALUE
+	error_value: XM_XPATH_ERROR_VALUE
 			-- Error value
 
 	is_nilled: BOOLEAN is
@@ -505,19 +505,19 @@ feature -- Status setting
 		end
 
 feature -- Conversion
-
+	
 	as_item_value: XM_XPATH_VALUE is
 			-- `Current' seen as a value
 		do
 			create {XM_XPATH_SINGLETON_NODE} Result.make (Current)
 		end
-
+	
 	as_node: XM_XPATH_NODE is
 			-- `Current' seen as a node
 		do
 			Result := Current
 		end
-
+	
 	as_namespace: XM_XPATH_NAMESPACE_NODE is
 			-- `Current' seen as a node
 		require
@@ -533,7 +533,7 @@ feature -- Conversion
 			tiny_node: is_tiny_node
 		do
 		ensure
-			same_object: ANY_.same_objects (Result, Current)
+			same_object: ANY_.same_objects (Result, Current)			
 		end
 
 	as_tree_node: XM_XPATH_TREE_NODE is
@@ -542,11 +542,11 @@ feature -- Conversion
 			tree_node: is_tree_node
 		do
 		ensure
-			same_object: ANY_.same_objects (Result, Current)
+			same_object: ANY_.same_objects (Result, Current)			
 		end
 
 feature -- Basic operations
-
+	
 	generate_id is
 			-- Generate a unique id for `Current'
 		require
@@ -564,7 +564,7 @@ feature -- Duplication
 		require
 			receiver_not_void: a_receiver /= Void
 			a_which_namespaces_valid: a_which_namespaces = No_namespaces
-				or a_which_namespaces = Local_namespaces or a_which_namespaces = All_namespaces
+				or a_which_namespaces = Local_namespaces or a_which_namespaces = All_namespaces 
 		deferred
 		end
 

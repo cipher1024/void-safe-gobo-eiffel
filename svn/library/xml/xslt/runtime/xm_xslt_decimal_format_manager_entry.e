@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XSLT Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (ven., 26 janv. 2007) $"
+	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
 	revision: "$Revision: 5877 $"
 
 class XM_XSLT_DECIMAL_FORMAT_MANAGER_ENTRY
@@ -42,12 +42,12 @@ feature {NONE} -- Initialization
 
 feature -- Access
 
-	decimal_format: ?XM_XSLT_DECIMAL_FORMAT_ENTRY
+	decimal_format: XM_XSLT_DECIMAL_FORMAT_ENTRY
 			-- Decimal format
 
-	list: ?DS_ARRAYED_LIST [XM_XSLT_FORMAT_NUMBER]
+	list: DS_ARRAYED_LIST [XM_XSLT_FORMAT_NUMBER]
 			-- List of call-backs
-
+	
 feature -- Status report
 
 	is_list: BOOLEAN
@@ -63,4 +63,4 @@ invariant
 	list: is_list implies list /= Void
 
 end
-
+	

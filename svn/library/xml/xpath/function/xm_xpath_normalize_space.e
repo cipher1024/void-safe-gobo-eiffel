@@ -43,7 +43,7 @@ feature -- Access
 
 	normalize (a_string: STRING): STRING is
 			-- Normalized version of `a_string';
-
+		
 			-- Strip leading and trailing whitespace;
 			-- replace sequences of one or more
 			-- whitespace character with a single space, #x20
@@ -81,7 +81,7 @@ feature -- Status report
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations
 		do
 			use_context_item_as_default
@@ -90,7 +90,7 @@ feature -- Optimization
 
 feature -- Evaluation
 
-	evaluate_item (a_result: DS_CELL [?XM_XPATH_ITEM]; a_context: ?XM_XPATH_CONTEXT) is
+	evaluate_item (a_result: DS_CELL [XM_XPATH_ITEM]; a_context: XM_XPATH_CONTEXT) is
 			-- Evaluate as a single item to `a_result'.
 		do
 			arguments.item (1).evaluate_item (a_result, a_context)
@@ -102,7 +102,7 @@ feature -- Evaluation
 				a_result.put (Void)
 			end
 		end
-
+	
 feature {XM_XPATH_EXPRESSION} -- Restricted
 
 	compute_cardinality is

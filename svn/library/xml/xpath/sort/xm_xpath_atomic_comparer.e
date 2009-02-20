@@ -40,7 +40,7 @@ feature -- Access
 	collator: ST_COLLATOR
 			-- Collator for string comparisons
 
-	dynamic_context: ?XM_XPATH_CONTEXT
+	dynamic_context: XM_XPATH_CONTEXT
 			-- Dynamic context for use in calendar-values comparisons
 
 feature -- Comparison

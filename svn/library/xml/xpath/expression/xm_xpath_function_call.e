@@ -86,7 +86,7 @@ feature -- Status report
 			from
 				a_cursor.start
 			variant
-				arguments.count + 1 - a_cursor.index
+				arguments.count + 1 - a_cursor.index				
 			until
 				a_cursor.after
 			loop
@@ -105,7 +105,7 @@ feature -- Status setting
 			a_cursor: DS_ARRAYED_LIST_CURSOR [XM_XPATH_EXPRESSION]
 		do
 			arguments := args
-			arguments.set_equality_tester (expression_tester)
+			arguments.set_equality_tester (expression_tester)											
 			from
 				a_cursor := arguments.new_cursor; a_cursor.start
 			variant
@@ -121,19 +121,19 @@ feature -- Status setting
 			arguments_set: arguments = args
 			static_properties_computed: are_static_properties_computed
 		end
-
+	
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations.
 		do
 			simplify_arguments (a_replacement)
 			if a_replacement.item = Void then
 				a_replacement.put (Current)
-			end
+			end			
 		end
 
-	simplify_arguments (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify_arguments (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Simplify `arguments'
 		require
 			no_previous_error: not is_error
@@ -142,7 +142,7 @@ feature -- Optimization
 		local
 			l_argument: XM_XPATH_EXPRESSION
 			l_cursor: DS_ARRAYED_LIST_CURSOR [XM_XPATH_EXPRESSION]
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			from
 				l_cursor := arguments.new_cursor
@@ -166,12 +166,12 @@ feature -- Optimization
 			end
 		end
 
-	check_static_type (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
+	check_static_type (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
 			-- Perform static type-checking of `Current' and its subexpressions.
 		local
 			l_fixed_values: BOOLEAN
 			l_cursor: DS_ARRAYED_LIST_CURSOR [XM_XPATH_EXPRESSION]
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			from
 				l_fixed_values := True -- until we find otherwise
@@ -201,7 +201,7 @@ feature -- Optimization
 				l_cursor.forth
 				l_replacement.put (Void)
 			end
-
+			
 			if a_replacement.item = Void then
 				check_arguments (a_replacement, a_context)
 			end
@@ -211,15 +211,15 @@ feature -- Optimization
 				else
 					a_replacement.put (Current)
 				end
-			end
+			end			
 		end
 
-	optimize (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
+	optimize (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
 			-- Perform optimization of `Current' and its subexpressions.
 		local
 			l_fixed_values: BOOLEAN
 			l_cursor: DS_ARRAYED_LIST_CURSOR [XM_XPATH_EXPRESSION]
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			from
 				l_fixed_values := True -- until we find otherwise
@@ -245,7 +245,7 @@ feature -- Optimization
 				l_cursor.forth
 				l_replacement.put (Void)
 			end
-
+	
 			if a_replacement.item = Void then
 				check_arguments (a_replacement, a_context)
 			end
@@ -255,15 +255,15 @@ feature -- Optimization
 				else
 					a_replacement.put (Current)
 				end
-			end
+			end		
 		end
 
-	promote (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
+	promote (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
 			-- Promote this subexpression.
 		local
 			l_promotion: XM_XPATH_EXPRESSION
 			l_cursor: DS_ARRAYED_LIST_CURSOR [XM_XPATH_EXPRESSION]
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			a_offer.accept (Current)
 			l_promotion := a_offer.accepted_expression
@@ -292,11 +292,11 @@ feature -- Optimization
 			else
 				a_replacement.put (Current)
 			end
-		end
+		end	
 
 feature -- Evaluation
 
-	pre_evaluate (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
+	pre_evaluate (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
 			-- Pre-evaluate `Current' at compile time.
 			-- Functions that do not allow pre-evaluation,
 			--  or that need access to context information,
@@ -317,10 +317,10 @@ feature -- Evaluation
 		ensure
 			replaced: a_replacement.item /= Void
 		end
-
+	
 feature {XM_XPATH_FUNCTION_CALL} -- Local
-
-	check_arguments (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
+	
+	check_arguments (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
 			-- Check arguments during parsing, when all the argument expressions have been read.
 		require
 			no_error: not is_error

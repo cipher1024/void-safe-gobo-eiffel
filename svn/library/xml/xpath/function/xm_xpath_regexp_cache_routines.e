@@ -61,7 +61,7 @@ feature -- Access
 			end
 		end
 
-	normalized_flags_string (a_flags_string: STRING): ?STRING is
+	normalized_flags_string (a_flags_string: STRING): STRING is
 			-- Normalized version of `a_flags_string'
 		require
 			flags_not_void: a_flags_string /= Void
@@ -74,7 +74,7 @@ feature -- Access
 			--  instance of each of the four flags, i, m,s and x, and ordering them so.
 			-- If any other non-blank characters are present in the string, then
 			--  it is invalid (a static error should be signalled), and `Void' is returned.
-
+			
 			from
 				an_index := 1
 			until
@@ -121,4 +121,4 @@ feature -- Access
 		end
 
 end
-
+	

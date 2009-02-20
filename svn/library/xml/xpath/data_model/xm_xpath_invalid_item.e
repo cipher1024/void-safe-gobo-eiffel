@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XPath Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-04-06 12:00:43 +0200 (dim., 06 avr. 2008) $"
+	date: "$Date: 2008-04-06 12:00:43 +0200 (Sun, 06 Apr 2008) $"
 	revision: "$Revision: 6341 $"
 
 class XM_XPATH_INVALID_ITEM
@@ -94,7 +94,7 @@ feature -- Status report
 	is_error: BOOLEAN
 			-- Has item failed evaluation?
 
-	error_value: ?XM_XPATH_ERROR_VALUE
+	error_value: XM_XPATH_ERROR_VALUE
 			-- Error value
 
 feature -- Status setting

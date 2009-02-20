@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XPath Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (ven., 26 janv. 2007) $"
+	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
 	revision: "$Revision: 5877 $"
 
 class XM_XPATH_REGEXP_MATCH_RECORD
@@ -18,7 +18,7 @@ create
 
 feature {NONE} -- Initialization
 
-	make (some_tokens: !like tokens) is
+	make (some_tokens: like tokens) is
 			-- Create with splitting record
 		do
 			add_split (some_tokens)
@@ -32,7 +32,7 @@ feature -- Access
 			Result := tokens /= Void
 		end
 
-	tokens: ?ARRAY [STRING]
+	tokens: ARRAY [STRING]
 			-- Result of previous split
 
 feature -- Element change

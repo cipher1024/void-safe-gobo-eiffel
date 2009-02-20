@@ -51,7 +51,7 @@ feature -- Status report
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations.
 		do
 			Precursor (a_replacement)
@@ -153,7 +153,7 @@ feature {XM_XPATH_FUNCTION_CALL} -- Restricted
 	argument_error_code: STRING
 			-- Error code set by `check_argument'
 
-	check_arguments (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
+	check_arguments (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
 			-- Check arguments during parsing, when all the argument expressions have been read.
 		local
 			l_counter: INTEGER
@@ -186,7 +186,7 @@ feature {NONE} -- Implementation
 			-- Minimum and maximum number of arguments permitted;
 			-- Maximum_argument_count = -1 implies no maximum
 
-	check_argument (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_argument_number: INTEGER; a_context: XM_XPATH_STATIC_CONTEXT) is
+	check_argument (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_argument_number: INTEGER; a_context: XM_XPATH_STATIC_CONTEXT) is
 			-- Perform static type checking on an argument to a function call, and add
 			--  type conversion logic where necessary.
 		require
@@ -199,7 +199,7 @@ feature {NONE} -- Implementation
 			l_role_locator: XM_XPATH_ROLE_LOCATOR
 			l_argument: XM_XPATH_EXPRESSION
 			l_type_checker: XM_XPATH_TYPE_CHECKER
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			create l_type_checker
 			create l_role_locator.make (Function_role, name, a_argument_number, Xpath_errors_uri, argument_error_code)

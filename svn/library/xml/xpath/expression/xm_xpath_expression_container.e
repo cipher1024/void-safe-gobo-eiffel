@@ -44,13 +44,8 @@ feature -- Access
 			-- `Current' seen as a computed expression
 		require
 			computed_expression: is_computed_expression
-		local
-			r: ?like as_computed_expression
 		do
-			check r /= Void end -- this code should not be called ...
-			Result := r
 		ensure
-			Result_not_void: Result /= Void
 			same_object: ANY_.same_objects (Result, Current)
 		end
 
@@ -72,4 +67,4 @@ invariant
 	not_user_function: is_computed_expression implies not is_user_function
 
 end
-
+	

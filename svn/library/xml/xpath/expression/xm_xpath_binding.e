@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XPath Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (ven., 26 janv. 2007) $"
+	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
 	revision: "$Revision: 5877 $"
 
 deferred class XM_XPATH_BINDING
@@ -18,7 +18,7 @@ feature -- Access
 			-- Static type of variable
 		deferred
 		end
-
+	
 	variable_name: STRING
 			-- name of variable
 
@@ -28,10 +28,10 @@ feature -- Access
 			local_variable: not is_global
 		deferred
 		end
-
+			
 feature -- Status report
 
-	last_evaluated_binding: ?XM_XPATH_VALUE
+	last_evaluated_binding: XM_XPATH_VALUE
 			-- Value from calling `evaluate_variable'
 
 	is_global: BOOLEAN is
@@ -41,7 +41,7 @@ feature -- Status report
 
 feature -- Evaluation
 
-	evaluate_variable (a_context: XM_XPATH_CONTEXT) is
+	evaluate_variable (a_context: XM_XPATH_CONTEXT) is 
 			-- Evaluate variable
 		require
 			context_not_void: a_context /= Void

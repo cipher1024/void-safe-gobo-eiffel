@@ -35,8 +35,8 @@
 			<file_rule>
 				<exclude>/expat$</exclude>
 				<!-- excluded for now, FIXME -->
-				<exclude>/xslt/</exclude>
 				<exclude>/xpath/</exclude>
+				<exclude>/xslt/</exclude>
 			</file_rule>
 		</cluster>
 	</target>

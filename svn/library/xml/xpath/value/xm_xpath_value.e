@@ -103,7 +103,7 @@ feature -- Access
 			index_in_range: a_index > 0 and then a_index <= count
 		local
 			l_integer: INTEGER
-			l_result: DS_CELL [?XM_XPATH_ITEM]
+			l_result: DS_CELL [XM_XPATH_ITEM]
 			l_saved_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ITEM]
 		do
 			if is_evaluate_supported and then a_index = 1 then
@@ -154,32 +154,32 @@ feature -- Status report
 	last_reduced_value: XM_XPATH_VALUE
 			-- Result of last call to `reduce'
 
-	is_convertible_to_item (a_context: ?XM_XPATH_CONTEXT): BOOLEAN is
+	is_convertible_to_item (a_context: XM_XPATH_CONTEXT): BOOLEAN is
 			-- Can `Current' be converted to an `XM_XPATH_ITEM'?
 		deferred
 		end
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations.
 		do
 			a_replacement.put (Current)
 		end
 
-	check_static_type (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
+	check_static_type (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
 			-- Perform static type-checking of `Current' and its subexpressions.
 		do
 			a_replacement.put (Current)
 		end
 
-	optimize (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
+	optimize (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
 			-- Perform optimization of `Current' and its subexpressions.
 		do
 			a_replacement.put (Current)
 		end
 
-	promote (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
+	promote (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
 			-- Promote this subexpression.
 		do
 			a_replacement.put (Current)
@@ -220,7 +220,7 @@ feature -- Evaluation
 			end
 		end
 
-	processed_eager_evaluation (a_context: ?XM_XPATH_CONTEXT): XM_XPATH_VALUE is
+	processed_eager_evaluation (a_context: XM_XPATH_CONTEXT): XM_XPATH_VALUE is
 			-- Eager evaluation via `generate_events'
 		do
 			Result := Current
@@ -228,7 +228,7 @@ feature -- Evaluation
 
 feature -- Conversion
 
-	as_item (a_context: ?XM_XPATH_CONTEXT): XM_XPATH_ITEM is
+	as_item (a_context: XM_XPATH_CONTEXT): XM_XPATH_ITEM is
 			-- `Current' seen as an item
 		require
 			is_convertible_to_item (a_context)

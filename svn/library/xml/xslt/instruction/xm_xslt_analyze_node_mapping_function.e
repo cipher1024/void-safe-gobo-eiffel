@@ -5,7 +5,7 @@ indexing
 	library: "Gobo Eiffel XSLT Library"
 	copyright: "Copyright (c) 2008, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-01-13 18:31:55 +0100 (dim., 13 janv. 2008) $"
+	date: "$Date: 2008-01-13 18:31:55 +0100 (Sun, 13 Jan 2008) $"
 	revision: "$Revision: 6257 $"
 
 class XM_XSLT_ANALYZE_NODE_MAPPING_FUNCTION
@@ -40,12 +40,12 @@ feature {NONE} -- Initialization
 
 feature -- Access
 
-	last_node_iterator: ?XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE]
+	last_node_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE]
 			-- Result from `map_nodes'
 
 feature -- Evaluation
 
-	map_nodes (an_item: XM_XPATH_ITEM; a_context: ?XM_XPATH_CONTEXT) is
+	map_nodes (an_item: XM_XPATH_ITEM; a_context: XM_XPATH_CONTEXT) is
 			-- Map `an_item' to a sequence
 		do
 			if base_iterator.is_matching and matching_block /= Void then

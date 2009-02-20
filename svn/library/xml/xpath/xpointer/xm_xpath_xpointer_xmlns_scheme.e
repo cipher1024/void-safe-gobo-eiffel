@@ -52,7 +52,7 @@ feature -- Status report
 
 	is_error: BOOLEAN
 			-- Did a syntax or evaluation error occur?
-
+		
 feature -- Element change
 
 	evaluate (a_resource: XM_XPATH_DOCUMENT; a_namespace_context: XM_XPOINTER_NAMESPACE_CONTEXT; some_data: STRING) is
@@ -98,8 +98,8 @@ feature -- Element change
 
 feature {NONE} -- Implementation
 
-	components: ?DS_LIST [STRING]
+	components: DS_LIST [STRING]
 			-- Components of scheme data
 
 end
-
+	

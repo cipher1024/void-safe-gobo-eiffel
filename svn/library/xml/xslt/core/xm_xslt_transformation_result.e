@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XSLT Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-01-19 21:12:03 +0100 (sam., 19 janv. 2008) $"
+	date: "$Date: 2008-01-19 21:12:03 +0100 (Sat, 19 Jan 2008) $"
 	revision: "$Revision: 6268 $"
 
 class XM_XSLT_TRANSFORMATION_RESULT
@@ -61,10 +61,10 @@ feature {NONE} -- Initialization
 			emitter := an_emitter
 			principal_receiver := emitter
 			is_emitter := True
-			if an_emitter.document_uri /= Void then
-				system_id := an_emitter.document_uri.full_reference
+			if emitter.document_uri /= Void then
+				system_id := emitter.document_uri.full_reference
 			else
-				system_id := an_emitter.base_uri
+				system_id := emitter.base_uri
 			end
 		ensure
 			emitter_set: emitter = an_emitter
@@ -78,10 +78,10 @@ feature {NONE} -- Initialization
 			receiver := a_receiver
 			principal_receiver := receiver
 			is_receiver := True
-			if a_receiver.document_uri /= Void then
-				system_id := a_receiver.document_uri.full_reference
+			if receiver.document_uri /= Void then
+				system_id := receiver.document_uri.full_reference
 			else
-				system_id := a_receiver.base_uri
+				system_id := receiver.base_uri
 			end
 		ensure
 			receiver_set: receiver = a_receiver
@@ -89,22 +89,22 @@ feature {NONE} -- Initialization
 
 feature -- Access
 
-	emitter: ?XM_XSLT_EMITTER
+	emitter: XM_XSLT_EMITTER
 			-- Wrapped emitter
 
-	stream: ?XM_OUTPUT
+	stream: XM_OUTPUT
 			-- Wrapped stream
 
-	receiver: ?XM_XPATH_RECEIVER
+	receiver: XM_XPATH_RECEIVER
 			-- Wrapped receivr.
 
-	principal_receiver: ?XM_XPATH_RECEIVER
+	principal_receiver: XM_XPATH_RECEIVER
 			-- Receiver for document node
 
-	system_id: ?STRING
+	system_id: STRING
 			-- System id
 
-	response_stream: ?KI_CHARACTER_INPUT_STREAM
+	response_stream: KI_CHARACTER_INPUT_STREAM
 			-- Body of response, if any;
 			-- Principally expected from HTTP POST requests
 
@@ -119,16 +119,13 @@ feature -- Status report
 	is_receiver: BOOLEAN
 			-- Is this a wrapper for an `XM_XPATH_RECEIVER'?
 
-	error_message: ?STRING
+	error_message: STRING
 			-- Possible error message from output resolver
 
 	is_document_started: BOOLEAN is
 			-- Has the result document been written to yet?
-		local
-			r: like principal_receiver
 		do
-			r := principal_receiver
-			Result := r /= Void and then r.is_written
+			Result := principal_receiver /= Void and then principal_receiver.is_written
 		end
 
 feature -- Element change
@@ -145,12 +142,9 @@ feature -- Element change
 
 	flush is
 			-- Flush `stream'.
-		local
-			s: like stream
 		do
-			s := stream
-			if s /= Void then
-				s.flush
+			if stream /= Void then
+				stream.flush
 			end
 		end
 
@@ -159,18 +153,15 @@ feature -- Element change
 		require
 			stream_result: is_stream
 			output_properties_not_void: some_properties /= Void
-		local
-			s: like output_stream
 		do
-			s := output_stream
-			if s /= Void then
-				s.close
+			if output_stream /= Void then
+				output_stream.close
 			end
 		end
 
 feature {NONE} -- Implementation
 
-	output_stream: ?KI_CHARACTER_OUTPUT_STREAM
+	output_stream: KI_CHARACTER_OUTPUT_STREAM
 			-- Text stream for secondary output destination
 
 invariant

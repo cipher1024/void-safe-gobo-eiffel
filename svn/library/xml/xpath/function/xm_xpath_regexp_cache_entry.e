@@ -58,7 +58,7 @@ feature -- Access
 			Result := match_records.has (an_input_string)
 		end
 
-	match_record (an_input_string: STRING): ?XM_XPATH_REGEXP_MATCH_RECORD is
+	match_record (an_input_string: STRING): XM_XPATH_REGEXP_MATCH_RECORD is
 			-- Possible previous match against `an_input_string'
 		require
 			input_string_not_void: an_input_string /= Void

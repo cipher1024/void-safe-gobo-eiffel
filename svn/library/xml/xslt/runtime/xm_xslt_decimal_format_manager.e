@@ -201,7 +201,7 @@ feature {NONE} -- Implementation
 	format_map: DS_HASH_TABLE [XM_XSLT_DECIMAL_FORMAT_MANAGER_ENTRY, INTEGER]
 			-- Map of fingerprints to decimal-formats
 
-	default_format: ?XM_XSLT_DECIMAL_FORMAT_ENTRY
+	default_format: XM_XSLT_DECIMAL_FORMAT_ENTRY
 			-- Default format
 
 	all_defaults: XM_XSLT_DECIMAL_FORMAT_ENTRY is

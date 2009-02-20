@@ -154,23 +154,23 @@ feature -- Access
 			create Result.make (Xml_schema_uri, "ENTITY", ncname_type, Entity_type_code)
 		end
 
-	idrefs_type: ?XM_XPATH_LIST_TYPE is
+	idrefs_type: XM_XPATH_LIST_TYPE is
 			-- xs:IDREFS
 		once
 			-- TODO			create Result.make ("IDREFS", any_simple_type, Idrefs_type_code)
 		end
 
-	entities_type: ?XM_XPATH_LIST_TYPE is
+	entities_type: XM_XPATH_LIST_TYPE is
 			-- xs:ENTITIES
 		once
 			-- TODO create Result.make ("ENTITIES", any_simple_type, Entities_type_code)
 		end
 
-	nmtokens_type: ?XM_XPATH_LIST_TYPE is
+	nmtokens_type: XM_XPATH_LIST_TYPE is
 			-- xs:NMTOKENS
 		once
 			-- TODO create Result.make ("NMTOKENS", any_simple_type, Nmtokens_type_code)
 		end
 
 end
-
+	

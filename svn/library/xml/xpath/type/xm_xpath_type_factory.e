@@ -18,7 +18,7 @@ inherit
 
 feature -- Access
 
-	schema_type (a_fingerprint: INTEGER): ?XM_XPATH_SCHEMA_TYPE is
+	schema_type (a_fingerprint: INTEGER): XM_XPATH_SCHEMA_TYPE is
 			-- Schema type with fingerprint of `a_fingerprint'
 		require
 			valid_fingerprint: is_built_in_fingerprint (a_fingerprint)
@@ -227,7 +227,7 @@ feature -- Access
 			qname_type_not_void: Result /= Void and then is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	notation_type: ?XM_XPATH_ATOMIC_TYPE is
+	notation_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:NOTATION
 		deferred
 		ensure
@@ -269,84 +269,84 @@ feature -- Access
 			integer_type_not_void: Result /= Void and then is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	non_positive_integer_type: ?XM_XPATH_ATOMIC_TYPE is
+	non_positive_integer_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:nonPositiveInteger
 		deferred
 		ensure
 			non_positive_integer_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	negative_integer_type: ?XM_XPATH_ATOMIC_TYPE is
+	negative_integer_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:negativeInteger
 		deferred
 		ensure
 			negative_integer_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	long_type: ?XM_XPATH_ATOMIC_TYPE is
+	long_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:long
 		deferred
 		ensure
 			long_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	int_type: ?XM_XPATH_ATOMIC_TYPE is
+	int_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:int
 		deferred
 		ensure
 			int_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	short_type: ?XM_XPATH_ATOMIC_TYPE is
+	short_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:short
 		deferred
 		ensure
 			short_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	byte_type: ?XM_XPATH_ATOMIC_TYPE is
+	byte_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:byte
 		deferred
 		ensure
 			byte_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	non_negative_integer_type: ?XM_XPATH_ATOMIC_TYPE is
+	non_negative_integer_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:nonNegativeInteger
 		deferred
 		ensure
 			non_negative_integer_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	positive_integer_type: ?XM_XPATH_ATOMIC_TYPE is
+	positive_integer_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:positiveInteger
 		deferred
 		ensure
 			positive_integer_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	unsigned_long_type: ?XM_XPATH_ATOMIC_TYPE is
+	unsigned_long_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:unsignedLong
 		deferred
 		ensure
 			unsigned_long_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	unsigned_int_type: ?XM_XPATH_ATOMIC_TYPE is
+	unsigned_int_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:unsignedInt
 		deferred
 		ensure
 			unsigned_int_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	unsigned_short_type: ?XM_XPATH_ATOMIC_TYPE is
+	unsigned_short_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:unsignedShort
 		deferred
 		ensure
 			unsigned_short_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	unsigned_byte_type: ?XM_XPATH_ATOMIC_TYPE is
+	unsigned_byte_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:unsignedByte
 		deferred
 		ensure
@@ -367,84 +367,84 @@ feature -- Access
 			day_time_duration_type_not_void: Result /= Void and then is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	normalized_string_type: ?XM_XPATH_ATOMIC_TYPE is
+	normalized_string_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:normalizedString
 		deferred
 		ensure
 			normalized_string_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	token_type: ?XM_XPATH_ATOMIC_TYPE is
+	token_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:token
 		deferred
 		ensure
 			token_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	language_type: ?XM_XPATH_ATOMIC_TYPE is
+	language_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:language
 		deferred
 		ensure
 			language_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	nmtoken_type: ?XM_XPATH_ATOMIC_TYPE is
+	nmtoken_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:NMTOKEN
 		deferred
 		ensure
 			nmtoken_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	name_type: ?XM_XPATH_ATOMIC_TYPE is
+	name_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:Name
 		deferred
 		ensure
 			name_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	ncname_type: ?XM_XPATH_ATOMIC_TYPE is
+	ncname_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:NCName
 		deferred
 		ensure
 			ncname_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	id_type: ?XM_XPATH_ATOMIC_TYPE is
+	id_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:ID
 		deferred
 		ensure
 			id_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	idref_type: ?XM_XPATH_ATOMIC_TYPE is
+	idref_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:IDREF
 		deferred
 		ensure
 			idref_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	entity_type: ?XM_XPATH_ATOMIC_TYPE is
+	entity_type: XM_XPATH_ATOMIC_TYPE is
 			-- xs:ENTITY
 		deferred
 		ensure
 			entity_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	idrefs_type: ?XM_XPATH_LIST_TYPE is
+	idrefs_type: XM_XPATH_LIST_TYPE is
 			-- xs:IDREFS
 		deferred
 		ensure
 			idrefs_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	entities_type: ?XM_XPATH_LIST_TYPE is
+	entities_type: XM_XPATH_LIST_TYPE is
 			-- xs:ENTITIES
 		deferred
 		ensure
 			entities_type_not_necessarily_present: Result /= Void implies is_built_in_fingerprint (Result.fingerprint)
 		end
 
-	nmtokens_type: ?XM_XPATH_LIST_TYPE is
+	nmtokens_type: XM_XPATH_LIST_TYPE is
 			-- xs:NMTOKENS
 		deferred
 		ensure
@@ -464,7 +464,7 @@ feature -- Access
 		ensure
 			untyped_type_not_void: Result /= Void and then is_built_in_fingerprint (Result.fingerprint)
 		end
-
+	
 feature -- Status report
 
 	is_built_in_fingerprint (a_fingerprint: INTEGER): BOOLEAN is
@@ -517,4 +517,4 @@ feature {NONE} -- Implementation
 	bits_8: INTEGER is 256
 
 end
-
+	

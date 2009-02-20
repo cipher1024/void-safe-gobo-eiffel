@@ -225,7 +225,7 @@ feature -- Access
 			Result := namespace_code_list
 		end
 
-	accumulated_namespace_codes: ?DS_ARRAYED_LIST [INTEGER]
+	accumulated_namespace_codes: DS_ARRAYED_LIST [INTEGER]
 			-- Namespace codes in scope
 
 	namespace_codes_in_scope: DS_ARRAYED_LIST [INTEGER] is

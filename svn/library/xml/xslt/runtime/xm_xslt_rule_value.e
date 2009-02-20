@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XSLT Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-05-14 04:13:22 +0200 (lun., 14 mai 2007) $"
+	date: "$Date: 2007-05-14 04:13:22 +0200 (Mon, 14 May 2007) $"
 	revision: "$Revision: 5970 $"
 
 class	XM_XSLT_RULE_VALUE
@@ -52,12 +52,8 @@ feature -- Access
 			-- Value as an `XM_XSLT_COMPILED_TEMPLATE'
 		require
 			is_template: is_template
-		local
-			r: like template_value
 		do
-			r := template_value
-			check r /= Void end -- implied by `is_template'
-			Result := r
+			Result := template_value
 		end
 
 feature -- Status report
@@ -70,7 +66,7 @@ feature -- Status report
 
 feature {XM_XSLT_MODE} -- Debugging and implementation
 
-	template_value: ?XM_XSLT_COMPILED_TEMPLATE
+	template_value: XM_XSLT_COMPILED_TEMPLATE
 			-- Template value
 
 feature {NONE} -- Implementation
@@ -84,4 +80,4 @@ invariant
 	template: is_template implies template_value /= Void
 
 end
-
+	

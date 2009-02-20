@@ -69,7 +69,7 @@ feature {NONE} -- Implementation
 
 feature -- Access
 
-	expanded_name: STRING is
+	expanded_name: STRING is 
 			-- Expanded name of implemented scheme
 		do
 			if is_w3c then
@@ -79,7 +79,7 @@ feature -- Access
 			end
 		end
 
-	value: ?XM_XPATH_VALUE
+	value: XM_XPATH_VALUE
 			-- Result of last call to `evaluate'
 
 feature -- Status report
@@ -145,7 +145,7 @@ feature -- Element change
 				end
 			end
 		end
-
+	
 feature {NONE} -- Implementation
 
 	function_library: XM_XPATH_FUNCTION_LIBRARY_MANAGER
@@ -165,7 +165,7 @@ feature {NONE} -- Implementation
 			a_document_pool.add (a_document, Void, a_document.base_uri) -- N.B. We can safely ignore the media type
 			create a_context.make (a_document, a_document_pool, function_library)
 			a_context.set_string_mode_mixed
-			a_expression.create_iterator (a_context)
+			a_expression.create_iterator (a_context)			
 			a_sequence_iterator := a_expression.last_iterator
 			if a_sequence_iterator.is_error then
 				is_error := True
@@ -181,4 +181,4 @@ invariant
 	function_library_not_void: function_library /= Void
 
 end
-
+	

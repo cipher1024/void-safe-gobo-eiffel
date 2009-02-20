@@ -32,10 +32,10 @@ inherit
 
 feature -- Access
 
-	parsed_error_value: ?XM_XPATH_ERROR_VALUE
+	parsed_error_value: XM_XPATH_ERROR_VALUE
 			-- Error result from last call to make_expression
 
-	last_created_closure: ?XM_XPATH_VALUE
+	last_created_closure: XM_XPATH_VALUE
 			-- Result from `create_closure' or `create_sequence_extent'
 
 	parsed_expression: XM_XPATH_EXPRESSION is
@@ -218,7 +218,7 @@ feature -- Creation
 
 feature {NONE} -- Implementation
 
-	internal_parsed_expression: ?XM_XPATH_EXPRESSION
+	internal_parsed_expression: XM_XPATH_EXPRESSION
 			-- Result of `make_expression'
 
 invariant

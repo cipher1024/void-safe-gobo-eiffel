@@ -11,16 +11,16 @@ indexing
 	revision: "$Revision: 5877 $"
 
 deferred class XM_XPATH_SCHEMA_TYPE
-
+	
 inherit
-
+	
 	XM_XPATH_ITEM_TYPE
 
 	XM_XPATH_STANDARD_NAMESPACES
 		export {NONE} all end
 
 	XM_XPATH_SHARED_TYPE_FACTORY
-
+	
 	XM_XPATH_SHARED_NAME_POOL
 		export {NONE} all end
 
@@ -35,7 +35,7 @@ feature -- Access
 	namespace_uri: STRING
 			--Namespace uri
 
-	base_type: ?XM_XPATH_SCHEMA_TYPE
+	base_type: XM_XPATH_SCHEMA_TYPE
 			-- Base type
 
 	standard_display_name: STRING is

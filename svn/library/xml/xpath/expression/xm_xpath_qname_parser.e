@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XPath Library"
 	copyright: "Copyright (c) 2005, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (ven., 26 janv. 2007) $"
+	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
 	revision: "$Revision: 5877 $"
 
 class XM_XPATH_QNAME_PARSER
@@ -54,10 +54,10 @@ feature {NONE} -- Initialization
 
 feature -- Access
 
-	optional_prefix: ?STRING
+	optional_prefix: STRING
 			-- Optional prefix
 
-	local_name: ?STRING
+	local_name: STRING
 			-- Local name
 
 feature -- Status report
@@ -72,12 +72,8 @@ feature -- Status report
 			-- Is a prefix present?
 		require
 			valid: is_valid
-		local
-			l_optional_prefix: like optional_prefix
 		do
-			l_optional_prefix := optional_prefix
-			check l_optional_prefix /= Void end -- implied by `is_valid'
-			Result := l_optional_prefix.count > 0
+			Result := optional_prefix.count > 0
 		end
 
 invariant
@@ -87,4 +83,4 @@ invariant
 	invalidity_contraint: too_many_colons implies not is_valid
 
 end
-
+	

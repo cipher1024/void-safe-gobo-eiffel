@@ -249,7 +249,7 @@ feature -- Access
 			valid_result: Result >= 0
 		end
 
-	suggested_prefix_for_uri (a_uri: STRING): ?STRING is
+	suggested_prefix_for_uri (a_uri: STRING): STRING is
 			-- Suggested prefix for a given `uri';
 			-- If there are several, it's undefined which one is returned.;
 			-- If there are no prefixes registered for this `uri', return `Void'
@@ -292,7 +292,7 @@ feature -- Access
 			valid_prefix_index: Result >= 0 and Result < 255
 		end
 
-	prefix_with_index (a_uri_code: INTEGER; an_index: INTEGER): ?STRING is
+	prefix_with_index (a_uri_code: INTEGER; an_index: INTEGER): STRING is
 			-- Get a prefix among all the prefixes used with a given URI, given its index
 		require
 			valid_code: a_uri_code >= 0 and a_uri_code <= 32000

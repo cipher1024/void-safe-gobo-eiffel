@@ -28,7 +28,7 @@ inherit
 		redefine
 			root, document_root, system_id, line_number, is_tiny_document, as_tiny_document
 		end
-
+	
 	XM_XPATH_STANDARD_NAMESPACES
 		export {NONE} all end
 
@@ -300,12 +300,11 @@ feature -- Duplication
 		local
 			an_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE]
 		do
-
+			
 			-- output the children
 
 			from
-				an_iterator := new_axis_iterator (Child_axis)
-				an_iterator.start
+				an_iterator := new_axis_iterator (Child_axis); an_iterator.start
 			until
 				an_iterator.is_error or else an_iterator.after
 			loop
@@ -321,22 +320,22 @@ feature {XM_XPATH_NODE} -- Restricted
 		do
 			Result := False
 		end
-
+	
 feature {NONE} -- Implementation
 
-	id_table: ?DS_HASH_TABLE [XM_XPATH_TINY_ELEMENT, STRING]
+	id_table: DS_HASH_TABLE [XM_XPATH_TINY_ELEMENT, STRING]
 			-- Mapping of IDs to elements.;
 			--  created on demand
 
-	element_list: ?DS_HASH_TABLE [DS_ARRAYED_LIST [XM_XPATH_TINY_ELEMENT], INTEGER]
+	element_list: DS_HASH_TABLE [DS_ARRAYED_LIST [XM_XPATH_TINY_ELEMENT], INTEGER]
 			-- Lists of elements with the same name;
 			--  created on demand
 
-	entity_table: ?DS_HASH_TABLE [DS_ARRAYED_LIST [STRING], STRING]
+	entity_table: DS_HASH_TABLE [DS_ARRAYED_LIST [STRING], STRING]
 			-- Mapping of unparsed entity names to their URI/PUBLIC-ID pairs;
 			--  created on demand
 
-	attribute_idref_table: ?XM_XPATH_TINY_ATTRIBUTE_IDREF_TABLE
+	attribute_idref_table: XM_XPATH_TINY_ATTRIBUTE_IDREF_TABLE
 			-- Mapping of IDREFs to attributes;
 			--  created on demand
 

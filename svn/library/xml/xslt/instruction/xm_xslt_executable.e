@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XSLT Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-11-25 18:07:18 +0100 (dim., 25 nov. 2007) $"
+	date: "$Date: 2007-11-25 18:07:18 +0100 (Sun, 25 Nov 2007) $"
 	revision: "$Revision: 6191 $"
 
 class XM_XSLT_EXECUTABLE
@@ -88,14 +88,14 @@ feature -- Access
 
 	default_output_properties: XM_XSLT_OUTPUT_PROPERTIES
 			-- Default output properties (for the unnamed output format)
-
-	compiled_templates_index: ?DS_HASH_TABLE [XM_XSLT_COMPILED_TEMPLATE, INTEGER]
+	
+	compiled_templates_index: DS_HASH_TABLE [XM_XSLT_COMPILED_TEMPLATE, INTEGER]
 			-- Index of named templates by `template_fingerprint'
 
 	character_map_index: DS_HASH_TABLE [DS_HASH_TABLE [STRING, INTEGER], INTEGER]
 			-- Index of named character maps
 
-	static_context: ?XM_XSLT_EXPRESSION_CONTEXT
+	static_context: XM_XSLT_EXPRESSION_CONTEXT
 			-- Static context of principal stylesheet
 
 	largest_pattern_stack_frame: INTEGER
@@ -230,7 +230,7 @@ feature -- Creation
 		ensure
 			bindery_not_void: Result /= Void
 		end
-
+		
 feature -- Element change
 
 	set_function_library (a_function_library: XM_XPATH_FUNCTION_LIBRARY_MANAGER) is
@@ -298,7 +298,7 @@ feature -- Element change
 		ensure
 			static_context_saved: static_context = a_static_context
 		end
-
+	
 	set_stripper_rules (a_stripper_rules_set: XM_XSLT_MODE) is
 			-- Set strip/preserve whitespace rules
 		do
@@ -332,8 +332,8 @@ feature {XM_XSLT_EVALUATION_CONTEXT} -- Access
 			-- Map of collation names to collators
 
 feature {NONE} -- Implementation
-
-	stripper_rules: ?XM_XSLT_MODE
+	
+	stripper_rules: XM_XSLT_MODE
 			-- Whitespace stripping rules
 
 	module_list: DS_ARRAYED_LIST [STRING]
@@ -354,11 +354,11 @@ invariant
 	collation_map_not_void: collation_map /= Void
 	module_list_not_void: module_list /= Void
 	character_map_index_not_void: character_map_index /= Void
-	function_library_not_void: function_library /= Void
+	function_library_not_void: function_library /= Void	
 	isolation_level_small_enough: isolation_level <= Serializable
 	isolation_level_large_enough: isolation_level >= Read_uncommitted
 	attribute_set_manager_not_void: attribute_set_manager /= Void
 	required_parameters_not_void: required_parameters /= Void
 
 end
-
+	

@@ -19,7 +19,7 @@ inherit
 			simplify, sub_expressions, allocate_slots, promote,
 			is_assignation, as_assignation
 		end
-
+	
 	XM_XPATH_BINDING
 
 	XM_XPATH_PROMOTION_ACTIONS
@@ -76,10 +76,10 @@ feature -- Status report
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations.
 		local
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			if declaration /= Void then
 				simplified := True
@@ -103,13 +103,13 @@ feature -- Optimization
 			end
 		end
 
-	promote (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
+	promote (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
 			-- Promote this subexpression.
 		local
 			l_promotion: XM_XPATH_EXPRESSION
 			l_cursor: DS_LIST_CURSOR [XM_XPATH_BINDING]
 			l_saved_binding_list, l_new_binding_list: DS_LIST [XM_XPATH_BINDING]
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			a_offer.accept (Current)
 			l_promotion := a_offer.accepted_expression
@@ -155,7 +155,7 @@ feature -- Optimization
 						replace_action (l_replacement.item)
 						reset_static_properties
 					end
-					a_offer.set_binding_list (l_saved_binding_list)
+					a_offer.set_binding_list (l_saved_binding_list)		
 				end
 				a_replacement.put (Current)
 			end
@@ -175,7 +175,7 @@ feature -- Evaluation
 
 feature -- Element change
 
-	allocate_slots (next_free_slot: INTEGER; a_slot_manager: ?XM_XPATH_SLOT_MANAGER) is
+	allocate_slots (next_free_slot: INTEGER; a_slot_manager: XM_XPATH_SLOT_MANAGER) is
 			-- Allocate slot numbers for all range variable in `Current' and it's sub-expresions.
 		do
 			set_slot_number (next_free_slot)
@@ -262,5 +262,5 @@ invariant
 	valid_operator: operator = For_token or operator = Some_token or operator = Every_token or operator = Let_token
 	sequence_not_void: initialized implies sequence /= Void
 	action_not_void: initialized implies action /= Void
-
+	
 end

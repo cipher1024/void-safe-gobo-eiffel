@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XSLT Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (ven., 26 janv. 2007) $"
+	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
 	revision: "$Revision: 5877 $"
 
 class	XM_XSLT_RULE
@@ -43,8 +43,6 @@ feature {NONE} -- Implementation
 			-- Create as a copy of `other', along with a copy of it's chain.
 		require
 			other_rule_not_void: other /= Void
-		local
-			r: ?like Current
 		do
 			pattern := other.pattern
 			handler := other.handler
@@ -52,9 +50,8 @@ feature {NONE} -- Implementation
 			priority := other.priority
 			priority_rank := other.priority_rank
 			sequence_number := other.sequence_number
-			r := other.next_rule
-			if r /= Void then
-				create next_rule.make_with_copy (r)
+			if other.next_rule /= Void then
+				create next_rule.make_with_copy (other.next_rule)
 			end
 		end
 
@@ -62,7 +59,7 @@ feature -- Access
 
 	pattern: XM_XSLT_PATTERN
 			-- pattern which this rule matches
-
+	
 	handler: XM_XSLT_RULE_VALUE
 			-- handler for `pattern'
 
@@ -77,8 +74,8 @@ feature -- Access
 
 	sequence_number: INTEGER
 			-- Sequence number
-
-	next_rule: ?XM_XSLT_RULE
+	
+	next_rule: XM_XSLT_RULE
 			-- Next rule on the chain
 
 feature -- Element change
@@ -103,10 +100,10 @@ feature -- Element change
 		end
 
 invariant
-
+	
 	pattern_not_void: pattern /= Void
 	handler_not_void: handler /= Void
 	positive_sequence_number: sequence_number >= 0
 
 end
-
+	

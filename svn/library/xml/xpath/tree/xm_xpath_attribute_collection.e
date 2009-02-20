@@ -13,7 +13,7 @@ indexing
 class XM_XPATH_ATTRIBUTE_COLLECTION
 
 inherit
-
+	
 	XM_XPATH_SHARED_NAME_POOL
 
 	XM_XPATH_STANDARD_NAMESPACES
@@ -26,7 +26,7 @@ create
 
 	make
 
-
+	
 feature {NONE} -- Initialization
 
 	make is
@@ -40,7 +40,7 @@ feature {NONE} -- Initialization
 
 feature -- Access
 
-	attribute_value (a_fingerprint: INTEGER): ?STRING is
+	attribute_value (a_fingerprint: INTEGER): STRING is
 			-- Value of attribute identified by `a_fingerprint'
 		local
 			an_index: INTEGER
@@ -50,8 +50,8 @@ feature -- Access
 				Result := attribute_values.item (an_index)
 			end
 		end
-
-	attribute_value_by_name (a_uri: STRING; a_local_name:STRING): ?STRING is
+	
+	attribute_value_by_name (a_uri: STRING; a_local_name:STRING): STRING is
 			-- Value of named attribute
 		local
 			a_fingerprint: INTEGER
@@ -128,7 +128,7 @@ feature -- Measurement
 		end
 
 feature -- Status report
-
+	
 	is_attribute_index_valid (an_attribute_index: INTEGER): BOOLEAN is
 		do
 			Result := an_attribute_index > 0 and then an_attribute_index <= attribute_values.count
@@ -239,9 +239,9 @@ feature {NONE} -- Implementation
 
 	-- The next five lists are quintuples - i.e. item number n in all four lists forms a quintuple
 
-	attribute_ids: ?DS_ARRAYED_LIST [INTEGER]
+	attribute_ids: DS_ARRAYED_LIST [INTEGER]
 			-- Are these ID, IDREF or IDREFS attributes?
-
+	
 	attribute_name_codes: DS_ARRAYED_LIST [INTEGER]
 			-- Name codes of attributes
 
@@ -314,4 +314,4 @@ invariant
 	ids: attribute_ids /= Void implies attribute_name_codes.count = attribute_ids.count
 
 end
-
+	

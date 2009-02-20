@@ -72,10 +72,10 @@ feature -- Access
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations.
 		local
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			first_operand.simplify (l_replacement)
@@ -95,13 +95,13 @@ feature -- Optimization
 		end
 
 
-	check_static_type (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
+	check_static_type (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
 			-- Perform static type-checking of `Current' and its subexpressions.
 		local
 			l_role, l_other_role: XM_XPATH_ROLE_LOCATOR
 			l_type_checker: XM_XPATH_TYPE_CHECKER
 			l_node_sequence: XM_XPATH_SEQUENCE_TYPE
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			first_operand.check_static_type (l_replacement, a_context, a_context_item_type)
@@ -138,7 +138,7 @@ feature -- Optimization
 
 feature -- Evaluation
 
-	calculate_effective_boolean_value (a_context: ?XM_XPATH_CONTEXT) is
+	calculate_effective_boolean_value (a_context: XM_XPATH_CONTEXT) is
 			-- Effective boolean value
 		local
 			a_boolean_value: XM_XPATH_BOOLEAN_VALUE
@@ -157,7 +157,7 @@ feature -- Evaluation
 			end
 		end
 
-	create_iterator (a_context: ?XM_XPATH_CONTEXT) is
+	create_iterator (a_context: XM_XPATH_CONTEXT) is
 			-- Create an iterator over the values of a sequence
 		local
 			l_iterator, l_other_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE]
@@ -194,7 +194,7 @@ feature -- Evaluation
 			node_iterator: last_iterator.is_node_iterator
 		end
 
-	create_node_iterator (a_context: ?XM_XPATH_CONTEXT) is
+	create_node_iterator (a_context: XM_XPATH_CONTEXT) is
 			-- Create an iterator over a node sequence
 		do
 			create_iterator (a_context)
@@ -237,7 +237,7 @@ feature {XM_XPATH_EXPRESSION} -- Restricted
 
 feature {XM_XPATH_VENN_EXPRESSION} -- Local
 
-	simplify_empty_expression (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify_empty_expression (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Further simplification when either operand is an empty sequence;
 			-- This can happen after reduction with constructs of the form //a[condition] | //b[not(condition)]
 			-- (common in XPath 1.0 because there were no conditional expressions)
@@ -357,7 +357,7 @@ feature {NONE} -- Implementation
 			end				
 		end
 
-	merge_axis_expression (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	merge_axis_expression (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Merge expressions when both operands are axis expressions on the same axis;
 			--  ie. rewrite (axis::test1 | axis::test2) as axis::(test1 | test2)
 		require
@@ -384,7 +384,7 @@ feature {NONE} -- Implementation
 			replaced: a_replacement.item /= Void
 		end
 
-	merge_common_start_expression (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	merge_common_start_expression (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Merge common start path expressions;
 			--  i.e. rewrite (/X | /Y) as /(X|Y).
 			--  This applies recursively, so that /A/B/C | /A/B/D becomes /A/B/child::(C|D)
@@ -412,7 +412,7 @@ feature {NONE} -- Implementation
 			replaced: a_replacement.item /= Void
 		end
 
-	merge_non_positional_filter_expression (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	merge_non_positional_filter_expression (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Merge non-positional filter expressions;
 			-- A[exp0] | A[exp1] becomes A[exp0 | exp1]
 		require

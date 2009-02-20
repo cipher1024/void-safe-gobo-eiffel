@@ -38,7 +38,7 @@ feature {NONE} -- Initialization
 		do
 			make_unary (a_source)
 			target_type := a_target.primary_type
-			is_empty_allowed := a_target.cardinality = Required_cardinality_optional
+			is_empty_allowed := a_target.cardinality = Required_cardinality_optional 
 			compute_static_properties
 		ensure
 			base_expression_set: base_expression = a_source
@@ -46,12 +46,12 @@ feature {NONE} -- Initialization
 		end
 
 feature -- Access
-
+	
 	is_empty_allowed: BOOLEAN
 			-- Empty sequence allowed?
 
 	target_type: XM_XPATH_ITEM_TYPE
-			-- Target type
+			-- Target type 
 
 	is_castable_expression: BOOLEAN is
 			-- Is `Current' a castable expression?
@@ -84,7 +84,7 @@ feature -- Comparison
 		do
 			if other.is_castable_expression then
 				other_castable := other.as_castable_expression
-				Result := base_expression.same_expression (other_castable.base_expression)
+				Result := base_expression.same_expression (other_castable.base_expression) 
 					and then other_castable.is_empty_allowed = is_empty_allowed
 					and then other_castable.target_type = target_type
 			end
@@ -100,10 +100,10 @@ feature -- Status report
 
 feature -- Optimization	
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations
 		local
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			base_expression.simplify (l_replacement)
@@ -119,15 +119,15 @@ feature -- Optimization
 				end
 			end
 		end
-
-	check_static_type (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
+	
+	check_static_type (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
 			-- Perform static type-checking of `Current' and its subexpressions.
 		local
 			l_type_checker: XM_XPATH_TYPE_CHECKER
 			l_atomic_sequence: XM_XPATH_SEQUENCE_TYPE
 			l_role: XM_XPATH_ROLE_LOCATOR
 			l_cardinality: INTEGER
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			base_expression.check_static_type (l_replacement, a_context, a_context_item_type)
@@ -159,10 +159,10 @@ feature -- Optimization
 			end
 		end
 
-	optimize (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
+	optimize (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
 			-- Perform optimization of `Current' and its subexpressions.
 		local
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			create l_replacement.make (Void)
 			base_expression.optimize (l_replacement, a_context, a_context_item_type)
@@ -175,25 +175,25 @@ feature -- Optimization
 					set_replacement (a_replacement, last_boolean_value)
 				else
 					a_replacement.put (Current)
-				end
+				end	
 			end
 		end
 
 
 feature -- Evaluation
 
-	evaluate_item (a_result: DS_CELL [?XM_XPATH_ITEM]; a_context: ?XM_XPATH_CONTEXT) is
+	evaluate_item (a_result: DS_CELL [XM_XPATH_ITEM]; a_context: XM_XPATH_CONTEXT) is
 			-- Evaluate as a single item to `a_result'.
 		do
 			calculate_effective_boolean_value (a_context)
 			a_result.put (last_boolean_value)
 		end
 
-
-	calculate_effective_boolean_value (a_context: ?XM_XPATH_CONTEXT) is
+	
+	calculate_effective_boolean_value (a_context: XM_XPATH_CONTEXT) is
 			-- Effective boolean value
 		local
-			l_result: DS_CELL [?XM_XPATH_ITEM]
+			l_result: DS_CELL [XM_XPATH_ITEM]
 		do
 			create l_result.make (Void)
 			base_expression.evaluate_item (l_result, a_context)
@@ -205,7 +205,7 @@ feature -- Evaluation
 		end
 
 feature {XM_XPATH_UNARY_EXPRESSION} -- Restricted
-
+	
 	display_operator: STRING is
 			-- Format `operator' for display
 		do
@@ -213,7 +213,7 @@ feature {XM_XPATH_UNARY_EXPRESSION} -- Restricted
 		end
 
 feature {NONE} -- Implementation
-
+	
 	compute_cardinality is
 			-- Compute cardinality.
 		do

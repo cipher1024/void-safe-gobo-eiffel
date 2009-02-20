@@ -73,7 +73,7 @@ feature -- Status report
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 		do
 			clone_special_properties (arguments.item (1))
 			Precursor (a_replacement)
@@ -81,14 +81,14 @@ feature -- Optimization
 
 feature -- Evaluation
 
-	create_iterator (a_context: ?XM_XPATH_CONTEXT) is
+	create_iterator (a_context: XM_XPATH_CONTEXT) is
 			-- Create iterator over the values of a sequence.
 		local
 			l_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ITEM]
 			l_item: XM_XPATH_ITEM
 			l_double_value: XM_XPATH_DOUBLE_VALUE
 			l_starting_location, l_final_position, l_length: INTEGER
-			l_result: DS_CELL [?XM_XPATH_ITEM]
+			l_result: DS_CELL [XM_XPATH_ITEM]
 		do
 			last_iterator := Void
 			arguments.item (1).create_iterator (a_context)
@@ -170,14 +170,14 @@ feature -- Evaluation
 			end
 		end
 
-	create_node_iterator (a_context: ?XM_XPATH_CONTEXT) is
+	create_node_iterator (a_context: XM_XPATH_CONTEXT) is
 			-- Create an iterator over a node sequence
 		local
 			l_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE]
 			l_item: XM_XPATH_ITEM
 			l_double_value: XM_XPATH_DOUBLE_VALUE
 			l_starting_location, l_final_position, l_length: INTEGER
-			l_result: DS_CELL [?XM_XPATH_ITEM]
+			l_result: DS_CELL [XM_XPATH_ITEM]
 		do
 			last_node_iterator := Void
 			arguments.item (1).create_node_iterator (a_context)

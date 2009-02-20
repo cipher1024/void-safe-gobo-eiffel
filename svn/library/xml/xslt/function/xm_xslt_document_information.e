@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XSLT Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-03-05 08:07:05 +0100 (lun., 05 mars 2007) $"
+	date: "$Date: 2007-03-05 08:07:05 +0100 (Mon, 05 Mar 2007) $"
 	revision: "$Revision: 5914 $"
 
 class XM_XSLT_DOCUMENT_INFORMATION
@@ -15,7 +15,7 @@ class XM_XSLT_DOCUMENT_INFORMATION
 inherit
 
 	ANY
-
+	
 	XM_XPATH_NODE_MAPPING_FUNCTION
 		export {NONE} all end
 
@@ -44,19 +44,19 @@ feature {NONE} -- Initialization
 		end
 
 feature -- Access
-
+	
 	base_uri, stylesheet_base_uri: UT_URI
 			-- Base URIs
 
 	transformer: XM_XSLT_TRANSFORMER
 			-- Transformer, for error reovery
 
-	last_node_iterator: ?XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE]
+	last_node_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE]
 			-- Result from `map_nodes'
 
 feature -- Evaluation
-
-	map_nodes (a_item: XM_XPATH_ITEM; a_context: ?XM_XPATH_CONTEXT) is
+	
+	map_nodes (a_item: XM_XPATH_ITEM; a_context: XM_XPATH_CONTEXT) is
 			-- Map `a_item' to a sequence
 		local
 			l_base_uri, l_uri: UT_URI
@@ -228,5 +228,5 @@ invariant
 	transformer_not_void: transformer /= Void
 
 end
-
+	
 

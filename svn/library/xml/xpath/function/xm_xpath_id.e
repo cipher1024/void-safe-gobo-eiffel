@@ -69,7 +69,7 @@ feature -- Status report
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations
 		do
 			Precursor (a_replacement)
@@ -82,7 +82,7 @@ feature -- Optimization
 feature -- Evaluation
 
 
-	create_iterator (a_context: ?XM_XPATH_CONTEXT) is
+	create_iterator (a_context: XM_XPATH_CONTEXT) is
 			-- An iterator over the values of a sequence
 		local
 			l_node: XM_XPATH_NODE
@@ -94,7 +94,7 @@ feature -- Evaluation
 			l_mapping_iterator: XM_XPATH_NODE_MAPPING_ITERATOR
 			l_local_order_comparer: XM_XPATH_LOCAL_ORDER_COMPARER
 			l_id_mapping_function: XM_XPATH_ID_MAPPING_FUNCTION
-			l_result: DS_CELL [?XM_XPATH_ITEM]
+			l_result: DS_CELL [XM_XPATH_ITEM]
 		do
 			create l_result.make (Void)
 			arguments.item (2).evaluate_item (l_result, a_context)
@@ -150,13 +150,13 @@ feature -- Evaluation
 			node_iterator: last_iterator.is_node_iterator
 		end
 
-	pre_evaluate (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
+	pre_evaluate (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
 			-- Pre-evaluate `Current' at compile time.
 		do
 			a_replacement.put (Current)
 		end
 	
-	create_node_iterator (a_context: ?XM_XPATH_CONTEXT) is
+	create_node_iterator (a_context: XM_XPATH_CONTEXT) is
 			-- Create an iterator over a node sequence
 		do
 			create_iterator (a_context)
@@ -165,10 +165,10 @@ feature -- Evaluation
 
 feature {XM_XPATH_FUNCTION_CALL} -- Local
 
-	check_arguments (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
+	check_arguments (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT) is
 			-- Check arguments during parsing, when all the argument expressions have been read.
 		local
-			l_replacement: DS_CELL [?XM_XPATH_EXPRESSION]
+			l_replacement: DS_CELL [XM_XPATH_EXPRESSION]
 		do
 			Precursor (a_replacement, a_context)
 			if a_replacement.item = Void then

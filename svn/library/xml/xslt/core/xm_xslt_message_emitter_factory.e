@@ -7,18 +7,18 @@ indexing
 	library: "Gobo Eiffel XSLT Library"
 	copyright: "Copyright (c) 2006, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-10-08 07:38:47 +0200 (lun., 08 oct. 2007) $"
+	date: "$Date: 2007-10-08 07:38:47 +0200 (Mon, 08 Oct 2007) $"
 	revision: "$Revision: 6109 $"
 
 class XM_XSLT_MESSAGE_EMITTER_FACTORY
 
 feature -- Access
 
-	outputter: ?XM_OUTPUT
+	outputter: XM_OUTPUT
 			-- Destination for xsl:message output
 
 feature -- Element change
-
+	
 	set_outputter (a_outputter: like outputter) is
 			-- Set `outputter' to `a_outputter'.
 		require
@@ -47,4 +47,4 @@ feature -- Creation
 		end
 
 end
-
+	

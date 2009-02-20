@@ -27,22 +27,22 @@ feature {NONE} -- Initialization
 		do
 			start_time := system_clock.time_now
 		end
-
+	
 feature -- Access
 
 	start_time: DT_TIME
 			-- Time at start of compilation
-
-	build_start_time: ?DT_TIME
+	
+	build_start_time: DT_TIME
 			-- Time at start of building document
 
-	build_finish_time: ?DT_TIME
+	build_finish_time: DT_TIME
 			-- Time at end of building document
 
-	finish_compiling_time: ?DT_TIME
+	finish_compiling_time: DT_TIME
 			-- Time at end of compilation
 
-	finish_time: ?DT_TIME
+	finish_time: DT_TIME
 			-- Time at ebd of transformation
 
 	compile_time: DT_TIME_DURATION is
@@ -54,7 +54,7 @@ feature -- Access
 		ensure
 			compile_time_not_void: Result /= Void
 		end
-
+		
 	document_build_time: DT_TIME_DURATION is
 			-- Time taken to buiuld an XML document tree.
 		require
@@ -70,7 +70,7 @@ feature -- Access
 			-- Time taken to perform transformation
 		require
 			finish_compiling_time_not_void: finish_compiling_time /= Void
-			finish_time_not_void: finish_time /= Void
+			finish_time_not_void: finish_time /= Void			
 		do
 			if build_finish_time = Void then
 				Result := finish_time.canonical_duration (finish_compiling_time)
@@ -84,13 +84,13 @@ feature -- Access
 	total_time: DT_TIME_DURATION is
 			-- Time taken to compile stylesheet modules and perform transformation.
 		require
-			finish_time_not_void: finish_time /= Void
+			finish_time_not_void: finish_time /= Void			
 		do
 			Result := finish_time.canonical_duration (start_time)
 		ensure
 			compile_time_not_void: Result /= Void
 		end
-
+	
 feature -- Basic operations
 
 	mark_compilation_finished is
@@ -100,7 +100,7 @@ feature -- Basic operations
 		ensure
 			finish_compiling_time_not_void: finish_compiling_time /= Void
 		end
-
+	
 	mark_transformation_finished is
 				-- Set `finish_time' to now.
 		do
@@ -108,7 +108,7 @@ feature -- Basic operations
 		ensure
 			finish_time_not_void: finish_time /= Void
 		end
-
+	
 	time_document_building is
 			-- Perform timing to parse an XML document and construct an XDM tree.
 		do
@@ -116,7 +116,7 @@ feature -- Basic operations
 		ensure
 			build_start_time_not_void: build_start_time /= Void
 		end
-
+	
 	mark_document_built is
 			-- Set `build_finish_time' to now.
 		do

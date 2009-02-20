@@ -41,7 +41,7 @@ feature -- Access
 			Result := regexp_cache.has (a_composed_key)
 		end
 
-	item (a_composed_key: STRING): ?XM_XPATH_REGEXP_CACHE_ENTRY is
+	item (a_composed_key: STRING): XM_XPATH_REGEXP_CACHE_ENTRY is
 			-- Possible cache entry for `a_composed_key'
 		require
 			composed_key_not_void: a_composed_key /= Void

@@ -803,7 +803,7 @@ feature {NONE} -- Implementation
 	next_token: INTEGER
 			-- The number of the next token to be returned
 
-	next_token_value: ?STRING
+	next_token_value: STRING
 		-- The string value of the next token to be read
 
 	input_index: INTEGER
@@ -812,13 +812,13 @@ feature {NONE} -- Implementation
 	next_line_number: INTEGER
 			-- The line number (within the expression) of the next token
 
-	internal_last_lexical_error: ?STRING
+	internal_last_lexical_error: STRING
 			-- Error text of last lexical error
 
 	current_token: INTEGER
 			-- The number identifying the most recently read token
 
-	current_token_value: ?STRING
+	current_token_value: STRING
 			-- The string value of the most recently read token
 
 	preceding_token: INTEGER

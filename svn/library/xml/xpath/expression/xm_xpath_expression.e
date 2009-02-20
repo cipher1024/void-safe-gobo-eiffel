@@ -7,7 +7,7 @@ indexing
 	library: "Gobo Eiffel XPath Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-05-05 19:06:00 +0200 (lun., 05 mai 2008) $"
+	date: "$Date: 2008-05-05 19:06:00 +0200 (Mon, 05 May 2008) $"
 	revision: "$Revision: 6390 $"
 
 deferred class XM_XPATH_EXPRESSION
@@ -29,7 +29,7 @@ inherit
 
 	XM_XPATH_PROMOTION_ACTIONS
 		export {NONE} all end
-
+	
 	XM_XPATH_SHARED_EXPRESSION_TESTER
 		export {NONE} all end
 
@@ -43,7 +43,7 @@ inherit
 
 	XM_XPATH_SHARED_ANY_NODE_TEST
 		export {NONE} all end
-
+	
 	XM_XPATH_SHARED_NO_NODE_TEST
 		export {NONE} all end
 
@@ -102,15 +102,15 @@ feature -- Access
 				else
 					a_node_kind_mask := a_base_type.as_node_test.node_kind_mask
 					if always_untyped then
-
+						
 						-- Some node-kinds always have a typed value that's a string
-
+						
 						if INTEGER_.bit_or (a_node_kind_mask, string_kinds) = string_kinds then
 							Result := type_factory.string_type
 							finished := True
-
+							
 							-- Some node-kinds are always untypedAtomic; some are conditionally so:
-
+							
 						elseif INTEGER_.bit_or (a_node_kind_mask, untyped_if_untyped_kinds) = untyped_if_untyped_kinds then
 							Result := type_factory.untyped_atomic_type
 							finished := True
@@ -239,24 +239,24 @@ feature -- Status report
 			Result := INTEGER_.bit_and (native_implementations, Supports_process) /= 0
 		end
 
-	error_value: ?XM_XPATH_ERROR_VALUE
+	error_value: XM_XPATH_ERROR_VALUE
 			-- Last error value
 
-	last_evaluated_string: ?XM_XPATH_STRING_VALUE
+	last_evaluated_string: XM_XPATH_STRING_VALUE
 			-- Value from last call to `evaluate_as_string'
 
-	last_boolean_value: ?XM_XPATH_BOOLEAN_VALUE
+	last_boolean_value: XM_XPATH_BOOLEAN_VALUE
 			-- Value from last call to `calculate_effective_boolean_value'
 
-	last_iterator: ?XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ITEM]
+	last_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_ITEM]
 			-- Result from last call to `create_iterator'
-
-	last_node_iterator: ?XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE]
+	
+	last_node_iterator: XM_XPATH_SEQUENCE_ITERATOR [XM_XPATH_NODE]
 			-- Result from last call to `create_node_iterator'
-
+	
 	last_slot_number: INTEGER
 			-- Last allocated variable slot number
-
+	
 	is_deferred_error: BOOLEAN is
 			-- Is `Current' a deferred error?
 		do
@@ -417,7 +417,7 @@ feature -- Status report
 		do
 			Result := False
 		end
-
+	
 	is_string_length_function: BOOLEAN is
 			-- Is `Current' XPath an string-length() function?
 		do
@@ -435,7 +435,7 @@ feature -- Status report
 		do
 			Result := False
 		end
-
+	
 	is_generate_id_function: BOOLEAN is
 			-- Is `Current' an XSLT generate-id() function?
 		do
@@ -465,13 +465,13 @@ feature -- Status report
 		do
 			Result := False
 		end
-
+	
 	is_hex_binary: BOOLEAN is
 			-- Is `Current' a hexBinary value?
 		do
 			Result := False
 		end
-
+	
 	is_base64_binary: BOOLEAN is
 			-- Is `Current' a base64Binary value?
 		do
@@ -483,7 +483,7 @@ feature -- Status report
 		do
 			Result := False
 		end
-
+	
 	is_integer_value: BOOLEAN is
 			-- Is `Current' an integer value?
 		do
@@ -495,13 +495,13 @@ feature -- Status report
 		do
 			Result := False
 		end
-
+	
 	is_integer_range: BOOLEAN is
 			-- Is `Current' an integer range?
 		do
 			Result := False
 		end
-
+	
 	is_decimal_value: BOOLEAN is
 			-- Is `Current' a decimal value?
 		do
@@ -513,7 +513,7 @@ feature -- Status report
 		do
 			Result := False
 		end
-
+	
 	is_date_value: BOOLEAN is
 			-- Is `Current' a date value?
 		do
@@ -591,7 +591,7 @@ feature -- Status report
 		do
 			Result := False
 		end
-
+	
 	is_untyped_atomic: BOOLEAN is
 			-- Is `Current' an untyped atomic value?
 		do
@@ -633,7 +633,7 @@ feature -- Status report
 		do
 			Result := False
 		end
-
+	
 	is_singleton_node: BOOLEAN is
 			-- Is `Current' a singleton node?
 		do
@@ -657,7 +657,7 @@ feature -- Status report
 		do
 			Result := False
 		end
-
+	
 	is_computed_expression: BOOLEAN is
 			-- Is `Current' a computed expression?
 		do
@@ -741,13 +741,13 @@ feature -- Status report
 		do
 			Result := False
 		end
-
+	
 	is_axis_expression: BOOLEAN is
 			-- Is `Current' an axis expression?
 		do
 			Result := False
 		end
-
+	
 	is_let_expression: BOOLEAN is
 			-- Is `Current' a let expression?
 		do
@@ -759,31 +759,31 @@ feature -- Status report
 		do
 			Result := False
 		end
-
+	
 	is_boolean_expression: BOOLEAN is
 			-- Is `Current' a boolean expression?
 		do
 			Result := False
 		end
-
+	
 	is_tail_expression: BOOLEAN is
 			-- Is `Current' a tail expression?
 		do
 			Result := False
 		end
-
+	
 	is_root_expression: BOOLEAN is
 			-- Is `Current' a root expression?
 		do
 			Result := False
 		end
-
+	
 	is_parent_node_expression: BOOLEAN is
 			-- Is `Current' a parent node expression?
 		do
 			Result := False
 		end
-
+	
 	is_path_expression: BOOLEAN is
 			-- Is `Current' a path expression?
 		do
@@ -841,7 +841,7 @@ feature -- Status setting
 	set_last_error (an_error_value: XM_XPATH_ERROR_VALUE) is
 			-- Set `error_value'.
 		require
-			not_in_error: not is_error
+			not_in_error: not is_error		
 			error_value_not_void: an_error_value /= Void
 		do
 			error_value := an_error_value
@@ -849,7 +849,7 @@ feature -- Status setting
 			set: error_value = an_error_value
 			in_error: is_error
 		end
-
+	
 	set_last_error_from_string (a_message, a_namespace_uri, a_code: STRING; an_error_type: INTEGER) is
 			-- Set `error_value'.
 		require
@@ -857,7 +857,7 @@ feature -- Status setting
 			message_not_void: a_message /= Void and then a_message.count > 0
 			namespace_uri_not_void: a_namespace_uri /= Void
 			code_not_void: a_code /= Void
-			not_in_error: not is_error
+			not_in_error: not is_error			
 		do
 			create error_value.make_from_string (a_message, a_namespace_uri, a_code, an_error_type)
 		ensure
@@ -866,7 +866,7 @@ feature -- Status setting
 			in_error: is_error
 		end
 
-	set_replacement (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_expression: XM_XPATH_EXPRESSION) is
+	set_replacement (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_expression: XM_XPATH_EXPRESSION) is
 			-- Set replacement for `Current'.
 		require
 			not_in_error: not is_error
@@ -897,7 +897,7 @@ feature -- Status setting
 			replacement_set: a_replacement.item = a_expression
 		end
 
-	resolve_calls_to_current_function (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	resolve_calls_to_current_function (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Resolve calls to "fn:current()".
 		require
 			a_replacement_not_void: a_replacement /= Void
@@ -950,7 +950,7 @@ feature -- Status setting
 
 feature -- Optimization
 
-	simplify (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]) is
+	simplify (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]) is
 			-- Perform context-independent static optimizations
 		require
 			no_previous_error: not is_error
@@ -962,7 +962,7 @@ feature -- Optimization
 			simplified_expression_not_void: a_replacement.item /= Void
 		end
 
-	check_static_type (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
+	check_static_type (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
 			-- Perform static type-checking of `Current' and its subexpressions.
 			-- This checks statically that the operands of the expression have the correct type.
 			-- If necessary it generates code to do run-time type checking or type conversion.
@@ -983,7 +983,7 @@ feature -- Optimization
 			replaced: a_replacement.item /= Void
 		end
 
-	optimize (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: ?XM_XPATH_ITEM_TYPE) is
+	optimize (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_context: XM_XPATH_STATIC_CONTEXT; a_context_item_type: XM_XPATH_ITEM_TYPE) is
 			-- Perform optimization of `Current' and its subexpressions.
 			-- This routine is called after all references to functions and variables have been resolved
 			--  to the declaration of the function or variable, and after static type-checking.
@@ -1000,7 +1000,7 @@ feature -- Optimization
 			may_be_in_error: True -- even if there was no replacement, early evaluation can cause this
 		end
 
-	promote (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
+	promote (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_offer: XM_XPATH_PROMOTION_OFFER) is
 			-- Promote this subexpression.
 			-- The offer will be accepted if the subexpression is not dependent on
 			--  the factors (e.g. the context item) identified in `a_offer'.
@@ -1023,7 +1023,7 @@ feature -- Evaluation
 
 		-- TODO: make a_context be non-Void in all these
 
-	evaluate (a_result: DS_CELL [?XM_XPATH_VALUE]; a_mode, a_reference_count: INTEGER; a_context: ?XM_XPATH_CONTEXT) is
+	evaluate (a_result: DS_CELL [XM_XPATH_VALUE]; a_mode, a_reference_count: INTEGER; a_context: XM_XPATH_CONTEXT) is
 			-- Evaluate `Current' according to `a_mode'.
 		require
 			context_may_be_void: True
@@ -1035,7 +1035,7 @@ feature -- Evaluation
 		local
 			l_reference_count: INTEGER
 			l_value: XM_XPATH_VALUE
-			l_result: DS_CELL [?XM_XPATH_ITEM]
+			l_result: DS_CELL [XM_XPATH_ITEM]
 		do
 			inspect
 				a_mode
@@ -1103,7 +1103,7 @@ feature -- Evaluation
 			evaluation_not_void: a_result.item /= Void
 		end
 
-	calculate_effective_boolean_value (a_context: ?XM_XPATH_CONTEXT) is
+	calculate_effective_boolean_value (a_context: XM_XPATH_CONTEXT) is
 			-- Effective boolean value;
 			-- The result has value `False' if the value is the empty sequence,
 			--  a zero-length string, a number equal to zero, or the boolean `False'.
@@ -1170,7 +1170,7 @@ feature -- Evaluation
 						end
 					end
 				end
-				if last_boolean_value = Void then create last_boolean_value.make (False) end
+				if last_boolean_value = Void then create last_boolean_value.make (False) end			
 			else
 				create last_boolean_value.make (False)
 				last_boolean_value.set_last_error (last_iterator.error_value)
@@ -1180,7 +1180,7 @@ feature -- Evaluation
 			value_not_void_but_may_be_in_error: last_boolean_value /= Void
 		end
 
-	evaluate_item (a_result: DS_CELL [?XM_XPATH_ITEM]; a_context: ?XM_XPATH_CONTEXT) is
+	evaluate_item (a_result: DS_CELL [XM_XPATH_ITEM]; a_context: XM_XPATH_CONTEXT) is
 			-- Evaluate as a single item to `a_result'.
 			-- This always sets `a_result.item' to either a single Item or Void (denoting the empty sequence). No conversion is done.
 			-- This routine should not be used unless the static type of the expression is a subtype of "item" or "item?":
@@ -1196,7 +1196,7 @@ feature -- Evaluation
 			item_evaluated_but_may_be_void: True
 		end
 
-	evaluate_as_string (a_context: ?XM_XPATH_CONTEXT) is
+	evaluate_as_string (a_context: XM_XPATH_CONTEXT) is
 			-- Evaluate as a String.
 			-- This procedure must only be called in contexts where it is known
 			--  that the expression will evaluate to a single string (or where an empty sequence
@@ -1212,7 +1212,7 @@ feature -- Evaluation
 			string_not_void_but_may_be_in_error: last_evaluated_string /= Void
 		end
 
-	create_iterator (a_context: ?XM_XPATH_CONTEXT) is
+	create_iterator (a_context: XM_XPATH_CONTEXT) is
 			-- Create an iterator over the values of a sequence
 		require
 			not_in_error: not is_error
@@ -1223,7 +1223,7 @@ feature -- Evaluation
 			iterator_before: not last_iterator.is_error implies last_iterator.before
 		end
 
-	create_node_iterator (a_context: ?XM_XPATH_CONTEXT) is
+	create_node_iterator (a_context: XM_XPATH_CONTEXT) is
 			-- Create an iterator over a node sequence
 		require
 			not_in_error: not is_error
@@ -1246,7 +1246,7 @@ feature -- Evaluation
 			no_tail_calls: True -- this will be refined within XSLT
 		end
 
-	processed_eager_evaluation (a_context: ?XM_XPATH_CONTEXT): XM_XPATH_VALUE is
+	processed_eager_evaluation (a_context: XM_XPATH_CONTEXT): XM_XPATH_VALUE is
 			-- Eager evaluation via `generate_events'
 		require
 			expression_not_in_error: not is_error
@@ -1258,8 +1258,8 @@ feature -- Evaluation
 		end
 
 feature -- Element change
-
-	allocate_slots (a_next_free_slot: INTEGER; a_slot_manager: ?XM_XPATH_SLOT_MANAGER) is
+	
+	allocate_slots (a_next_free_slot: INTEGER; a_slot_manager: XM_XPATH_SLOT_MANAGER) is
 			-- Allocate slot numbers for all range variable in `Current' and it's sub-expresions.
 		require
 			strictly_positive_slot_number: a_next_free_slot > 0
@@ -1433,7 +1433,7 @@ feature -- Conversion
 		do
 		ensure
 			same_object: ANY_.same_objects (Result, Current)
-		end
+		end	
 
 	as_assignation: XM_XPATH_ASSIGNATION is
 			-- `Current' seen as a assignation
@@ -1461,7 +1461,7 @@ feature -- Conversion
 		ensure
 			same_object: ANY_.same_objects (Result, Current)
 		end
-
+	
 	as_lazy_expression: XM_XPATH_LAZY_EXPRESSION is
 			-- `Current' seen as a lazy expression
 		require
@@ -1541,7 +1541,7 @@ feature -- Conversion
 		do
 		ensure
 			same_object: ANY_.same_objects (Result, Current)
-		end
+		end	
 
 	as_closure: XM_XPATH_CLOSURE is
 			-- `Current' seen as a closure
@@ -1623,7 +1623,7 @@ feature -- Conversion
 		ensure
 			same_object: ANY_.same_objects (Result, Current)
 		end
-
+	
 	as_duration_value: XM_XPATH_DURATION_VALUE is
 			-- `Current' seen as an xs:duration value
 		require
@@ -1967,7 +1967,7 @@ feature {XM_XPATH_EXPRESSION} -- Local
 
 	Supports_evaluate: INTEGER is 1
 			-- `Current' natively supports `evaluate'
-
+	
 	Supports_iterator: INTEGER is 2
 			-- `Current' natively supports `create_iterator'
 
@@ -1981,12 +1981,12 @@ feature {XM_XPATH_EXPRESSION} -- Local
 			bit_set: Result < 8 and then Result > 0 and then INTEGER_.bit_and (Result, INTEGER_.bit_or (INTEGER_.bit_or (Supports_evaluate, Supports_iterator), Supports_process)) /= 0
 		end
 
-	set_unsorted (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_eliminate_duplicates: BOOLEAN) is
+	set_unsorted (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_eliminate_duplicates: BOOLEAN) is
 			-- Remove unwanted sorting from an expression, at compile time.
 		require
 			not_in_error: not is_error
 			a_replacement_not_void: a_replacement /= Void
-			not_replaced: a_replacement.item = Void
+			not_replaced: a_replacement.item = Void			
 		local
 			l_offer: XM_XPATH_PROMOTION_OFFER
 		do
@@ -1997,7 +1997,7 @@ feature {XM_XPATH_EXPRESSION} -- Local
 			not_in_error: not a_replacement.item.is_error
 		end
 
-	set_unsorted_if_homogeneous  (a_replacement: DS_CELL [?XM_XPATH_EXPRESSION]; a_eliminate_duplicates: BOOLEAN) is
+	set_unsorted_if_homogeneous  (a_replacement: DS_CELL [XM_XPATH_EXPRESSION]; a_eliminate_duplicates: BOOLEAN) is
 			-- Remove unwanted sorting from an expression, at compile time,
 			--  but only if all nodes or all atomic values.
 		require
@@ -2015,7 +2015,7 @@ feature {XM_XPATH_EXPRESSION} -- Local
 			end
 		ensure
 			replaced: a_replacement.item /= Void
-			not_in_error: not a_replacement.item.is_error
+			not_in_error: not a_replacement.item.is_error			
 		end
 
 	indentation (a_level: INTEGER): STRING is
@@ -2050,7 +2050,7 @@ feature {XM_XPATH_EXPRESSION} -- Local
 
 feature {XM_XPATH_EXPRESSION_FACTORY} -- Implementation
 
-	evaluate_lazy_tail_expression (a_result: DS_CELL [?XM_XPATH_VALUE]; a_context: ?XM_XPATH_CONTEXT; a_reference_count: INTEGER) is
+	evaluate_lazy_tail_expression (a_result: DS_CELL [XM_XPATH_VALUE]; a_context: XM_XPATH_CONTEXT; a_reference_count: INTEGER) is
 			-- Evaluate `Current' as a lazy tail expression.
 		require
 			context_may_be_void: True
@@ -2117,7 +2117,7 @@ feature {XM_XPATH_EXPRESSION_FACTORY} -- Implementation
 
 feature {NONE} -- Implementation
 
-	evaluate_by_generating_events (a_result: DS_CELL [?XM_XPATH_VALUE]; a_context: ?XM_XPATH_CONTEXT) is
+	evaluate_by_generating_events (a_result: DS_CELL [XM_XPATH_VALUE]; a_context: XM_XPATH_CONTEXT) is
 			-- Evaluate via `generate_events'.
 		require
 			context_may_be_void: True
@@ -2135,4 +2135,4 @@ invariant
 	value_or_computed_expression: BOOLEAN_.nxor (<<is_value, is_computed_expression, is_pattern_bridge>>)
 
 end
-
+	
