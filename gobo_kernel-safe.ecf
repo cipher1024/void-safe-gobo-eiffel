@@ -30,24 +30,6 @@
 				<exclude>/misc/kl_comparable.e$</exclude>
 				<exclude>/misc/kl_numeric.e$</exclude>
 			</file_rule>
-			<!--
-			<file_rule>
-				<exclude>/kl_input_stream_routines.e$</exclude>
-				<exclude>/kl_imported_output_stream_routines.e$</exclude>
-				<exclude>/kl_string_buffer_routines.e$</exclude>
-				<exclude>/kl_fixed_array_routines.e$</exclude>
-				<exclude>/kl_imported_fixed_array_routines.e$</exclude>
-				<exclude>/kl_output_stream_routines.e$</exclude>
-				<exclude>/kl_native_array_routines.e$</exclude>
-				<exclude>/kl_imported_fixed_array_type.e$</exclude>
-				<exclude>/kl_imported_native_array_routines.e$</exclude>
-				<exclude>/kl_imported_native_array_type.e$</exclude>
-				<exclude>/kl_imported_fixed_array_type2.e$</exclude>
-				<exclude>/uc_equality_tester.e$</exclude>
-				<exclude>/kl_imported_string_buffer_routines.e$</exclude>
-				<exclude>/kl_imported_input_stream_routines.e$</exclude>
-			</file_rule>
-			-->
 		</cluster>
 		<cluster name="override" location="override\library\kernel\" recursive="true"/>
 	</target>
