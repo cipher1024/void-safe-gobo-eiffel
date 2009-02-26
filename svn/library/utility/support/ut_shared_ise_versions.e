@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Utility Library"
 	copyright: "Copyright (c) 2006-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-01-13 10:23:04 +0100 (Tue, 13 Jan 2009) $"
-	revision: "$Revision: 6573 $"
+	date: "$Date: 2009-02-26 17:41:20 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6589 $"
 
 class UT_SHARED_ISE_VERSIONS
 
@@ -195,6 +195,15 @@ feature -- Access
 			create Result.make (6, 3, 7, 4554)
 		ensure
 			ise_6_3_7_4554_not_void: Result /= Void
+		end
+
+	ise_6_3_7_5660: UT_VERSION is
+			-- ISE 6.3.7.5660
+			-- First release that accepts object-tests in preconditions and check instructions.
+		once
+			create Result.make (6, 3, 7, 5660)
+		ensure
+			ise_6_3_7_5660_not_void: Result /= Void
 		end
 
 	ise_6_3_latest: UT_VERSION is
