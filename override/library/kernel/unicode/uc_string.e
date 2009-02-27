@@ -2344,7 +2344,7 @@ feature -- Element change
 			a_string_count := a_string.count
 			if a_string_count /= 0 then
 				if i = count + 1 then
-					append (a_string)
+					append_string (a_string)
 				else
 					if a_string = Current then
 						str := cloned_string
@@ -2394,7 +2394,7 @@ feature -- Element change
 				remove_substring (start_index, end_index)
 			else
 				if start_index = count + 1 then
-					append (a_string)
+					append_string (a_string)
 				else
 					if a_string = Current then
 						str := cloned_string
@@ -2700,7 +2700,7 @@ feature -- Output
 					else
 						Result.append_character ('%%')
 						Result.append_character ('/')
-						Result.append (c.code.out)
+						Result.append_string (c.code.out)
 						Result.append_character ('/')
 					end
 					i := i + 1
@@ -2719,7 +2719,7 @@ feature -- Output
 					else
 						Result.append_character ('%%')
 						Result.append_character ('/')
-						Result.append (a_code.out)
+						Result.append_string (a_code.out)
 						Result.append_character ('/')
 					end
 					i := next_byte_index (i)
