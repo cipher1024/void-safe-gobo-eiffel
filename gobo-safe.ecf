@@ -22,6 +22,9 @@
 		<library name="eiffeltime" location="$ISE_LIBRARY\library\time\time-safe.ecf"/>
 		<assembly name="eiffelsoftware.runtime" location="$ISE_EIFFEL\studio\spec\$ISE_PLATFORM\lib\EiffelSoftware.Runtime.dll"/>
 		<cluster name="override" location="override\library\kernel" recursive="true">
+			<file_rule>
+				<exclude>uc_character.e$</exclude>
+			</file_rule>
 		</cluster>
 		<cluster name="kernel" location="svn\library\kernel\" recursive="true">
 			<option namespace="Kernel">
