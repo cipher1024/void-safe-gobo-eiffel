@@ -2703,7 +2703,7 @@ feature -- Output
 					else
 						Result.append_character ('%%')
 						Result.append_character ('/')
-						Result.append (c.code.out)
+						Result.append_string (c.code.out)
 						Result.append_character ('/')
 					end
 					i := i + 1
@@ -2722,7 +2722,7 @@ feature -- Output
 					else
 						Result.append_character ('%%')
 						Result.append_character ('/')
-						Result.append (a_code.out)
+						Result.append_string (a_code.out)
 						Result.append_character ('/')
 					end
 					i := next_byte_index (i)

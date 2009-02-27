@@ -1055,8 +1055,8 @@ feature -- Access
 			-- (ELKS 2001 STRING)
 		do
 			create Result.make (byte_count + utf8.substring_byte_count (other, 1, other.count))
-			Result.append (Current)
-			Result.append (other)
+			Result.append_string (Current)
+			Result.append_string (other)
 		ensure then
 			final_unicode: Result.substring (count + 1, count + other.count).same_unicode_string (other)
 		end
@@ -1068,8 +1068,8 @@ feature -- Access
 			other_not_void: other /= Void
 		do
 			create Result.make (byte_count + utf8.substring_byte_count (other, 1, other.count))
-			Result.append (other)
-			Result.append (Current)
+			Result.append_string (other)
+			Result.append_string (Current)
 		ensure
 			prefixed_string_not_void: Result /= Void
 			prefixed_string_count: Result.count = other.count + count
