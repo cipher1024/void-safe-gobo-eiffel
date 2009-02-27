@@ -8,8 +8,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 1999, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
-	revision: "$Revision: 5877 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 class KL_SHARED_EXCEPTIONS
 
@@ -19,18 +19,6 @@ feature -- Access
 			-- Exception handling
 		once
 			create Result
-		ensure
-			exceptions_not_void: Result /= Void
-		end
-
-feature -- Obsolete
-
-	exceptions_: KL_EXCEPTIONS is
-			-- Exception handling
-		obsolete
-			"[040101] Use `Exceptions' instead."
-		once
-			Result := Exceptions
 		ensure
 			exceptions_not_void: Result /= Void
 		end

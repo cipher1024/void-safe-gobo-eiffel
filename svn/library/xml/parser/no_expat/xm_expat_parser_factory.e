@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel XML Library"
 	copyright: "Copyright (c) 2001, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (ven., 26 janv. 2007) $"
-	revision: "$Revision: 5877 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 class XM_EXPAT_PARSER_FACTORY
 
@@ -26,14 +26,6 @@ feature -- Status report
 			-- Is Expat XML parser available?
 		do
 			Result := False
-		end
-
-	is_expat_available: BOOLEAN is
-			-- Is Expat XML parser available?
-		obsolete
-			"[020812] Use `is_expat_parser_available' instead."
-		do
-			Result := is_expat_parser_available
 		end
 
 feature -- Access

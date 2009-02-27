@@ -11,8 +11,8 @@ indexing
 	library: "Gobo Eiffel Parse Library"
 	copyright: "Copyright (c) 2003-2005, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 deferred class YY_OLD_PARSER_SKELETON [G]
 
@@ -54,7 +54,7 @@ feature {NONE} -- Implementation
 			-- Clear objects in semantic value stacks so that
 			-- they can be collected by the garbage collector.
 		do
-			yy_special_routines.clear_all (yyvs)
+			yyvs.clear_all
 		end
 
 	yy_push_last_value (yychar1: INTEGER) is

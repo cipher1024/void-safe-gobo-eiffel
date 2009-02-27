@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 1999-2001, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-09-28 20:40:54 +0200 (Sun, 28 Sep 2008) $"
-	revision: "$Revision: 6526 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 deferred class DS_CURSOR [G]
 
@@ -66,16 +66,6 @@ feature -- Status report
 			Result := container.valid_cursor (other)
 		ensure
 			Result implies container.valid_cursor (other)
-		end
-
-	is_valid: BOOLEAN is
-			-- Is cursor valid?
-		obsolete
-			"Backward compatibility with Gobo 1.4"
-		do
-			Result := True
-		ensure
-			definition: Result = True
 		end
 
 feature -- Cursor movement

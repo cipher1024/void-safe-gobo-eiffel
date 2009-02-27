@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Utility Library"
 	copyright: "Copyright (c) 1999-2002, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
-	revision: "$Revision: 5877 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 class UT_ERROR_HANDLER
 
@@ -208,41 +208,6 @@ feature -- Setting
 			info_file := null_output_stream
 		ensure
 			info_file_set: info_file = null_output_stream
-		end
-
-feature -- Obsolete
-
-	report_message (an_info: UT_ERROR) is
-			-- Report `an_info'.
-		obsolete
-			"[020617] Use `report_info' instead."
-		require
-			an_info_not_void: an_info /= Void
-		do
-			report_info (an_info)
-		end
-
-	message_file: KI_TEXT_OUTPUT_STREAM is
-			-- File where info messages are logged
-		obsolete
-			"[020617] Use `info_file' instead."
-		do
-			Result := info_file
-		ensure
-			definition: Result = info_file
-		end
-
-	set_message_file (a_file: like info_file) is
-			-- Set `info_file' to `a_file'.
-		obsolete
-			"[020617] Use `set_info_file' instead."
-		require
-			a_file_not_void: a_file /= Void
-			a_file_open_write: a_file.is_open_write
-		do
-			set_info_file (a_file)
-		ensure
-			info_file_set: info_file = a_file
 		end
 
 feature {NONE} -- Implementation

@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Regexp Library"
 	copyright: "Copyright (c) 2001-2002, Harald Erdbruegger and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 class RX_PCRE_MATCHER
 
@@ -107,16 +107,6 @@ feature -- Compilation
 			if offset_vector.count < offset_vector_count then
 				offset_vector := SPECIAL_INTEGER_.resize (offset_vector, offset_vector_count)
 			end
-		end
-
-feature -- Status report
-
-	is_matcher_active: BOOLEAN is
-			-- Matcher active state
-		obsolete
-			"[020710] Use `is_matching' instead."
-		do
-			Result := is_matching
 		end
 
 feature -- Access

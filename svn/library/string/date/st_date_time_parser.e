@@ -7,25 +7,14 @@ indexing
 	library: "Gobo Eiffel String Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-08-22 12:40:02 +0200 (Fri, 22 Aug 2008) $"
-	revision: "$Revision: 6484 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 deferred class ST_DATE_TIME_PARSER
 
 inherit
 
 	DT_GREGORIAN_CALENDAR
-		rename
-			Sunday as obsolete_sunday,
-			Monday as obsolete_monday,
-			Tuesday as obsolete_tuesday,
-			Wednesday as obsolete_wednesday,
-			Thursday as obsolete_thursday,
-			Friday as obsolete_friday,
-			Saturday as obsolete_saturday,
-			next_day as obsolete_next_day,
-			previous_day as obsolete_previous_day
-		end
 
 feature -- Access
 

@@ -7,25 +7,14 @@ indexing
 	library: "Gobo Eiffel Time Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-09-28 20:36:52 +0200 (Sun, 28 Sep 2008) $"
-	revision: "$Revision: 6525 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 class DT_WEEK_DAYS_FROM_MONDAY
 
 inherit
 
 	DT_GREGORIAN_CALENDAR
-		rename
-			Monday as obsolete_monday,
-			Tuesday as obsolete_tuesday,
-			Wednesday as obsolete_wednesday,
-			Thursday as obsolete_thursday,
-			Friday as obsolete_friday,
-			Saturday as obsolete_saturday,
-			Sunday as obsolete_sunday,
-			previous_day as obsolete_previous_day,
-			next_day as obsolete_next_day
-		end
 
 feature -- Access
 

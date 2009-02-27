@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Utility Library"
 	copyright: "Copyright (c) 1999-2004, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
-	revision: "$Revision: 5877 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 class UT_INTEGER_FORMATTER
 
@@ -17,90 +17,6 @@ inherit
 	ANY -- Export features of ANY.
 
 	KL_IMPORTED_INTEGER_ROUTINES
-
-feature -- Access
-
-	decimal_integer_out (an_int: INTEGER): STRING is
-			-- Decimal representation of `an_int';
-			-- Return a new string at each call.
-		obsolete
-			"[041226] Use `to_decimal' from KL_INTEGER_ROUTINES instead."
-		do
-			Result := INTEGER_.to_decimal (an_int)
-		ensure
-			decimal_integer_out_not_void: Result /= Void
-			-- regexp: (0|(-?[1-9][0-9]*)).recognizes (Result)
-		end
-
-	octal_integer_out (an_int: INTEGER): STRING is
-			-- Octal representation of `an_int';
-			-- Return a new string at each call.
-		obsolete
-			"[041226] Use `to_hexadecimal' from KL_INTEGER_ROUTINES instead."
-		require
-			an_int_positive: an_int >= 0
-		do
-			Result := INTEGER_.to_octal (an_int)
-		ensure
-			octal_integer_out_not_void: Result /= Void
-			-- regexp: (0|[1-7][0-7]*).recognizes (Result)
-		end
-
-	hexadecimal_integer_out (an_int: INTEGER; uppercase: BOOLEAN): STRING is
-			-- Hexadecimal representation of `an_int';
-			-- Return a new string at each call.
-		obsolete
-			"[041226] Use `to_hexadecimal' from KL_INTEGER_ROUTINES instead."
-		require
-			an_int_positive: an_int >= 0
-		do
-			Result := INTEGER_.to_hexadecimal (an_int, uppercase)
-		ensure
-			hexadecimal_integer_out_not_void: Result /= Void
-			-- regexp_uppercase: uppercase implies (0|[1-9A-F][0-9A-F]*).recognizes (Result)
-			-- regexp_lowercase: not uppercase implies (0|[1-9a-f][0-9a-f]*).recognizes (Result)
-		end
-
-feature -- String handling
-
-	append_decimal_integer (a_string: STRING; an_int: INTEGER) is
-			-- Append decimal representation of `an_int' to `a_string'.
-		obsolete
-			"[041226] Use `append_decimal_integer' from KL_INTEGER_ROUTINES instead."
-		require
-			a_string_not_void: a_string /= Void
-		do
-			INTEGER_.append_decimal_integer (an_int, a_string)
-		ensure
-			-- regexp: (0|(-?[1-9][0-9]*)).recognizes (a_string.substring (old a_string.count + 1, a_string.count))
-		end
-
-	append_octal_integer (a_string: STRING; an_int: INTEGER) is
-			-- Append octal representation of `an_int' to `a_string'.
-		obsolete
-			"[041226] Use `append_octal_integer' from KL_INTEGER_ROUTINES instead."
-		require
-			a_string_not_void: a_string /= Void
-			an_int_positive: an_int >= 0
-		do
-			INTEGER_.append_octal_integer (an_int, a_string)
-		ensure
-			-- regexp: (0|[1-7][0-7]*).recognizes (a_string.substring (old a_string.count + 1, a_string.count))
-		end
-
-	append_hexadecimal_integer (a_string: STRING; an_int: INTEGER; uppercase: BOOLEAN) is
-			-- Append hexadecimal representation of `an_int' to `a_string'.
-		obsolete
-			"[041226] Use `append_hexadecimal_integer' from KL_INTEGER_ROUTINES instead."
-		require
-			a_string_not_void: a_string /= Void
-			an_int_positive: an_int >= 0
-		do
-			INTEGER_.append_hexadecimal_integer (an_int, a_string, uppercase)
-		ensure
-			-- regexp_uppercase: uppercase implies (0|[1-9A-F][0-9A-F]*).recognizes (a_string.substring (old a_string.count + 1, a_string.count))
-			-- regexp_lowercase: not uppercase implies (0|[1-9a-f][0-9a-f]*).recognizes (a_string.substring (old a_string.count + 1, a_string.count))
-		end
 
 feature -- File handling
 

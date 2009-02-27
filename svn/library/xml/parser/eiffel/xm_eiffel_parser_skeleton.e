@@ -9,8 +9,8 @@ indexing
 	library: "Gobo Eiffel XML Library"
 	copyright: "Copyright (c) 2002, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-08-17 10:35:35 +0200 (Sun, 17 Aug 2008) $"
-	revision: "$Revision: 6480 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 deferred class XM_EIFFEL_PARSER_SKELETON
 
@@ -157,19 +157,6 @@ feature {NONE} -- Implementation
 			on_start
 			parse
 			on_finish
-		end
-
-feature -- Obsolete
-
-	parse_stream (a_stream: KI_CHARACTER_INPUT_STREAM) is
-			-- Parse XML Document from input stream.
-		obsolete
-			"[020815] Use `parse_from_stream' instead."
-		require
-			a_stream_not_void: a_stream /= Void
-			is_open_read: a_stream.is_open_read
-		do
-			parse_from_stream (a_stream)
 		end
 
 feature -- Namespace mode

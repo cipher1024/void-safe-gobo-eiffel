@@ -8,8 +8,8 @@ indexing
 	library: "Gobo Eiffel Time Library"
 	copyright: "Copyright (c) 2000-2001, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-12-23 16:09:12 +0100 (Tue, 23 Dec 2008) $"
-	revision: "$Revision: 6570 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 class DT_DATE
 
@@ -140,25 +140,6 @@ feature -- Access
 			-- the previous year.
 		do
 			Result := week_number (year, month, day)
-		end
-
-	week_day: INTEGER is
-			-- Day of week for `Current'
-		obsolete
-			"[041224] Use `day_of_week' instead."
-		local
-			d: INTEGER
-		do
-				-- 1 January 1970 is a Thursday.
-				-- (Thursday - Sunday = 4)
-			d := day_count + 4
-			if d < 0 then
-				Result := Saturday - ((-(d + 1)) \\ Days_in_week)
-			else
-				Result := Sunday + d \\ Days_in_week
-			end
-		ensure
-			valid_day: Result >= Sunday and Result <= Saturday
 		end
 
 	day_of_week: DT_WEEK_DAY is

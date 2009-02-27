@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel XML Library"
 	copyright: "Copyright (c) 2002, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-04-22 18:12:58 +0200 (Tue, 22 Apr 2008) $"
-	revision: "$Revision: 6373 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 class XM_EIFFEL_CHARACTER_ENTITY
 
@@ -113,35 +113,6 @@ feature -- Conversion
 		do
 			create Result.make (6)
 			utf8.append_code_to_utf8 (Result, code)
-		ensure
-			to_utf8_not_void: Result /= Void
-			string_type: ANY_.same_types (Result, "")
-			valid_utf8: utf8.valid_utf8 (Result)
-		end
-
-feature -- Obsolete
-
-	as_character: CHARACTER is
-			-- Character represented by entity
-		obsolete
-			"[020814] Use `to_character' instead."
-		require
-			is_valid: is_valid
-			small_enough: code <= Platform.Maximum_character_code
-		do
-			Result := to_character
-		ensure
-			same_code: Result.code = code
-		end
-
-	as_string: STRING is
-			-- UTF-8 string from character code
-		obsolete
-			"[020814] Use `to_utf8' instead."
-		require
-			valid: is_valid
-		do
-			Result := to_utf8
 		ensure
 			to_utf8_not_void: Result /= Void
 			string_type: ANY_.same_types (Result, "")

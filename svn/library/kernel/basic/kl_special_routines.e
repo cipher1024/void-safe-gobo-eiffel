@@ -9,8 +9,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2003-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 class KL_SPECIAL_ROUTINES [G]
 
@@ -101,20 +101,6 @@ feature -- Resizing
 		ensure
 			special_not_void: Result /= Void
 			count_set: Result.count = n
-		end
-
-feature -- Removal
-
-	clear_all (an_array: SPECIAL [G]) is
-			-- Reset all items to default values.
-		obsolete
-			"[040930] Use `an_array.clear_all instead."
-		require
-			an_array_not_void: an_array /= Void
-		do
-			an_array.clear_all
-		ensure
---			all_cleared: forall i in 0..(an_array.count - 1), an_array.item (i) = Void or else an_array.item (i) = an_array.item (i).default
 		end
 
 end

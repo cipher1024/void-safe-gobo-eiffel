@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-07-26 10:10:48 +0200 (Sat, 26 Jul 2008) $"
-	revision: "$Revision: 6456 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 class KL_EIFFEL_COMPILER
 
@@ -42,16 +42,6 @@ feature -- Access
 
 	unknown_vendor: STRING is "unknown"
 			-- Unknown Eiffel vendor
-
-	hact_vendor: STRING is
-			-- Halstenbach vendor
-		obsolete
-			"[040922] HACT not supported anymore."
-		once
-			Result := "hact"
-		ensure
-			vendor_not_void: Result /= Void
-		end
 
 	se_vendor: STRING is
 			-- SmartEiffel vendor
@@ -89,16 +79,6 @@ feature -- Status report
 			Result := (vendor = ise_vendor)
 		ensure
 			definition: Result = (vendor = ise_vendor)
-		end
-
-	is_hact: BOOLEAN is
-			-- Has this program been compiled with Halstenbach?
-		obsolete
-			"[040922] HACT not supported anymore."
-		once
-			Result := False
-		ensure
-			definition: not Result
 		end
 
 	is_se: BOOLEAN is

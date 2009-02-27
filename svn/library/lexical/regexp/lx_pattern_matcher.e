@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Lexical Library"
 	copyright: "Copyright (c) 2001-2002, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 deferred class LX_PATTERN_MATCHER
 
@@ -83,16 +83,6 @@ feature -- Access
 			matched: has_matched implies Result /= Void
 			definition_first: Result /= Void implies Result.first = captured_start_position (0)
 			definition_second: Result /= Void implies Result.second = captured_end_position (0)
-		end
-
-feature -- Obsolete
-
-	compiled: BOOLEAN is
-			-- Has pattern been sucessfully compiled?
-		obsolete
-			"[020706] Use `is_compiled' instead."
-		do
-			Result := is_compiled
 		end
 
 end

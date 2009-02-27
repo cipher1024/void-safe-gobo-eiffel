@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 1999-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 class KL_ARRAY_ROUTINES [G]
 
@@ -151,20 +151,6 @@ feature -- Element change
 			end
 		ensure
 --			copied: forall i in 0 .. (end_pos - start_pos), an_array.item (index_pos + i) = other.item (start_pos + i)
-		end
-
-feature -- Removal
-
-	clear_all (an_array: ARRAY [G]) is
-			-- Reset all items to default values.
-		obsolete
-			"[040929] Use `an_array.clear_all' instead."
-		require
-			an_array_not_void: an_array /= Void
-		do
-			an_array.clear_all
-		ensure
---			all_cleared: forall i in an_array.lower .. an_array.upper, an_array.item (i) = Void or else an_array.item (i) = an_array.item (i).default
 		end
 
 feature -- Resizing

@@ -18,8 +18,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-01-23 21:06:53 +0100 (Fri, 23 Jan 2009) $"
-	revision: "$Revision: 6576 $"
+	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
+	revision: "$Revision: 6590 $"
 
 class UC_STRING
 
@@ -124,8 +124,6 @@ inherit
 			as_upper,
 			out,
 			fill_with,
-			head,
-			tail,
 			infix "@",
 			count,
 			old_clear_all,
@@ -192,8 +190,6 @@ inherit
 			index_of,
 			has,
 			occurrences,
-			head,
-			tail,
 			hash_code,
 			remove,
 			to_lower,
@@ -3221,71 +3217,6 @@ feature -- Implementation
 			-- Current string
 		do
 			Result := Current
-		end
-
-feature -- Obsolete
-
-	empty: BOOLEAN is
-			-- Is string empty?
-		obsolete
-			"[011225] Use `is_empty' instead."
-		do
-			Result := is_empty
-		end
-
-	head (n: INTEGER) is
-			-- Remove all the characters except for the first `n';
-			-- if `n' > `count', do nothing.
-		obsolete
-			"[020602] Use `keep_head' instead."
-		do
-			keep_head (n)
-		end
-
-	tail (n: INTEGER) is
-			-- Remove all the characters except for the last `n';
-			-- if `n' > `count', do nothing.
-		obsolete
-			"[020602] Use `keep_tail' instead."
-		do
-			keep_tail (n)
-		end
-
-	append_uc_string (a_string: UC_STRING) is
-			-- Append a copy of `a_string' at end.
-		obsolete
-			"[011225] Use `append' instead."
-		require
-			a_string_not_void: a_string /= Void
-		do
-			append (a_string)
-		end
-
-	append_unicode, append_uc_character (c: UC_CHARACTER) is
-			-- Append unicode character `c' at end.
-		obsolete
-			"[020720] Use `append_unicode_character' instead."
-		require
-			c_not_void: c /= Void
-		do
-			append_unicode_character (c)
-		end
-
-	insert_unicode (c: UC_CHARACTER; i: INTEGER) is
-			-- Insert unicode character `c' at index `i', shifting
-			-- characters between ranks `i' and `count' rightwards.
-		obsolete
-			"[020720] Use `insert_unicode_character' instead."
-		require
-			c_not_void: c /= Void
-			valid_insertion_index: 1 <= i and i <= count + 1
-		do
-			insert_unicode_character (c, i)
-		ensure
-			one_more_character: count = old count + 1
-			inserted: item_code (i) = c.code
-			stable_before_i: substring (1, i - 1).is_equal (old substring (1, i - 1))
-			stable_after_i: substring (i + 1, count).is_equal (old substring (i, count))
 		end
 
 feature {UC_STRING_HANDLER} -- Implementation
