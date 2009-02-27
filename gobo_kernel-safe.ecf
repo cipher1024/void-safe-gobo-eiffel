@@ -26,11 +26,14 @@
 			</option>
 			<file_rule>
 				<exclude>/unicode/uc_string.e$</exclude>
-				<exclude>/unicode/uc_character.e$</exclude>
 				<exclude>/misc/kl_comparable.e$</exclude>
 				<exclude>/misc/kl_numeric.e$</exclude>
 			</file_rule>
 		</cluster>
-		<cluster name="override" location="override\library\kernel\" recursive="true"/>
+		<cluster name="override" location="override\library\kernel\" recursive="true">
+			<file_rule>
+				<exclude>/unicode/uc_character.e$</exclude>
+			</file_rule>
+		</cluster>
 	</target>
 </system>

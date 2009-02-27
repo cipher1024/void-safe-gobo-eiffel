@@ -20,7 +20,6 @@
 		</option>
 		<setting name="dotnet_naming_convention" value="true"/>
 		<library name="eiffelbase" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
-		<library name="eiffeltime" location="$ISE_LIBRARY\library\time\time-safe.ecf"/>
 		<library name="gobo_argument" location="gobo_argument-safe.ecf" readonly="false"/>
 		<library name="gobo_kernel" location="gobo_kernel-safe.ecf" readonly="false"/>
 		<library name="gobo_lexical" location="gobo_lexical-safe.ecf" readonly="false"/>
