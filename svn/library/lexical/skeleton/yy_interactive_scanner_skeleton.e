@@ -51,7 +51,6 @@ feature -- Scanning
 			yy_rejected_column: INTEGER
 			yy_rejected_position: INTEGER
 			yy_done: BOOLEAN
-			l_yy_content_area: like yy_content_area
 			l_yy_ec: like yy_ec
 			l_yy_meta: like yy_meta
 			l_yy_acclist: like yy_acclist
@@ -102,24 +101,15 @@ feature -- Scanning
 				when yyMatch then
 						-- Find the next match.
 					from
-						l_yy_content_area := yy_content_area
 						yy_done := False
 					until
 						yy_done
 					loop
 						l_yy_ec := yy_ec
 						if l_yy_ec /= Void then
-							if l_yy_content_area /= Void then
-								yy_c := l_yy_ec.item (l_yy_content_area.item (yy_cp).code)
-							else
-								yy_c := l_yy_ec.item (yy_content.item (yy_cp).code)
-							end
+							yy_c := l_yy_ec.item (yy_content_area.item (yy_cp).code)
 						else
-							if l_yy_content_area /= Void then
-								yy_c := l_yy_content_area.item (yy_cp).code
-							else
-								yy_c := yy_content.item (yy_cp).code
-							end
+							yy_c := yy_content_area.item (yy_cp).code
 						end
 						if not yyReject_or_variable_trail_context and then yy_accept.item (yy_current_state) /= 0 then
 								-- Save the backing-up info before computing
@@ -130,11 +120,11 @@ feature -- Scanning
 							yy_last_accepting_cpos := yy_cp
 						end
 						from
-							l_yy_meta := yy_meta
 						until
 							yy_chk.item (yy_base.item (yy_current_state) + yy_c) = yy_current_state
 						loop
 							yy_current_state := yy_def.item (yy_current_state)
+							l_yy_meta := yy_meta
 							if l_yy_meta /= Void and then yy_current_state >= yyTemplate_mark then
 									-- We've arranged it so that templates are
 									-- never chained to one another. This means

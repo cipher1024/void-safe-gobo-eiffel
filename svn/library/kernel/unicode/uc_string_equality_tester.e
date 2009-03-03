@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2003-2004, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
-	revision: "$Revision: 5877 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class UC_STRING_EQUALITY_TESTER
 

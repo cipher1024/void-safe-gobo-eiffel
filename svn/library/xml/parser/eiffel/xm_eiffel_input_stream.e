@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel XML Library"
 	copyright: "Copyright (c) 2002, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
-	revision: "$Revision: 5877 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 	--xml_specific_lt: "Detection assuming first char is < is XML specific"
 
@@ -60,7 +60,7 @@ feature {NONE} -- Initialization
 		do
 			impl := a_stream
 			create utf_queue.make
-			create last_string.make (0)
+			create last_string.make_empty
 			encoding := Undetected
 		ensure
 			impl_set: impl = a_stream
@@ -191,7 +191,7 @@ feature -- Input
 				-- remain the same object. It would also require
 				-- to duplicate some of the detection handling.
 			from
-				last_string.wipe_out
+				last_string.clear_all
 				read_character
 				i := nb
 			until
@@ -278,8 +278,10 @@ feature -- Access
 
 	last_string: STRING
 			-- Last string read
-			-- (Note: unlike the abstract specification, this _often_ but
-			-- not always returns the same object.)
+			-- (Note: this query always return the same object.
+			-- Therefore a clone should be used if the result
+			-- is to be kept beyond the next call to this feature.
+			-- However `last_string' is not shared between file objects.)
 
 feature {NONE} -- State
 
@@ -536,7 +538,6 @@ feature {NONE} -- Constants
 
 invariant
 
-	last_string: last_string /= Void
 	impl_not_void: impl /= Void
 	queue_not_void: utf_queue /= Void
 

@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2002, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class KL_STRING_INPUT_STREAM
 
@@ -32,6 +32,7 @@ feature {NONE} -- Initialization
 		require
 			a_string_not_void: a_string /= Void
 		do
+			create last_string.make_empty
 			string := a_string
 			location := 0
 			end_of_input := False
@@ -68,7 +69,7 @@ feature -- Access
 	last_character: CHARACTER
 			-- Last character read
 
-	last_string: ?STRING
+	last_string: STRING
 			-- Last string read
 			-- (Note: this query always return the same object.
 			-- Therefore a clone should be used if the result
@@ -111,15 +112,8 @@ feature -- Input
 			-- will all be read.)
 		local
 			i: INTEGER
-			l_last_string: like last_string
 		do
-			l_last_string := last_string
-			if l_last_string = Void then
-				create l_last_string.make (256)
-				last_string := l_last_string
-			else
-				STRING_.wipe_out (l_last_string)
-			end
+			last_string.clear_all
 			from
 				i := 1
 			until
@@ -127,14 +121,14 @@ feature -- Input
 			loop
 				read_character
 				if not end_of_input then
-					l_last_string.append_character (last_character)
+					last_string.append_character (last_character)
 					i := i + 1
 				else
 						-- Jump out of the loop.
 					i := nb + 1
 				end
 			end
-			end_of_input := (l_last_string.count = 0)
+			end_of_input := (last_string.count = 0)
 		end
 
 	read_line is
@@ -144,18 +138,13 @@ feature -- Input
 			-- separator characters from the input stream.
 		local
 			done: BOOLEAN
-			a_target: like last_string
+			a_target: STRING
 			c: CHARACTER
 			is_eof: BOOLEAN
 		do
-			a_target := last_string
-			if a_target = Void then
-				create a_target.make (256)
-				last_string := a_target
-			else
-				STRING_.wipe_out (a_target)
-			end
+			last_string.clear_all
 			is_eof := True
+			a_target := last_string
 			from
 			until
 				done
@@ -183,20 +172,12 @@ feature -- Input
 			-- or make `last_string' empty and leave the
 			-- input stream unchanged if no line separator
 			-- was found.
-		local
-			l_last_string: like last_string
 		do
-			l_last_string := last_string
-			if l_last_string = Void then
-				create l_last_string.make (256)
-				last_string := l_last_string
-			else
-				STRING_.wipe_out (l_last_string)
-			end
+			last_string.clear_all
 			read_character
 			if not end_of_input then
 				if last_character = '%N' then
-					l_last_string.append_character ('%N')
+					last_string.append_character ('%N')
 				else
 						-- Put character back to input file.
 					unread_character (last_character)

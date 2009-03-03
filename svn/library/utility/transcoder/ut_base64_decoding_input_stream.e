@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2005, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (ven., 26 janv. 2007) $"
-	revision: "$Revision: 5877 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class UT_BASE64_DECODING_INPUT_STREAM
 
@@ -34,6 +34,7 @@ feature {NONE} -- Initialization
 	make (a_stream: like base_stream) is
 			-- Create a new base64 decoding stream.
 		do
+			create last_string.make_empty
 			Precursor (a_stream)
 			create codes.make (1, 4)
 			create decoded_triplet.make_filled (' ', 3)
@@ -51,25 +52,18 @@ feature -- Input
 			-- will all be read.)
 		local
 			i: INTEGER
-			l_last_string: like last_string
 		do
-			l_last_string := last_string
-			if l_last_string = Void then
-				create l_last_string.make (nb)
-				last_string := l_last_string
-			else
-				STRING_.wipe_out (l_last_string)
-			end
+			last_string.clear_all
 			from i := 1 until i > nb loop
 				read_character
 				if not end_of_input then
-					l_last_string.append_character (last_character)
+					last_string.append_character (last_character)
 					i := i + 1
 				else
 					i := nb + 1 -- Jump out of the loop.
 				end
 			end
-			end_of_input := l_last_string.is_empty
+			end_of_input := last_string.is_empty
 		end
 
 	read_character is
@@ -97,8 +91,12 @@ feature -- Input
 
 feature -- Access
 
-	last_string: ?STRING
+	last_string: STRING
 			-- Last string read
+			-- (Note: this query always return the same object.
+			-- Therefore a clone should be used if the result
+			-- is to be kept beyond the next call to this feature.
+			-- However `last_string' is not shared between file objects.)
 
 	last_character: CHARACTER
 			-- Last item read

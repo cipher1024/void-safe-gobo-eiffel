@@ -87,7 +87,6 @@ feature -- Scanning
 			yy_rejected_column: INTEGER
 			yy_rejected_position: INTEGER
 			yy_done: BOOLEAN
-			l_yy_content_area: like yy_content_area
 			l_yy_ec: like yy_ec
 			l_yy_meta: like yy_meta
 			l_yy_acclist: like yy_acclist
@@ -145,24 +144,15 @@ feature -- Scanning
 				when yyMatch then
 						-- Find the next match.
 					from
-						l_yy_content_area := yy_content_area
 						yy_done := False
 					until
 						yy_done
 					loop
 						l_yy_ec := yy_ec
 						if l_yy_ec /= Void then
-							if l_yy_content_area /= Void then
-								yy_c := l_yy_ec.item (l_yy_content_area.item (yy_cp).code)
-							else
-								yy_c := l_yy_ec.item (yy_content.item (yy_cp).code)
-							end
+							yy_c := l_yy_ec.item (yy_content_area.item (yy_cp).code)
 						else
-							if l_yy_content_area /= Void then
-								yy_c := l_yy_content_area.item (yy_cp).code
-							else
-								yy_c := yy_content.item (yy_cp).code
-							end
+							yy_c := yy_content_area.item (yy_cp).code
 						end
 						if not yyReject_or_variable_trail_context and then yy_accept.item (yy_current_state) /= 0 then
 								-- Save the backing-up info before computing
@@ -477,7 +467,6 @@ feature {NONE} -- Implementation
 		local
 			yy_cp, yy_nb: INTEGER
 			yy_c: INTEGER
-			l_yy_content_area: like yy_content_area
 			l_yy_ec: like yy_ec
 			l_yy_meta: like yy_meta
 		do
@@ -496,7 +485,6 @@ feature {NONE} -- Implementation
 				yy_state_count := 1
 			end
 			from
-				l_yy_content_area := yy_content_area
 				l_yy_ec := yy_ec
 				yy_cp := yy_start + yy_more_len
 				yy_nb := yy_end
@@ -504,11 +492,7 @@ feature {NONE} -- Implementation
 				yy_cp >= yy_nb
 			loop
 					-- Find the next state.
-				if l_yy_content_area /= Void then
-					yy_c := l_yy_content_area.item (yy_cp).code
-				else
-					yy_c := yy_content.item (yy_cp).code
-				end
+				yy_c := yy_content_area.item (yy_cp).code
 				if yy_c = 0 then
 					yy_c := yyNull_equiv_class
 				elseif l_yy_ec /= Void then

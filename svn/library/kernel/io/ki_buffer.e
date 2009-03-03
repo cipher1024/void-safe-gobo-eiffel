@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-01-28 14:07:56 +0100 (Wed, 28 Jan 2009) $"
-	revision: "$Revision: 6580 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 deferred class KI_BUFFER [G]
 
@@ -26,7 +26,10 @@ feature -- Access
 				-- a bug with ISE Eiffel 5.1.5 and 5.2 in the generated
 				-- C code in finalized mode, and having this
 				-- routine effective is a workaround.
-			check r /= Void end -- fooling the compiler ...
+			check
+					-- Fooling the compiler.
+				r_not_void: r /= Void
+			end
 			Result := r
 		end
 

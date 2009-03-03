@@ -78,7 +78,7 @@ feature -- Access
 			Result := base_stream.name
 		end
 
-	last_string: ?STRING is
+	last_string: STRING is
 			-- Last string read
 		do
 			Result := base_stream.last_string

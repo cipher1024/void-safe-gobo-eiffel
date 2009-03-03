@@ -8,8 +8,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 deferred class KL_INPUT_FILE
 
@@ -26,19 +26,31 @@ inherit
 			open as open_read,
 			is_open as is_open_read
 		redefine
-			close
+			make, close
 		end
 
 	STRING_HANDLER
 
 	KL_IMPORTED_ANY_ROUTINES
 
+feature {NONE} -- Initialization
+
+	make (a_name: like name) is
+			-- Create a new file named `a_name'.
+			-- (`a_name' should follow the pathname convention
+			-- of the underlying platform. For pathname conversion
+			-- use KI_FILE_SYSTEM.pathname_from_file_system.)
+		do
+			create last_string.make_empty
+			precursor (a_name)
+		end
+
 feature -- Access
 
 	last_character: CHARACTER
 			-- Last character read
 
-	last_string: ?STRING
+	last_string: STRING
 			-- Last string read
 			-- (Note: this query always return the same object.
 			-- Therefore a clone should be used if the result
@@ -103,29 +115,24 @@ feature -- Input
 			-- will all be read.)
 		local
 			i: INTEGER
-			l_last_string: like last_string
 		do
-			l_last_string := last_string
-			if l_last_string = Void then
-				create l_last_string.make (nb)
-				last_string := l_last_string
-			elseif l_last_string.capacity < nb then
-				l_last_string.resize (nb)
+			if last_string.capacity < nb then
+				last_string.resize (nb)
 			end
 			if character_buffer = Void then
 				if not old_end_of_file then
-					l_last_string.set_count (nb)
-					i := old_read_to_string (l_last_string, 1, nb)
-					l_last_string.set_count (i)
+					last_string.set_count (nb)
+					i := old_read_to_string (last_string, 1, nb)
+					last_string.set_count (i)
 				else
-					l_last_string.set_count (0)
+					last_string.set_count (0)
 				end
 			else
-				l_last_string.set_count (nb)
-				i := read_to_string (l_last_string, 1, nb)
-				l_last_string.set_count (i)
+				last_string.set_count (nb)
+				i := read_to_string (last_string, 1, nb)
+				last_string.set_count (i)
 			end
-			end_of_file := (l_last_string.count = 0)
+			end_of_file := (last_string.count = 0)
 		end
 
 	read_to_string (a_string: STRING; pos, nb: INTEGER): INTEGER is

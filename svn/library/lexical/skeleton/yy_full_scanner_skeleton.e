@@ -32,7 +32,6 @@ feature -- Scanning
 			yy_act: INTEGER
 			yy_goto: INTEGER
 			yy_c: INTEGER
-			l_yy_content_area: like yy_content_area
 			l_yy_ec: like yy_ec
 		do
 				-- This routine is implemented with a loop whose body
@@ -75,21 +74,12 @@ feature -- Scanning
 					yy_goto := yyMatch
 				when yyMatch then
 						-- Find the next match.
-					l_yy_content_area := yy_content_area
-					l_yy_ec := yy_ec
 					from
+						l_yy_ec := yy_ec
 						if l_yy_ec /= Void then
-							if l_yy_content_area /= Void then
-								yy_c := l_yy_ec.item (l_yy_content_area.item (yy_cp).code)
-							else
-								yy_c := l_yy_ec.item (yy_content.item (yy_cp).code)
-							end
+							yy_c := l_yy_ec.item (yy_content_area.item (yy_cp).code)
 						else
-							if l_yy_content_area /= Void then
-								yy_c := l_yy_content_area.item (yy_cp).code
-							else
-								yy_c := yy_content.item (yy_cp).code
-							end
+							yy_c := yy_content_area.item (yy_cp).code
 						end
 						yy_current_state := yy_nxt.item (yy_current_state * yyNb_rows + yy_c)
 					until
@@ -100,18 +90,11 @@ feature -- Scanning
 							yy_last_accepting_cpos := yy_cp
 						end
 						yy_cp := yy_cp + 1
+						l_yy_ec := yy_ec
 						if l_yy_ec /= Void then
-							if l_yy_content_area /= Void then
-								yy_c := l_yy_ec.item (l_yy_content_area.item (yy_cp).code)
-							else
-								yy_c := l_yy_ec.item (yy_content.item (yy_cp).code)
-							end
+							yy_c := l_yy_ec.item (yy_content_area.item (yy_cp).code)
 						else
-							if l_yy_content_area /= Void then
-								yy_c := l_yy_content_area.item (yy_cp).code
-							else
-								yy_c := yy_content.item (yy_cp).code
-							end
+							yy_c := yy_content_area.item (yy_cp).code
 						end
 						yy_current_state := yy_nxt.item (yy_current_state * yyNb_rows + yy_c)
 					end
@@ -238,13 +221,10 @@ feature {NONE} -- Implementation
 		local
 			yy_cp, yy_nb: INTEGER
 			yy_c: INTEGER
-			l_yy_content_area: like yy_content_area
 			l_yy_ec: like yy_ec
 		do
 				-- Find the start state.
 			Result := yy_start_state + yy_at_beginning_of_line
-			l_yy_content_area := yy_content_area
-			l_yy_ec := yy_ec
 			from
 				yy_cp := yy_start + yy_more_len
 				yy_nb := yy_end
@@ -252,11 +232,8 @@ feature {NONE} -- Implementation
 				yy_cp >= yy_nb
 			loop
 					-- Find the next state.
-				if l_yy_content_area /= Void then
-					yy_c := l_yy_content_area.item (yy_cp).code
-				else
-					yy_c := yy_content.item (yy_cp).code
-				end
+				yy_c := yy_content_area.item (yy_cp).code
+				l_yy_ec := yy_ec
 				if yy_c = 0 then
 					yy_c := yyNull_equiv_class
 				elseif l_yy_ec /= Void then

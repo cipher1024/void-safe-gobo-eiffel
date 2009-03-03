@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 1999-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class KL_DIRECTORY
 
@@ -56,6 +56,7 @@ feature {NONE} -- Initialization
 			-- use KI_FILE_SYSTEM.pathname_from_file_system.)
 		do
 			name := a_name
+			last_entry := Dummy_entry
 			old_make (STRING_.as_string (a_name))
 		end
 
@@ -67,7 +68,7 @@ feature -- Access
 			-- the bytes of its associated UTF unicode encoding will
 			-- be used.
 
-	last_entry: ?STRING
+	last_entry: STRING
 			-- Last entry (file or subdirectory name) read
 			-- (Note: this query returns the new object after
 			-- each call to `read_entry'.)
@@ -76,7 +77,7 @@ feature -- Access
 			-- Names of readable files in current directory;
 			-- Void if current directory could not be searched
 		local
-			a_name: ?STRING
+			a_name: STRING
 			an_array: ARRAY [STRING]
 			i, nb, k: INTEGER
 		do
@@ -91,7 +92,6 @@ feature -- Access
 						end_of_input
 					loop
 						a_name := last_entry
-						check a_name /= Void end -- implied by `not end_of_input'
 						tmp_file.reset (file_system.pathname (string_name, a_name))
 						if tmp_file.is_readable then
 							nb := nb + 1
@@ -125,7 +125,7 @@ feature -- Access
 			-- Void if current directory could not be searched
 			-- (Do not include parent and current directory names.)
 		local
-			a_name: ?STRING
+			a_name: STRING
 			an_array: ARRAY [STRING]
 			i, nb, k: INTEGER
 		do
@@ -140,7 +140,6 @@ feature -- Access
 						end_of_input
 					loop
 						a_name := last_entry
-						check a_name /= Void end -- implied by `not end_of_input'
 						if
 							not STRING_.same_string (a_name, file_system.relative_current_directory) and then
 							not STRING_.same_string (a_name, file_system.relative_parent_directory)
@@ -206,7 +205,7 @@ feature -- Status report
 			-- the parent and current directory entries?
 			-- Return False if not able to open current directory.
 		local
-			a_name: ?STRING
+			a_name: STRING
 		do
 			if is_closed then
 				open_read
@@ -218,7 +217,6 @@ feature -- Status report
 						not Result or end_of_input
 					loop
 						a_name := last_entry
-						check a_name /= Void end -- implied by `not end_of_input'
 						if
 							not STRING_.same_string (a_name, file_system.relative_current_directory) and then
 							not STRING_.same_string (a_name, file_system.relative_parent_directory)
@@ -274,7 +272,7 @@ feature -- Basic operations
 				old_close
 				lastentry := Void
 				entry_buffer := Void
-				last_entry := Void
+				last_entry := Dummy_entry
 			end
 		rescue
 			if not rescued then
@@ -387,7 +385,7 @@ feature -- Basic operations
 			-- use KI_FILE_SYSTEM.pathname_from_file_system.)
 		local
 			rescued: BOOLEAN
-			a_name: ?STRING
+			a_name: STRING
 			a_dir: KL_DIRECTORY
 			a_new_dir: KL_DIRECTORY
 			a_pathname: STRING
@@ -406,7 +404,6 @@ feature -- Basic operations
 								end_of_input
 							loop
 								a_name := last_entry
-								check a_name /= Void end -- implied by `not end_of_input'
 								if
 									not STRING_.same_string (a_name, file_system.relative_current_directory) and then
 									not STRING_.same_string (a_name, file_system.relative_parent_directory)
@@ -441,7 +438,7 @@ feature -- Iteration
 			-- Do nothing if current directory could not be searched.
 			-- (Semantics not guaranteed if `an_action' changes the contents of the directory.)
 		local
-			a_name: ?STRING
+			a_name: STRING
 		do
 			if is_closed then
 				open_read
@@ -452,7 +449,6 @@ feature -- Iteration
 						end_of_input
 					loop
 						a_name := last_entry
-						check a_name /= Void end -- implied by `not end_of_input'
 						if
 							not STRING_.same_string (a_name, file_system.relative_current_directory) and then
 							not STRING_.same_string (a_name, file_system.relative_parent_directory)
@@ -474,7 +470,7 @@ feature -- Iteration
 			-- Do nothing if current directory could not be searched.
 			-- (Semantics not guaranteed if `an_action' changes the contents of the directory.)
 		local
-			a_name: ?STRING
+			a_name: STRING
 		do
 			if is_closed then
 				open_read
@@ -485,7 +481,6 @@ feature -- Iteration
 						end_of_input
 					loop
 						a_name := last_entry
-						check a_name /= Void end -- implied by `not end_of_input'
 						if
 							not STRING_.same_string (a_name, file_system.relative_current_directory) and then
 							not STRING_.same_string (a_name, file_system.relative_parent_directory)
@@ -509,7 +504,7 @@ feature -- Iteration
 			-- False if current directory could not be searched.
 			-- (Semantics not guaranteed if `an_action' changes the contents of the directory.)
 		local
-			a_name: ?STRING
+			a_name: STRING
 		do
 			if is_closed then
 				open_read
@@ -520,7 +515,6 @@ feature -- Iteration
 						Result or end_of_input
 					loop
 						a_name := last_entry
-						check a_name /= Void end -- implied by `not end_of_input'
 						if
 							not STRING_.same_string (a_name, file_system.relative_current_directory) and then
 							not STRING_.same_string (a_name, file_system.relative_parent_directory)
@@ -544,7 +538,7 @@ feature -- Iteration
 			-- False if current directory could not be searched.
 			-- (Semantics not guaranteed if `an_action' changes the contents of the directory.)
 		local
-			a_name: ?STRING
+			a_name: STRING
 		do
 			if is_closed then
 				open_read
@@ -556,7 +550,6 @@ feature -- Iteration
 						not Result or end_of_input
 					loop
 						a_name := last_entry
-						check a_name /= Void end -- implied by `not end_of_input'
 						if
 							not STRING_.same_string (a_name, file_system.relative_current_directory) and then
 							not STRING_.same_string (a_name, file_system.relative_parent_directory)
@@ -580,15 +573,24 @@ feature -- Input
 	read_entry is
 			-- Read next entry in directory.
 			-- Make result available in `last_entry'.
+		local
+			l_last_entry: ?STRING
+			l_entry_buffer: like entry_buffer
 		do
-			if {l_entry_buffer: like entry_buffer} entry_buffer then
+			l_entry_buffer := entry_buffer
+			if l_entry_buffer /= Void then
 				last_entry := l_entry_buffer.item
 				entry_buffer := l_entry_buffer.right
 			elseif old_end_of_input then
 				end_of_input := True
 			else
 				readentry
-				last_entry := lastentry
+				l_last_entry := lastentry
+				if l_last_entry /= Void then
+					last_entry := l_last_entry
+				else
+					last_entry := Dummy_entry
+				end
 				end_of_input := old_end_of_input
 			end
 		end
@@ -599,9 +601,11 @@ feature -- Input
 			-- call to a read routine.
 		local
 			a_cell: like entry_buffer
+			l_entry_buffer: like entry_buffer
 		do
 			create a_cell.make (an_entry)
-			if {l_entry_buffer: like entry_buffer} entry_buffer then
+			l_entry_buffer := entry_buffer
+			if l_entry_buffer /= Void then
 				a_cell.put_right (l_entry_buffer)
 			end
 			entry_buffer := a_cell
@@ -613,6 +617,14 @@ feature {NONE} -- Implementation
 
 	entry_buffer: ?KL_LINKABLE [STRING]
 			-- Unread entries
+
+	valid_entry_buffer (a_buffer: like entry_buffer): BOOLEAN is
+			-- Is `a_buffer' a valid buffer for unread entries?
+		do
+			Result := a_buffer /= Void implies valid_unread_entry (a_buffer.item)
+		ensure
+			definition: Result = (a_buffer /= Void implies valid_unread_entry (a_buffer.item))
+		end
 
 	old_end_of_input: BOOLEAN is
 			-- Have all entries been read
@@ -648,6 +660,6 @@ feature {NONE} -- Implementation
 invariant
 
 	string_name_is_string: ANY_.same_types (string_name, "")
-	no_void_bufferred_entry: {ot_entry_buffer: like entry_buffer} entry_buffer implies ot_entry_buffer.item /= Void
+	valid_entry_buffer: valid_entry_buffer (entry_buffer)
 
 end

@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 1999-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-07-26 10:10:48 +0200 (Sat, 26 Jul 2008) $"
-	revision: "$Revision: 6456 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class KL_HASHABLE_ROUTINES
 

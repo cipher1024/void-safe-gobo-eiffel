@@ -8,8 +8,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class KL_MACOS_INPUT_FILE
 
@@ -48,18 +48,13 @@ feature -- Input
 			-- separator characters from the input file.
 		local
 			done: BOOLEAN
-			a_target: like last_string
+			a_target: STRING
 			c: CHARACTER
 			is_eof: BOOLEAN
 		do
-			a_target := last_string
-			if a_target = Void then
-				create a_target.make (256)
-				last_string := a_target
-			else
-				a_target.clear_all
-			end
+			last_string.clear_all
 			is_eof := True
+			a_target := last_string
 			from
 			until
 				done
@@ -87,21 +82,12 @@ feature -- Input
 			-- or make `last_string' empty and leave the
 			-- input file unchanged if no line separator
 			-- was found.
-		local
-			a_target: like last_string
 		do
-			a_target := last_string
-			if a_target = Void then
-				create a_target.make (256)
-				last_string := a_target
-			else
-				a_target.clear_all
-			end
-
+			last_string.clear_all
 			read_character
 			if not end_of_file then
 				if last_character = '%R' then
-					a_target.append_character ('%R')
+					last_string.append_character ('%R')
 				else
 						-- Put character back to input file.
 					unread_character (last_character)

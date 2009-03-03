@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-31 10:06:26 +0100 (Fri, 31 Oct 2008) $"
-	revision: "$Revision: 6541 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 deferred class KL_STRING_VALUES
 
@@ -35,7 +35,8 @@ feature -- Conversion
 		require
 			a_string_not_void: a_string /= Void
 		local
-			str: ?STRING
+			l_name: STRING
+			l_value: ?STRING
 			i, nb: INTEGER
 			c: CHARACTER
 			stop: BOOLEAN
@@ -68,7 +69,7 @@ feature -- Conversion
 					else
 							-- Found beginning of a variable.
 							-- It is either ${VAR} or $VAR.
-						str := STRING_.new_empty_string (a_string, 5)
+						l_name := STRING_.new_empty_string (a_string, 5)
 						if c = '{' then
 								-- Looking for a right brace.
 							from
@@ -81,10 +82,10 @@ feature -- Conversion
 								if c = '}' then
 									stop := True
 								elseif c /= '%U' then
-									str.append_character (c)
+									l_name.append_character (c)
 								else
-									check same_type: ANY_.same_types (str, a_string) end
-									STRING_.append_substring_to_string (str, a_string, i, i)
+									check same_type: ANY_.same_types (l_name, a_string) end
+									STRING_.append_substring_to_string (l_name, a_string, i, i)
 								end
 								i := i + 1
 							end
@@ -99,16 +100,16 @@ feature -- Conversion
 								c := a_string.item (i)
 								inspect c
 								when 'a'..'z', 'A'..'Z', '0'..'9', '_' then
-									str.append_character (c)
+									l_name.append_character (c)
 									i := i + 1
 								else
 									stop := True
 								end
 							end
 						end
-						str := value (str)
-						if str /= Void then
-							Result := STRING_.appended_string (Result, str)
+						l_value := value (l_name)
+						if l_value /= Void then
+							Result := STRING_.appended_string (Result, l_value)
 						end
 					end
 				end

@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 deferred class KI_CHARACTER_INPUT_STREAM
 
@@ -39,9 +39,8 @@ feature -- Input
 			nb_large_enough: nb > 0
 		deferred
 		ensure
-			last_string_not_void: not end_of_input implies last_string /= Void
-			last_string_count_small_enough: not end_of_input implies ({ot_last_string: like last_string} last_string and then ot_last_string.count <= nb)
-			character_read: not end_of_input implies ({ot_last_string2: like last_string} last_string and then ot_last_string2.count > 0)
+			last_string_count_small_enough: not end_of_input implies last_string.count <= nb
+			character_read: not end_of_input implies last_string.count > 0
 		end
 
 	read_to_string (a_string: STRING; pos, nb: INTEGER): INTEGER is
@@ -86,7 +85,7 @@ feature -- Input
 
 feature -- Access
 
-	last_string: ?STRING is
+	last_string: STRING is
 			-- Last string read
 			-- (Note: this query always return the same object.
 			-- Therefore a clone should be used if the result
@@ -97,7 +96,8 @@ feature -- Access
 			not_end_of_input: not end_of_input
 		deferred
 		ensure
-			string_type: Result /= Void implies ANY_.same_types (Result, "")
+			last_string_not_void: Result /= Void
+			string_type: ANY_.same_types (Result, "")
 		end
 
 feature -- Status report

@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 deferred class KL_FILE_SYSTEM
 
@@ -135,7 +135,7 @@ feature -- File handling
 							a_file1.close
 							a_file2.close
 							done := True
-						elseif not (a_file1.last_string ~ a_file2.last_string) then
+						elseif not a_file1.last_string.same_string (a_file2.last_string) then
 							Result := False
 							a_file1.close
 							a_file2.close
@@ -163,7 +163,7 @@ feature -- File handling
 		local
 			a_file1, a_file2: KL_BINARY_INPUT_FILE
 			a_count1, a_count2: INTEGER
-			s1, s2: ?STRING
+			s1, s2: STRING
 			i, nb: INTEGER
 			done: BOOLEAN
 		do
@@ -203,9 +203,6 @@ feature -- File handling
 									-- do the comparison ourselves by hand character by character.
 								s1 := a_file1.last_string
 								s2 := a_file2.last_string
-								check
-									s1 /= Void  and s2 /= Void
-								end -- implied by `not a_file*.end_of_file'
 								nb := s1.count
 								if s2.count /= nb then
 									Result := False

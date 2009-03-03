@@ -12,8 +12,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 1999-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
-	revision: "$Revision: 6590 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class KL_STRING_ROUTINES
 

@@ -10,8 +10,8 @@ indexing
 	library: "Gobo Eiffel XML library"
 	copyright: "Copyright (c) 2002-2003, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
-	revision: "$Revision: 5877 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 	-- TODO:
 	-- system literal accepts non-CHAR
@@ -3662,6 +3662,9 @@ feature -- Scanning
 			yy_rejected_column: INTEGER
 			yy_rejected_position: INTEGER
 			yy_done: BOOLEAN
+			l_yy_ec: like yy_ec
+			l_yy_meta: like yy_meta
+			l_yy_acclist: like yy_acclist
 		do
 				-- This routine is implemented with a loop whose body
 				-- is a big inspect instruction. This is a mere
@@ -3720,18 +3723,11 @@ feature -- Scanning
 					until
 						yy_done
 					loop
-						if {l_yy_ec: like yy_ec} yy_ec then
-							if {l_yy_content_area_1: like yy_content_area} yy_content_area then
-								yy_c := l_yy_ec.item (l_yy_content_area_1.item (yy_cp).code)
-							else
-								yy_c := l_yy_ec.item (yy_content.item (yy_cp).code)
-							end
+						l_yy_ec := yy_ec
+						if l_yy_ec /= Void then
+							yy_c := l_yy_ec.item (yy_content_area.item (yy_cp).code)
 						else
-							if {l_yy_content_area_2: like yy_content_area} yy_content_area then
-								yy_c := l_yy_content_area_2.item (yy_cp).code
-							else
-								yy_c := yy_content.item (yy_cp).code
-							end
+							yy_c := yy_content_area.item (yy_cp).code
 						end
 						if
 							not yyReject_or_variable_trail_context and then
@@ -3748,8 +3744,9 @@ feature -- Scanning
 							yy_chk.item (yy_base.item (yy_current_state) + yy_c) = yy_current_state
 						loop
 							yy_current_state := yy_def.item (yy_current_state)
+							l_yy_meta := yy_meta
 							if
-								{l_yy_meta: like yy_meta} yy_meta and then
+								l_yy_meta /= Void and then
 								yy_current_state >= yyTemplate_mark
 							then
 									-- We've arranged it so that templates are
@@ -3796,11 +3793,9 @@ feature -- Scanning
 							yy_lp /= 0 and
 							yy_lp < yy_accept.item (yy_current_state + 1)
 						then
-							if {l_yy_acclist: like yy_acclist} yy_acclist then
-								yy_act := l_yy_acclist.item (yy_lp)
-							else
-								check False end
-							end
+							l_yy_acclist := yy_acclist
+							check l_yy_acclist /= Void end -- implied by ... ?
+							yy_act := l_yy_acclist.item (yy_lp)
 							if yyVariable_trail_context then
 								if
 									yy_act < - yyNb_rules or

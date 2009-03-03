@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-11-24 19:26:24 +0100 (Mon, 24 Nov 2008) $"
-	revision: "$Revision: 6562 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class KL_PATHNAME
 
@@ -68,7 +68,10 @@ feature -- Access
 			s: ?STRING
 		do
 			s := components.item (i)
-			check s /= Void end -- implied by `i_large_enough' and `i_small_enough'
+			check
+					 -- Implied by `i_large_enough' and `i_small_enough'.
+				s_not_void: s /= Void
+			end
 			Result := s
 		end
 
@@ -144,6 +147,7 @@ feature -- Element change
 			-- Append components `a_names' to pathname.
 		require
 			a_names_not_void: a_names /= Void
+			no_void_name: not STRING_ARRAY_.has_void (a_names)
 			no_empty_name: not a_names.there_exists (agent {STRING}.is_empty)
 		local
 			i, nb: INTEGER

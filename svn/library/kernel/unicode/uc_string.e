@@ -18,8 +18,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
-	revision: "$Revision: 6590 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class UC_STRING
 
@@ -38,7 +38,7 @@ inherit
 			is_equal
 		end
 
-	STRING
+	KL_STRING
 		rename
 			item as item,
 			capacity as byte_capacity,
@@ -54,7 +54,7 @@ inherit
 				-- Note: The postcondition of `infix "<"' in ELKS 2001 STRING
 				-- is too constraining and does not allow a redefinition here.
 				-- Redefine version from COMPARABLE instead.
-			infix "<" as old_infix_less,
+			is_less as old_infix_less,
 				-- Note: The postcondition of `is_equal' in ELKS 2001 STRING
 				-- is too constraining and does not allow a redefinition here.
 				-- Redefine version from ANY instead.
@@ -78,9 +78,9 @@ inherit
 -- in ISE 6.2 and 6.3. So we need to comment out the line below.
 --			{NONE} all
 		undefine
-			infix ">",
-			infix "<=",
-			infix ">=",
+			is_greater,
+			is_less_equal,
+			is_greater_equal,
 			max,
 			min
 		redefine
@@ -124,7 +124,7 @@ inherit
 			as_upper,
 			out,
 			fill_with,
-			infix "@",
+			at,
 			count,
 			old_clear_all,
 			old_left_adjust,
@@ -136,14 +136,14 @@ inherit
 			has_code,
 			index_of_code,
 			substring_index,
-			infix "+",
+			plus,
 			copy
 		select
 			put,
 			item
 		end
 
-	STRING
+	KL_STRING
 		rename
 			item as old_item,
 			put as old_put,
@@ -166,13 +166,13 @@ inherit
 				-- Note: The postcondition of `infix "<"' in ELKS 2001 STRING
 				-- is too constraining and does not allow a redefinition here.
 				-- Redefine version from COMPARABLE instead.
-			infix "<" as old_infix_less
+			is_less as old_infix_less
 		export
 			{NONE} all
 		undefine
-			infix ">",
-			infix "<=",
-			infix ">=",
+			is_greater,
+			is_less_equal,
+			is_greater_equal,
 			max,
 			min
 		redefine
@@ -225,12 +225,12 @@ inherit
 			put_code,
 			has_code,
 			index_of_code,
-			infix "+",
+			plus,
 			copy,
-			infix "@"
+			at
 		end
 
-	COMPARABLE
+	KL_COMPARABLE
 		undefine
 			three_way_comparison,
 			is_equal,
@@ -240,7 +240,7 @@ inherit
 				-- Note: The postcondition of `infix "<"' in ELKS 2001 STRING
 				-- is too constraining and does not allow a redefinition here.
 				-- Redefine version from COMPARABLE instead.
-			infix "<"
+			is_less
 		end
 
 	KI_TEXT_OUTPUT_STREAM
@@ -384,8 +384,30 @@ feature {NONE} -- Initialization
 			-- Initialize from the character sequence of `a_string'.
 		require
 			a_string_not_void: a_string /= Void
+		local
+			l_uc_string: ?UC_STRING
 		do
-			make_from_substring_general (a_string, 1, a_string.count)
+				-- Note that we do nothing if `a_string' is `Current'.
+				-- This is what the following tries to determine. In
+				-- the end, if `l_uc_string' is Void this means that
+				-- `a_string' is not `Current'.
+			l_uc_string ?= a_string
+			if l_uc_string /= Void then
+				area := l_uc_string.area
+				if a_string /= Current then
+					l_uc_string := Void
+				end
+			end
+			if l_uc_string /= Void then
+					-- We know by now that `a_string' is `Current', so the
+					-- current routine is not used as a creation procedure,
+					-- and therefore `area' has already been set and is
+					-- equal to the 'area' of `l_uc_string'. But the compiler
+					-- has to be told again.
+				area := l_uc_string.area
+			else
+				make_from_substring_general (a_string, 1, a_string.count)
+			end
 		ensure
 			same_unicode: same_unicode_string (a_string)
 		end
@@ -407,8 +429,6 @@ feature {NONE} -- Initialization
 	make_from_substring_general (a_string: STRING_GENERAL; start_index, end_index: INTEGER) is
 			-- Initialize from the character sequence of `a_string'
 			-- between `start_index' and `end_index' inclusive.
-			-- Do not call `make_from_substring_general' outside creation purpose!
-			--   otherwise, use make_from_current_substring
 		require
 			a_string_not_void: a_string /= Void
 			valid_start_index: 1 <= start_index
@@ -416,42 +436,36 @@ feature {NONE} -- Initialization
 			meaningful_interval: start_index <= end_index + 1
 		local
 			nb: INTEGER
-		do
-			if end_index < start_index then
-				nb := 0
-			else
-				nb := utf8.substring_byte_count (a_string, start_index, end_index)
-			end
-			make (nb)
-			if nb > 0 then
-				set_count (end_index - start_index + 1)
-				byte_count := nb
-				put_substring_at_byte_index (a_string, start_index, end_index, nb, 1)
-			end
-			check
-				a_string_not_current: a_string /= Current
-			end
-		ensure
-			initialized: same_unicode_string (a_string.substring (start_index, end_index))
-		end
-
-	make_from_current_substring (start_index, end_index: INTEGER) is
-			-- Initialize from the character sequence of `a_string'
-			-- between `start_index' and `end_index' inclusive.
-			-- Do not call `make_from_substring_general' outside creation purpose!
-		require
-			valid_start_index: 1 <= start_index
-			valid_end_index: end_index <= count
-			meaningful_interval: start_index <= end_index + 1
-		local
-			nb: INTEGER
 			str: STRING_GENERAL
+			l_uc_string: ?UC_STRING
 		do
-			if start_index /= 1 or else end_index /= count then
+				-- Note that we do nothing if `a_string' is `Current'.
+				-- This is what the following tries to determine. In
+				-- the end, if `l_uc_string' is Void this means that
+				-- `a_string' is not `Current'.
+			l_uc_string ?= a_string
+			if l_uc_string /= Void then
+				area := l_uc_string.area
+				if a_string /= Current then
+					l_uc_string := Void
+				end
+			end
+			if l_uc_string /= Void and then start_index = 1 and then end_index = count then
+					-- We know by now that `a_string' is `Current', so the
+					-- current routine is not used as a creation procedure,
+					-- and therefore `area' has already been set and is
+					-- equal to the 'area' of `l_uc_string'. But the compiler
+					-- has to be told again.
+				area := l_uc_string.area
+			else
 				if end_index < start_index then
 					make (0)
 				else
-					str := cloned_string
+					if l_uc_string /= Void then
+						str := l_uc_string.cloned_string
+					else
+						str := a_string
+					end
 					nb := utf8.substring_byte_count (str, start_index, end_index)
 					make (nb)
 					set_count (end_index - start_index + 1)
@@ -460,7 +474,7 @@ feature {NONE} -- Initialization
 				end
 			end
 		ensure
-			initialized: same_unicode_string (substring (start_index, end_index))
+			initialized: same_unicode_string (a_string.substring (start_index, end_index))
 		end
 
 	make_filled_unicode (c: UC_CHARACTER; n: INTEGER) is
@@ -637,7 +651,7 @@ feature -- Access
 			overflow: item_code (i) > Platform.Maximum_character_code implies Result = '%U'
 		end
 
-	infix "@" (i: INTEGER): CHARACTER is
+	at alias "@" (i: INTEGER): CHARACTER is
 			-- Character at index `i'
 			-- (ELKS 2001 STRING)
 		do
@@ -1050,7 +1064,7 @@ feature -- Access
 			end
 		end
 
-	infix "+" (other: STRING): like Current is
+	plus alias "+" (other: STRING): like Current is
 			-- New object which is a clone of `Current' extended
 			-- by the characters of `other'
 			-- (ELKS 2001 STRING)
@@ -1082,7 +1096,7 @@ feature -- Access
 			-- Index of first occurrence of `c' at or after `start_index';
 			-- 0 if none
 		require
-			c_attached: c /= Void
+			c_not_void: c /= Void
 			valid_start_index: start_index >= 1 and start_index <= count + 1
 		do
 			Result := index_of_item_code (c.code, start_index)
@@ -1472,7 +1486,7 @@ feature -- Comparison
 				substring (2, count).is_equal (other.substring (2, count)))))
 		end
 
-	infix "<" (other: like Current): BOOLEAN is
+	is_less alias "<" (other: like Current): BOOLEAN is
 			-- Is string lexicographically lower than `other'?
 			-- (Extended from ELKS 2001 STRING, inherited from COMPARABLE)
 		do
@@ -1599,7 +1613,9 @@ feature -- Comparison
 				Result := 0
 			elseif ANY_.same_types (Current, other) then
 				uc_string ?= other
-				check uc_string /= Void end -- implied by `same_types...'
+				check
+					is_uc_string: uc_string /= Void
+				end
 				nb1 := byte_count
 				nb2 := uc_string.byte_count
 				if nb1 < nb2 then
@@ -2381,7 +2397,7 @@ feature -- Element change
 			-- Replace the substring from `start_index' to `end_index',
 			-- inclusive, with `a_string'.
 		require
-			a_string_attached: a_string /= Void
+			a_string_not_void: a_string /= Void
 		local
 			a_string_count: INTEGER
 			k, nb: INTEGER
@@ -2437,11 +2453,11 @@ feature -- Element change
 
 -- TODO: ISE 6.2 version because there is a flat Degree 3 error when using version from 6.4
 -- with the signature of `replace_substring' of the current class.
-	replace_substring_all (original, new: like Current)
+	replace_substring_all (original, new: like Current) is
 			-- Replace every occurrence of `original' with `new'.
 		local
 			l_first_pos, l_next_pos: INTEGER
-			l_orig_count, l_new_count, l_new_lower, l_count: INTEGER
+			l_orig_count, l_new_count, l_count: INTEGER
 			l_area, l_new_area: like area
 			l_offset: INTEGER
 			l_string_searcher: like string_searcher
@@ -2459,11 +2475,10 @@ feature -- Element change
 						from
 							l_area := area
 							l_new_area := new.area
-							l_new_lower := new.area_lower
 						until
 							l_first_pos = 0
 						loop
-							l_area.copy_data (l_new_area, l_new_lower, l_first_pos - 1, l_new_count)
+							l_area.copy_data (l_new_area, 0, l_first_pos - 1, l_new_count)
 							if l_first_pos + l_new_count <= l_count then
 								l_first_pos := l_string_searcher.substring_index_with_deltas (Current, original, l_first_pos + l_new_count, l_count)
 							else
@@ -2477,12 +2492,11 @@ feature -- Element change
 							l_next_pos := l_string_searcher.substring_index_with_deltas (Current, original, l_first_pos + l_orig_count, l_count)
 							l_area := area
 							l_new_area := new.area
-							l_new_lower := new.area_lower
 						until
 							l_next_pos = 0
 						loop
 								-- Copy new string into Current
-							l_area.copy_data (l_new_area, l_new_lower, l_first_pos - 1 - l_offset, l_new_count)
+							l_area.copy_data (l_new_area, 0, l_first_pos - 1 - l_offset, l_new_count)
 								-- Shift characters between `l_first_pos' and `l_next_pos'
 							l_area.overlapping_move (l_first_pos + l_orig_count - 1,
 								l_first_pos + l_new_count - 1 - l_offset, l_next_pos - l_first_pos - l_orig_count)
@@ -2496,7 +2510,7 @@ feature -- Element change
 						end
 							-- Perform final substitution:
 							-- Copy new string into Current
-						l_area.copy_data (l_new_area, l_new_lower, l_first_pos - 1 - l_offset, l_new_count)
+						l_area.copy_data (l_new_area, 0, l_first_pos - 1 - l_offset, l_new_count)
 							-- Shift characters between `l_first_pos' and the end of the string
 						l_area.overlapping_move (l_first_pos + l_orig_count - 1,
 							l_first_pos + l_new_count - 1 - l_offset, l_count + 1 - l_first_pos - l_orig_count)
@@ -2659,7 +2673,7 @@ feature -- Duplication
 			if other /= Current then
 				other_count := other.count
 				other.set_count (other.byte_count)
-				precursor {STRING} (other)
+				precursor {KL_STRING} (other)
 				set_count (other_count)
 				other.set_count (other_count)
 			end

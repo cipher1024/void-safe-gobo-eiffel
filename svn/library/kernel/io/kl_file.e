@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 deferred class KL_FILE
 
@@ -148,8 +148,9 @@ feature -- Status report
 		local
 			absolute_name1, absolute_name2: STRING
 			canonical_name1, canonical_name2: STRING
-			a_name, string_other_name: STRING
+			a_name: STRING
 			saved_string_name: ?STRING
+			string_other_name: STRING
 			i: INTEGER
 			rescued: BOOLEAN
 			other_inode: INTEGER
@@ -217,8 +218,9 @@ feature -- Status report
 					end
 				end
 			else
-				check saved_string_name /= Void end -- implied by rescued status
-				string_name := saved_string_name
+				if saved_string_name /= Void then
+					string_name := saved_string_name
+				end
 				Result := True
 			end
 		rescue
@@ -277,8 +279,7 @@ feature -- Basic operations
 						end
 					end
 				end
-			else
-				check saved_string_name /= Void end -- implied by rescued status
+			elseif saved_string_name /= Void then
 				string_name := saved_string_name
 			end
 		rescue
@@ -301,7 +302,6 @@ feature -- Basic operations
 			old_file: KL_BINARY_INPUT_FILE
 			new_file: KL_BINARY_OUTPUT_FILE
 			string_new_name: STRING
-			a_string: ?STRING
 		do
 			string_new_name := STRING_.as_string (new_name)
 			if string_name /= Empty_name and string_new_name.count > 0 then
@@ -318,9 +318,7 @@ feature -- Basic operations
 								until
 									old_file.end_of_file
 								loop
-									a_string := old_file.last_string
-									check a_string /= Void end -- implied by `not end_of_file'
-									new_file.put_string (a_string)
+									new_file.put_string (old_file.last_string)
 									old_file.read_string (512)
 								end
 								new_file.close
@@ -347,7 +345,7 @@ feature -- Basic operations
 			a_source_file: KL_BINARY_INPUT_FILE
 			a_target_file: KL_BINARY_OUTPUT_FILE
 			a_string_filename: STRING
-			a_string: ?STRING
+			a_string: STRING
 			nb: INTEGER
 		do
 			a_string_filename := STRING_.as_string (a_filename)
@@ -369,7 +367,6 @@ feature -- Basic operations
 							nb <= 0 or else a_source_file.end_of_file
 						loop
 							a_string := a_source_file.last_string
-							check a_string /= Void end -- implied by `not end_of_file'
 							a_target_file.put_string (a_string)
 							nb := nb - a_string.count
 							if nb >= 512 then
@@ -430,6 +427,7 @@ feature {NONE} -- Implementation
 			string_not_empty: not fn.is_empty
 		deferred
 		ensure
+			string_name_not_void: string_name /= Void
 			file_named: string_name.is_equal (fn)
 			file_closed: old_is_closed
 		end
@@ -512,6 +510,7 @@ feature {NONE} -- Implementation
 
 invariant
 
+	string_name_not_void: string_name /= Void
 	string_name_is_string: ANY_.same_types (string_name, "")
 
 end

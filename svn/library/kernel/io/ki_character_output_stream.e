@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 deferred class KI_CHARACTER_OUTPUT_STREAM
 
@@ -164,7 +164,6 @@ feature -- Output
 			-- of input is reached, and write these items to
 			-- current output stream.
 		local
-			l_string: ?STRING
 			a_character_input: ?KI_CHARACTER_INPUT_STREAM
 		do
 			a_character_input ?= an_input_stream
@@ -176,9 +175,7 @@ feature -- Output
 				until
 					a_character_input.end_of_input
 				loop
-					l_string := a_character_input.last_string
-					check a_string_attached: l_string /= Void end
-					put_string (l_string)
+					put_string (a_character_input.last_string)
 					a_character_input.read_string (512)
 				end
 			else

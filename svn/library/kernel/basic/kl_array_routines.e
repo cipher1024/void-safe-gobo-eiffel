@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 1999-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
-	revision: "$Revision: 6590 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class KL_ARRAY_ROUTINES [G]
 
@@ -60,17 +60,19 @@ feature -- Status report
 			end
 		end
 
-	has_void (an_array: ARRAY [G]): BOOLEAN is
-			-- Does `Void' appear in `an_array' (use '=' for item comparison).
-			-- Reasons why we don't use ARRAY.has directly:
-			-- * `has' is not in ELKS ARRAY 2000.
-			-- * ISE may change this behavior with `compare_objects'.
+	has_void (a_array: ARRAY [G]): BOOLEAN is
+			-- Does 'Void' appear in `an_array' (use '=' for item comparison).
+			-- Reason why we don't use `has (Void)' directly:
+			-- * the actual generic parameter may be attached and
+			--   'Void' would not conform to it.
 		require
-			an_array_not_void: an_array /= Void
+			a_array_not_void: a_array /= Void
 		local
 			i, nb: INTEGER
+			l_array: ?ARRAY [?G]
 		do
-			if {l_array: ARRAY [?G]} an_array then
+			l_array ?= a_array
+			if l_array /= Void then
 				from
 					i := l_array.lower
 					nb := l_array.upper

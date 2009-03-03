@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-11-24 19:26:24 +0100 (Mon, 24 Nov 2008) $"
-	revision: "$Revision: 6562 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 deferred class KI_PATHNAME
 
@@ -35,6 +35,22 @@ inherit
 		end
 
 	KL_IMPORTED_ARRAY_ROUTINES
+		undefine
+			is_equal
+		end
+
+	KL_SHARED_STRING_EQUALITY_TESTER
+		rename
+			string_equality_tester as other_string_equality_tester
+		export
+			{NONE} all
+		undefine
+			is_equal
+		end
+
+	UC_SHARED_STRING_EQUALITY_TESTER
+		export
+			{NONE} all
 		undefine
 			is_equal
 		end
@@ -218,7 +234,6 @@ feature -- Comparison
 			a_pathname_not_void: a_pathname /= Void
 		local
 			i, nb: INTEGER
-			s, pathname_s: ?STRING
 		do
 			if a_pathname = Current then
 				Result := True
@@ -226,44 +241,23 @@ feature -- Comparison
 				nb := count
 				if
 					nb <= a_pathname.count and
-					is_relative = a_pathname.is_relative
+					is_relative = a_pathname.is_relative and
+					string_equality_tester.test (drive, a_pathname.drive) and
+					string_equality_tester.test (hostname, a_pathname.hostname) and
+					string_equality_tester.test (sharename, a_pathname.sharename)
 				then
-					s := drive
-					pathname_s := a_pathname.drive
-					if
-						((s = Void and pathname_s = Void) or else
-						((s /= Void and pathname_s /= Void) and then
-							STRING_.same_string (s, pathname_s)))
-					then
-						s := hostname
-						pathname_s := a_pathname.hostname
-						if
-							((s = Void and pathname_s = Void) or else
-							((s /= Void and pathname_s /= Void) and then
-							STRING_.same_string (s, pathname_s)))
-						then
-							s := sharename
-							pathname_s := a_pathname.sharename
-							if
-								((s = Void and pathname_s = Void) or else
-								((s /= Void and pathname_s /= Void) and then
-								STRING_.same_string (s, pathname_s)))
-							then
-								Result := True
-								from
-									i := 1
-								until
-									i > nb
-								loop
-									if not STRING_.same_string (item (i), a_pathname.item (i)) then
-										Result := False
-											-- Jump out of the loop.
-										i := nb + 1
-									end
-									i := i + 1
-								end
-							end
+					Result := True
+					from
+						i := 1
+					until
+						i > nb
+					loop
+						if not STRING_.same_string (item (i), a_pathname.item (i)) then
+							Result := False
+								-- Jump out of the loop.
+							i := nb + 1
 						end
+						i := i + 1
 					end
 				end
 			end
@@ -276,7 +270,6 @@ feature -- Comparison
 			a_pathname_not_void: a_pathname /= Void
 		local
 			i, nb: INTEGER
-			s, pathname_s: ?STRING
 		do
 			if a_pathname = Current then
 				Result := True
@@ -284,44 +277,23 @@ feature -- Comparison
 				nb := count
 				if
 					nb <= a_pathname.count and
-					is_relative = a_pathname.is_relative
+					is_relative = a_pathname.is_relative and
+					case_insensitive_string_equality_tester.test (drive, a_pathname.drive) and
+					case_insensitive_string_equality_tester.test (hostname, a_pathname.hostname) and
+					case_insensitive_string_equality_tester.test (sharename, a_pathname.sharename)
 				then
-					s := drive
-					pathname_s := a_pathname.drive
-					if
-						((s = Void and pathname_s = Void) or else
-						((s /= Void and pathname_s /= Void) and then
-						STRING_.same_case_insensitive (s, pathname_s)))
-					then
-						s := hostname
-						pathname_s := a_pathname.hostname
-						if
-							((s = Void and pathname_s = Void) or else
-							((s /= Void and pathname_s /= Void) and then
-							STRING_.same_case_insensitive (s, pathname_s)))
-						then
-							s := sharename
-							pathname_s := a_pathname.sharename
-							if
-								((s = Void and pathname_s = Void) or else
-								((s /= Void and pathname_s /= Void) and then
-								STRING_.same_case_insensitive (s, pathname_s)))
-							then
-								Result := True
-								from
-									i := 1
-								until
-									i > nb
-								loop
-									if not STRING_.same_case_insensitive (item (i), a_pathname.item (i)) then
-										Result := False
-											-- Jump out of the loop.
-										i := nb + 1
-									end
-									i := i + 1
-								end
-							end
+					Result := True
+					from
+						i := 1
+					until
+						i > nb
+					loop
+						if not STRING_.same_case_insensitive (item (i), a_pathname.item (i)) then
+							Result := False
+								-- Jump out of the loop.
+							i := nb + 1
 						end
+						i := i + 1
 					end
 				end
 			end

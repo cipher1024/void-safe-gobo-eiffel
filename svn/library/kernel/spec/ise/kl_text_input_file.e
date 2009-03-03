@@ -11,8 +11,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-07-26 10:10:48 +0200 (Sat, 26 Jul 2008) $"
-	revision: "$Revision: 6456 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class KL_TEXT_INPUT_FILE
 
@@ -83,7 +83,7 @@ feature -- Access
 	last_character: CHARACTER
 			-- Last character read
 
-	last_string: ?STRING
+	last_string: STRING
 			-- Last string read
 			-- (Note: this query always return the same object.
 			-- Therefore a clone should be used if the result
@@ -104,19 +104,14 @@ feature -- Input
 			-- '%R%N and '%R'.
 		local
 			done: BOOLEAN
-			a_target: like last_string
+			a_target: STRING
 			c: CHARACTER
 			is_eof: BOOLEAN
 			has_carriage: BOOLEAN
 		do
-			a_target := last_string
-			if a_target = Void then
-				create a_target.make (256)
-				last_string := a_target
-			else
-				a_target.clear_all
-			end
+			last_string.clear_all
 			is_eof := True
+			a_target := last_string
 			from until done loop
 				read_character
 				if end_of_file then
@@ -152,27 +147,19 @@ feature -- Input
 			-- was found.
 			-- Line separators recognized by current file are:
 			-- '%N', '%R%N and '%R'.
-		local
-			l_last_string: like last_string
 		do
-			l_last_string := last_string
-			if l_last_string = Void then
-				create l_last_string.make (256)
-				last_string := l_last_string
-			else
-				l_last_string.clear_all
-			end
+			last_string.clear_all
 			read_character
 			if not end_of_file then
 				inspect last_character
 				when '%N' then
-					l_last_string.append_character ('%N')
+					last_string.append_character ('%N')
 				when '%R' then
-					l_last_string.append_character ('%R')
+					last_string.append_character ('%R')
 					read_character
 					if not end_of_file then
 						if last_character = '%N' then
-							l_last_string.append_character ('%N')
+							last_string.append_character ('%N')
 						else
 								-- Put character back to input file.
 							unread_character (last_character)

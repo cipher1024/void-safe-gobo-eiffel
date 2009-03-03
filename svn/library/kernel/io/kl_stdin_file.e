@@ -12,8 +12,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class KL_STDIN_FILE
 
@@ -56,7 +56,8 @@ inherit
 				is_open_write
 			{NONE} all
 		redefine
-			file_readable
+			file_readable,
+			last_string
 		end
 
 create
@@ -68,6 +69,7 @@ feature {NONE} -- Initialization
 	make is
 			-- Create a new standard input file.
 		do
+			create last_string.make_empty
 			make_open_stdin ("stdin")
 			end_of_file := False
 		ensure
@@ -77,6 +79,13 @@ feature {NONE} -- Initialization
 		end
 
 feature -- Access
+
+	last_string: STRING
+			-- Last string read
+			-- (Note: this query always return the same object.
+			-- Therefore a clone should be used if the result
+			-- is to be kept beyond the next call to this feature.
+			-- However `last_string' is not shared between file objects.)
 
 	eol: STRING is "%N"
 			-- Line separator
@@ -139,29 +148,24 @@ feature -- Input
 			-- will all be read.)
 		local
 			i: INTEGER
-			l_last_string: like last_string
 		do
-			l_last_string := last_string
-			if l_last_string = Void then
-				create l_last_string.make (nb)
-				last_string := l_last_string
-			elseif l_last_string.capacity < nb then
-				l_last_string.resize (nb)
+			if last_string.capacity < nb then
+				last_string.resize (nb)
 			end
 			if character_buffer = Void then
 				if not old_end_of_file then
-					l_last_string.set_count (nb)
-					i := old_read_to_string (l_last_string, 1, nb)
-					l_last_string.set_count (i)
+					last_string.set_count (nb)
+					i := old_read_to_string (last_string, 1, nb)
+					last_string.set_count (i)
 				else
-					l_last_string.set_count (0)
+					last_string.set_count (0)
 				end
 			else
-				l_last_string.set_count (nb)
-				i := read_to_string (l_last_string, 1, nb)
-				l_last_string.set_count (i)
+				last_string.set_count (nb)
+				i := read_to_string (last_string, 1, nb)
+				last_string.set_count (i)
 			end
-			end_of_file := (l_last_string.count = 0)
+			end_of_file := (last_string.count = 0)
 		end
 
 	read_line is
@@ -176,15 +180,8 @@ feature -- Input
 			c: CHARACTER
 			is_eof: BOOLEAN
 			has_carriage: BOOLEAN
-			l_last_string: like last_string
 		do
-			l_last_string := last_string
-			if l_last_string = Void then
-				create l_last_string.make (256)
-				last_string := l_last_string
-			else
-				l_last_string.clear_all
-			end
+			last_string.clear_all
 			is_eof := True
 			from
 			until
@@ -207,7 +204,7 @@ feature -- Input
 							unread_character (c)
 							done := True
 						else
-							l_last_string.append_character (c)
+							last_string.append_character (c)
 						end
 					end
 				end
@@ -224,27 +221,19 @@ feature -- Input
 			-- separator was found.
 			-- Line separators recognized by current standard
 			-- input file are: '%N', '%R%N and '%R'.
-		local
-			l_last_string: like last_string
 		do
-			l_last_string := last_string
-			if l_last_string = Void then
-				create l_last_string.make (256)
-				last_string := l_last_string
-			else
-				l_last_string.clear_all
-			end
+			last_string.clear_all
 			read_character
 			if not end_of_file then
 				inspect last_character
 				when '%N' then
-					l_last_string.append_character ('%N')
+					last_string.append_character ('%N')
 				when '%R' then
-					l_last_string.append_character ('%R')
+					last_string.append_character ('%R')
 					read_character
 					if not end_of_file then
 						if last_character = '%N' then
-							l_last_string.append_character ('%N')
+							last_string.append_character ('%N')
 						else
 								-- Put character back to input file.
 							unread_character (last_character)

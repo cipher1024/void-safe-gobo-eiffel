@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-11-21 15:30:43 +0100 (Fri, 21 Nov 2008) $"
-	revision: "$Revision: 6560 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 deferred class KI_FILE_SYSTEM
 
@@ -17,6 +17,7 @@ inherit
 	ANY
 
 	KL_IMPORTED_ANY_ROUTINES
+
 	KL_IMPORTED_ARRAY_ROUTINES
 
 feature {NONE} -- Initialization

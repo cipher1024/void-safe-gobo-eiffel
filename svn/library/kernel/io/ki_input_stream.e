@@ -52,7 +52,6 @@ feature -- Input
 			enough_space: (pos + nb - 1) <= a_buffer.count
 		local
 			i, end_pos: INTEGER
-			l_item: ?G
 		do
 			end_pos := pos + nb - 1
 			from
@@ -62,9 +61,7 @@ feature -- Input
 			loop
 				read
 				if not end_of_input then
-					l_item := last_item
-					check l_item /= Void end -- implied by `not end_of_input'
-					a_buffer.put (l_item, i)
+					a_buffer.put (last_item, i)
 					i := i + 1
 				else
 					Result := i - pos - nb
@@ -110,7 +107,7 @@ feature -- Status report
 		deferred
 		end
 
-	valid_unread_item (an_item: ?G): BOOLEAN is
+	valid_unread_item (an_item: G): BOOLEAN is
 			-- Can `an_item' be put back in input stream?
 		deferred
 		end
@@ -124,7 +121,7 @@ feature -- Access
 			name_not_void: Result /= Void
 		end
 
-	last_item: ?G is
+	last_item: G is
 			-- Last item read
 		require
 			is_open_read: is_open_read

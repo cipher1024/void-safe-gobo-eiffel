@@ -14,8 +14,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 1999-2006, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-02-07 23:01:29 +0100 (Sat, 07 Feb 2009) $"
-	revision: "$Revision: 6584 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class KL_EXECUTION_ENVIRONMENT
 

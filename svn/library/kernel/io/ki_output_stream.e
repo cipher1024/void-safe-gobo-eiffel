@@ -29,8 +29,6 @@ feature -- Output
 			is_open_write: is_open_write
 			an_input_stream_not_void: an_input_stream /= Void
 			an_input_stream_open_read: an_input_stream.is_open_read
-		local
-			l_item: ?G
 		do
 			from
 				if not an_input_stream.end_of_input then
@@ -39,9 +37,7 @@ feature -- Output
 			until
 				an_input_stream.end_of_input
 			loop
-				l_item := an_input_stream.last_item
-				check l_item /= Void end -- implied by `not end_of_input'
-				put (l_item)
+				put (an_input_stream.last_item)
 				an_input_stream.read
 			end
 		ensure

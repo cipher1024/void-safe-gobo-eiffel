@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2005, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 deferred class KI_DIRECTORY
 
@@ -36,13 +36,18 @@ inherit
 			last_entry
 		end
 
+	KL_IMPORTED_ARRAY_ROUTINES
+		export {NONE} all end
+
 feature -- Access
 
-	last_entry: ?STRING is
+	last_entry: STRING is
 			-- Last entry (file or subdirectory name) read
 			-- (Note: this query returns the new object after
 			-- each call to `read_entry'.)
 		deferred
+		ensure then
+			last_entry_not_void: Result /= Void
 		end
 
 	filenames: ?ARRAY [STRING] is
@@ -50,6 +55,7 @@ feature -- Access
 			-- Void if current directory could not be searched
 		deferred
 		ensure
+			no_void_filename: Result /= Void implies not STRING_ARRAY_.has_void (Result)
 --			no_empty_filename: Result /= Void implies forall s in Result, s.count > 0
 		end
 
@@ -59,6 +65,7 @@ feature -- Access
 			-- (Do not include parent and current directory names.)
 		deferred
 		ensure
+			no_void_filename: Result /= Void implies not STRING_ARRAY_.has_void (Result)
 --			no_empty_filename: Result /= Void implies forall s in Result, s.count > 0
 		end
 
@@ -71,13 +78,13 @@ feature -- Status report
 		deferred
 		end
 
-	valid_unread_entry (an_entry: ?STRING): BOOLEAN is
+	valid_unread_entry (an_entry: STRING): BOOLEAN is
 			-- Can `an_entry' be put back in input stream?
 		do
 			Result := an_entry /= Void and then an_entry.count > 0
 		ensure then
 			an_entry_not_void: Result implies an_entry /= Void
-			an_entry_not_empty: Result implies an_entry /= Void and then an_entry.count > 0
+			an_entry_not_empty: Result implies an_entry.count > 0
 		end
 
 feature -- Basic operations
@@ -183,8 +190,7 @@ feature -- Input
 			-- Make result available in `last_entry'.
 		deferred
 		ensure then
-			last_entry_not_void: not end_of_input implies last_entry /= Void
-			last_entry_not_empty: not end_of_input implies ({ot_last_entry: like last_entry} last_entry and then ot_last_entry.count > 0)
+			last_entry_not_empty: not end_of_input implies last_entry.count > 0
 		end
 
 end

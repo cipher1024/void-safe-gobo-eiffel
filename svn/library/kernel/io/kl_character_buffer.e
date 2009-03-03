@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 class KL_CHARACTER_BUFFER
 
@@ -27,9 +27,6 @@ inherit
 	STRING_HANDLER
 		export {NONE} all end
 
-	KL_SHARED_OPERATING_SYSTEM
-		export {NONE} all end
-
 	KL_IMPORTED_ANY_ROUTINES
 
 create
@@ -43,14 +40,9 @@ feature {NONE} -- Initialization
 			-- Create a new character buffer being able
 			-- to contain `n' characters.
 		do
-			if not operating_system.is_dotnet then
-				create area.make (n + 1)
-				area.set_count (n + 1)
-				as_special := area.area
-			else
-				create area.make (n)
-				area.set_count (n)
-			end
+			create area.make (n + 1)
+			area.set_count (n + 1)
+			as_special := area.area
 		end
 
 feature -- Access
@@ -58,11 +50,7 @@ feature -- Access
 	item (i: INTEGER): CHARACTER is
 			-- Item at position `i'
 		do
-			if {l_as_special: like as_special} as_special then
-				Result := l_as_special.item (i)
-			else
-				Result := area.item (i)
-			end
+			Result := as_special.item (i)
 		end
 
 	substring (s, e: INTEGER): STRING is
@@ -73,11 +61,7 @@ feature -- Access
 					-- Empty string
 				create Result.make (0)
 			else
-				if as_special /= Void then
-					Result := area.substring (s + 1, e + 1)
-				else
-					Result := area.substring (s, e)
-				end
+				Result := area.substring (s + 1, e + 1)
 			end
 		end
 
@@ -86,31 +70,22 @@ feature -- Measurement
 	count: INTEGER is
 			-- Number of characters in buffer
 		do
-			if as_special /= Void then
-				Result := area.count - 1
-			else
-				Result := area.count
-			end
+			Result := area.count - 1
 		end
 
 feature -- Conversion
 
-	as_special: ?SPECIAL [CHARACTER]
+	as_special: SPECIAL [CHARACTER]
 			-- 'SPECIAL [CHARACTER]' version of current character buffer;
 			-- Characters are indexed starting at 1;
-			-- May return void in some descendants, and the result may share
-			-- the internal data with `Current'
+			-- Note that the result may share the internal data with `Current'.
 
 feature -- Element change
 
 	put (v: CHARACTER; i: INTEGER) is
 			-- Replace character at position `i' by `v'.
 		do
-			if {l_as_special: like as_special} as_special then
-				l_as_special.put (v, i)
-			else
-				area.put (v, i)
-			end
+			as_special.put (v, i)
 		end
 
 	append_substring_to_string (s, e: INTEGER; a_string: STRING) is
@@ -119,7 +94,6 @@ feature -- Element change
 		local
 			i, nb: INTEGER
 			old_count, new_count: INTEGER
-			l_as_special: ?like as_special
 		do
 			if s <= e then
 				nb := e - s + 1
@@ -128,33 +102,17 @@ feature -- Element change
 				if new_count > a_string.capacity then
 					a_string.resize (new_count)
 				end
-				l_as_special := as_special
 				if ANY_.same_types (a_string, dummy_string) then
 					a_string.set_count (new_count)
-					if l_as_special /= Void then
-						a_string.subcopy (area, s + 1, e + 1, old_count + 1)
-					else
-						a_string.subcopy (area, s, e, old_count + 1)
-					end
+					a_string.subcopy (area, s + 1, e + 1, old_count + 1)
 				else
-					if l_as_special /= Void then
-						from
-							i := s
-						until
-							i > e
-						loop
-							a_string.append_character (l_as_special.item (i))
-							i := i + 1
-						end
-					else
-						from
-							i := s
-						until
-							i > e
-						loop
-							a_string.append_character (area.item (i))
-							i := i + 1
-						end
+					from
+						i := s
+					until
+						i > e
+					loop
+						a_string.append_character (as_special.item (i))
+						i := i + 1
 					end
 				end
 			end
@@ -168,11 +126,7 @@ feature -- Element change
 		do
 			nb := a_string.count
 			if nb > 0 then
-				if as_special /= Void then
-					area.subcopy (a_string, 1, nb, pos + 1)
-				else
-					area.subcopy (a_string, 1, nb, pos)
-				end
+				area.subcopy (a_string, 1, nb, pos + 1)
 			end
 		end
 
@@ -181,11 +135,7 @@ feature -- Element change
 			-- at most `nb' characters read from `a_stream'.
 			-- Return the number of characters actually read.
 		do
-			if as_special /= Void then
-				Result := a_stream.read_to_string (area, pos + 1, nb)
-			else
-				Result := a_stream.read_to_string (area, pos, nb)
-			end
+			Result := a_stream.read_to_string (area, pos + 1, nb)
 		end
 
 	move_left (old_pos, new_pos: INTEGER; nb: INTEGER) is
@@ -193,11 +143,7 @@ feature -- Element change
 			-- `new_pos' in buffer.
 		do
 			if nb > 0 then
-				if as_special /= Void then
-					area.subcopy (area, old_pos + 1, old_pos + nb, new_pos + 1)
-				else
-					area.subcopy (area, old_pos, old_pos + nb - 1, new_pos)
-				end
+				area.subcopy (area, old_pos + 1, old_pos + nb, new_pos + 1)
 			end
 		end
 
@@ -206,11 +152,7 @@ feature -- Element change
 			-- `new_pos' in buffer.
 		do
 			if nb > 0 then
-				if as_special /= Void then
-					area.subcopy (area, old_pos + 1, old_pos + nb, new_pos + 1)
-				else
-					area.subcopy (area, old_pos, old_pos + nb - 1, new_pos)
-				end
+				area.subcopy (area, old_pos + 1, old_pos + nb, new_pos + 1)
 			end
 		end
 
@@ -220,14 +162,9 @@ feature -- Resizing
 			-- Resize buffer so that it contains `n' characters.
 			-- Do not lose any previously entered characters.
 		do
-			if as_special /= Void then
-				area.resize (n + 1)
-				area.set_count (n + 1)
-				as_special := area.area
-			else
-				area.resize (n)
-				area.set_count (n)
-			end
+			area.resize (n + 1)
+			area.set_count (n + 1)
+			as_special := area.area
 		end
 
 feature {NONE} -- Implementation

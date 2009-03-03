@@ -89,15 +89,8 @@ feature -- Access
 
 	text_item (i: INTEGER): CHARACTER is
 			-- `i'-th character of last token read
-		local
-			l_yy_content_area: like yy_content_area
 		do
-			l_yy_content_area := yy_content_area
-			if l_yy_content_area /= Void then
-				Result := l_yy_content_area.item (yy_start + i - 1)
-			else
-				Result := yy_content.item (yy_start + i - 1)
-			end
+			Result := yy_content_area.item (yy_start + i - 1)
 		end
 
 	text_substring (s, e: INTEGER): STRING is
@@ -237,14 +230,8 @@ feature -- Element change
 		local
 			found: BOOLEAN
 			c: CHARACTER
-			l_yy_content_area: like yy_content_area
 		do
-			l_yy_content_area := yy_content_area
-			if l_yy_content_area /= Void then
-				c := l_yy_content_area.item (yy_end)
-			else
-				c := yy_content.item (yy_end)
-			end
+			c := yy_content_area.item (yy_end)
 			if c = yyEnd_of_buffer_character then
 					-- `yy_end' now points to the character we want
 					-- to return. If this occurs before the EOB characters,
@@ -269,12 +256,7 @@ feature -- Element change
 				end
 			end
 			if not found then
-				l_yy_content_area := yy_content_area
-				if l_yy_content_area /= Void then
-					last_character := l_yy_content_area.item (yy_end)
-				else
-					last_character := yy_content.item (yy_end)
-				end
+				last_character := yy_content_area.item (yy_end)
 				yy_end := yy_end + 1
 				yy_position := yy_position + 1
 				if last_character = yyNew_line_character then
@@ -458,16 +440,9 @@ feature {NONE} -- Implementation
 	yy_set_beginning_of_line is
 			-- Set `yy_at_beginning_of_line' according
 			-- to the current position in input source.
-		local
-			l_yy_content_area: like yy_content_area
 		do
 			if yy_end > yy_start then
-				l_yy_content_area := yy_content_area
-				if l_yy_content_area /= Void then
-					input_buffer.set_beginning_of_line (l_yy_content_area.item (yy_end - 1) = yyNew_line_character)
-				else
-					input_buffer.set_beginning_of_line (yy_content.item (yy_end - 1) = yyNew_line_character)
-				end
+				input_buffer.set_beginning_of_line (yy_content_area.item (yy_end - 1) = yyNew_line_character)
 			end
 		end
 
@@ -482,22 +457,14 @@ feature {NONE} -- Implementation
 			i, nb: INTEGER
 			a_line: INTEGER
 			c: CHARACTER
-			l_yy_content: like yy_content
-			l_yy_content_area: like yy_content_area
 		do
 			from
 				i := yy_end - a_column - 1
 				nb := yy_start + yy_more_len
-				l_yy_content := yy_content
-				l_yy_content_area := yy_content_area
 			until
 				i < nb
 			loop
-				if l_yy_content_area /= Void then
-					c := l_yy_content_area.item (i)
-				else
-					c := l_yy_content.item (i)
-				end
+				c := yy_content_area.item (i)
 				if c = yyNew_line_character then
 					a_line := a_line + 1
 				end
@@ -520,22 +487,14 @@ feature {NONE} -- Implementation
 			i, nb: INTEGER
 			a_column: INTEGER
 			c: CHARACTER
-			l_yy_content: like yy_content
-			l_yy_content_area: like yy_content_area
 		do
 			from
 				i := yy_end - 1
 				nb := yy_start + yy_more_len
-				l_yy_content := yy_content
-				l_yy_content_area := yy_content_area
 			until
 				i < nb
 			loop
-				if l_yy_content_area /= Void then
-					c := l_yy_content_area.item (i)
-				else
-					c := l_yy_content.item (i)
-				end
+				c := yy_content_area.item (i)
 				if c /= yyNew_line_character then
 					a_column := a_column + 1
 					i := i - 1
@@ -555,22 +514,14 @@ feature {NONE} -- Implementation
 			a_line, a_column: INTEGER
 			new_line_found: BOOLEAN
 			c: CHARACTER
-			l_yy_content: like yy_content
-			l_yy_content_area: like yy_content_area
 		do
-			l_yy_content := yy_content
-			l_yy_content_area := yy_content_area
 			from
 				i := yy_end - 1
 				nb := yy_start + yy_more_len
 			until
 				i < nb or new_line_found
 			loop
-				if l_yy_content_area /= Void then
-					c := l_yy_content_area.item (i)
-				else
-					c := l_yy_content.item (i)
-				end
+				c := yy_content_area.item (i)
 				if c = yyNew_line_character then
 					a_line := a_line + 1
 					new_line_found := True
@@ -583,11 +534,7 @@ feature {NONE} -- Implementation
 			until
 				i < nb
 			loop
-				if l_yy_content_area /= Void then
-					c := l_yy_content_area.item (i)
-				else
-					c := l_yy_content.item (i)
-				end
+				c := yy_content_area.item (i)
 				if c = yyNew_line_character then
 					a_line := a_line + 1
 				end
@@ -618,7 +565,7 @@ feature {NONE} -- Implementation
 	yy_content: KI_CHARACTER_BUFFER
 			-- Characters in `input_buffer'
 
-	yy_content_area: ?SPECIAL [CHARACTER]
+	yy_content_area: SPECIAL [CHARACTER]
 			-- Characters in `input_buffer';
 			-- More efficient than `yy_content' when not void;
 			-- Characters are indexed starting at 1
@@ -695,6 +642,7 @@ feature {NONE} -- Constants
 invariant
 
 	yy_content_not_void: yy_content /= Void
+	yy_content_area_not_void: yy_content_area /= Void
 	yy_line_positive: yy_line >= 1
 	yy_column_positive: yy_column >= 1
 	yy_position_positive: yy_position >= 1

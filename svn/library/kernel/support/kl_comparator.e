@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2002, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-07-20 21:27:20 +0200 (Sun, 20 Jul 2008) $"
-	revision: "$Revision: 6454 $"
+	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6595 $"
 
 deferred class KL_COMPARATOR [G]
 
