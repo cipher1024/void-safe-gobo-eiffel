@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2007, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-03-03 11:22:33 +0100 (Tue, 03 Mar 2009) $"
+	revision: "$Revision: 6598 $"
 
 class KL_AGENT_HASH_FUNCTION [G]
 
@@ -49,7 +49,7 @@ feature {NONE} -- Implementation
 
 invariant
 
-	hash_function_not_void: hash_agent /= Void
+	hash_agent_not_void: hash_agent /= Void
 --	hash_agent_arg_not_void: hash_agent can have a precondition which states that its open operand is not Void
 --	hash_agent_result_not_negative: hash_agent has a postcondition which says that Result >= 0
 

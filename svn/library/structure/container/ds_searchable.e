@@ -7,20 +7,14 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 1999-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-09-28 20:40:54 +0200 (Sun, 28 Sep 2008) $"
-	revision: "$Revision: 6526 $"
+	date: "$Date: 2009-03-02 23:02:37 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6597 $"
 
 deferred class DS_SEARCHABLE [G]
 
 inherit
 
 	DS_CONTAINER [G]
-
-	KL_IMPORTED_ANY_ROUTINES
-		undefine
-			copy,
-			is_equal
-		end
 
 feature -- Status report
 
@@ -37,8 +31,10 @@ feature -- Status report
 			-- Does container include Void?
 		local
 			v: ?G
+			l_current: ?DS_SEARCHABLE [?G]
 		do
-			if {l_current: DS_SEARCHABLE [?G]} Current then
+			l_current ?= Current
+			if l_current /= Void then
 				Result := l_current.has (v)
 			end
 		ensure
@@ -63,7 +59,7 @@ feature -- Status report
 		require
 			other_not_void: other /= Void
 		do
-			Result := ANY_.equal_objects (equality_tester, other.equality_tester)
+			Result := equality_tester ~ other.equality_tester
 		end
 
 	equality_tester_settable (a_tester: like equality_tester): BOOLEAN is

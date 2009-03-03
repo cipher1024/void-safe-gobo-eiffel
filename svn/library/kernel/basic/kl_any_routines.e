@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2005-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
-	revision: "$Revision: 6595 $"
+	date: "$Date: 2009-03-02 23:02:37 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6597 $"
 
 class KL_ANY_ROUTINES
 
@@ -41,15 +41,11 @@ feature -- Status report
 		do
 			if obj1 = obj2 then
 				Result := True
-			elseif obj1 = Void then
-				Result := False
-			elseif obj2 = Void then
-				Result := False
-			elseif same_types (obj1, obj2) then
-				Result := obj1.is_equal (obj2)
+			else
+				Result := obj1 ~ obj2
 			end
 		ensure
-			same_types: Result and (obj1 /= Void and obj2 /= Void) implies same_types (obj1, obj2)
+			definition: Result = (obj1 ~ obj2)
 		end
 
 feature -- Conversion

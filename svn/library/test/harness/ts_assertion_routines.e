@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Test Library"
 	copyright: "Copyright (c) 2000-2006, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
-	revision: "$Revision: 6590 $"
+	date: "$Date: 2009-03-02 23:02:37 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6597 $"
 
 deferred class TS_ASSERTION_ROUTINES
 
@@ -23,9 +23,6 @@ inherit
 		export {NONE} all end
 
 	KL_IMPORTED_INTEGER_ROUTINES
-		export {NONE} all end
-
-	KL_IMPORTED_ANY_ROUTINES
 		export {NONE} all end
 
 feature -- Access
@@ -119,7 +116,7 @@ feature {TS_TEST_HANDLER} -- Equality
 			l_condition: BOOLEAN
 		do
 			assertions.add_assertion
-			l_condition := ANY_.equal_objects (expected, actual)
+			l_condition := expected ~ actual
 			logger.report_assertion (a_tag, l_condition)
 			if not l_condition then
 				a_message := assert_equal_message (a_tag, expected, actual)
@@ -150,7 +147,7 @@ feature {TS_TEST_HANDLER} -- Equality
 			l_condition: BOOLEAN
 		do
 			assertions.add_assertion
-			l_condition := not ANY_.equal_objects (expected, actual)
+			l_condition := expected /~ actual
 			logger.report_assertion (a_tag, l_condition)
 			if not l_condition then
 				a_message := assert_not_equal_message (a_tag, expected, actual)
@@ -868,7 +865,7 @@ feature {TS_TEST_HANDLER} -- Containers
 				loop
 					expected_item := expected.item (i1)
 					actual_item := actual.item (i1)
-					if not ANY_.equal_objects (expected_item, actual_item) then
+					if expected_item /~ actual_item then
 						create new_tag.make (15)
 						new_tag.append_string (a_tag)
 						new_tag.append_string ("-item #")

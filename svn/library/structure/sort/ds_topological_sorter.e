@@ -112,9 +112,11 @@ feature -- Status report
 			-- Does container include Void?
 		local
 			v: ?G
+			l_current: ?DS_TOPOLOGICAL_SORTER [?G]
 		do
-			if {d: DS_TOPOLOGICAL_SORTER [?G]} Current then
-				Result := d.has (v)
+			l_current ?= Current
+			if l_current /= Void then
+				Result := l_current.has (v)
 			end
 		ensure
 			not_empty: Result implies not is_empty

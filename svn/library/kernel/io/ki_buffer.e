@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-03-02 18:28:36 +0100 (Mon, 02 Mar 2009) $"
-	revision: "$Revision: 6595 $"
+	date: "$Date: 2009-03-02 19:06:52 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6596 $"
 
 deferred class KI_BUFFER [G]
 
@@ -23,8 +23,8 @@ feature -- Access
 			r: ?G
 		do
 				-- TODO: This routine should be deferred, but there is
-				-- a bug with ISE Eiffel 5.1.5 and 5.2 in the generated
-				-- C code in finalized mode, and having this
+				-- a bug with ISE Eiffel 5.1.5 up to 6.3 in the generated
+				-- C code in finalized mode (ISE bug#15375), and having this
 				-- routine effective is a workaround.
 			check
 					-- Fooling the compiler.
@@ -51,8 +51,8 @@ feature -- Element change
 			i_small_enough: i <= count
 		do
 				-- TODO: This routine should be deferred, but there is
-				-- a bug with ISE Eiffel 5.1.5 and 5.2 in the generated
-				-- C code in finalized mode, and having this
+				-- a bug with ISE Eiffel 5.1.5 up to 6.3 in the generated
+				-- C code in finalized mode (ISE bug#15375), and having this
 				-- routine effective is a workaround.
 		ensure
 			inserted: item (i) = v

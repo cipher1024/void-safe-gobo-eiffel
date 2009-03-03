@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Parse Library"
 	copyright: "Copyright (c) 1999-2003, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-03-02 23:02:37 +0100 (Mon, 02 Mar 2009) $"
+	revision: "$Revision: 6597 $"
 
 class PR_FSM
 
@@ -20,8 +20,6 @@ inherit
 	KL_IMPORTED_STRING_ROUTINES
 
 	KL_IMPORTED_INTEGER_ROUTINES
-
-	KL_IMPORTED_ANY_ROUTINES
 
 create
 
@@ -283,7 +281,7 @@ feature -- Setting
 							if action_position /= Void then
 								an_action := a_position.error_action
 								other_action := action_position.error_action
-								if not ANY_.equal_objects (an_action, other_action) then
+								if an_action /~ other_action then
 									has_conflict := True
 								end
 								if an_action /= Void then
@@ -339,7 +337,7 @@ feature -- Setting
 						if action_position /= Void then
 							an_action := a_position.error_action
 							other_action := action_position.error_action
-							if not ANY_.equal_objects (an_action, other_action) then
+							if an_action /~ other_action then
 								has_conflict := True
 							end
 							if an_action /= Void then
@@ -433,7 +431,7 @@ feature -- Setting
 							if action_position /= Void then
 								an_action := a_position.error_action
 								other_action := action_position.error_action
-								if not ANY_.equal_objects (an_action, other_action) then
+								if an_action /~ other_action then
 									if conflicts = Void then
 										create conflicts.make (nb2)
 										conflicts.put_last (action_position)
@@ -493,7 +491,7 @@ feature -- Setting
 						if action_position /= Void then
 							an_action := a_position.error_action
 							other_action := action_position.error_action
-							if not ANY_.equal_objects (an_action, other_action) then
+							if an_action /~ other_action then
 								if conflicts = Void then
 									create conflicts.make (nb2)
 									conflicts.put_last (action_position)
