@@ -29,9 +29,9 @@
 			<option namespace="Kernel">
 			</option>
 			<file_rule>
-				<exclude>/unicode/uc_string.e$</exclude>
 				<exclude>/misc/kl_comparable.e$</exclude>
 				<exclude>/misc/kl_numeric.e$</exclude>
+				<exclude>/misc/kl_string.e$</exclude>
 			</file_rule>
 		</cluster>
 		<cluster name="lexical" location="svn\library\lexical\" recursive="true">
@@ -81,9 +81,10 @@
 				<exclude>/expat$</exclude>
 			</file_rule>
 		</cluster>
-		<cluster name="override" location="override\library\kernel" recursive="true">
+		<cluster name="override" location="override" recursive="true">
 			<file_rule>
-				<exclude>uc_character.e$</exclude>
+				<exclude>/generated/src$</exclude>
+				<exclude>/generated/library/test$</exclude>
 			</file_rule>
 		</cluster>
 	</target>

@@ -39,6 +39,7 @@
 				<exclude>/xslt/</exclude>
 			</file_rule>
 		</cluster>
+		<cluster name="override_generated" location="override\generated\library\xml" recursive="true"/>
 	</target>
 </system>
 
