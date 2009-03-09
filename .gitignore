@@ -12,7 +12,7 @@ svn/test/
 svn/library/tools/
 src/
 test/
-_
+_*/
 git/
 *.swp
 *.swo
