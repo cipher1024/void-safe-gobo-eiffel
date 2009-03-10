@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Parse Library"
 	copyright: "Copyright (c) 1999-2003, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-03-07 09:20:15 +0100 (Sat, 07 Mar 2009) $"
+	revision: "$Revision: 6604 $"
 
 class PR_TYPE
 
@@ -26,25 +26,35 @@ create
 
 	make,
 	make_generic,
-	make_anchored
+	make_labeled_tuple,
+	make_anchored,
+	make_like_current
 
 feature {NONE} -- Initialization
 
-	make (an_id: INTEGER; a_name: like name) is
+	make (an_id: INTEGER; a_type_mark: ?STRING; a_name: like name) is
 			-- Create a new type named `a_name'.
 		require
 			valid_id: id >= 0
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
+			a_type_mark_not_empty: a_type_mark /= Void implies not a_type_mark.is_empty
 		do
 			id := an_id
-			name := a_name
+			if a_type_mark = Void then
+				name := a_name
+			else
+				create name.make (a_type_mark.count + a_name.count + 1)
+				name.append_string (a_type_mark)
+				name.append_character (' ')
+				name.append_string (a_name)
+			end
 		ensure
 			id_set: id = an_id
-			name_set: name = a_name
+			name_set: a_type_mark = Void implies name = a_name
 		end
 
-	make_generic (an_id: INTEGER; a_name: like name; generics: DS_ARRAYED_LIST [PR_TYPE]) is
+	make_generic (an_id: INTEGER; a_type_mark: ?STRING; a_name: like name; generics: DS_ARRAYED_LIST [PR_TYPE]) is
 			-- Create a new generic type named `a_name' and generic
 			-- parameters `generics'.
 		require
@@ -53,47 +63,137 @@ feature {NONE} -- Initialization
 			a_name_long_enough: a_name.count > 0
 			generics_not_void: generics /= Void
 			no_void_generic_parameter: not generics.has_void
+			a_type_mark_not_empty: a_type_mark /= Void implies not a_type_mark.is_empty
 		local
 			i, nb: INTEGER
-			l_name: ?like name
 		do
-			id := an_id
 			if generics.is_empty then
-				l_name := a_name
+				make (an_id, a_type_mark, a_name)
 			else
-				create l_name.make (50)
-				l_name.append_string (a_name)
-				l_name.append_string (" [")
-				l_name.append_string (generics.item (1).name)
+				id := an_id
+				create name.make (50)
+				if a_type_mark /= Void then
+					name.append_string (a_type_mark)
+					name.append_character (' ')
+				end
+				name.append_string (a_name)
+				name.append_string (" [")
+				name.append_string (generics.item (1).name)
 				nb := generics.count
 				from
 					i := 2
 				until
 					i > nb
 				loop
-					l_name.append_string (", ")
-					l_name.append_string (generics.item (i).name)
+					name.append_string (", ")
+					name.append_string (generics.item (i).name)
 					i := i + 1
 				end
-				l_name.append_character (']')
+				name.append_character (']')
 			end
-			name := l_name
 		ensure
 			id_set: id = an_id
 		end
 
-	make_anchored (an_id: INTEGER; a_name: like name) is
+	make_labeled_tuple (an_id: INTEGER; a_type_mark: ?STRING; a_name: like name; generics: DS_ARRAYED_LIST [PR_LABELED_TYPE]) is
+			-- Create a new labeled tuple type named `a_name' and generic
+			-- parameters `generics'.
+		require
+			valid_id: id >= 0
+			a_name_not_void: a_name /= Void
+			a_name_long_enough: a_name.count > 0
+			generics_not_void: generics /= Void
+			no_void_generic_parameter: not generics.has_void
+			a_type_mark_not_empty: a_type_mark /= Void implies not a_type_mark.is_empty
+		local
+			i, nb: INTEGER
+			l_labeled_type: PR_LABELED_TYPE
+			l_labels: DS_ARRAYED_LIST [STRING]
+			j, nb2: INTEGER
+		do
+			if generics.is_empty then
+				make (an_id, a_type_mark, a_name)
+			else
+				id := an_id
+				create name.make (50)
+				if a_type_mark /= Void then
+					name.append_string (a_type_mark)
+					name.append_character (' ')
+				end
+				name.append_string (a_name)
+				name.append_string (" [")
+				nb := generics.count
+				from
+					i := 1
+				until
+					i > nb
+				loop
+					if i /= 1 then
+						name.append_string ("; ")
+					end
+					l_labeled_type := generics.item (i)
+					l_labels := l_labeled_type.labels
+					nb2 := l_labels.count
+					from
+						j := 1
+					until
+						j > nb2
+					loop
+						if j /= 1 then
+							name.append_string (", ")
+						end
+						name.append_string (l_labels.item (j))
+						j := j + 1
+					end
+					name.append_string (": ")
+					name.append_string (l_labeled_type.type.name)
+					i := i + 1
+				end
+				name.append_character (']')
+			end
+		ensure
+			id_set: id = an_id
+		end
+
+	make_anchored (an_id: INTEGER; a_type_mark: ?STRING; a_name: like name) is
 			-- Create a new anchored type
 			-- of the form "like `a_name'".
 		require
 			valid_id: id >= 0
 			a_name_not_void: a_name /= Void
 			a_name_long_enough: a_name.count > 0
+			a_type_mark_not_empty: a_type_mark /= Void implies not a_type_mark.is_empty
 		do
 			id := an_id
-			create name.make (a_name.count + 5)
-			name.append_string ("like ")
-			name.append_string (a_name)
+			if a_type_mark /= Void then
+				create name.make (a_type_mark.count + a_name.count + 6)
+				name.append_string (a_type_mark)
+				name.append_character (' ')
+				name.append_string ("like ")
+				name.append_string (a_name)
+			else
+				create name.make (a_name.count + 5)
+				name.append_string ("like ")
+				name.append_string (a_name)
+			end
+		ensure
+			id_set: id = an_id
+		end
+
+	make_like_current (an_id: INTEGER; a_type_mark: ?STRING) is
+			-- Create a new  type of the form "like Current".
+		require
+			valid_id: id >= 0
+			a_type_mark_not_empty: a_type_mark /= Void implies not a_type_mark.is_empty
+		do
+			id := an_id
+			if a_type_mark /= Void then
+				create name.make (a_type_mark.count + 13)
+				name.append_string (a_type_mark)
+				name.append_string (" like Current")
+			else
+				name := "like Current"
+			end
 		ensure
 			id_set: id = an_id
 		end
@@ -108,13 +208,22 @@ feature -- Access
 	name: STRING
 			-- Type name
 
+	alias_name: ?STRING
+			-- Name to be used in `last_value_name', typically "last_<alias_name>_value".
+			-- Use `name' instead if `alias_name' is Void or empty.
+
 	last_value_name: STRING is
 			-- Name of last value entity
 		local
+			l_name: ?STRING
 			i, nb: INTEGER
 			c: CHARACTER
 		do
-			nb := name.count
+			l_name := alias_name
+			if l_name = Void or else l_name.is_empty then
+				l_name := name
+			end
+			nb := l_name.count
 			create Result.make (nb + 11)
 			Result.append_string ("last_")
 			from
@@ -122,7 +231,7 @@ feature -- Access
 			until
 				i > nb
 			loop
-				c := name.item (i)
+				c := l_name.item (i)
 				inspect c
 				when '0' .. '9', 'a' .. 'z', '_' then
 					Result.append_character (c)
@@ -146,6 +255,16 @@ feature -- Access
 			-- Hash value
 		do
 			Result := id
+		end
+
+feature -- Setting
+
+	set_alias_name (a_name: like alias_name) is
+			-- Set `alias_name' to `a_name'.
+		do
+			alias_name := a_name
+		ensure
+			alias_name_set: alias_name = a_name
 		end
 
 feature -- Output

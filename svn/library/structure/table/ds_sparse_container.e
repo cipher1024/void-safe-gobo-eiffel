@@ -56,7 +56,7 @@ feature {NONE} -- Initialization
 
 feature -- Access
 
-	found_item: ?G is
+	found_item: G is
 			-- Item found by last call to `search'
 		require
 			item_found: found

@@ -8,8 +8,8 @@ indexing
 	library: "Gobo Eiffel Parse Library"
 	copyright: "Copyright (c) 1999, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-03-31 00:05:10 +0200 (Sat, 31 Mar 2007) $"
-	revision: "$Revision: 5933 $"
+	date: "$Date: 2009-03-07 09:20:15 +0100 (Sat, 07 Mar 2009) $"
+	revision: "$Revision: 6604 $"
 
 class PR_YACC_SCANNER
 
@@ -70,12 +70,56 @@ ESC					\\(.|[0-7]{1,3}|x[0-9a-f]{1,2})
 						last_token := T_INTEGER
 						last_string_value := text
 					}
+	[iI][nN][tT][eE][gG][eE][rR]_8	{
+						last_token := T_INTEGER_8
+						last_string_value := text
+					}
+	[iI][nN][tT][eE][gG][eE][rR]_16	{
+						last_token := T_INTEGER_16
+						last_string_value := text
+					}
+	[iI][nN][tT][eE][gG][eE][rR]_32	{
+						last_token := T_INTEGER_32
+						last_string_value := text
+					}
+	[iI][nN][tT][eE][gG][eE][rR]_64	{
+						last_token := T_INTEGER_64
+						last_string_value := text
+					}
+	[nN][aA][tT][uU][rR][aA][lL]	{
+						last_token := T_NATURAL
+						last_string_value := text
+					}
+	[nN][aA][tT][uU][rR][aA][lL]_8	{
+						last_token := T_NATURAL_8
+						last_string_value := text
+					}
+	[nN][aA][tT][uU][rR][aA][lL]_16	{
+						last_token := T_NATURAL_16
+						last_string_value := text
+					}
+	[nN][aA][tT][uU][rR][aA][lL]_32	{
+						last_token := T_NATURAL_32
+						last_string_value := text
+					}
+	[nN][aA][tT][uU][rR][aA][lL]_64	{
+						last_token := T_NATURAL_64
+						last_string_value := text
+					}
 	[bB][oO][oO][lL][eE][aA][nN]	{
 						last_token := T_BOOLEAN
 						last_string_value := text
 					}
 	[rR][eE][aA][lL]	{
 						last_token := T_REAL
+						last_string_value := text
+					}
+	[rR][eE][aA][lL]_32	{
+						last_token := T_REAL_32
+						last_string_value := text
+					}
+	[rR][eE][aA][lL]_64	{
+						last_token := T_REAL_64
 						last_string_value := text
 					}
 	[dD][oO][uU][bB][lL][eE]	{
@@ -86,12 +130,52 @@ ESC					\\(.|[0-7]{1,3}|x[0-9a-f]{1,2})
 						last_token := T_CHARACTER
 						last_string_value := text
 					}
+	[cC][hH][aA][rR][aA][cC][tT][eE][rR]_8	{
+						last_token := T_CHARACTER_8
+						last_string_value := text
+					}
+	[cC][hH][aA][rR][aA][cC][tT][eE][rR]_32	{
+						last_token := T_CHARACTER_32
+						last_string_value := text
+					}
 	[pP][oO][iI][nN][tT][eE][rR]	{
 						last_token := T_POINTER
 						last_string_value := text
 					}
+	[tT][uU][pP][lL][eE]	{
+						last_token := T_TUPLE
+						last_string_value := text
+					}
 	[lL][iI][kK][eE]	{
 						last_token := T_LIKE
+						last_string_value := text
+					}
+	[cC][uU][rR][rR][eE][nN][tT]	{
+						last_token := T_CURRENT
+						last_string_value := text
+					}
+	[eE][xX][pP][aA][nN][dD][eE][dD]	{
+						last_token := T_EXPANDED
+						last_string_value := text
+					}
+	[rR][eE][fF][eE][rR][eE][nN][cC][eE]	{
+						last_token := T_REFERENCE
+						last_string_value := text
+					}
+	[sS][eE][pP][aA][rR][aA][tT][eE]	{
+						last_token := T_SEPARATE
+						last_string_value := text
+					}
+	[aA][tT][tT][aA][cC][hH][eE][dD]	{
+						last_token := T_ATTACHED
+						last_string_value := text
+					}
+	[dD][eE][tT][aA][cC][hH][aA][bB][lL][eE]	{
+						last_token := T_DETACHABLE
+						last_string_value := text
+					}
+	[aA][sS]	{
+						last_token := T_AS
 						last_string_value := text
 					}
 	[a-z][a-z0-9_]*	{
@@ -213,19 +297,19 @@ ESC					\\(.|[0-7]{1,3}|x[0-9a-f]{1,2})
 					if start_condition = ERROR_ACTION then
 						report_invalid_dollar_dollar_error
 						action_buffer.append_string ("$$")
-					elseif {l_rule_0: like rule} rule then
-						process_dollar_dollar (l_rule_0)
+					elseif {l_rule_1: like rule} rule then
+						process_dollar_dollar (l_rule_1)
 					else
 						action_buffer.append_string ("$$")
 					end
 				}
 	\$[0-9]+	{
 					if text_substring (2, text_count).is_integer then
-						if {l_rule_1: like rule} rule then
+						if {l_rule_2: like rule} rule then						
 							if start_condition = ERROR_ACTION then
-								process_dollar_n (text_substring (2, text_count).to_integer, last_error - 1, l_rule_1)
+								process_dollar_n (text_substring (2, text_count).to_integer, last_error - 1, l_rule_2)
 							else
-								process_dollar_n (text_substring (2, text_count).to_integer, l_rule_1.rhs.count, l_rule_1)
+								process_dollar_n (text_substring (2, text_count).to_integer, l_rule_2.rhs.count, l_rule_2)
 							end
 						else
 							action_buffer.append_string (text)
@@ -237,11 +321,11 @@ ESC					\\(.|[0-7]{1,3}|x[0-9a-f]{1,2})
 				}
 	\$\-[0-9]+	{
 					if text_substring (3, text_count).is_integer then
-						if {l_rule_2: like rule} rule then
+						if {l_rule_3: like rule} rule then						
 							if start_condition = ERROR_ACTION then
-								process_dollar_n (- text_substring (3, text_count).to_integer, last_error - 1, l_rule_2)
+								process_dollar_n (- text_substring (3, text_count).to_integer, last_error - 1, l_rule_3)
 							else
-								process_dollar_n (- text_substring (3, text_count).to_integer, l_rule_2.rhs.count, l_rule_2)
+								process_dollar_n (- text_substring (3, text_count).to_integer, l_rule_3.rhs.count, l_rule_3)
 							end
 						else
 							action_buffer.append_string (text)

@@ -248,7 +248,7 @@ feature {NONE} -- Error handling
 		end
 
 	report_invalid_string_token_error (a_string: STRING) is
-			-- Report that a literal string token must
+			-- Report that a literal string token must 
 			-- have at least two characters.
 		require
 			a_string_not_void: a_string /= Void
