@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Parse Library"
 	copyright: "Copyright (c) 1999-2003, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-03-07 09:20:15 +0100 (Sat, 07 Mar 2009) $"
-	revision: "$Revision: 6604 $"
+	date: "$Date: 2009-03-11 13:44:55 +0100 (Wed, 11 Mar 2009) $"
+	revision: "$Revision: 6606 $"
 
 class PR_TYPE
 
@@ -244,8 +244,8 @@ feature -- Access
 			end
 			Result.append_string ("_value")
 		ensure
-			last_value_name_not_void: last_value_name /= Void
-			last_value_name_not_empty: last_value_name.count > 0
+			last_value_name_not_void: Result /= Void
+			last_value_name_not_empty: Result.count > 0
 		end
 
 	id: INTEGER

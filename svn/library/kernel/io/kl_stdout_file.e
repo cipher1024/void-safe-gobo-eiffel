@@ -10,8 +10,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2001-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-03-11 14:13:29 +0100 (Wed, 11 Mar 2009) $"
+	revision: "$Revision: 6607 $"
 
 class KL_STDOUT_FILE
 
@@ -29,6 +29,14 @@ inherit
 			put_character as old_put_character,
 			put_string as old_put_string,
 			put_integer as old_put_integer,
+			put_integer_8 as old_put_integer_8,
+			put_integer_16 as old_put_integer_16,
+			put_integer_32 as old_put_integer_32,
+			put_integer_64 as old_put_integer_64,
+			put_natural_8 as old_put_natural_8,
+			put_natural_16 as old_put_natural_16,
+			put_natural_32 as old_put_natural_32,
+			put_natural_64 as old_put_natural_64,
 			put_new_line as old_put_new_line,
 			is_open_write as old_is_open_write,
 			flush as old_flush,
