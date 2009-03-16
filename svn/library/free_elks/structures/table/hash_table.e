@@ -10,10 +10,10 @@ note
 		]"
 
 	status: "See notice at end of class."
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-14 15:13:03 +0100 (Sat, 14 Mar 2009) $"
+	revision: "$Revision: 6612 $"
 
-class HASH_TABLE [G, K -> HASHABLE] inherit
+class HASH_TABLE [G, K -> ?HASHABLE] inherit
 
 	UNBOUNDED [?G]
 		rename
@@ -1409,7 +1409,7 @@ note
 			end
 		]"
 	library:	"EiffelBase: Library of reusable components for Eiffel."
-	copyright:	"Copyright (c) 1984-2008, Eiffel Software and others"
+	copyright:	"Copyright (c) 1984-2009, Eiffel Software and others"
 	license:	"Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"
 	source: "[
 			 Eiffel Software

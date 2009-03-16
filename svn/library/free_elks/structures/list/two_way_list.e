@@ -9,8 +9,8 @@ note
 	representation: linked;
 	access: index, cursor, membership;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-14 15:13:03 +0100 (Sat, 14 Mar 2009) $"
+	revision: "$Revision: 6612 $"
 
 class TWO_WAY_LIST [G] inherit
 
@@ -274,10 +274,11 @@ feature -- Element change
 				other_first_element := other.first_element
 				other_last_element := other.last_element
 				other_count := other.count
-					check
-						other_first_element /= Void
-						other_last_element /= Void
-					end
+				other.wipe_out
+				check
+					other_first_element /= Void
+					other_last_element /= Void
+				end
 				if is_empty then
 					last_element := other_last_element
 					first_element := other_first_element
@@ -301,7 +302,6 @@ feature -- Element change
 					end
 				end
 				count := count + other_count
-				other.wipe_out
 			end
 		end
 

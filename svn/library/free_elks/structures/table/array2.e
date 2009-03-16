@@ -10,8 +10,8 @@ note
 	access: index, row_and_column, membership;
 	size: resizable;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-14 15:13:03 +0100 (Sat, 14 Mar 2009) $"
+	revision: "$Revision: 6612 $"
 
 class ARRAY2 [G] inherit
 
@@ -124,6 +124,8 @@ feature -- Removal
 		do
 			height := 0
 			width := 0
+			lower := 1
+			upper := 0
 			discard_items
 		end
 

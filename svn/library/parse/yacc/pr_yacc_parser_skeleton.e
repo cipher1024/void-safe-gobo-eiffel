@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Parse Library"
 	copyright: "Copyright (c) 1999-2003, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-03-15 16:37:07 +0100 (Sun, 15 Mar 2009) $"
+	revision: "$Revision: 6615 $"
 
 deferred class PR_YACC_PARSER_SKELETON
 
@@ -794,20 +794,22 @@ feature {NONE} -- Factory
 			type_not_void: Result /= Void
 		end
 
-	new_labeled_type (a_labels: ?DS_ARRAYED_LIST [STRING]; a_type: ?PR_TYPE): PR_LABELED_TYPE is
+	new_labeled_type (a_label: ?STRING; a_type: ?PR_TYPE): PR_LABELED_TYPE is
 			-- New labeled type
 			--| NOTE: `a_labels,a_type' should be attached,
 			--| but are detachable for easier use of geyacc in void-safe mode			
 		require
-			a_labels_not_void: a_labels /= Void
-			a_labels_not_empty: not a_labels.is_empty
-			no_void_label: not a_labels.has_void
+			a_label_not_void: a_label /= Void
 			a_type_not_void: a_type /= Void
+		local
+			l_labels: DS_ARRAYED_LIST [STRING]
 		do
-			create Result.make (a_labels, a_type)
+			create l_labels.make (5)
+			l_labels.put_first (a_label)
+			create Result.make (l_labels, a_type)
 		ensure
 			type_not_void: Result /= Void
-			labels_set: Result.labels = a_labels
+			labels_set: Result.labels.first = a_label
 			type_set: Result.type = a_type
 		end
 

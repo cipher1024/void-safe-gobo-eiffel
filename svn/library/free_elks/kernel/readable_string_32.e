@@ -6,8 +6,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-02-07 16:50:43 +0100 (Sat, 07 Feb 2009) $"
-	revision: "$Revision: 6583 $"
+	date: "$Date: 2009-03-14 15:13:03 +0100 (Sat, 14 Mar 2009) $"
+	revision: "$Revision: 6612 $"
 
 deferred class
 	READABLE_STRING_32
@@ -21,7 +21,7 @@ inherit
 		end
 
 convert
-	to_cil: {SYSTEM_STRING},
+	to_cil: {SYSTEM_STRING, ?SYSTEM_STRING},
 	as_string_8: {READABLE_STRING_8, STRING_8},
 	as_string_32: {STRING_32}
 
@@ -106,7 +106,7 @@ feature {NONE} -- Initialization
 			make_from_c (c_string)
 		end
 
-	make_from_cil (a_system_string: SYSTEM_STRING)
+	make_from_cil (a_system_string: ?SYSTEM_STRING)
 			-- Initialize Current with `a_system_string'.
 		require
 			is_dotnet: {PLATFORM}.is_dotnet

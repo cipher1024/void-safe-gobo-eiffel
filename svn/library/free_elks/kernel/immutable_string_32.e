@@ -6,8 +6,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-23 21:06:53 +0100 (Fri, 23 Jan 2009) $"
-	revision: "$Revision: 6576 $"
+	date: "$Date: 2009-03-14 15:13:03 +0100 (Sat, 14 Mar 2009) $"
+	revision: "$Revision: 6612 $"
 
 class
 	IMMUTABLE_STRING_32
@@ -211,8 +211,6 @@ feature -- Elment change
 
 	shared_substring (start_index, end_index: INTEGER_32): like Current
 			-- <Precursor>
-		local
-			a: like area
 		do
 			if (1 <= start_index) and (start_index <= end_index) and (end_index <= count) then
 				create Result.make_from_area_and_bounds (area, area_lower + start_index - 1, end_index - start_index + 1)

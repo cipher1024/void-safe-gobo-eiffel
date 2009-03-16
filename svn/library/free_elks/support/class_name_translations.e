@@ -13,8 +13,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 2005-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-02-07 16:50:43 +0100 (Sat, 07 Feb 2009) $"
-	revision: "$Revision: 6583 $"
+	date: "$Date: 2009-03-14 15:13:03 +0100 (Sat, 14 Mar 2009) $"
+	revision: "$Revision: 6612 $"
 
 class CLASS_NAME_TRANSLATIONS
 
@@ -31,7 +31,6 @@ inherit
 		end
 
 create
-
 	default_create
 
 feature -- Initialization

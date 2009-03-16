@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Utility Library"
 	copyright: "Copyright (c) 2006-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-02-26 17:41:20 +0100 (Thu, 26 Feb 2009) $"
-	revision: "$Revision: 6589 $"
+	date: "$Date: 2009-03-14 14:12:37 +0100 (Sat, 14 Mar 2009) $"
+	revision: "$Revision: 6611 $"
 
 class UT_SHARED_ISE_VERSIONS
 
@@ -230,6 +230,15 @@ feature -- Access
 			create Result.make (6, 4, 7, 6592)
 		ensure
 			ise_6_4_7_6592_not_void: Result /= Void
+		end
+
+	ise_6_4_7_7252: UT_VERSION is
+			-- ISE 6.4.7.7252
+			-- First release that accepts keywords 'attached' and 'detachable'.
+		once
+			create Result.make (6, 4, 7, 7252)
+		ensure
+			ise_6_4_7_7252_not_void: Result /= Void
 		end
 
 	ise_6_4_latest: UT_VERSION is
