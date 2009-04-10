@@ -4,8 +4,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 deferred class FILE inherit
 
@@ -1609,7 +1609,7 @@ feature {NONE} -- Implementation
 			create last_string.make (default_last_string_size.max (a_min_size))
 		ensure
 			last_string_attached: last_string /= Void
-			capacity_set: {l: like last_string} last_string and then l.capacity >= a_min_size
+			capacity_set: attached last_string as l and then l.capacity >= a_min_size
 		end
 
 	default_last_string_size: INTEGER = 256

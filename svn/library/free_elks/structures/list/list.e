@@ -8,8 +8,8 @@ note
 	names: list, sequence;
 	access: index, cursor, membership;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 deferred class LIST [G] inherit
 
@@ -33,8 +33,8 @@ feature -- Comparison
 						(count = other.count)
 				if Result and not is_empty then
 					if
-						{c1: CURSOR} cursor and then
-						{c2: CURSOR} other.cursor
+						attached {CURSOR} cursor as c1 and then
+						attached {CURSOR} other.cursor as c2
 					then
 						from
 							start

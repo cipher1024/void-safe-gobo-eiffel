@@ -3,8 +3,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 class
 	NATURAL_64_REF
@@ -122,11 +122,11 @@ feature -- Status report
 	exponentiable (other: NUMERIC): BOOLEAN
 			-- May current object be elevated to the power `other'?
 		do
-			if {integer_value: INTEGER_32_REF} other then
+			if attached {INTEGER_32_REF} other as integer_value then
 				Result := integer_value.item >= 0 or item /= 0
-			elseif {real_value: REAL_32_REF} other then
+			elseif attached {REAL_32_REF} other as real_value then
 				Result := real_value.item >= 0.0 or item /= 0
-			elseif {double_value: REAL_64_REF} other then
+			elseif attached {REAL_64_REF} other as double_value then
 				Result := double_value.item >= 0.0 or item /= 0
 			end
 		ensure then

@@ -9,8 +9,8 @@ note
 	representation: recursive;
 	access: cursor, membership;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 deferred class DYNAMIC_TREE [G] inherit
 
@@ -21,7 +21,7 @@ deferred class DYNAMIC_TREE [G] inherit
 
 feature -- Access
 
-	parent: ?DYNAMIC_TREE [G]
+	parent: detachable DYNAMIC_TREE [G]
 			-- Parent of current node.
 
 feature -- Status report
@@ -153,7 +153,7 @@ feature -- Conversion
 			-- Right child becomes right sibling.
 			-- Any right child of `b' is ignored.
 		local
-			current_node: ?BINARY_TREE [G]
+			current_node: detachable BINARY_TREE [G]
 			c: like child
 		do
 			replace (b.item)
@@ -241,7 +241,7 @@ feature {DYNAMIC_TREE} -- Implementation
 			-- Fill children with children of `other'.
 		local
 			c: like child
-			o: ?TREE [G]
+			o: detachable TREE [G]
 		do
 			from
 				other.child_start

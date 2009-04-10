@@ -9,8 +9,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 class
 	STRING_SEARCHER
@@ -234,7 +234,7 @@ feature {NONE} -- Implementation: Access
 	deltas: SPECIAL [INTEGER]
 			-- Record shifting deltas.
 
-	deltas_array: ?SPECIAL [like deltas]
+	deltas_array: detachable SPECIAL [like deltas]
 			-- Record shifting deltas for fuzzy search.
 
 feature {NONE} -- Implementation
@@ -304,7 +304,7 @@ feature {NONE} -- Implementation
 			deltas_array := l_deltas_array
 		ensure
 			deltas_array_not_void: deltas_array /= Void
-			deltas_array_count_set:  {delta: SPECIAL [like deltas]} deltas_array and then delta.count = fuzzy + 1
+			deltas_array_count_set:  attached {SPECIAL [like deltas]} deltas_array as delta and then delta.count = fuzzy + 1
 		end
 
 invariant

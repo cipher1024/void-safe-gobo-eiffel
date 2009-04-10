@@ -7,8 +7,8 @@ note
 	names: traversable_subset, set, subset;
 	access: sequential;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 deferred class TRAVERSABLE_SUBSET [G] inherit
 
@@ -104,7 +104,7 @@ feature -- Element change
 		local
 			l: LINEAR [G]
 		do
-			if {lin_rep: LINEAR [G]} other then
+			if attached {LINEAR [G]} other as lin_rep then
 				l := lin_rep
 			else
 					-- `other' is not a descendant of LINEAR, therefore  we

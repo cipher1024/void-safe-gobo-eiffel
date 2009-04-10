@@ -9,8 +9,8 @@ note
 	representation: recursive, array;
 	access: cursor, membership;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 class
 	BINARY_TREE [G]
@@ -53,7 +53,7 @@ feature -- Initialization
 
 feature -- Access
 
-	parent: ?BINARY_TREE [G]
+	parent: detachable BINARY_TREE [G]
 			-- Parent of current node
 
 	child_index: INTEGER
@@ -543,7 +543,7 @@ feature {NONE} -- Implementation
 		local
 			c: like left_child
 		do
-			if {l_other: like Current} other then
+			if attached {like Current} other as l_other then
 				if not l_other.is_leaf then
 					c := l_other.left_child
 					if c /= Void then

@@ -10,8 +10,8 @@ note
 	access: cursor, membership;
 	size: resizable;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 class COMPACT_CURSOR_TREE [G] inherit
 
@@ -168,7 +168,7 @@ feature -- Status report
 	valid_cursor (p: CURSOR): BOOLEAN
 			-- Can the cursor be moved to position `p'?
 		do
-			if {temp: COMPACT_TREE_CURSOR} p then
+			if attached {COMPACT_TREE_CURSOR} p as temp then
 				Result := (first_child_table.item (temp.active) /= Removed_mark)
 			end
 		end
@@ -315,7 +315,7 @@ feature -- Cursor movement
 	go_to (p: CURSOR)
 			-- Move cursor to position `p'.
 		do
-			if {temp: COMPACT_TREE_CURSOR} p then
+			if attached {COMPACT_TREE_CURSOR} p as temp then
 				active := temp.active
 				after := temp.after
 				before := temp.before

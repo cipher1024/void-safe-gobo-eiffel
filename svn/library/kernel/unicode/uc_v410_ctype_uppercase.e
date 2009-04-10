@@ -9,8 +9,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2005, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-04-18 20:08:40 +0200 (Fri, 18 Apr 2008) $"
-	revision: "$Revision: 6359 $"
+	date: "$Date: 2009-04-01 18:37:49 +0200 (mer., 01 avr. 2009) $"
+	revision: "$Revision: 6623 $"
 
 class UC_V410_CTYPE_UPPERCASE
 
@@ -796,7 +796,7 @@ feature {NONE} -- Implementation
 			Result.put (upper_code_plane_0_segment_255, 255)
 		ensure
 			result_not_void: Result /= Void
-			sub_arrays_not_void: True -- all items are non-Void
+			sub_arrays_not_void: True --not Result.has (Void)
 		end
 
 	upper_code_plane_1_segment_4: ARRAY [INTEGER] is
@@ -1096,7 +1096,7 @@ feature {NONE} -- Implementation
 			Result.put (empty_upper_code_segment, 255)
 		ensure
 			result_not_void: Result /= Void
-			sub_arrays_not_void: True -- all items are non-Void
+			sub_arrays_not_void: True --not Result.has (Void)
 		end
 
 	empty_upper_code_plane: SPECIAL [ARRAY [INTEGER]] is
@@ -1361,7 +1361,7 @@ feature {NONE} -- Implementation
 			Result.put (empty_upper_code_segment, 255)
 		ensure
 			result_not_void: Result /= Void
-			sub_arrays_not_void: True -- all items are non-Void
+			sub_arrays_not_void: True --not Result.has (Void)
 		end
 
 	upper_codes: SPECIAL [SPECIAL [ARRAY [INTEGER]]] is

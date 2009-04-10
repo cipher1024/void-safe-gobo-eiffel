@@ -3,8 +3,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 deferred class IO_MEDIUM
 
@@ -18,7 +18,7 @@ inherit
 
 feature -- Access
 
-	name: ?STRING
+	name: detachable STRING
 			-- Medium name
 		deferred
 		end
@@ -100,7 +100,7 @@ feature -- Status report
 	last_character: CHARACTER
 			-- Last character read by `read_character'
 
-	last_string: ?STRING
+	last_string: detachable STRING
 			-- Last string read
 
 	last_integer: INTEGER
@@ -503,7 +503,7 @@ feature -- Obsolete
 			Result := last_character
 		end
 
-	laststring: ?STRING
+	laststring: detachable STRING
 			-- Last string read
 		do
 			Result := last_string

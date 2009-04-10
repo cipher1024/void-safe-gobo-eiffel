@@ -2,8 +2,8 @@ note
 	description: "Cursors for two way lists."
 	legal: "See notice at end of class."
 	status: "See notice at end of class."
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 class
 	TWO_WAY_LIST_CURSOR [G]
@@ -19,7 +19,7 @@ create
 
 feature {TWO_WAY_LIST} -- Implementation
 
-	active: ?BI_LINKABLE [G];
+	active: detachable BI_LINKABLE [G];
 			-- Current element in linked list
 
 note

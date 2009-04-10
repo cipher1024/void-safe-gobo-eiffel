@@ -6,8 +6,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 2005-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-02-07 16:50:43 +0100 (Sat, 07 Feb 2009) $"
-	revision: "$Revision: 6583 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 
 class EXECUTION_ENVIRONMENT
@@ -33,7 +33,7 @@ feature -- Access
 	default_shell: STRING
 			-- Default shell
 		local
-			s: ?STRING
+			s: detachable STRING
 		once
 			s := get ("SHELL")
 			if s = Void then
@@ -43,7 +43,7 @@ feature -- Access
 			end
 		end
 
-	get (s: STRING): ?STRING
+	get (s: STRING): detachable STRING
 			-- Value of `s' if it is an environment variable and has been set;
 			-- void otherwise.
 		require
@@ -61,7 +61,7 @@ feature -- Access
 			end
 		end
 
-	home_directory_name: ?STRING
+	home_directory_name: detachable STRING
 			-- Directory name corresponding to the home directory.
 		require
 			home_directory_supported: Operating_environment.home_directory_supported
@@ -85,7 +85,7 @@ feature -- Access
 		local
 			l_ptr: POINTER
 			i: INTEGER
-			l_curr_var: ?TUPLE [value: STRING; key: STRING]
+			l_curr_var: detachable TUPLE [value: STRING; key: STRING]
 		do
 			create Result.make (40)
 			from
@@ -225,7 +225,7 @@ feature {NONE} -- Implementation
 			]"
 		end
 
-	separated_variables (a_var: STRING): ?TUPLE [value: STRING; key: STRING]
+	separated_variables (a_var: STRING): detachable TUPLE [value: STRING; key: STRING]
 			-- Given an environment variable `a_var' in form of "key=value",
 			-- return separated key and value.
 			-- Return Void if `a_var' is in incorrect format.
@@ -292,7 +292,7 @@ feature {NONE} -- External
 			"eif_system_asynchronous"
 		end
 
-	eif_home_directory_name: ?STRING
+	eif_home_directory_name: detachable STRING
 			-- Directory name corresponding to the home directory
 		external
 			"C use %"eif_path_name.h%""

@@ -12,40 +12,40 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 class
 	DECLARATOR
 
 feature {NONE} -- Implementation
 
-	s1: ?SPECIAL [INTEGER]
+	s1: detachable SPECIAL [INTEGER]
 
-	s1_2: ?SPECIAL [INTEGER_8]
+	s1_2: detachable SPECIAL [INTEGER_8]
 
-	s1_3: ?SPECIAL [INTEGER_16]
+	s1_3: detachable SPECIAL [INTEGER_16]
 
-	s1_4: ?SPECIAL [INTEGER_64]
+	s1_4: detachable SPECIAL [INTEGER_64]
 
-	s2: ?SPECIAL [REAL]
+	s2: detachable SPECIAL [REAL]
 
-	s3: ?SPECIAL [DOUBLE]
+	s3: detachable SPECIAL [DOUBLE]
 
-	s4: ?SPECIAL [BOOLEAN]
+	s4: detachable SPECIAL [BOOLEAN]
 
-	s5: ?SPECIAL [CHARACTER]
+	s5: detachable SPECIAL [CHARACTER]
 
-	s6: ?SPECIAL [POINTER]
+	s6: detachable SPECIAL [POINTER]
 
-	s7: ?SPECIAL [ANY]
+	s7: detachable SPECIAL [ANY]
 
-	s8: ?SPECIAL [NATURAL_8]
+	s8: detachable SPECIAL [NATURAL_8]
 
-	s8_2: ?SPECIAL [NATURAL_16]
+	s8_2: detachable SPECIAL [NATURAL_16]
 
-	s8_3: ?SPECIAL [NATURAL_32]
+	s8_3: detachable SPECIAL [NATURAL_32]
 
-	s8_4: ?SPECIAL [NATURAL_64]
+	s8_4: detachable SPECIAL [NATURAL_64]
 
 end

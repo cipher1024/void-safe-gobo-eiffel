@@ -3,8 +3,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2006, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 class UNIX_FILE_INFO inherit
 
@@ -114,7 +114,7 @@ feature -- Access
 			Result := file_group (group_id)
 		end
 
-	file_name: ?STRING
+	file_name: detachable STRING
 			-- File name to which information applies
 
 feature -- Status report
@@ -221,7 +221,7 @@ feature -- Status report
 			file_name_attached: file_name /= Void
 		local
 			ext_name: ANY
-			f: ?STRING
+			f: detachable STRING
 		do
 			f := file_name
 			if f /= Void then
@@ -236,7 +236,7 @@ feature -- Status report
 			file_name_attached: file_name /= Void
 		local
 			ext_name: ANY
-			f: ?STRING
+			f: detachable STRING
 		do
 			f := file_name
 			if f /= Void then
@@ -251,7 +251,7 @@ feature -- Status report
 			file_name_attached: file_name /= Void
 		local
 			ext_name: ANY
-			f: ?STRING
+			f: detachable STRING
 		do
 			f := file_name
 			if f /= Void then

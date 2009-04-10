@@ -3,8 +3,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 class RAW_FILE
 
@@ -223,7 +223,7 @@ feature {NONE} -- Implementation
 	integer_buffer: MANAGED_POINTER
 			-- Buffer used to read INTEGER_64, INTEGER_16, INTEGER_8
 		local
-			r: ?MANAGED_POINTER
+			r: detachable MANAGED_POINTER
 		do
 			r := internal_integer_buffer
 			if r = Void then
@@ -233,7 +233,7 @@ feature {NONE} -- Implementation
 			Result := r
 		end
 
-	internal_integer_buffer: ?MANAGED_POINTER
+	internal_integer_buffer: detachable MANAGED_POINTER
 			-- Internal integer buffer
 
 	read_to_string (a_string: STRING; pos, nb: INTEGER): INTEGER

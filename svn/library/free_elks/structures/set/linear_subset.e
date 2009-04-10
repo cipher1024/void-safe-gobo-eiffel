@@ -10,8 +10,8 @@ note
 	names: linear_subset, subset, set;
 	access: membership;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 deferred class LINEAR_SUBSET [G] inherit
 
@@ -106,7 +106,7 @@ feature {NONE} -- Implementation
 			-- Strategy to calculate several subset features selected depending
 			-- on the dynamic type of `v' and `other'
 		do
-			if {h: HASHABLE} v then
+			if attached {HASHABLE} v as h then
 				create {SUBSET_STRATEGY_HASHABLE [G]} Result
 			else
 				create {SUBSET_STRATEGY_GENERIC [G]} Result

@@ -9,8 +9,8 @@ note
 	access: cursor, membership;
 	representation: recursive, linked;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 class TWO_WAY_CURSOR_TREE [G] inherit
 
@@ -75,8 +75,8 @@ feature -- Element change
 	put_right (v: G)
 			-- Add `v' to the right of cursor position.
 		local
-			a: ?like active
-			c: ?like active
+			a: detachable like active
+			c: detachable like active
 		do
 			if below then
 				a := active
@@ -114,7 +114,7 @@ feature -- Element change
 			is_empty: is_empty
 		local
 			a: like active
-			c: ?like active
+			c: detachable like active
 		do
 			a := above_node
 			if a /= Void then

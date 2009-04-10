@@ -4,14 +4,14 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 class IDENTIFIED_ROUTINES
 
 feature -- Basic operations
 
-	eif_id_object (an_id: INTEGER): ?ANY
+	eif_id_object (an_id: INTEGER): detachable ANY
 			-- Object associated with `an_id'
 		require
 			an_id_non_negative: an_id >= 0

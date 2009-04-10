@@ -8,8 +8,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 class
 	ARGUMENTS
@@ -155,7 +155,7 @@ feature -- Status report
 			if i <= argument_count then Result := i end
 		end
 
-	separate_character_option_value (o: CHARACTER): ?STRING
+	separate_character_option_value (o: CHARACTER): detachable STRING
 			-- The value, if any, specified after character option `o' on
 			-- the command line.
 			-- This is one of the following (where `X' is the current
@@ -183,7 +183,7 @@ feature -- Status report
 			end
 		end
 
-	separate_word_option_value (opt: STRING): ?STRING
+	separate_word_option_value (opt: STRING): detachable STRING
 			-- The value, if any, specified after word option `opt' on the
 			-- command line.
 			-- This is one of the following (where `X' is the current `option_sign'):
@@ -210,13 +210,13 @@ feature -- Status report
 			end
 		end
 
-	coalesced_option_character_value (o: CHARACTER): ?STRING
+	coalesced_option_character_value (o: CHARACTER): detachable STRING
 		obsolete "Use coalesced_character_option_value instead."
 		do
 			Result := coalesced_character_option_value (o)
 		end
 
-	coalesced_character_option_value (o: CHARACTER): ?STRING
+	coalesced_character_option_value (o: CHARACTER): detachable STRING
 			-- The value, if any, specified for character option `o' on
 			-- the command line.
 			-- Defined as follows (where 'X' is the current 'option_sign' and
@@ -240,13 +240,13 @@ feature -- Status report
 			end
 		end
 
-	coalesced_option_word_value (opt: STRING): ?STRING
+	coalesced_option_word_value (opt: STRING): detachable STRING
 		obsolete "Use coalesced_word_option_value instead."
 		do
 			Result := coalesced_word_option_value (opt)
 		end
 
-	coalesced_word_option_value (opt: STRING): ?STRING
+	coalesced_word_option_value (opt: STRING): detachable STRING
 			-- The value, if any, specified for word option `opt' on the
 			-- command line.
 			-- Defined as follows (where X is the current `option_sign'):

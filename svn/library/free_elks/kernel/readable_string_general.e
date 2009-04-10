@@ -3,8 +3,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-23 21:06:53 +0100 (Fri, 23 Jan 2009) $"
-	revision: "$Revision: 6576 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 deferred class
 	READABLE_STRING_GENERAL
@@ -205,7 +205,7 @@ feature -- Conversion
 			i, nb: INTEGER
 			l_code: like code
 		do
-			if {l_result: STRING_8} Current then
+			if attached {STRING_8} Current as l_result then
 				Result := l_result
 			else
 				nb := count
@@ -235,7 +235,7 @@ feature -- Conversion
 		local
 			i, nb: INTEGER
 		do
-			if {l_result: STRING_32} Current then
+			if attached {STRING_32} Current as l_result then
 				Result := l_result
 			else
 				nb := count

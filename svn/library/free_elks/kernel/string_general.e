@@ -3,8 +3,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-02-07 16:50:43 +0100 (Sat, 07 Feb 2009) $"
-	revision: "$Revision: 6583 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 deferred class
 	STRING_GENERAL
@@ -16,7 +16,7 @@ inherit
 		end
 
 convert
-	as_string_32: {READABLE_STRING_32, ?READABLE_STRING_32, STRING_32, ?STRING_32},
+	as_string_32: {READABLE_STRING_32, detachable READABLE_STRING_32, STRING_32, detachable STRING_32},
 	to_cil: {SYSTEM_STRING}
 
 feature -- Settings

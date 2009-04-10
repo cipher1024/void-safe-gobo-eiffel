@@ -6,8 +6,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (lun., 16 mars 2009) $"
+	revision: "$Revision: 6620 $"
 
 frozen class
 	SPECIAL [T]
@@ -150,7 +150,7 @@ feature -- Status report
 			index_big_enough: i >= 0
 			index_small_enough: i < count
 		local
-			default_value: ?T
+			default_value: detachable T
 		do
 			Result := item (i) = default_value
 		end
