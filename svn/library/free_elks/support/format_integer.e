@@ -7,8 +7,8 @@ note
 	copyright: "Copyright (c) 2005-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
 	names: format_integer;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class FORMAT_INTEGER
 
@@ -467,7 +467,7 @@ feature {NONE} -- Implementation
 	process_sign (s: STRING; sn: INTEGER): STRING
 			-- Process sign related values.
 		local
-			sstring: ?STRING
+			sstring: detachable STRING
 		do
 			Result := s
 			if bracketted_negative and sn = -1 then

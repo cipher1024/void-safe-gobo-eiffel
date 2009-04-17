@@ -14,8 +14,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 2005-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-02-07 16:50:43 +0100 (Sat, 07 Feb 2009) $"
-	revision: "$Revision: 6583 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class MISMATCH_INFORMATION
 
@@ -43,12 +43,12 @@ feature -- Access
 	class_name: STRING
 			-- Name of generating class which held attribute values
 		local
-			r: ?STRING
+			r: detachable STRING
 		do
 			check
 				has_class_entry: has (Class_key)
 			end
-			if {l_result: STRING} item (Class_key) then
+			if attached {STRING} item (Class_key) as l_result then
 				r := l_result
 			end
 			check
@@ -64,8 +64,8 @@ feature -- Output
 	out: STRING
 			-- Printable representation of attributes values
 		local
-			i: ?ANY
-			k: ?STRING
+			i: detachable ANY
+			k: detachable STRING
 		do
 			from
 				create Result.make (20 + class_name.count + 40 * count)

@@ -8,8 +8,8 @@ indexing
 	library: "Gobo Eiffel String Library"
 	copyright: "Copyright (c) 2004-2005, Object-Tools and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-04-16 17:06:13 +0200 (Thu, 16 Apr 2009) $"
+	revision: "$Revision: 6624 $"
 
 deferred class ST_FORMATTER
 
@@ -443,7 +443,7 @@ feature {NONE} -- Formatting
 									a_formatter.set_padding_character ('0')
 								end
 								if a_space_prefix then
-									a_formatter.set_plus_sign_enabled (False)
+									a_formatter.set_space_sign_enabled (True)
 								end
 								if a_plus_sign then
 									a_formatter.set_plus_sign_enabled (True)

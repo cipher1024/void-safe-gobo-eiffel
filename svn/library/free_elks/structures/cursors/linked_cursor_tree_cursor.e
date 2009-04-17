@@ -4,8 +4,8 @@ note
 	status: "See notice at end of class."
 	names: linked_tree_cursor, cursor;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class LINKED_CURSOR_TREE_CURSOR [G]
 
@@ -20,7 +20,7 @@ create
 
 feature {LINKED_CURSOR_TREE} -- Access
 
-	active: ?LINKED_TREE [G];
+	active: detachable LINKED_TREE [G];
 			-- Current node
 
 note

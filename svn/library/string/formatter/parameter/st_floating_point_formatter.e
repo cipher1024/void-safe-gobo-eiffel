@@ -17,8 +17,8 @@ indexing
 	library: "Gobo Eiffel String Library"
 	copyright: "Copyright (c) 2004-2005, Object-Tools and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-04-16 17:06:13 +0200 (Thu, 16 Apr 2009) $"
+	revision: "$Revision: 6624 $"
 
 class ST_FLOATING_POINT_FORMATTER
 
@@ -52,6 +52,8 @@ feature -- Formatting
 			STRING_.wipe_out (double_buffer)
 			string_output_stream.set_string (double_buffer)
 			decimal_formatter.reset_options
+			decimal_formatter.set_space_sign_enabled (space_sign_enabled)
+			decimal_formatter.set_plus_sign_enabled (plus_sign_enabled)
 			decimal_formatter.integer_format_to (integer_part, string_output_stream)
 			double_buffer.append_string (fractional_part)
 			if is_lowercase then

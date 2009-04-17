@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel String Library"
 	copyright: "Copyright (c) 2004-2005, Object-Tools and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-04-16 17:06:13 +0200 (Thu, 16 Apr 2009) $"
+	revision: "$Revision: 6624 $"
 
 deferred class ST_PARAMETER_FORMATTER
 
@@ -37,6 +37,7 @@ feature -- Initialization
 			set_align_right
 			set_padding_character (' ')
 			set_plus_sign_enabled (False)
+			set_space_sign_enabled (False)
 			set_lowercase (True)
 		end
 
@@ -73,7 +74,13 @@ feature -- Options
 			-- (Default is space character)
 
 	plus_sign_enabled: BOOLEAN
-			-- Should the '+' sign be shown in the formatted parameter?
+			-- Should the '+' sign be shown in the formatted parameter of the
+			-- output value is not negative and is of a signed type?
+			-- (By default only the '-' sign is shown.)
+
+	space_sign_enabled: BOOLEAN
+			-- Should a space character be shown in the formatted parameter of the
+			-- output value is not negative and is of a signed type?
 			-- (By default only the '-' sign is shown.)
 
 	is_lowercase: BOOLEAN
@@ -140,6 +147,14 @@ feature -- Setting
 			plus_sign_enabled := b
 		ensure
 			plus_sign_enabled_set: plus_sign_enabled = b
+		end
+
+	set_space_sign_enabled (b: BOOLEAN) is
+			-- Set `space_sign_enabled' to `b'.
+		do
+			space_sign_enabled := b
+		ensure
+			space_sign_enabled_set: space_sign_enabled = b
 		end
 
 	set_lowercase (b: BOOLEAN) is

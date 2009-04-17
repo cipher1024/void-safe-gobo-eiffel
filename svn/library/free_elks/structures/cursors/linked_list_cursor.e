@@ -7,8 +7,8 @@ note
 	status: "See notice at end of class."
 	names: linked_list_cursor, cursor;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class LINKED_LIST_CURSOR [G] inherit
 
@@ -29,7 +29,7 @@ feature {NONE} -- Initialization
 
 feature {LINKED_LIST} -- Implementation
 
-	active: ?LINKABLE [G]
+	active: detachable LINKABLE [G]
 			-- Current element in linked list
 
 	after: BOOLEAN

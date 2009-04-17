@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel String Library"
 	copyright: "Copyright (c) 2004-2005, Object-Tools and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-04-16 17:06:13 +0200 (Thu, 16 Apr 2009) $"
+	revision: "$Revision: 6624 $"
 
 deferred class ST_UNSIGNED_INTEGER_FORMATTER
 
@@ -34,6 +34,7 @@ feature -- Formatting
 			-- Format `a_parameter' to `a_stream'.
 		do
 			plus_sign_enabled := False
+			space_sign_enabled := False
 			precursor (a_parameter, a_stream)
 		end
 

@@ -13,8 +13,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 2005-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-03-14 15:13:03 +0100 (Sat, 14 Mar 2009) $"
-	revision: "$Revision: 6612 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class CLASS_NAME_TRANSLATIONS
 
@@ -118,7 +118,7 @@ feature -- Output
 			-- Printable representation of translations
 		local
 			k: STRING
-			i: ?STRING
+			i: detachable STRING
 		do
 			from
 				create Result.make (25 + count * 40)
@@ -143,7 +143,7 @@ feature -- Output
 
 feature {NONE} -- Implementation
 
-	add_translation (new_name, old_name: ?STRING)
+	add_translation (new_name, old_name: detachable STRING)
 			-- Add a translation entry mapping class `old_name' in the
 			-- storing system to class `new_name' in the retrieving system.
 		local

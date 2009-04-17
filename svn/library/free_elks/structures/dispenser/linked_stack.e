@@ -7,8 +7,8 @@ note
 	representation: linked;
 	access: fixed, lifo, membership;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class LINKED_STACK [G] inherit
 
@@ -112,7 +112,7 @@ feature -- Conversion
 
 feature -- Duplication
 
-	duplicate (n: INTEGER): ?like Current
+	duplicate (n: INTEGER): detachable like Current
 			-- New stack containing the `n' latest items inserted
 			-- in current stack.
 			-- If `n' is greater than `count', identical to current stack.

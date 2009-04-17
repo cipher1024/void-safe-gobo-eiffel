@@ -36,7 +36,7 @@ feature -- Operation(s)
 			a_uri_scheme: {s: STRING} a_uri.scheme and then STRING_.same_string (scheme, s)
 		deferred
 		ensure
-			stream_open_on_success: not has_error implies {l_last_stream: like last_stream} last_stream and then l_last_stream.is_open_read
+			stream_open_on_success: not has_error implies {el_last_stream: like last_stream} last_stream and then el_last_stream.is_open_read
 		end
 
 feature -- Result

@@ -7,8 +7,8 @@ note
 	status: "See notice at end of class."
 	names: recursive_tree_cursor, cursor;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class RECURSIVE_TREE_CURSOR [G] inherit
 
@@ -32,7 +32,7 @@ feature {NONE} -- Initialization
 
 feature {RECURSIVE_CURSOR_TREE} -- Access
 
-	active: ?DYNAMIC_TREE [G]
+	active: detachable DYNAMIC_TREE [G]
 			-- Current node
 
 	active_parent: like active

@@ -3,8 +3,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 2005-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class
 	INTERNAL_HELPER
@@ -24,7 +24,7 @@ feature -- Status report
 			l_type_name: STRING
 			l_start_pos, l_end_pos: INTEGER
 			l_class_type_name: STRING
-			l_parameters: ?ARRAYED_LIST [STRING]
+			l_parameters: detachable ARRAYED_LIST [STRING]
 		do
 			if s /= Void and then not s.is_empty then
 				l_class_type_name := s.twin
@@ -79,7 +79,7 @@ feature -- Status report
 			a_type_not_void: a_type /= Void
 		local
 			l_table: like pre_ecma_type_mapping
-			r: ?STRING
+			r: detachable STRING
 		do
 			if not is_pre_ecma_mapping_disabled then
 				l_table := pre_ecma_type_mapping
@@ -155,7 +155,7 @@ feature {NONE} -- Implementation: status report
 
 feature {NONE} -- Decompose string type
 
-	parameters_decomposition (a_str: STRING): ?ARRAYED_LIST [STRING]
+	parameters_decomposition (a_str: STRING): detachable ARRAYED_LIST [STRING]
 			-- Decompose `a_str' which should be of the form "A, B, D [G], H [E ,F]"
 			-- into a list of strings "A", "B", "D [G]", "H [E, F]"
 			-- If decomposition is not possible, Void.

@@ -10,8 +10,8 @@ note
 	access: index, cursor, membership;
 	size: fixed;
 	contents: generic;
-	date: "$Date: 2009-01-23 21:06:53 +0100 (Fri, 23 Jan 2009) $"
-	revision: "$Revision: 6576 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class ARRAYED_LIST [G] inherit
 
@@ -196,7 +196,7 @@ feature -- Status report
 	valid_cursor (p: CURSOR): BOOLEAN
 			-- Can the cursor be moved to position `p'?
 		do
-			if {al_c: ARRAYED_LIST_CURSOR} p then
+			if attached {ARRAYED_LIST_CURSOR} p as al_c then
 				Result := valid_cursor_index (al_c.index)
 			end
 		end
@@ -275,7 +275,7 @@ feature -- Cursor movement
 	go_to (p: CURSOR)
 			-- Move cursor to position `p'.
 		do
-			if {al_c: ARRAYED_LIST_CURSOR} p then
+			if attached {ARRAYED_LIST_CURSOR} p as al_c then
 				index := al_c.index
 			else
 				check
@@ -418,7 +418,7 @@ feature -- Element change
 		local
 			c, old_count, new_count: INTEGER
 		do
-			if {al: ARRAYED_LIST [G]} s then -- Optimization for arrayed lists
+			if attached {ARRAYED_LIST [G]} s as al then -- Optimization for arrayed lists
 				c := al.count
 					-- If `s' is empty nothing to be done.
 				if c > 0 then

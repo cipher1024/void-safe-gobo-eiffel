@@ -9,8 +9,8 @@ note
 	access: cursor, membership;
 	representation: recursive, linked;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class LINKED_CURSOR_TREE [G] inherit
 
@@ -76,7 +76,7 @@ feature -- Element change
 			-- Add `v' to the right of cursor position.
 		local
 			a: like active_parent
-			c: ?like active
+			c: detachable like active
 		do
 			if below then
 				a := active
@@ -113,7 +113,7 @@ feature -- Element change
 		require
 			is_empty: is_empty
 		local
-			a: ?like active
+			a: detachable like active
 		do
 			above_node.child_put_right (v)
 			active_parent := above_node

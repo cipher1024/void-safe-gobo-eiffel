@@ -9,8 +9,8 @@ indexing
 	library: "Gobo Eiffel Kernel Library"
 	copyright: "Copyright (c) 2005, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-08-22 15:10:29 +0200 (Fri, 22 Aug 2008) $"
-	revision: "$Revision: 6487 $"
+	date: "$Date: 2009-04-01 18:37:49 +0200 (Wed, 01 Apr 2009) $"
+	revision: "$Revision: 6623 $"
 
 class UC_V510_CTYPE_TITLECASE
 
@@ -901,7 +901,7 @@ feature {NONE} -- Implementation
 			Result.put (title_code_plane_0_segment_255, 255)
 		ensure
 			result_not_void: Result /= Void
-			sub_arrays_not_void: True -- all items are non-Void
+			sub_arrays_not_void: True --not Result.has (Void)
 		end
 
 	title_code_plane_1_segment_4: ARRAY [INTEGER] is
@@ -1201,7 +1201,7 @@ feature {NONE} -- Implementation
 			Result.put (empty_title_code_segment, 255)
 		ensure
 			result_not_void: Result /= Void
-			sub_arrays_not_void: True -- all items are non-Void
+			sub_arrays_not_void: True --not Result.has (Void)
 		end
 
 	empty_title_code_plane: SPECIAL [ARRAY [INTEGER]] is
@@ -1466,7 +1466,7 @@ feature {NONE} -- Implementation
 			Result.put (empty_title_code_segment, 255)
 		ensure
 			result_not_void: Result /= Void
-			sub_arrays_not_void: True -- all items are non-Void
+			sub_arrays_not_void: True --not Result.has (Void)
 		end
 
 	title_codes: SPECIAL [SPECIAL [ARRAY [INTEGER]]] is

@@ -13,8 +13,8 @@ indexing
 	library: "Gobo Eiffel String Library"
 	copyright: "Copyright (c) 2004-2005, Object-Tools and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-04-16 17:06:13 +0200 (Thu, 16 Apr 2009) $"
+	revision: "$Revision: 6624 $"
 
 deferred class ST_INTEGER_FORMATTER
 
@@ -114,11 +114,13 @@ feature -- Formatting
 						i := i - 1
 					end
 				end
-				if plus_sign_enabled or a_parameter < 0 then
+				if plus_sign_enabled or space_sign_enabled or a_parameter < 0 then
 					if a_parameter < 0 then
 						a_sign := '-'
-					else
+					elseif plus_sign_enabled then
 						a_sign := '+'
+					else
+						a_sign := ' '
 					end
 					inspect alignment
 					when align_left then
