@@ -75,7 +75,7 @@ feature -- Basic operations
 --						create e
 --						e.raise ("Invalid file format : need 8 bytes packed decimal")
 						error := True
-						l_decimal := Void
+						last_decimal := Void
 					end
 				end
 				index := index + 1
