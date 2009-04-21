@@ -215,6 +215,20 @@ feature -- Status report
 			Result := position /= No_position
 		end
 
+	has_void: BOOLEAN is
+			-- Does container include Void?
+		local
+			k: ?K
+			l_current: ?DS_SPARSE_TABLE [G, ?K]
+		do
+			l_current ?= Current
+			if l_current /= Void then
+				Result := l_current.has (k)
+			end
+		ensure
+			not_empty: Result implies not is_empty
+		end
+
 	valid_key (k: K): BOOLEAN is
 			-- Is `k' a valid key?
 		do
