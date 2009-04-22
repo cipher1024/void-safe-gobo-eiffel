@@ -21,8 +21,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2008, Daniel Tuser and others"
 	license: "MIT License"
-	date: "$Date: 2008-12-23 16:09:12 +0100 (Tue, 23 Dec 2008) $"
-	revision: "$Revision: 6570 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 deferred class DS_BINARY_SEARCH_TREE_CONTAINER [G, K]
 
@@ -299,13 +299,7 @@ feature -- Status report
 			end
 		end
 
-feature {NONE} -- Status report
-
-	valid_key (k: K): BOOLEAN is
-			-- Is `k' a valid key?
-		do
-			Result := True
-		end
+feature {DS_BINARY_SEARCH_TREE_CONTAINER} -- Status report
 
 	has_key (a_key: K): BOOLEAN is
 			-- Is there an item associated with `a_key'?
@@ -314,6 +308,27 @@ feature {NONE} -- Status report
 			if root_node /= Void then
 				search_node (a_key)
 				Result := found_node /= Void
+			end
+		end
+
+feature {NONE} -- Status report
+
+	valid_key (k: K): BOOLEAN is
+			-- Is `k' a valid key?
+		do
+			Result := True
+		end
+
+	has_void_key: BOOLEAN is
+			-- Is there an item associated with Void?
+			-- (Performance: O(height).)
+		local
+			k: ?K
+			l_current: ?DS_BINARY_SEARCH_TREE_CONTAINER [G, ?K]
+		do
+			l_current ?= Current
+			if l_current /= Void and k = Void then
+				Result := l_current.has_key (k)
 			end
 		end
 

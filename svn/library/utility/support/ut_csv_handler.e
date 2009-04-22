@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Utility Library"
 	copyright: "Copyright (c) 2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-05-22 15:27:01 +0200 (Thu, 22 May 2008) $"
-	revision: "$Revision: 6422 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class UT_CSV_HANDLER
 

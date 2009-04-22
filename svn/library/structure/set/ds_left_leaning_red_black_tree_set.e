@@ -10,8 +10,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2008, Daniel Tuser and others"
 	license: "MIT License"
-	date: "$Date: 2008-09-28 20:40:54 +0200 (Sun, 28 Sep 2008) $"
-	revision: "$Revision: 6526 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class DS_LEFT_LEANING_RED_BLACK_TREE_SET [G]
 
@@ -32,6 +32,7 @@ inherit
 	DS_LEFT_LEANING_RED_BLACK_TREE_CONTAINER [G, G]
 		rename
 			has_key as has,
+			has_void_key as has_void,
 			key_comparator as equality_tester,
 			key_comparator_settable as equality_tester_settable,
 			set_key_comparator as set_equality_tester

@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Parse Library"
 	copyright: "Copyright (c) 2009, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-03-06 23:53:42 +0100 (Fri, 06 Mar 2009) $"
-	revision: "$Revision: 6603 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class PR_LABELED_TYPE
 

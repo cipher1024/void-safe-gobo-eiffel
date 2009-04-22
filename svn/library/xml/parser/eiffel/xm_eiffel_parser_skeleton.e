@@ -9,8 +9,8 @@ indexing
 	library: "Gobo Eiffel XML Library"
 	copyright: "Copyright (c) 2002, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
-	revision: "$Revision: 6590 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 deferred class XM_EIFFEL_PARSER_SKELETON
 

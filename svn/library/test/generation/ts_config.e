@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Test Library"
 	copyright: "Copyright (c) 2000, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class TS_CONFIG
 
@@ -25,7 +25,7 @@ feature {NONE} -- Initialization
 			a_compile_not_void: a_compile /= Void
 			an_execute_not_void: an_execute /= Void
 			a_clusters_not_void: a_clusters /= Void
-			no_void_cluster: not a_clusters.has (Void)
+			no_void_cluster: not a_clusters.has_void
 		do
 			root_class := a_root
 			testgen := a_testgen
@@ -151,6 +151,6 @@ invariant
 	compile_not_void: compile /= Void
 	execute_not_void: execute /= Void
 	clusters_not_void: clusters /= Void
-	no_void_cluster: not clusters.has (Void)
+	no_void_cluster: not clusters.has_void
 
 end

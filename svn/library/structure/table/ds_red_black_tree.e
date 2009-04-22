@@ -10,8 +10,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2008, Daniel Tuser and others"
 	license: "MIT License"
-	date: "$Date: 2008-09-28 20:40:54 +0200 (Sun, 28 Sep 2008) $"
-	revision: "$Revision: 6526 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class DS_RED_BLACK_TREE [G, K]
 
@@ -30,7 +30,8 @@ inherit
 		rename
 			has as has_item,
 			has_void as has_void_item,
-			has_key as has
+			has_key as has,
+			has_void_key as has_void
 		redefine
 			root_node
 		end

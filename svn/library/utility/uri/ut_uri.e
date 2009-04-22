@@ -7,8 +7,8 @@ indexing
 	standards: "RFC 3986 (obsoleting RFC 2396)"
 	library: "Gobo Eiffel XML Library"
 	author: "Copyright (c) 2004, Berend de Boer and others"
-	revision: "$Revision: 5914 $"
-	date: "$Date: 2007-03-05 08:07:05 +0100 (lun., 05 mars 2007) $"
+	revision: "$Revision: 6626 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
 
 class UT_URI
 

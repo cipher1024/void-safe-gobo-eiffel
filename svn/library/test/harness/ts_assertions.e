@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Test Library"
 	copyright: "Copyright (c) 2000-2005, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
-	revision: "$Revision: 5877 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class TS_ASSERTIONS
 
@@ -147,7 +147,7 @@ feature {NONE} -- Constants
 invariant
 
 	error_messages_not_void: error_messages /= Void
-	no_void_error_message: not error_messages.has (Void)
+	no_void_error_message: not error_messages.has_void
 	count_positive: count >= 0
 
 end

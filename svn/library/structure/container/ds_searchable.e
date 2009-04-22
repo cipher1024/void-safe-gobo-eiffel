@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 1999-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-03-02 23:02:37 +0100 (Mon, 02 Mar 2009) $"
-	revision: "$Revision: 6597 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 deferred class DS_SEARCHABLE [G]
 
@@ -34,7 +34,7 @@ feature -- Status report
 			l_current: ?DS_SEARCHABLE [?G]
 		do
 			l_current ?= Current
-			if l_current /= Void then
+			if l_current /= Void and v = Void then
 				Result := l_current.has (v)
 			end
 		ensure
