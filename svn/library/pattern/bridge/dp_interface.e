@@ -7,12 +7,14 @@ indexing
 	library: "Gobo Eiffel Pattern Library"
 	copyright: "Copyright (c) 2001, Andreas Leitner and others"
 	license: "MIT License"
-	date: "$Date: 2008-09-28 20:35:10 +0200 (Sun, 28 Sep 2008) $"
-	revision: "$Revision: 6524 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
+	revision: "$Revision: 6627 $"
 
-class DP_INTERFACE
-create
-	make_from_implementation
+deferred class DP_INTERFACE
+
+obsolete
+
+	"[090423] This class does not work well in void-safe mode. Please stop using it."
 
 feature {NONE} -- Initialization
 
@@ -21,9 +23,9 @@ feature {NONE} -- Initialization
 			-- `an_implementation' as implementation.
 		require
 			an_implementation_not_void: an_implementation /= Void
+			valid_implementation: an_implementation.can_implement (Current)
 		do
 			implementation := an_implementation
-			check valid_implementation: an_implementation.can_implement (Current) end
 			implementation.implement (Current)
 		ensure
 			implementation_set: implementation = an_implementation

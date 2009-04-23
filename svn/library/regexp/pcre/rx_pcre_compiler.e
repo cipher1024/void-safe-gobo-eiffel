@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Regexp Library"
 	copyright: "Copyright (c) 2001-2008, Harald Erdbruegger and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
+	revision: "$Revision: 6627 $"
 
 class RX_PCRE_COMPILER
 
@@ -67,6 +67,7 @@ feature {NONE} -- Initialization
 			-- Create a new regexp compiler.
 		do
 			create byte_code.make (1024)
+			create internal_start_bits.make_empty
 			pattern := STRING_.cloned_string (empty_pattern)
 			reset
 			set_character_case_mapping (default_character_case_mapping)
@@ -474,11 +475,7 @@ feature -- Compilation
 				-- multiline pattern that matches only at "line starts", no further processing at
 				-- present.
 			if not is_anchored and then first_character < 0 and then not is_startline then
-				if {l_internal_start_bits: like internal_start_bits} internal_start_bits then
-					l_internal_start_bits.wipe_out
-				else
-					create internal_start_bits.make_empty
-				end
+				internal_start_bits.wipe_out
 				set_start_bits (0, is_caseless)
 			end
 		end
@@ -645,7 +642,10 @@ feature -- Debugging
 				if a_native_code then
 					a_position := i
 				else
-					check a_position_map /= Void end -- implied by `not a_native_code' and implementation
+					check
+							-- `a_position_map' has been set when `a_native_code' is False.
+						a_position_map_not_void: a_position_map /= Void
+					end
 					a_position := map_position (i, a_position_map)
 				end
 				STRING_FORMATTER_.put_left_padded_string (a_file, a_position.out, 3, ' ')
@@ -656,7 +656,10 @@ feature -- Debugging
 						if a_native_code then
 							a_position := byte_code.integer_item (i + 1)
 						else
-							check a_position_map /= Void end -- implied by `not a_native_code' and implementation
+							check
+									-- `a_position_map' has been set when `a_native_code' is False.
+								a_position_map_not_void: a_position_map /= Void
+							end
 							a_position := map_position (i + byte_code.integer_item (i + 1), a_position_map) - map_position (i, a_position_map)
 						end
 						STRING_FORMATTER_.put_left_padded_string (a_file, a_position.out, 3, ' ')
@@ -673,7 +676,10 @@ feature -- Debugging
 							if a_native_code then
 								a_position := byte_code.integer_item (i + 1)
 							else
-								check a_position_map /= Void end -- implied by `not a_native_code' and implementation
+								check
+										-- `a_position_map' has been set when `a_native_code' is False.
+									a_position_map_not_void: a_position_map /= Void
+								end
 								a_position := map_position (i + byte_code.integer_item (i + 1), a_position_map) - map_position (i, a_position_map)
 							end
 							STRING_FORMATTER_.put_left_padded_string (a_file, a_position.out, 3, ' ')
@@ -688,7 +694,10 @@ feature -- Debugging
 							if a_native_code then
 								a_position := byte_code.integer_item (i + 1)
 							else
-								check a_position_map /= Void end -- implied by `not a_native_code' and implementation
+								check
+										-- `a_position_map' has been set when `a_native_code' is False.
+									a_position_map_not_void: a_position_map /= Void
+								end
 								a_position := map_position (i, a_position_map) - map_position (i - byte_code.integer_item (i + 1), a_position_map)
 							end
 							STRING_FORMATTER_.put_left_padded_string (a_file, a_position.out, 3, ' ')
@@ -1215,7 +1224,7 @@ feature {NONE} -- Access
 	maxbackrefs: INTEGER
 			-- Maximum number of back references
 
-	internal_start_bits: ?RX_CHARACTER_SET
+	internal_start_bits: RX_CHARACTER_SET
 			-- To avoid repeated allocations of the `start_bits' character set
 
 	start_bits: ?RX_CHARACTER_SET
@@ -3140,8 +3149,6 @@ feature {NONE} -- Implementation
 			-- If it can't, it sets `start_bits' to Void.
 			-- `a_code_index' points to an expression and `a_caseless'
 			-- is the current state of the caseless flag.
-		require
-			internal_start_bits_attached: internal_start_bits /= Void
 		local
 			i, nb: INTEGER
 			icode: INTEGER
@@ -3152,10 +3159,7 @@ feature {NONE} -- Implementation
 			stop: BOOLEAN
 			caseless: BOOLEAN
 			success: BOOLEAN
-			l_internal_start_bits: like internal_start_bits
 		do
-			l_internal_start_bits := internal_start_bits
-			check l_internal_start_bits /= Void end -- implied by precondition `internal_start_bits_attached'
 			from
 				success := True
 				caseless := a_caseless
@@ -3230,27 +3234,27 @@ feature {NONE} -- Implementation
 						when op_star, op_minstar, op_query, op_minquery then
 								-- Single-char * or ? sets the bit and tries the next item.
 							ch := byte_code.integer_item (tcode + 1)
-							l_internal_start_bits.add_character (ch)
+							internal_start_bits.add_character (ch)
 							if caseless then
-								l_internal_start_bits.add_character (character_case_mapping.flip_case (ch))
+								internal_start_bits.add_character (character_case_mapping.flip_case (ch))
 							end
 							tcode := tcode + 2
 							stop := False
 						when op_upto, op_minupto then
 								-- Single-char upto sets the bit and tries the next.
 							ch := byte_code.integer_item (tcode + 2)
-							l_internal_start_bits.add_character (ch)
+							internal_start_bits.add_character (ch)
 							if caseless then
-								l_internal_start_bits.add_character (character_case_mapping.flip_case (ch))
+								internal_start_bits.add_character (character_case_mapping.flip_case (ch))
 							end
 							tcode := tcode + 3
 							stop := False
 						when op_exact, op_chars then
 								-- At least one single char sets the bit and stops.
 							ch := byte_code.integer_item (tcode + 2)
-							l_internal_start_bits.add_character (ch)
+							internal_start_bits.add_character (ch)
 							if caseless then
-								l_internal_start_bits.add_character (character_case_mapping.flip_case (ch))
+								internal_start_bits.add_character (character_case_mapping.flip_case (ch))
 							end
 							check
 								stop = True and op /= op_alt
@@ -3258,46 +3262,46 @@ feature {NONE} -- Implementation
 						when op_plus, op_minplus then
 								-- At least one single char sets the bit and stops.
 							ch := byte_code.integer_item (tcode + 1)
-							l_internal_start_bits.add_character (ch)
+							internal_start_bits.add_character (ch)
 							if caseless then
-								l_internal_start_bits.add_character (character_case_mapping.flip_case (ch))
+								internal_start_bits.add_character (character_case_mapping.flip_case (ch))
 							end
 							check
 								exit: stop = True and op /= op_alt
 							end
 						when op_not_digit then
 								-- Single character type sets the bits and stops.
-							l_internal_start_bits.add_negated_set (digit_set)
+							internal_start_bits.add_negated_set (digit_set)
 							check
 								exit: stop = True and op /= op_alt
 							end
 						when op_digit then
 								-- Single character type sets the bits and stops.
-							l_internal_start_bits.add_set (digit_set)
+							internal_start_bits.add_set (digit_set)
 							check
 								exit: stop = True and op /= op_alt
 							end
 						when op_not_whitespace then
 								-- Single character type sets the bits and stops.
-							l_internal_start_bits.add_negated_set (space_set)
+							internal_start_bits.add_negated_set (space_set)
 							check
 								exit: stop = True and op /= op_alt
 							end
 						when op_whitespace then
 								-- Single character type sets the bits and stops.
-							l_internal_start_bits.add_set (space_set)
+							internal_start_bits.add_set (space_set)
 							check
 								exit: stop = True and op /= op_alt
 							end
 						when op_not_wordchar then
 								-- Single character type sets the bits and stops.
-							l_internal_start_bits.add_negated_set (word_set)
+							internal_start_bits.add_negated_set (word_set)
 							check
 								exit: stop = True and op /= op_alt
 							end
 						when op_wordchar then
 								-- Single character type sets the bits and stops.
-							l_internal_start_bits.add_set (word_set)
+							internal_start_bits.add_set (word_set)
 							check
 								stop = True and op /= op_alt
 							end
@@ -3317,22 +3321,22 @@ feature {NONE} -- Implementation
 							inspect byte_code.integer_item (tcode + 2)
 							when op_not_digit then
 									-- Single character type sets the bits and stops.
-								l_internal_start_bits.add_negated_set (digit_set)
+								internal_start_bits.add_negated_set (digit_set)
 							when op_digit then
 									-- Single character type sets the bits and stops.
-								l_internal_start_bits.add_set (digit_set)
+								internal_start_bits.add_set (digit_set)
 							when op_not_whitespace then
 									-- Single character type sets the bits and stops.
-								l_internal_start_bits.add_negated_set (space_set)
+								internal_start_bits.add_negated_set (space_set)
 							when op_whitespace then
 									-- Single character type sets the bits and stops.
-								l_internal_start_bits.add_set (space_set)
+								internal_start_bits.add_set (space_set)
 							when op_not_wordchar then
 									-- Single character type sets the bits and stops.
-								l_internal_start_bits.add_negated_set (word_set)
+								internal_start_bits.add_negated_set (word_set)
 							when op_wordchar then
 									-- Single character type sets the bits and stops.
-								l_internal_start_bits.add_set (word_set)
+								internal_start_bits.add_set (word_set)
 							else
 									-- Do nothing.
 							end
@@ -3344,22 +3348,22 @@ feature {NONE} -- Implementation
 							inspect byte_code.integer_item (tcode + 1)
 							when op_not_digit then
 									-- Single character type sets the bits and stops.
-								l_internal_start_bits.add_negated_set (digit_set)
+								internal_start_bits.add_negated_set (digit_set)
 							when op_digit then
 									-- Single character type sets the bits and stops.
-								l_internal_start_bits.add_set (digit_set)
+								internal_start_bits.add_set (digit_set)
 							when op_not_whitespace then
 									-- Single character type sets the bits and stops.
-								l_internal_start_bits.add_negated_set (space_set)
+								internal_start_bits.add_negated_set (space_set)
 							when op_whitespace then
 									-- Single character type sets the bits and stops.
-								l_internal_start_bits.add_set (space_set)
+								internal_start_bits.add_set (space_set)
 							when op_not_wordchar then
 									-- Single character type sets the bits and stops.
-								l_internal_start_bits.add_negated_set (word_set)
+								internal_start_bits.add_negated_set (word_set)
 							when op_wordchar then
 									-- Single character type sets the bits and stops.
-								l_internal_start_bits.add_set (word_set)
+								internal_start_bits.add_set (word_set)
 							else
 									-- Do nothing.
 							end
@@ -3375,7 +3379,7 @@ feature {NONE} -- Implementation
 								i > 255
 							loop
 								if byte_code.character_set_has (set, i) then
-									l_internal_start_bits.add_character (i)
+									internal_start_bits.add_character (i)
 								end
 								i := i + 1
 							end
@@ -3416,7 +3420,7 @@ feature {NONE} -- Implementation
 				end
 			end
 			if success then
-				start_bits := l_internal_start_bits
+				start_bits := internal_start_bits
 			else
 				start_bits := Void
 			end
@@ -3470,5 +3474,6 @@ invariant
 	end_of_pattern: pattern.item (pattern.count) = '%U'
 	valid_first_character: -1 <= first_character
 	valid_required_character: -2 <= required_character
+	internal_start_bits_not_void: internal_start_bits /= Void
 
 end

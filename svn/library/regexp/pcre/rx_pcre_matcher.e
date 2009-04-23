@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Regexp Library"
 	copyright: "Copyright (c) 2001-2002, Harald Erdbruegger and others"
 	license: "MIT License"
-	date: "$Date: 2009-02-26 23:52:17 +0100 (Thu, 26 Feb 2009) $"
-	revision: "$Revision: 6590 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
+	revision: "$Revision: 6627 $"
 
 class RX_PCRE_MATCHER
 

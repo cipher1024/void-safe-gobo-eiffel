@@ -8,8 +8,8 @@ indexing
 	library: "Gobo Eiffel String Library"
 	copyright: "Copyright (c) 2004-2005, Object-Tools and others"
 	license: "MIT License"
-	date: "$Date: 2009-04-16 17:06:13 +0200 (Thu, 16 Apr 2009) $"
-	revision: "$Revision: 6624 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
+	revision: "$Revision: 6627 $"
 
 deferred class ST_FORMATTER
 
@@ -51,7 +51,7 @@ feature {NONE} -- Initialization
 
 feature -- Status report
 
-	valid_format_and_parameters (a_format: STRING; a_parameters: ARRAY [ANY]): BOOLEAN is
+	valid_format_and_parameters (a_format: STRING; a_parameters: ?ARRAY [?ANY]): BOOLEAN is
 			-- Does `a_format' contain valid formatting specifications and
 			-- do `a_parameters' comply to these formatting specifications?
 		require
@@ -149,7 +149,7 @@ feature -- Formatting
 
 feature {NONE} -- Formatting
 
-	do_format_to (a_format: STRING; a_parameters: ARRAY [?ANY]; a_stream: KI_CHARACTER_OUTPUT_STREAM) is
+	do_format_to (a_format: STRING; a_parameters: ?ARRAY [?ANY]; a_stream: KI_CHARACTER_OUTPUT_STREAM) is
 			-- Append to `a_stream' the string `a_format' where the
 			-- formatting specifications have been replaced by their
 			-- corresponding formatted parameters from `a_parameters'.
@@ -328,6 +328,12 @@ feature {NONE} -- Formatting
 								elseif j > nb2 then
 									set_error ("Not enough parameters")
 								else
+									check
+											-- When j <= nb2 it means that we still have
+											-- items in `a_parameters', and therefore that
+											-- `a_parameters' is not Void.
+										a_parameters_not_void: a_parameters /= Void
+									end
 									a_parameter := a_parameters.item (j)
 									an_integer_parameter ?= a_parameter
 									if an_integer_parameter /= Void then
@@ -398,6 +404,12 @@ feature {NONE} -- Formatting
 									elseif j > nb2 then
 										set_error ("Not enough parameters")
 									else
+										check
+												-- When j <= nb2 it means that we still have
+												-- items in `a_parameters', and therefore that
+												-- `a_parameters' is not Void.
+											a_parameters_not_void: a_parameters /= Void
+										end
 										a_parameter := a_parameters.item (j)
 										an_integer_parameter ?= a_parameter
 										if an_integer_parameter /= Void then
@@ -457,9 +469,16 @@ feature {NONE} -- Formatting
 								if j > nb2 then
 									set_error ("Not enough parameters")
 								else
+									check
+											-- When j <= nb2 it means that we still have
+											-- items in `a_parameters', and therefore that
+											-- `a_parameters' is not Void.
+										a_parameters_not_void: a_parameters /= Void
+									end
 									a_parameter := a_parameters.item (j)
-									check a_parameter /= Void end -- implied by `i <= nb'
-									if a_formatter.valid_parameter (a_parameter) then
+									if a_parameter = Void then
+										set_error ("Invalid parameter Void for format specification " + escape_character.out + a_typechar.out)
+									elseif a_formatter.valid_parameter (a_parameter) then
 										a_formatter.format_to (a_parameter, a_stream)
 									else
 										set_error ("Invalid parameter " + a_parameter.out + " for format specification " + escape_character.out + a_typechar.out)

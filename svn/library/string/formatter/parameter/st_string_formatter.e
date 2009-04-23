@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel String Library"
 	copyright: "Copyright (c) 2004-2005, Object-Tools and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
+	revision: "$Revision: 6627 $"
 
 class ST_STRING_FORMATTER
 
@@ -52,6 +52,7 @@ feature -- Formatting
 		do
 			a_string ?= a_parameter
 			check
+					-- From precondition 'valid_parameter'.
 				valid_parameter: a_string /= Void
 			end -- implied by precondition `valid_parameter'
 			string_format_to (a_string, a_stream)

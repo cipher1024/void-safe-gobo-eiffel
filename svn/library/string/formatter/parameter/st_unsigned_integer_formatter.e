@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel String Library"
 	copyright: "Copyright (c) 2004-2005, Object-Tools and others"
 	license: "MIT License"
-	date: "$Date: 2009-04-16 17:06:13 +0200 (Thu, 16 Apr 2009) $"
-	revision: "$Revision: 6624 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
+	revision: "$Revision: 6627 $"
 
 deferred class ST_UNSIGNED_INTEGER_FORMATTER
 
@@ -24,8 +24,11 @@ feature -- Status report
 
 	valid_parameter (a_parameter: ANY): BOOLEAN is
 			-- Is `a_parameter' a valid parameter for current formatter?
+		local
+			a_cell: ?DS_CELL [INTEGER]
 		do
-			Result := {l_cell: DS_CELL [INTEGER]} a_parameter and then l_cell.item >= 0
+			a_cell ?= a_parameter
+			Result := a_cell /= Void and then a_cell.item >= 0
 		end
 
 feature -- Formatting

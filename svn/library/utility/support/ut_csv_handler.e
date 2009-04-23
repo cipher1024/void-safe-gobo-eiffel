@@ -93,7 +93,6 @@ feature -- Input
 			a_action_not_void: a_action /= Void
 		local
 			l_cells: DS_ARRAYED_LIST [STRING]
-			l_last_string: ?STRING
 		do
 			if not a_file.end_of_input then
 				create l_cells.make (512)
@@ -102,9 +101,7 @@ feature -- Input
 				until
 					a_file.end_of_input
 				loop
-					l_last_string := a_file.last_string
-					check l_last_string /= Void end -- implied by postcondition of `file.read_line'
-					read_row (l_last_string, l_cells)
+					read_row (a_file.last_string, l_cells)
 					a_action.call ([l_cells])
 					l_cells.wipe_out
 					a_file.read_line

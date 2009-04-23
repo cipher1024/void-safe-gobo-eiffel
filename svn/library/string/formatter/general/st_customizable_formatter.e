@@ -8,8 +8,8 @@ indexing
 	library: "Gobo Eiffel String Library"
 	copyright: "Copyright (c) 2004-2005, Object-Tools and others"
 	license: "MIT License"
-	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
-	revision: "$Revision: 6626 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
+	revision: "$Revision: 6627 $"
 
 class ST_CUSTOMIZABLE_FORMATTER
 
@@ -69,7 +69,6 @@ feature -- Parameter formatters
 	put_scientific_parameter_formatters is
 			-- Add scientific parameter formatters.
 		local
-			l_parameter_formatters: like parameter_formatters
 			a_boolean_formatter: ST_BOOLEAN_FORMATTER
 			a_character_formatter: ST_CHARACTER_FORMATTER
 			a_floating_point_formatter: ST_FLOATING_POINT_FORMATTER
@@ -82,35 +81,34 @@ feature -- Parameter formatters
 			a_pointer_formatter: ST_POINTER_FORMATTER
 			a_string_formatter: ST_STRING_FORMATTER
 		do
-			l_parameter_formatters := parameter_formatters
 			create a_boolean_formatter.make
-			l_parameter_formatters.force (a_boolean_formatter, 'b')
-			l_parameter_formatters.force (a_boolean_formatter, 'B')
+			parameter_formatters.force (a_boolean_formatter, 'b')
+			parameter_formatters.force (a_boolean_formatter, 'B')
 			create a_character_formatter.make
-			l_parameter_formatters.force (a_character_formatter, 'c')
+			parameter_formatters.force (a_character_formatter, 'c')
 			create a_floating_point_formatter.make
-			l_parameter_formatters.force (a_floating_point_formatter, 'e')
-			l_parameter_formatters.force (a_floating_point_formatter, 'E')
+			parameter_formatters.force (a_floating_point_formatter, 'e')
+			parameter_formatters.force (a_floating_point_formatter, 'E')
 			create a_fixed_point_formatter.make
-			l_parameter_formatters.force (a_fixed_point_formatter, 'f')
+			parameter_formatters.force (a_fixed_point_formatter, 'f')
 			create a_fixed_or_floating_point_formatter.make
-			l_parameter_formatters.force (a_fixed_or_floating_point_formatter, 'g')
-			l_parameter_formatters.force (a_fixed_or_floating_point_formatter, 'G')
+			parameter_formatters.force (a_fixed_or_floating_point_formatter, 'g')
+			parameter_formatters.force (a_fixed_or_floating_point_formatter, 'G')
 			create a_decimal_formatter.make
-			l_parameter_formatters.force (a_decimal_formatter, 'd')
-			l_parameter_formatters.force (a_decimal_formatter, 'i')
+			parameter_formatters.force (a_decimal_formatter, 'd')
+			parameter_formatters.force (a_decimal_formatter, 'i')
 			create an_octal_formatter.make
-			l_parameter_formatters.force (an_octal_formatter, 'o')
+			parameter_formatters.force (an_octal_formatter, 'o')
 			create an_hexadecimal_formatter.make
-			l_parameter_formatters.force (an_hexadecimal_formatter, 'x')
-			l_parameter_formatters.force (an_hexadecimal_formatter, 'X')
+			parameter_formatters.force (an_hexadecimal_formatter, 'x')
+			parameter_formatters.force (an_hexadecimal_formatter, 'X')
 			create an_unsigned_decimal_formatter.make
-			l_parameter_formatters.force (an_unsigned_decimal_formatter, 'u')
+			parameter_formatters.force (an_unsigned_decimal_formatter, 'u')
 			create a_pointer_formatter.make
-			l_parameter_formatters.force (a_pointer_formatter, 'p')
-			l_parameter_formatters.force (a_pointer_formatter, 'P')
+			parameter_formatters.force (a_pointer_formatter, 'p')
+			parameter_formatters.force (a_pointer_formatter, 'P')
 			create a_string_formatter.make
-			l_parameter_formatters.force (a_string_formatter, 's')
+			parameter_formatters.force (a_string_formatter, 's')
 		end
 
 	remove_parameter_formatter (a_formatter: ST_PARAMETER_FORMATTER; a_typechar: CHARACTER) is
@@ -128,14 +126,10 @@ feature {NONE} -- Parameter formatters
 	internal_parameter_formatter (a_typechar: CHARACTER): ?ST_PARAMETER_FORMATTER is
 			-- Formatter for parameter of type `a_typechar';
 			-- Void if no such parameter formatter
-		local
-			l_parameter_formatters: like parameter_formatters
 		do
-			l_parameter_formatters := parameter_formatters
-			l_parameter_formatters.search (a_typechar)
-			if l_parameter_formatters.found then
-				Result := l_parameter_formatters.found_item
-				check Result /= Void end
+			parameter_formatters.search (a_typechar)
+			if parameter_formatters.found then
+				Result := parameter_formatters.found_item
 				Result.reset_options
 				Result.set_lowercase (a_typechar >= 'a' and a_typechar <= 'z')
 			end

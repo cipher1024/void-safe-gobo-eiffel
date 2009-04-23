@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Time Library"
 	copyright: "Copyright (c) 2009, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-04-16 23:31:51 +0200 (Thu, 16 Apr 2009) $"
-	revision: "$Revision: 6625 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
+	revision: "$Revision: 6627 $"
 
 class DT_STOPWATCH
 

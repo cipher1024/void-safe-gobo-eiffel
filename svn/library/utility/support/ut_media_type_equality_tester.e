@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Utility Library"
 	copyright: "Copyright (c) 2005, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
-	revision: "$Revision: 5877 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
+	revision: "$Revision: 6627 $"
 
 class UT_MEDIA_TYPE_EQUALITY_TESTER
 

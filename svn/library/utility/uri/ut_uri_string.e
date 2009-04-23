@@ -96,7 +96,7 @@ feature -- Access
 			l_decoded_utf8_impl := decoded_utf8_impl
 			if l_decoded_utf8_impl = Void then
 				l_decoded_utf8_impl := Url_encoding.unescape_utf8 (encoded)
-				check l_decoded_utf8_impl /= Void end
+				check l_decoded_utf8_impl /= Void end -- implied by ???
 				decoded_utf8_impl := l_decoded_utf8_impl
 			end
 			Result := l_decoded_utf8_impl

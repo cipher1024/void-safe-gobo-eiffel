@@ -6,8 +6,8 @@ indexing
 
 	library: "Gobo Eiffel Utility Library"
 	author: "Copyright (c) 2004, Eric Bezault and others"
-	revision: "$Revision: 4860 $"
-	date: "$Date: 2005-04-03 14:06:12 +0200 (Sun, 03 Apr 2005) $"
+	revision: "$Revision: 6627 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
 
 class UT_URI_EQUALITY_TESTER
 

@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Time Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-09-28 20:36:52 +0200 (Sun, 28 Sep 2008) $"
-	revision: "$Revision: 6525 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
+	revision: "$Revision: 6627 $"
 
 deferred class DT_ZONED
 
