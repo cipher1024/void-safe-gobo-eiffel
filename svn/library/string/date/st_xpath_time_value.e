@@ -77,11 +77,17 @@ feature -- Access
 		do
 			if zoned then
 				l_zoned_time := zoned_time
-				check l_zoned_time /= Void end -- implied by `zoned'
+				check 
+						-- condition `zoned'
+					zoned: l_zoned_time /= Void 
+				end
 				l_time := l_zoned_time.time
 			else
 				l_time := local_time
-				check l_time /= Void end -- implied by `not zoned'
+				check 
+						-- condition `not zoned'
+					not_zoned: l_time /= Void 
+				end
 			end
 			Result := l_time
 		ensure

@@ -72,16 +72,22 @@ feature -- Access
 	date: DT_DATE is
 			-- Date component
 		local
-			l_date: ?like date
+			l_date: ?DT_DATE
 			l_zoned_date: like zoned_date
 		do
 			if zoned then
 				l_zoned_date := zoned_date
-				check l_zoned_date /= Void end -- implied by `zoned'
+				check 
+						-- condition `zoned'
+					zoned: l_zoned_date /= Void 
+				end
 				l_date := l_zoned_date.date
 			else
 				l_date := local_date
-				check l_date /= Void end -- implied by `not zoned'
+				check 
+						-- condition `not zoned'
+					not_zoned: l_date /= Void 
+				end
 			end
 			Result := l_date
 		end

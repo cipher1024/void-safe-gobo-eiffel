@@ -224,15 +224,24 @@ feature -- Access
 		do
 			if is_xpath_time then
 				l_zoned_time := as_xpath_time.zoned_time
-				check l_zoned_time /= Void end -- implied by precondition `zoned_value'
+				check 
+						-- precondition `zoned_value'
+					zoned_value: l_zoned_time /= Void 
+				end
 				l_time_zone := l_zoned_time.time_zone
 			elseif is_xpath_date then
 				l_zoned_date := as_xpath_date.zoned_date
-				check l_zoned_date /= Void end -- implied by precondition `zoned_value'
+				check 
+						-- precondition `zoned_value'
+					zoned_value: l_zoned_date /= Void 
+				end
 				l_time_zone := l_zoned_date.time_zone
 			else
 				l_zoned_date_time := as_xpath_date_time.zoned_date_time
-				check l_zoned_date_time /= Void end -- implied by precondition `zoned_value'
+				check 
+						-- precondition `zoned_value'
+					zoned_value: l_zoned_date_time /= Void 
+				end
 				l_time_zone := l_zoned_date_time.time_zone
 			end
 			Result := l_time_zone.name
@@ -282,9 +291,12 @@ feature -- Conversion
 		require
 			is_xpath_time_value: is_xpath_time
 		local
-			v: ?like as_xpath_time
+			v: ?ST_XPATH_TIME_VALUE
 		do
-			check should_not_occur: v /= Void end
+			check 
+					-- Fool the compiler for void-safety purpose
+				should_not_occur: v /= Void 
+			end
 			Result := v
 		ensure
 			same_object: ANY_.same_objects (Result, Current)
@@ -295,9 +307,12 @@ feature -- Conversion
 		require
 			is_xpath_date_value: is_xpath_date
 		local
-			v: ?like as_xpath_date
+			v: ?ST_XPATH_DATE_VALUE
 		do
-			check should_not_occur: v /= Void end
+			check 
+					-- Fool the compiler for void-safety purpose
+				should_not_occur: v /= Void 
+			end
 			Result := v
 		ensure
 			same_object: ANY_.same_objects (Result, Current)
@@ -308,9 +323,12 @@ feature -- Conversion
 		require
 			is_xpath_date_time_value: is_xpath_date_time
 		local
-			v: ?like as_xpath_date_time
+			v: ?ST_XPATH_DATE_TIME_VALUE
 		do
-			check should_not_occur: v /= Void end
+			check 
+					-- Fool the compiler for void-safety purpose
+				should_not_occur: v /= Void 
+			end
 			Result := v
 		ensure
 			same_object: ANY_.same_objects (Result, Current)
