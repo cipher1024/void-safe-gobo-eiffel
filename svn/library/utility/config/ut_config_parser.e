@@ -263,7 +263,11 @@ debug ("GEYACC")
 end
 
 			if not ignored then
-				define_value ("", yyvs2.item (yyvsp2))
+				if {l_define_value_2: STRING} yyvs2.item (yyvsp2) then
+					define_value ("", l_define_value_2)
+				else
+					check False end
+				end
 			end
 		
 if yy_parsing_status >= yyContinue then
@@ -273,13 +277,17 @@ if yy_parsing_status >= yyContinue then
 	yyvs1.put (yyval1, yyvsp1)
 end
 when 8 then
---|#line 74 "ut_config_parser.y"
+--|#line 78 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 74")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 78")
 end
 
 			if not ignored then
-				undefine_value (yyvs2.item (yyvsp2))
+				if {l_undefine_value_2: STRING} yyvs2.item (yyvsp2) then
+					undefine_value (l_undefine_value_2)
+				else
+					check False end
+				end
 			end
 		
 if yy_parsing_status >= yyContinue then
@@ -289,13 +297,17 @@ if yy_parsing_status >= yyContinue then
 	yyvs1.put (yyval1, yyvsp1)
 end
 when 9 then
---|#line 80 "ut_config_parser.y"
+--|#line 88 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 80")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 88")
 end
 
 			if not ignored then
-				process_include (yyvs2.item (yyvsp2))
+				if {l_process_include_2: STRING} yyvs2.item (yyvsp2) then
+					process_include (l_process_include_2)
+				else
+					check False end
+				end
 			end
 		
 if yy_parsing_status >= yyContinue then
@@ -305,13 +317,17 @@ if yy_parsing_status >= yyContinue then
 	yyvs1.put (yyval1, yyvsp1)
 end
 when 10 then
---|#line 86 "ut_config_parser.y"
+--|#line 98 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 86")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 98")
 end
 
 			if not ignored then
-				config_values.force (yyvs2.item (yyvsp2), yyvs2.item (yyvsp2 - 1))
+				if {l_instr_3: STRING} yyvs2.item (yyvsp2) and {l_instr_1: STRING} yyvs2.item (yyvsp2 - 1) then
+					config_values.force (l_instr_3, l_instr_1)
+				else
+					check False end
+				end
 			end
 		
 if yy_parsing_status >= yyContinue then
@@ -321,13 +337,17 @@ if yy_parsing_status >= yyContinue then
 	yyvs1.put (yyval1, yyvsp1)
 end
 when 11 then
---|#line 92 "ut_config_parser.y"
+--|#line 108 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 92")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 108")
 end
 
 			if not ignored then
-				config_values.force ("", yyvs2.item (yyvsp2))
+				if {l_instr_s1: STRING} yyvs2.item (yyvsp2) then
+					config_values.force ("", l_instr_s1)
+				else
+					check False end
+				end
 			end
 		
 if yy_parsing_status >= yyContinue then
@@ -337,9 +357,9 @@ if yy_parsing_status >= yyContinue then
 	yyvs1.put (yyval1, yyvsp1)
 end
 when 12 then
---|#line 98 "ut_config_parser.y"
+--|#line 118 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 98")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 118")
 end
 
 			-- Empty lines are skipped.
@@ -349,9 +369,9 @@ if yy_parsing_status >= yyContinue then
 	yyvs1.put (yyval1, yyvsp1)
 end
 when 13 then
---|#line 104 "ut_config_parser.y"
+--|#line 124 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 104")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 124")
 end
 
 			if_level := if_level + 1
@@ -366,9 +386,9 @@ if yy_parsing_status >= yyContinue then
 	yyvs1.put (yyval1, yyvsp1)
 end
 when 14 then
---|#line 111 "ut_config_parser.y"
+--|#line 131 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 111")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 131")
 end
 
 			if_level := if_level + 1
@@ -383,12 +403,16 @@ if yy_parsing_status >= yyContinue then
 	yyvs1.put (yyval1, yyvsp1)
 end
 when 15 then
---|#line 120 "ut_config_parser.y"
+--|#line 140 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 120")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 140")
 end
 
-			yyval3 := is_defined (yyvs2.item (yyvsp2))
+			if {l_is_defined_1: STRING} yyvs2.item (yyvsp2) then
+				yyval3 := is_defined (l_is_defined_1)
+			else
+				check False end
+			end
 		
 if yy_parsing_status >= yyContinue then
 	yyssp := yyssp - 1
@@ -404,9 +428,9 @@ if yy_parsing_status >= yyContinue then
 	yyvs3.put (yyval3, yyvsp3)
 end
 when 16 then
---|#line 124 "ut_config_parser.y"
+--|#line 148 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 124")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 148")
 end
 
 			yyval3 := yyvs3.item (yyvsp3)
@@ -417,9 +441,9 @@ if yy_parsing_status >= yyContinue then
 	yyvs3.put (yyval3, yyvsp3)
 end
 when 17 then
---|#line 128 "ut_config_parser.y"
+--|#line 152 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 128")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 152")
 end
 
 			yyval3 := yyvs3.item (yyvsp3 - 1) and yyvs3.item (yyvsp3)
@@ -431,9 +455,9 @@ if yy_parsing_status >= yyContinue then
 	yyvs3.put (yyval3, yyvsp3)
 end
 when 18 then
---|#line 132 "ut_config_parser.y"
+--|#line 156 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 132")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 156")
 end
 
 			yyval3 := yyvs3.item (yyvsp3 - 1) or yyvs3.item (yyvsp3)
@@ -445,9 +469,9 @@ if yy_parsing_status >= yyContinue then
 	yyvs3.put (yyval3, yyvsp3)
 end
 when 19 then
---|#line 136 "ut_config_parser.y"
+--|#line 160 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 136")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 160")
 end
 
 			yyval3 := not yyvs3.item (yyvsp3)
@@ -458,9 +482,9 @@ if yy_parsing_status >= yyContinue then
 	yyvs3.put (yyval3, yyvsp3)
 end
 when 20 then
---|#line 142 "ut_config_parser.y"
+--|#line 166 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 142")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 166")
 end
 
 			if ignored_level = if_level then
@@ -474,9 +498,9 @@ if yy_parsing_status >= yyContinue then
 	yyvs1.put (yyval1, yyvsp1)
 end
 when 21 then
---|#line 151 "ut_config_parser.y"
+--|#line 175 "ut_config_parser.y"
 debug ("GEYACC")
-	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 151")
+	std.error.put_line ("Executing parser user-code from file 'ut_config_parser.y' at line 175")
 end
 
 			if not ignored then
@@ -763,7 +787,7 @@ feature -- Parsing
 
 feature -- Processing
 
-	process_include (a_filename: ?STRING) is
+	process_include (a_filename: STRING) is
 			-- Parse include file `a_filename'.
 			-- Do not allow more than 10 nested include files.
 		require
@@ -841,7 +865,7 @@ feature -- Status report
 			Result := ignored_level /= 0
 		end
 
-	is_defined (a_name: ?STRING): BOOLEAN is
+	is_defined (a_name: STRING): BOOLEAN is
 			-- Is `a_name' defined?
 		require
 			a_name_not_void: a_name/= Void
@@ -851,12 +875,12 @@ feature -- Status report
 
 feature -- Access
 
-	config_values: DS_HASH_TABLE [?STRING, ?STRING]
+	config_values: DS_HASH_TABLE [STRING, STRING]
 			-- Name/value pairs read from the config file so far
 
 feature -- Element change
 
-	define_value (a_value: ?STRING; a_name: ?STRING) is
+	define_value (a_value: STRING; a_name: STRING) is
 			-- Define `a_name' with `a_value'.
 		require
 			a_value_not_void: a_value /= Void
@@ -867,7 +891,7 @@ feature -- Element change
 			a_name_defined: is_defined (a_name)
 		end
 
-	undefine_value (a_name: ?STRING) is
+	undefine_value (a_name: STRING) is
 			-- Undefine `a_name'.
 		require
 			a_name_not_void: a_name /= Void

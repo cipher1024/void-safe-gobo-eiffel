@@ -68,31 +68,51 @@ Instruction: If_condition Instructions Endif
 	| P_DEFINE P_NAME P_EOL
 		{
 			if not ignored then
-				define_value ("", $2)
+				if {l_define_value_2: STRING} $2 then
+					define_value ("", l_define_value_2)
+				else
+					check False end
+				end
 			end
 		}
 	| P_UNDEF P_NAME P_EOL
 		{
 			if not ignored then
-				undefine_value ($2)
+				if {l_undefine_value_2: STRING} $2 then
+					undefine_value (l_undefine_value_2)
+				else
+					check False end
+				end
 			end
 		}
 	| P_INCLUDE P_STRING P_EOL
 		{
 			if not ignored then
-				process_include ($2)
+				if {l_process_include_2: STRING} $2 then
+					process_include (l_process_include_2)
+				else
+					check False end
+				end
 			end
 		}
 	| P_NAME P_COLON P_VALUE P_EOL
 		{
 			if not ignored then
-				config_values.force ($3, $1)
+				if {l_instr_3: STRING} $3 and {l_instr_1: STRING} $1 then
+					config_values.force (l_instr_3, l_instr_1)
+				else
+					check False end
+				end
 			end
 		}
 	| P_NAME P_COLON P_EOL
 		{
 			if not ignored then
-				config_values.force ("", $1)
+				if {l_instr_s1: STRING} $1 then
+					config_values.force ("", l_instr_s1)
+				else
+					check False end
+				end
 			end
 		}
 	| P_EOL
@@ -119,7 +139,11 @@ If_condition: P_IFDEF Condition P_EOL
 
 Condition: P_NAME
 		{
-			$$ := is_defined ($1)
+			if {l_is_defined_1: STRING} $1 then
+				$$ := is_defined (l_is_defined_1)
+			else
+				check False end
+			end
 		}
 	| '(' Condition ')'
 		{
@@ -218,7 +242,7 @@ feature -- Parsing
 
 feature -- Processing
 
-	process_include (a_filename: ?STRING) is
+	process_include (a_filename: STRING) is
 			-- Parse include file `a_filename'.
 			-- Do not allow more than 10 nested include files.
 		require
@@ -296,7 +320,7 @@ feature -- Status report
 			Result := ignored_level /= 0
 		end
 
-	is_defined (a_name: ?STRING): BOOLEAN is
+	is_defined (a_name: STRING): BOOLEAN is
 			-- Is `a_name' defined?
 		require
 			a_name_not_void: a_name/= Void
@@ -306,12 +330,12 @@ feature -- Status report
 
 feature -- Access
 
-	config_values: DS_HASH_TABLE [?STRING, ?STRING]
+	config_values: DS_HASH_TABLE [STRING, STRING]
 			-- Name/value pairs read from the config file so far
 
 feature -- Element change
 
-	define_value (a_value: ?STRING; a_name: ?STRING) is
+	define_value (a_value: STRING; a_name: STRING) is
 			-- Define `a_name' with `a_value'.
 		require
 			a_value_not_void: a_value /= Void
@@ -322,7 +346,7 @@ feature -- Element change
 			a_name_defined: is_defined (a_name)
 		end
 
-	undefine_value (a_name: ?STRING) is
+	undefine_value (a_name: STRING) is
 			-- Undefine `a_name'.
 		require
 			a_name_not_void: a_name /= Void
