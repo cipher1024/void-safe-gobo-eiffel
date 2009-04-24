@@ -177,10 +177,7 @@ feature -- Status report
 			loop
 				l_option := options.item_for_iteration
 				l_long_form := l_option.long_form
-				if
-					l_long_form /= Void and then
-					l_long_form.same_string (an_option)
-				then
+				if l_long_form /= Void and then	l_long_form.same_string (an_option) then
 					check l_option.has_long_form end
 					Result := True
 					options.go_after
@@ -428,7 +425,7 @@ feature {NONE} -- Implementation
 			l_current_options: like current_options
 		do
 			l_current_options := current_options
-			check l_current_options /= Void end
+			check l_current_options /= Void end -- Implied by precondition `current_options_attached'
 			from
 				l_current_options.start
 			until
@@ -459,7 +456,8 @@ feature {NONE} -- Implementation
 			l_parameters: like parameters
 		do
 			l_parameters := parameters
-			check l_parameters /= Void end
+			check l_parameters /= Void end -- Implied by precondition `parameters_attached'
+
 			l_argument := a_list.item_for_iteration
 			length := l_argument.count
 			if length >= 2 and then l_argument.item (1) = short_option_introduction then
@@ -490,10 +488,8 @@ feature {NONE} -- Implementation
 		require
 			a_list_attached: a_list /= Void
 			a_list_not_off: not a_list.off
-			current_is_long_option: {rl_item: STRING} a_list.item_for_iteration and then
-				rl_item.count >= 2 and then
-				(rl_item.item (1) = short_option_introduction and
-			 	rl_item.item (2) = long_option_introduction)
+			current_is_long_option: {rl_item: STRING} a_list.item_for_iteration and then rl_item.count >= 2 and then
+				(rl_item.item (1) = short_option_introduction and rl_item.item (2) = long_option_introduction)
 		local
 			l_argument: STRING
 			option_string: STRING
@@ -533,7 +529,7 @@ feature {NONE} -- Implementation
 			end
 			if option = Void then
 				l_current_options := current_options
-				check l_current_options /= Void end -- implied by ... ?
+				check l_current_options /= Void end -- implied by logic of `parse_long' and preconditions
 				from
 					l_current_options.start
 				until
@@ -625,7 +621,7 @@ feature {NONE} -- Implementation
 				end
 				if option = Void then
 					l_current_options := current_options
-					check l_current_options /= Void end -- implied by ... ?
+					check l_current_options /= Void end -- implied by logic of `parse_short' and preconditions
 					from
 						l_current_options.start
 					until

@@ -109,15 +109,14 @@ feature {AP_PARSER} -- Parser Interface
 			l_last_option_parameter: ?STRING
 		do
 			l_last_option_parameter := a_parser.last_option_parameter
-			if l_last_option_parameter /= Void then
-				if true_strings.has (l_last_option_parameter) then
-					parameters.force_last (True)
-				elseif false_strings.has (l_last_option_parameter) then
-					parameters.force_last (False)
-				else
-					create error.make_invalid_parameter_error (Current, l_last_option_parameter)
-					a_parser.error_handler.report_error (error)
-				end
+			check l_last_option_parameter /= Void end -- Implied by inherited precondition `parameter_if_needed' and value of `needs_parameter'
+			if true_strings.has (l_last_option_parameter) then
+				parameters.force_last (True)
+			elseif false_strings.has (l_last_option_parameter) then
+				parameters.force_last (False)
+			else
+				create error.make_invalid_parameter_error (Current, l_last_option_parameter)
+				a_parser.error_handler.report_error (error)
 			end
 		end
 

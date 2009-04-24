@@ -36,7 +36,7 @@ feature {NONE} -- Initialization
 
 feature -- Access
 
-	parameters: DS_LIST [STRING]
+	parameters: DS_LIST [?STRING]
 			-- List of parameters that were give to this option
 
 feature -- Status report
@@ -64,17 +64,13 @@ feature {AP_PARSER} -- Parser Interface
 	reset is
 			-- Reset the option to a clean state before parsing.
 		do
-			create {DS_ARRAYED_LIST [STRING]} parameters.make (1)
+			create {DS_ARRAYED_LIST [?STRING]} parameters.make (1)
 		end
 
 	record_occurrence (a_parser: AP_PARSER) is
 			-- This option was found during parsing by `a_parser'.
-		local
-			l_last_option_parameter: ?STRING
 		do
-			l_last_option_parameter := a_parser.last_option_parameter
-			check l_last_option_parameter /= Void end
-			parameters.force_last (l_last_option_parameter)
+			parameters.force_last (a_parser.last_option_parameter)
 		end
 
 end

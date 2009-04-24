@@ -47,10 +47,9 @@ feature -- Access
 				Result.append_character (' ')
 				Result.append_string (parameter_description)
 			else
+				Result.append_character (long_option_introduction)
 				l_long_form := long_form
 				check l_long_form /= Void end -- implied by inherited invariant has_short_or_long
-				Result.append_character (long_option_introduction)
-
 				Result.append_string (l_long_form)
 				if not needs_parameter then
 					Result.append_character ('[')
@@ -88,7 +87,7 @@ feature -- Access
 	parameter_description: STRING
 			-- Name of the parameter
 
-	parameter: G is
+	parameter: ?G is
 			-- Last value give to the option
 		require
 			was_found: was_found
@@ -96,7 +95,7 @@ feature -- Access
 			Result := parameters.last
 		end
 
-	parameters: DS_LIST [G] is
+	parameters: DS_LIST [?G] is
 			-- All parameters given to the option
 		deferred
 		end

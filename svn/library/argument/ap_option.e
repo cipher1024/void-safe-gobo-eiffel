@@ -100,8 +100,11 @@ feature -- Access
 
 	name: STRING is
 			-- Name of the option (short or long from)
+		local
+			l_long_form: like long_form
 		do
-			if {l_long_form: like long_form} long_form then
+			l_long_form := long_form
+			if l_long_form /= Void then
 				check has_long_form: has_long_form end
 				Result := short_option_introduction.out + long_option_introduction.out + l_long_form
 			else
@@ -115,12 +118,14 @@ feature -- Access
 			-- Names of the option (short and long)
 		local
 			s: ?STRING
+			l_long_form: like long_form
 		do
 			if has_short_form then
 				s := short_option_introduction.out
 				s.append_character (short_form)
 			end
-			if {l_long_form: like long_form} long_form then
+			l_long_form := long_form
+			if l_long_form /= Void then
 				check has_long_form end
 				if s = Void then
 					s := "    "

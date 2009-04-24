@@ -62,14 +62,13 @@ feature {AP_PARSER} -- Parser Interface
 			l_last_option_parameter: ?STRING
 		do
 			l_last_option_parameter := a_parser.last_option_parameter
-			if l_last_option_parameter /= Void then
-				if l_last_option_parameter.is_integer then
-					parameters.force_last (l_last_option_parameter.to_integer)
-				else
-					create error.make_invalid_parameter_error (Current, l_last_option_parameter)
-					a_parser.error_handler.report_error (error)
-					parameters.force_last (0)
-				end
+			check l_last_option_parameter /= Void end -- Implied by inherited precondition `parameter_if_needed' and value of `needs_parameter'
+			if l_last_option_parameter.is_integer then
+				parameters.force_last (l_last_option_parameter.to_integer)
+			else
+				create error.make_invalid_parameter_error (Current, l_last_option_parameter)
+				a_parser.error_handler.report_error (error)
+				parameters.force_last (0)
 			end
 		end
 
