@@ -54,7 +54,7 @@ feature -- Formatting
 			check
 					-- From precondition 'valid_parameter'.
 				valid_parameter: a_string /= Void
-			end -- implied by precondition `valid_parameter'
+			end
 			string_format_to (a_string, a_stream)
 		end
 

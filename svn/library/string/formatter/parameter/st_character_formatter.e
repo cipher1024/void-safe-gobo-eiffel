@@ -44,7 +44,6 @@ feature -- Formatting
 			check
 					-- From precondition 'valid_parameter'.
 				valid_parameter: a_cell /= Void
- 				-- implied by precondition `valid_parameter'				
 			end
 			character_format_to (a_cell.item, a_stream)
 		end
