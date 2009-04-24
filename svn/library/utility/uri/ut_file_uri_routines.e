@@ -35,7 +35,10 @@ feature -- Filename
 			Result := file_system.pathname_to_string (uri_to_pathname (a_uri))
 			if a_uri.has_path_base then
 				l_path_base_item := a_uri.path_base_item
-				check l_path_base_item /= Void end -- implied by `has_path_base'
+				check
+						-- condition `a_uri.has_path_base'
+					a_uri_has_path_base: l_path_base_item /= Void
+				end
 				Result := file_system.pathname (Result, uri_component_to_pathname (l_path_base_item))
 			end
 			debug ("file_uri")
@@ -85,7 +88,10 @@ feature -- Pathname
 			create Result.make
 			if a_uri.has_authority then
 				a_uri_authority_item := a_uri.authority_item
-				check a_uri_authority_item /= Void end -- implied by `has_authority'
+				check
+						-- condition `a_uri.has_authority'
+					a_uri_has_authority: a_uri_authority_item /= Void
+				end
 				if not a_uri_authority_item.decoded.same_string (Localhost_authority) then
 					Result.set_hostname (a_uri.authority)
 				end
@@ -161,9 +167,7 @@ feature -- Pathname
 				end
 			end
 			from i := 1 until i > nb loop
-				s := a_pathname.item (i)
-				check s /= Void end
-				a_path.put_last (pathname_to_uri_component (s))
+				a_path.put_last (pathname_to_uri_component (a_pathname.item (i)))
 				i := i + 1
 			end
 			Result.set_path_items (not a_pathname.is_relative, a_path)
