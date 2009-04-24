@@ -41,7 +41,7 @@ feature -- Status report
 	is_last: BOOLEAN is
 			-- Is internal cursor on last item?
 		do
-			Result := cursor_is_last (attached_internal_cursor)
+			Result := cursor_is_last (internal_cursor)
 		ensure
 			not_empty: Result implies not is_empty
 			not_off: Result implies not off
@@ -51,7 +51,7 @@ feature -- Status report
 	before: BOOLEAN is
 			-- Is there no valid position to left of internal cursor?
 		do
-			Result := cursor_before (attached_internal_cursor)
+			Result := cursor_before (internal_cursor)
 		end
 
 feature -- Cursor movement
@@ -59,7 +59,7 @@ feature -- Cursor movement
 	finish is
 			-- Move internal cursor to last position.
 		do
-			cursor_finish (attached_internal_cursor)
+			cursor_finish (internal_cursor)
 		ensure
 			empty_behavior: is_empty implies before
 			not_empty_behavior: not is_empty implies is_last
@@ -70,7 +70,7 @@ feature -- Cursor movement
 		require
 			not_before: not before
 		do
-			cursor_back (attached_internal_cursor)
+			cursor_back (internal_cursor)
 		end
 
 	search_back (v: G) is
@@ -82,13 +82,13 @@ feature -- Cursor movement
 		require
 			not_off: not off or before
 		do
-			cursor_search_back (attached_internal_cursor, v)
+			cursor_search_back (internal_cursor, v)
 		end
 
 	go_before is
 			-- Move internal cursor to `before' position.
 		do
-			cursor_go_before (attached_internal_cursor)
+			cursor_go_before (internal_cursor)
 		ensure
 			before: before
 		end

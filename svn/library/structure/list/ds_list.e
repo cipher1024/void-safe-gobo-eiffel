@@ -26,7 +26,7 @@ feature -- Access
 	index: INTEGER is
 			-- Index of current internal cursor position
 		do
-			Result := cursor_index (attached_internal_cursor)
+			Result := cursor_index (internal_cursor)
 		ensure
 			valid_index: valid_index (Result)
 		end
@@ -53,7 +53,7 @@ feature -- Cursor movement
 		require
 			valid_index: valid_index (i)
 		do
-			cursor_go_i_th (attached_internal_cursor, i)
+			cursor_go_i_th (internal_cursor, i)
 		ensure
 			moved: index = i
 		end
@@ -67,7 +67,7 @@ feature -- Element change
 			extendible: extendible (1)
 			not_before: not before
 		do
-			put_left_cursor (v, attached_internal_cursor)
+			put_left_cursor (v, internal_cursor)
 		ensure
 			one_more: count = old count + 1
 		end
@@ -93,7 +93,7 @@ feature -- Element change
 			extendible: extendible (1)
 			not_after: not after
 		do
-			put_right_cursor (v, attached_internal_cursor)
+			put_right_cursor (v, internal_cursor)
 		ensure
 			one_more: count = old count + 1
 		end
@@ -118,7 +118,7 @@ feature -- Element change
 		require
 			not_before: not before
 		do
-			force_left_cursor (v, attached_internal_cursor)
+			force_left_cursor (v, internal_cursor)
 		ensure
 			one_more: count = old count + 1
 		end
@@ -142,7 +142,7 @@ feature -- Element change
 		require
 			not_after: not after
 		do
-			force_right_cursor (v, attached_internal_cursor)
+			force_right_cursor (v, internal_cursor)
 		ensure
 			one_more: count = old count + 1
 		end
@@ -166,7 +166,7 @@ feature -- Element change
 		require
 			not_off: not off
 		do
-			attached_internal_cursor.replace (v)
+			internal_cursor.replace (v)
 		ensure
 			same_count: count = old count
 			replaced: item_for_iteration = v
@@ -196,7 +196,7 @@ feature -- Element change
 			extendible: extendible (other.count)
 			not_before: not before
 		do
-			extend_left_cursor (other, attached_internal_cursor)
+			extend_left_cursor (other, internal_cursor)
 		ensure
 			new_count: count = old count + old other.count
 			same_order: (not other.is_empty) implies (item (old index) = other.first)
@@ -228,7 +228,7 @@ feature -- Element change
 			extendible: extendible (other.count)
 			not_after: not after
 		do
-			extend_right_cursor (other, attached_internal_cursor)
+			extend_right_cursor (other, internal_cursor)
 		ensure
 			new_count: count = old count + old other.count
 			same_order: (not other.is_empty) implies (item (index + 1) = other.first)
@@ -259,7 +259,7 @@ feature -- Element change
 			other_not_void: other /= Void
 			not_before: not before
 		do
-			append_left_cursor (other, attached_internal_cursor)
+			append_left_cursor (other, internal_cursor)
 		ensure
 			new_count: count = old count + old other.count
 			same_order: (not other.is_empty) implies (item (old index) = other.first)
@@ -289,7 +289,7 @@ feature -- Element change
 			other_not_void: other /= Void
 			not_after: not after
 		do
-			append_right_cursor (other, attached_internal_cursor)
+			append_right_cursor (other, internal_cursor)
 		ensure
 			new_count: count = old count + old other.count
 			same_order: (not other.is_empty) implies (item (index + 1) = other.first)
@@ -319,7 +319,7 @@ feature -- Removal
 		require
 			not_off: not off
 		do
-			remove_at_cursor (attached_internal_cursor)
+			remove_at_cursor (internal_cursor)
 		ensure
 			one_less: count = old count - 1
 		end
@@ -345,7 +345,7 @@ feature -- Removal
 			not_before: not before
 			not_first: not is_first
 		do
-			remove_left_cursor (attached_internal_cursor)
+			remove_left_cursor (internal_cursor)
 		ensure
 			one_less: count = old count - 1
 		end
@@ -373,7 +373,7 @@ feature -- Removal
 			not_after: not after
 			not_last: not is_last
 		do
-			remove_right_cursor (attached_internal_cursor)
+			remove_right_cursor (internal_cursor)
 		ensure
 			one_less: count = old count - 1
 		end
@@ -399,7 +399,7 @@ feature -- Removal
 		require
 			valid_n: 0 <= n and n < index
 		do
-			prune_left_cursor (n, attached_internal_cursor)
+			prune_left_cursor (n, internal_cursor)
 		ensure
 			new_count: count = old count - n
 		end
@@ -423,7 +423,7 @@ feature -- Removal
 		require
 			valid_n: 0 <= n and n <= (count - index)
 		do
-			prune_right_cursor (n, attached_internal_cursor)
+			prune_right_cursor (n, internal_cursor)
 		ensure
 			new_count: count = old count - n
 		end

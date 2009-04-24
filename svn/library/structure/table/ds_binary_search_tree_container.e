@@ -46,7 +46,7 @@ feature {NONE} -- Initialization
 		do
 			internal_set_key_comparator (a_comparator)
 			count := 0
-			internal_cursor := new_cursor
+			detachable_internal_cursor := new_cursor
 		ensure
 			comparator_set: key_comparator = a_comparator
 		end
@@ -859,7 +859,7 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER} -- Cursor implementation
 			successor_in_same_tree: Result /= Void implies are_nodes_in_same_tree (Result, v)
 		end
 
-	internal_cursor: ?like new_cursor
+	detachable_internal_cursor: ?like new_cursor
 			-- Internal cursor
 
 feature {NONE} -- Cursor movement
@@ -869,11 +869,11 @@ feature {NONE} -- Cursor movement
 		require
 			a_last_position_not_void: a_last_position /= Void
 		local
-			l_internal_cursor: like internal_cursor
+			l_internal_cursor: like detachable_internal_cursor
 			l_cursor: ?like new_cursor
 			l_previous_cursor: ?like new_cursor
 		do
-			l_internal_cursor := internal_cursor
+			l_internal_cursor := detachable_internal_cursor
 			check l_internal_cursor /= Void end
 			from
 				if l_internal_cursor.position = a_last_position then
@@ -900,10 +900,10 @@ feature {NONE} -- Cursor movement
 			a_old_node_not_void: a_old_node /= Void
 			a_new_node_not_void: a_new_node /= Void
 		local
-			l_cursor: like internal_cursor
+			l_cursor: like detachable_internal_cursor
 		do
 			from
-				l_cursor := internal_cursor
+				l_cursor := detachable_internal_cursor
 			until
 				l_cursor = Void
 			loop
@@ -917,9 +917,9 @@ feature {NONE} -- Cursor movement
 	move_all_cursors_after is
 			-- Move `after' all cursors.
 		local
-			l_internal_cursor, l_cursor: like internal_cursor
+			l_internal_cursor, l_cursor: like detachable_internal_cursor
 		do
-			l_internal_cursor := internal_cursor
+			l_internal_cursor := detachable_internal_cursor
 			check l_internal_cursor /= Void end -- FIXME:jfiat: no assertion precise it is not Void, potential bug in origin code
 			from
 				if not l_internal_cursor.off then

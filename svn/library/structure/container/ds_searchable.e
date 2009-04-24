@@ -45,8 +45,11 @@ feature -- Status report
 			-- Are `v' and `u' considered equal?
 			-- (Use `equality_tester''s comparison criterion
 			-- if not void, use `=' criterion otherwise.)
+		local
+			l_equality_tester: like equality_tester
 		do
-			if {l_equality_tester: like equality_tester} equality_tester then
+			l_equality_tester := equality_tester
+			if l_equality_tester /= Void then
 				Result := l_equality_tester.test (v, u)
 			else
 				Result := (v = u)

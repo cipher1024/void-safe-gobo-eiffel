@@ -114,7 +114,10 @@ feature -- Access
 			a_cell: like first_cell
 		do
 			a_cell := first_cell
-			check a_cell /= Void end -- implied by precondition `not_empty'
+			check 
+					-- precondition `not_empty' and invariant `first_cell'
+				first_cell_not_void: a_cell /= Void 
+			end
 			Result := a_cell.item
 		end
 
@@ -169,7 +172,10 @@ feature -- Duplication
 				if not other.is_empty then
 					from
 						old_cell := other.first_cell
-						check old_cell_attached: old_cell /= Void end -- implied by `not other.is_empty'
+						check 
+								-- condition `not other.is_empty' and invariant `first_cell' on `other'
+							old_cell_not_void: old_cell /= Void 
+						end
 						create a_cell.make (old_cell.item)
 						first_cell := a_cell
 						old_cell := old_cell.right
@@ -203,7 +209,10 @@ feature -- Comparison
 				until
 					a_cell = Void
 				loop
-					check other_cell_attached: other_cell /= Void end -- implied by `a_cell /= Void' and `other.count = count'
+					check 
+						-- other_cell is not Void because `a_cell /= Void', `other.count = count' and invariant `first_cell'
+						other_cell_not_void: other_cell /= Void 
+					end
 					if a_cell.item /= other_cell.item then
 						Result := False
 							-- Jump out of the loop.
@@ -231,7 +240,10 @@ feature -- Element change
 				count := 1
 			else
 				l_last_cell := last_cell
-				check l_last_cell /= Void end -- implied by `not is_empty'
+				check 
+						-- condition `not is_empty' and invariant `first_cell'
+					last_cell_not_void: l_last_cell /= Void 
+				end
 				l_last_cell.put_right (a_cell)
 				last_cell := a_cell
 				count := count + 1
@@ -266,6 +278,10 @@ feature -- Element change
 					first_cell := new_first
 				else
 					l_last_cell := last_cell
+					check 
+							-- condition `not is_empty' and invariant `first_cell'
+						last_cell_not_void: l_last_cell /= Void 
+					end
 					check l_last_cell /= Void end -- implied by `not is_empty'
 					l_last_cell.put_right (new_first)
 				end
@@ -285,7 +301,10 @@ feature -- Removal
 				wipe_out
 			else
 				a_cell := first_cell
-				check a_cell /= Void end -- implied by precondition `not_empty'
+				check 
+						-- inherited precondition `not_empty' and invariant `first_cell'
+					first_cell_not_void: a_cell /= Void 
+				end
 				first_cell := a_cell.right
 				count := count - 1
 			end
@@ -301,14 +320,20 @@ feature -- Removal
 				wipe_out
 			else
 				a_cell := first_cell
-				check a_cell /= Void end -- implied by `n /= count' and precondition `valid_n'
+				check 
+						-- inherited precondition `not_empty' and invariant `first_cell'
+					first_cell_not_void: a_cell /= Void 
+				end
 				from
 					i := 1
 				until
 					i > n
 				loop
 					a_cell := a_cell.right
-					check a_cell /= Void end -- implied by `n /= count' and precondition `valid_n'					
+					check 
+							-- inherited precondition `valid_n' and `i <= n < count'
+						a_cell_right_not_void: a_cell /= Void 
+					end 
 					i := i + 1
 				end
 				first_cell := a_cell
@@ -416,7 +441,7 @@ feature {DS_LINKED_QUEUE} -- Implementation
 	first_cell: ?DS_LINKABLE [G]
 			-- First cell in queue
 
-	last_cell: ?like first_cell
+	last_cell: like first_cell
 			-- Last cell in queue
 
 invariant

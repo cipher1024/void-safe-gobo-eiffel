@@ -50,7 +50,7 @@ feature {NONE} -- Initialization
 			create special_routines
 			storage := special_routines.make (n + 1)
 			capacity := n
-			internal_cursor := new_cursor
+			detachable_internal_cursor := new_cursor
 		ensure
 			empty: is_empty
 			capacity_set: capacity = n
@@ -67,7 +67,7 @@ feature {NONE} -- Initialization
 			create special_routines
 			storage := special_routines.make (n + 1)
 			capacity := n
-			internal_cursor := new_cursor
+			detachable_internal_cursor := new_cursor
 			create equality_tester
 		ensure
 			empty: is_empty
@@ -83,24 +83,34 @@ feature {NONE} -- Initialization
 		local
 			other_cursor: DS_LINEAR_CURSOR [G]
 			i, nb: INTEGER
+			l_other_as_current: ?like Current
 		do
 			nb := other.count
-			make (nb)
-			--| FIXME:jfiat: the following check assertion should be a Precondition
-			--| however, due to attached attribute, Current can not be used before this point.
-			check not_same: other /= Current end
+			l_other_as_current ?= other
+			if l_other_as_current /= Void then
+				special_routines := l_other_as_current.special_routines
+				storage := l_other_as_current.storage
+				if l_other_as_current /= Current then
+					make (nb)
+				end
+			else
+				make (nb)
+				l_other_as_current := Current
+			end
 
-			count := nb
-			from
-				i := 1
-				other_cursor := other.new_cursor
-				other_cursor.start
-			until
-				i > nb
-			loop
-				storage.put (other_cursor.item, i)
-				other_cursor.forth
-				i := i + 1
+			if l_other_as_current /= Current then
+				count := nb
+				from
+					i := 1
+					other_cursor := other.new_cursor
+					other_cursor.start
+				until
+					i > nb
+				loop
+					storage.put (other_cursor.item, i)
+					other_cursor.forth
+					i := i + 1
+				end
 			end
 		ensure
 			count_set: count = other.count
@@ -277,16 +287,16 @@ feature -- Duplication
 			old_cursor: ?like new_cursor
 		do
 			if other /= Current then
-				old_cursor := internal_cursor
+				old_cursor := detachable_internal_cursor
 				move_all_cursors_after
 				standard_copy (other)
 				if old_cursor /= Void and then valid_cursor (old_cursor) then
-					internal_cursor := old_cursor
+					detachable_internal_cursor := old_cursor
 				else
-						-- Set `internal_cursor' to Void before calling
+						-- Set `detachable_internal_cursor' to Void before calling
 						-- `new_cursor' to avoid an invariant violation.
-					internal_cursor := Void
-					internal_cursor := new_cursor
+					detachable_internal_cursor := Void
+					detachable_internal_cursor := new_cursor
 				end
 				storage := storage.twin
 			end
@@ -885,12 +895,14 @@ feature {NONE} -- Implementation
 			end
 		end
 
+feature {DS_ARRAYED_LIST} -- Implementation
+
 	special_routines: KL_SPECIAL_ROUTINES [G]
 			-- Routines that ought to be in SPECIAL
 
 feature {NONE} -- Implementation
 
-	internal_cursor: ?like new_cursor
+	detachable_internal_cursor: ?like new_cursor
 			-- Internal cursor
 
 feature {NONE} -- Cursor movement
@@ -901,7 +913,7 @@ feature {NONE} -- Cursor movement
 			a_cursor, next_cursor: ?like new_cursor
 		do
 			from
-				a_cursor := internal_cursor
+				a_cursor := detachable_internal_cursor
 			until
 				(a_cursor = Void)
 			loop
@@ -919,7 +931,7 @@ feature {NONE} -- Cursor movement
 			a_cursor, previous_cursor, next_cursor: ?like new_cursor
 		do
 			i := count
-			a_cursor := attached_internal_cursor
+			a_cursor := internal_cursor
 			if a_cursor.position = i then
 				a_cursor.set_position (after_position)
 			end
@@ -952,7 +964,7 @@ feature {NONE} -- Cursor movement
 			a_cursor: ?like new_cursor
 		do
 			from
-				a_cursor := internal_cursor
+				a_cursor := detachable_internal_cursor
 			until
 				(a_cursor = Void)
 			loop
@@ -975,7 +987,7 @@ feature {NONE} -- Cursor movement
 			j: INTEGER
 		do
 			from
-				a_cursor := internal_cursor
+				a_cursor := detachable_internal_cursor
 			until
 				(a_cursor = Void)
 			loop

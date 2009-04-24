@@ -184,7 +184,7 @@ feature -- Access
 	key_for_iteration: K is
 			-- Key at internal cursor position
 		do
-			Result := cursor_key (attached_internal_cursor)
+			Result := cursor_key (internal_cursor)
 		end
 
 	new_cursor: DS_SPARSE_TABLE_CURSOR [G, K] is
@@ -694,11 +694,11 @@ feature {NONE} -- Implementation
 			-- Some Eiffel compilers check invariants even when the
 			-- execution of the creation procedure is not completed.
 			-- (In this case, checking the assertions of the being
-			-- created `internal_cursor' and `internal_keys'
+			-- created `detachable_internal_cursor' and `internal_keys'
 			-- triggers the invariants on the current container.
 			-- So these invariants need to be protected.)
 		do
-			Result := (internal_cursor /= Void and internal_keys /= Void)
+			Result := (detachable_internal_cursor /= Void and internal_keys /= Void)
 		end
 
 feature {DS_SPARSE_TABLE_CURSOR} -- Cursor implementation

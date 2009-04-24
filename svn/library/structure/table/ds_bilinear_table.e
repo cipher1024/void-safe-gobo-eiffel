@@ -31,7 +31,7 @@ feature -- Access
 		require
 			not_off: not off
 		do
-			Result := cursor_key (attached_internal_cursor)
+			Result := cursor_key (internal_cursor)
 		end
 
 	new_cursor: DS_BILINEAR_TABLE_CURSOR [G, K] is

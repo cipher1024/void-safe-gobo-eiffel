@@ -37,7 +37,7 @@ feature {NONE} -- Initialization
 		do
 			table := a_table
 			equality_tester := table.key_equality_tester
-			internal_cursor := new_cursor
+			detachable_internal_cursor := new_cursor
 		ensure
 			table_set: table = a_table
 		end
@@ -251,7 +251,7 @@ feature -- Removal
 
 feature {NONE} -- Cursor implementation
 
-	internal_cursor: ?like new_cursor
+	detachable_internal_cursor: ?like new_cursor
 			-- Internal cursor
 
 feature {DS_SPARSE_TABLE_KEYS_CURSOR} -- Cursor implementation

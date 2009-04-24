@@ -249,10 +249,10 @@ feature -- Duplication
 		local
 			l_old_cursor_position: ?DS_BINARY_SEARCH_TREE_CONTAINER_NODE [G, G]
 			l_other_node: like root_node
-			l_internal_cursor: like internal_cursor
+			l_internal_cursor: like detachable_internal_cursor
 		do
 			if other /= Current then
-				l_internal_cursor := attached_internal_cursor
+				l_internal_cursor := internal_cursor
 				if not l_internal_cursor.off then
 					l_old_cursor_position := l_internal_cursor.position
 				end
