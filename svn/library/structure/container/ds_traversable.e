@@ -75,6 +75,11 @@ feature -- Cursor movement
 
 feature {NONE} -- Cursor implementation
 
+	set_internal_cursor (c: like detachable_internal_cursor) is
+			-- Set `detachable_internal_cursor' to `c'
+		deferred
+		end
+
 	detachable_internal_cursor: ?like new_cursor is
 			-- Internal cursor
 		deferred

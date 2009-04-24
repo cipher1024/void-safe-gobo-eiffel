@@ -60,7 +60,7 @@ feature {NONE} -- Initialization
 			-- Create an empty list.
 			-- Use `equal' as comparison criterion.
 		do
-			detachable_internal_cursor := new_cursor
+			set_internal_cursor (new_cursor)
 			create equality_tester
 		ensure
 			empty: is_empty
@@ -422,14 +422,14 @@ feature -- Duplication
 				move_all_cursors_after
 				standard_copy (other)
 				if old_cursor /= Void and then valid_cursor (old_cursor) then
-					detachable_internal_cursor := old_cursor
+					set_internal_cursor (old_cursor)
 				else
 						-- This may happen when `copy' is called from `clone'
 						-- and the target has not been properly initialized.
 						-- Set `detachable_internal_cursor' to Void before calling
 						-- `new_cursor' to avoid an invariant violation.
-					detachable_internal_cursor := Void
-					detachable_internal_cursor := new_cursor
+					set_internal_cursor (Void)
+					set_internal_cursor (new_cursor)
 				end
 				if not other.is_empty then
 					from
@@ -1518,6 +1518,12 @@ feature {NONE} -- Implementation
 		end
 
 feature {NONE} -- Implementation
+
+	set_internal_cursor (c: like detachable_internal_cursor) is
+			-- Set `detachable_internal_cursor' to `c'
+		do
+			detachable_internal_cursor := c
+		end
 
 	detachable_internal_cursor: ?like new_cursor
 			-- Internal cursor

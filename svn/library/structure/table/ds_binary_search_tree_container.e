@@ -46,7 +46,7 @@ feature {NONE} -- Initialization
 		do
 			internal_set_key_comparator (a_comparator)
 			count := 0
-			detachable_internal_cursor := new_cursor
+			set_internal_cursor (new_cursor)
 		ensure
 			comparator_set: key_comparator = a_comparator
 		end
@@ -859,6 +859,12 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER} -- Cursor implementation
 			successor_in_same_tree: Result /= Void implies are_nodes_in_same_tree (Result, v)
 		end
 
+	set_internal_cursor (c: like detachable_internal_cursor) is
+			-- Set `detachable_internal_cursor' to `c'
+		do
+			detachable_internal_cursor := c
+		end
+
 	detachable_internal_cursor: ?like new_cursor
 			-- Internal cursor
 
@@ -1544,7 +1550,7 @@ feature {NONE} -- Basic operation
 			grand_parent_correct: a_node.parent = old (grand_parent_of_node (a_node))
 			parent_correct: a_node.right_child = old (parent_of_node (a_node))
 			a_correct: a_node.left_child = old (a_node.left_child)
-			b_correct: {l_right_child: like root_node} a_node.right_child and then 
+			b_correct: {l_right_child: like root_node} a_node.right_child and then
 				l_right_child.left_child = old (a_node.right_child)
 			c_correct: {l_right_child2: like root_node} a_node.right_child and then
 				l_right_child2.right_child = old (right_child_of_parent_of_node (a_node))
@@ -1679,9 +1685,9 @@ feature {NONE} -- Basic operation
 		ensure
 			grand_parent_correct: grand_parent_of_node (a_node) = old (grand_parent_of_node (a_node))
 			parent_correct: left_child_of_parent_of_node (a_node) = old (a_node.parent)
-			a_correct: {l_parent_left_child: like root_node} left_child_of_parent_of_node (a_node) and then 
+			a_correct: {l_parent_left_child: like root_node} left_child_of_parent_of_node (a_node) and then
 				l_parent_left_child.left_child = old (left_child_of_parent_of_node (a_node))
-			b_correct: {l_parent_left_child_2: like root_node} left_child_of_parent_of_node (a_node) and then 
+			b_correct: {l_parent_left_child_2: like root_node} left_child_of_parent_of_node (a_node) and then
 				l_parent_left_child_2.right_child = old (left_child_of_left_child_of_node (a_node))
 			c_correct: a_node.left_child = old (right_child_of_left_child_of_node (a_node))
 			d_correct: a_node.right_child = old (a_node.right_child)

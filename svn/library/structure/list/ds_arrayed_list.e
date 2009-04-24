@@ -50,7 +50,7 @@ feature {NONE} -- Initialization
 			create special_routines
 			storage := special_routines.make (n + 1)
 			capacity := n
-			detachable_internal_cursor := new_cursor
+			set_internal_cursor (new_cursor)
 		ensure
 			empty: is_empty
 			capacity_set: capacity = n
@@ -67,7 +67,7 @@ feature {NONE} -- Initialization
 			create special_routines
 			storage := special_routines.make (n + 1)
 			capacity := n
-			detachable_internal_cursor := new_cursor
+			set_internal_cursor (new_cursor)
 			create equality_tester
 		ensure
 			empty: is_empty
@@ -91,14 +91,13 @@ feature {NONE} -- Initialization
 				special_routines := l_other_as_current.special_routines
 				storage := l_other_as_current.storage
 				if l_other_as_current /= Current then
-					make (nb)
+					storage := storage.twin
+					capacity := nb
+					set_internal_cursor (new_cursor)
+					count := nb
 				end
 			else
 				make (nb)
-				l_other_as_current := Current
-			end
-
-			if l_other_as_current /= Current then
 				count := nb
 				from
 					i := 1
@@ -291,12 +290,12 @@ feature -- Duplication
 				move_all_cursors_after
 				standard_copy (other)
 				if old_cursor /= Void and then valid_cursor (old_cursor) then
-					detachable_internal_cursor := old_cursor
+					set_internal_cursor (old_cursor)
 				else
 						-- Set `detachable_internal_cursor' to Void before calling
 						-- `new_cursor' to avoid an invariant violation.
-					detachable_internal_cursor := Void
-					detachable_internal_cursor := new_cursor
+					set_internal_cursor (Void)
+					set_internal_cursor (new_cursor)
 				end
 				storage := storage.twin
 			end
@@ -901,6 +900,12 @@ feature {DS_ARRAYED_LIST} -- Implementation
 			-- Routines that ought to be in SPECIAL
 
 feature {NONE} -- Implementation
+
+	set_internal_cursor (c: like detachable_internal_cursor) is
+			-- Set `detachable_internal_cursor' to `c'
+		do
+			detachable_internal_cursor := c
+		end
 
 	detachable_internal_cursor: ?like new_cursor
 			-- Internal cursor
