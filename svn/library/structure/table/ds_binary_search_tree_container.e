@@ -21,8 +21,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2008, Daniel Tuser and others"
 	license: "MIT License"
-	date: "$Date: 2009-04-29 11:04:25 +0200 (Wed, 29 Apr 2009) $"
-	revision: "$Revision: 6628 $"
+	date: "$Date: 2009-04-29 16:52:03 +0200 (Wed, 29 Apr 2009) $"
+	revision: "$Revision: 6629 $"
 
 deferred class DS_BINARY_SEARCH_TREE_CONTAINER [G, K]
 
@@ -801,7 +801,9 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER_CURSOR} -- Cursor implementation
 				end
 			end
 		ensure
-			has_key_k_implies_a_cursor_points_to_it: has_key (k) implies {el_position: like found_node} a_cursor.position and then el_position.key = k
+			has_key_k_implies_a_cursor_points_to_it:
+				(has_key (k) and k /= Void and {el_position: like found_node} a_cursor.position and then {el_position_key: K} el_position.key) implies
+					key_comparator.order_equal (el_position_key, k)
 			k_greater_equal_cursor_positions_key:
 				(not a_cursor.off and then {el_position2: like found_node} a_cursor.position and then {el_position2_key: K} el_position2.key and k /= Void) implies
 					key_comparator.greater_equal (k, el_position2_key)
@@ -833,7 +835,9 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER_CURSOR} -- Cursor implementation
 				end
 			end
 		ensure
-			has_key_k_implies_a_cursor_points_to_it: has_key (k) implies {el_position: like found_node} a_cursor.position and then el_position.key = k
+			has_key_k_implies_a_cursor_points_to_it:
+				(has_key (k) and k /= Void and {el_position: like found_node} a_cursor.position and then {el_position_key: K} el_position.key) implies
+					key_comparator.order_equal (el_position_key, k)
 			k_less_equal_cursors_key:
 				(not a_cursor.off and then {el_position2: like found_node} a_cursor.position and then {el_position2_key: K} el_position2.key and k /= Void) implies
 					key_comparator.less_equal (k, el_position2_key)
