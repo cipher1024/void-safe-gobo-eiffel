@@ -147,12 +147,12 @@ feature {NONE} -- Implementation
 		end
 
 
-	parse_scheme (a_tokenizer: XM_XPOINTER_TOKENIZER; a_name: STRING) is
+	parse_scheme (a_tokenizer: XM_XPOINTER_TOKENIZER; a_name: detachable STRING) is
 			-- Parse a single XPointer scheme name and data and set `last_token'.
 		require
 			no_previous_error: not is_error
 			tokenizer_not_finished: a_tokenizer /= Void and then not a_tokenizer.is_lexical_error and then a_tokenizer.last_token /= Eof_token
-			possible_scheme_name: a_name = Void and then a_tokenizer.last_token /= Eof_token or else is_qname (a_name)
+			possible_scheme_name: a_name = Void and then a_tokenizer.last_token /= Eof_token or else a_name /= Void and then is_qname (a_name)
 				and then a_tokenizer.last_token = Left_parenthesis_token
 		local
 			a_left_parenthesis_count, a_right_parenthesis_count: INTEGER
@@ -208,12 +208,12 @@ feature {NONE} -- Implementation
 				and then current_scheme_data /= Void
 		end
 
-	parse_scheme_name (a_tokenizer: XM_XPOINTER_TOKENIZER; a_name: STRING) is
+	parse_scheme_name (a_tokenizer: XM_XPOINTER_TOKENIZER; a_name: detachable STRING) is
 			-- Parse scheme name
 		require
 			no_previous_error: not is_error
 			tokenizer_not_finished: a_tokenizer /= Void and then not a_tokenizer.is_lexical_error and then a_tokenizer.last_token /= Eof_token
-			possible_scheme_name: a_name = Void and then a_tokenizer.last_token /= Eof_token or else is_qname (a_name)
+			possible_scheme_name: a_name = Void and then a_tokenizer.last_token /= Eof_token or else a_name /= Void and then is_qname (a_name)
 				and then a_tokenizer.last_token = Left_parenthesis_token
 		local
 			l_current_scheme_name: like current_scheme_name

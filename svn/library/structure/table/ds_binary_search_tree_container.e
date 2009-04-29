@@ -21,8 +21,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2008, Daniel Tuser and others"
 	license: "MIT License"
-	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
-	revision: "$Revision: 6626 $"
+	date: "$Date: 2009-04-29 11:04:25 +0200 (Wed, 29 Apr 2009) $"
+	revision: "$Revision: 6628 $"
 
 deferred class DS_BINARY_SEARCH_TREE_CONTAINER [G, K]
 
@@ -617,13 +617,14 @@ feature {DS_LINEAR_CURSOR} -- Cursor implementation
 			-- Move `after' if not found.
 		local
 			l_was_off: BOOLEAN
-
+			l_equality_tester: like equality_tester
 		do
 			if a_cursor.before then
 				a_cursor.forth
 				l_was_off := True
 			end
-			if {l_equality_tester: like equality_tester} equality_tester then
+			l_equality_tester := equality_tester
+			if l_equality_tester /= Void then
 				from
 				until
 					a_cursor.after or else l_equality_tester.test (a_cursor.item, v)
@@ -661,8 +662,11 @@ feature {DS_BILINEAR_CURSOR} -- Cursor implementation
 
 	cursor_is_last (a_cursor: like new_cursor): BOOLEAN is
 			-- Is `a_cursor' on last item?
+		local
+			l_last_node: like last_node
 		do
-			if {l_last_node: like last_node} last_node then
+			l_last_node := last_node
+			if l_last_node /= Void then
 				Result := a_cursor.position = l_last_node
 			end
 		end
@@ -694,6 +698,7 @@ feature {DS_BILINEAR_CURSOR} -- Cursor implementation
 		local
 			l_position: ?DS_BINARY_SEARCH_TREE_CONTAINER_NODE [G, K]
 			l_has_cursor, l_add_cursor: BOOLEAN
+			l_equality_tester: like equality_tester
 		do
 			l_position := a_cursor.position
 			l_has_cursor := l_position /= Void
@@ -725,12 +730,14 @@ feature {DS_BILINEAR_CURSOR} -- Cursor implementation
 			-- Move `before' if not found.
 		local
 			l_was_off: BOOLEAN
+			l_equality_tester: like equality_tester
 		do
 			if a_cursor.after then
 				a_cursor.back
 				l_was_off := True
 			end
-			if {l_equality_tester: like equality_tester} equality_tester then
+			l_equality_tester := equality_tester
+			if l_equality_tester /= Void then
 				from
 				until
 					a_cursor.before or else l_equality_tester.test (a_cursor.item, v)
@@ -763,6 +770,76 @@ feature {DS_BILINEAR_CURSOR} -- Cursor implementation
 				remove_traversing_cursor (a_cursor)
 			end
 		end
+
+feature {DS_BINARY_SEARCH_TREE_CONTAINER_CURSOR} -- Cursor implementation
+
+	cursor_go_at_or_before_key (a_cursor: like new_cursor; k: K) is
+			-- Move `a_cursor' to last position with a smaller key than `k'.
+		require
+			a_cursor_not_void: a_cursor /= Void
+		local
+			l_was_off: BOOLEAN
+			l_position: like found_node
+			l_position_key: detachable K
+		do
+			l_was_off := a_cursor.off
+			if is_empty then
+				a_cursor.set_is_before (True)
+			elseif k = Void then
+				a_cursor.set_is_before (True)
+				if not l_was_off then
+					remove_traversing_cursor (a_cursor)
+				end
+			else
+				search_insert_position (k)
+				l_position := found_node
+				check l_position /= Void end -- implied by ???
+				a_cursor.set_position (l_position)
+				l_position_key := l_position.key
+				if l_position_key = Void or else key_comparator.less_than (k, l_position_key) then
+					a_cursor.back
+				end
+			end
+		ensure
+			has_key_k_implies_a_cursor_points_to_it: has_key (k) implies {el_position: like found_node} a_cursor.position and then el_position.key = k
+			k_greater_equal_cursor_positions_key:
+				(not a_cursor.off and then {el_position2: like found_node} a_cursor.position and then {el_position2_key: K} el_position2.key and k /= Void) implies
+					key_comparator.greater_equal (k, el_position2_key)
+			a_cursor_not_after: not a_cursor.after
+		end
+
+	cursor_go_at_or_after_key (a_cursor: like new_cursor; k: K) is
+			-- Move `a_cursor' to first position with a greater key than `k'.
+		require
+			a_cursor_not_void: a_cursor /= Void
+		local
+			l_was_off: BOOLEAN
+			l_position: like found_node
+			l_position_key: detachable K
+		do
+			l_was_off := a_cursor.off
+			if is_empty then
+				a_cursor.set_is_before (False)
+			elseif k = Void then
+				a_cursor.set_position (first_node)
+			else
+				search_insert_position (k)
+				l_position := found_node
+				check l_position /= Void end -- implied by ???
+				a_cursor.set_position (l_position)
+				l_position_key := l_position.key
+				if l_position_key = Void or else key_comparator.greater_than (k, l_position_key) then
+					a_cursor.forth
+				end
+			end
+		ensure
+			has_key_k_implies_a_cursor_points_to_it: has_key (k) implies {el_position: like found_node} a_cursor.position and then el_position.key = k
+			k_less_equal_cursors_key:
+				(not a_cursor.off and then {el_position2: like found_node} a_cursor.position and then {el_position2_key: K} el_position2.key and k /= Void) implies
+					key_comparator.less_equal (k, el_position2_key)
+			a_cursor_not_before: not a_cursor.before
+		end
+
 
 feature {DS_BINARY_SEARCH_TREE_CONTAINER} -- Cursor implementation
 
@@ -1842,6 +1919,7 @@ feature {NONE} -- Basic operation
 				until
 					l_stop
 				loop
+					check l_found_node /= Void end -- implied by loop's invariant `result_not_void'
 					if l_found_node.key = Void then
 						if l_found_node.right_child /= Void then
 							found_node := l_found_node.right_child

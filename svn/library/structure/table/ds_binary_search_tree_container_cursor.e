@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2008, Daniel Tuser and others"
 	license: "MIT License"
-	date: "$Date: 2008-07-20 21:27:20 +0200 (Sun, 20 Jul 2008) $"
-	revision: "$Revision: 6454 $"
+	date: "$Date: 2009-04-29 11:04:25 +0200 (Wed, 29 Apr 2009) $"
+	revision: "$Revision: 6628 $"
 
 deferred class DS_BINARY_SEARCH_TREE_CONTAINER_CURSOR [G, K]
 
@@ -95,6 +95,24 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER} -- Status setting
 		ensure
 			position_is_void: position = Void
 			is_before_set: is_before = a_bool
+		end
+
+feature -- Cursor movement
+
+	go_at_or_before_key (a_key: K) is
+			-- Move to last position with a smaller key than `k'.
+		do
+			container.cursor_go_at_or_before_key (Current, a_key)
+		ensure
+			not_after: not after
+		end
+
+	go_at_or_after_key (a_key: K) is
+			-- Move to first position with a greater key than `k'.
+		do
+			container.cursor_go_at_or_after_key (Current, a_key)
+		ensure
+			not_before: not before
 		end
 
 feature {DS_BILINEAR} -- Implementation

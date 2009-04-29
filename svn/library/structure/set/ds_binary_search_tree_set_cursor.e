@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2008, Daniel Tuser and others"
 	license: "MIT License"
-	date: "$Date: 2008-07-20 21:27:20 +0200 (Sun, 20 Jul 2008) $"
-	revision: "$Revision: 6454 $"
+	date: "$Date: 2009-04-29 11:04:25 +0200 (Wed, 29 Apr 2009) $"
+	revision: "$Revision: 6628 $"
 
 class DS_BINARY_SEARCH_TREE_SET_CURSOR [G]
 
@@ -23,6 +23,9 @@ inherit
 		end
 
 	DS_BINARY_SEARCH_TREE_CONTAINER_CURSOR [G, G]
+		rename
+			go_at_or_before_key as go_at_or_before,
+			go_at_or_after_key as go_at_or_after
 		redefine
 			container,
 			next_cursor
