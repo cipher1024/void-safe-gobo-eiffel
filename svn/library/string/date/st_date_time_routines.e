@@ -10,8 +10,8 @@ indexing
 	library: "Gobo Eiffel String Library"
 	copyright: "Copyright (c) 2008, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
+	revision: "$Revision: 6630 $"
 
 class ST_DATE_TIME_ROUTINES
 

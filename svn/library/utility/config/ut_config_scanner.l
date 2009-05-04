@@ -7,8 +7,8 @@ indexing
 
 	copyright: "Copyright (c) 2007, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-09-07 20:03:00 +0200 (Fri, 07 Sep 2007) $"
-	revision: "$Revision: 6060 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
+	revision: "$Revision: 6630 $"
 
 deferred class UT_CONFIG_SCANNER
 

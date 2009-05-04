@@ -6,8 +6,8 @@ indexing
 
 	library: "Gobo Eiffel Utility Library"
 	author: "Copyright (c) 2004, Franck Arnaud and others"
-	date: "$Date: 2006-11-20 05:03:52 +0100 (lun., 20 nov. 2006) $"
-	revision: "$Revision: 5766 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
+	revision: "$Revision: 6630 $"
 
 class UT_URI_STRING
 

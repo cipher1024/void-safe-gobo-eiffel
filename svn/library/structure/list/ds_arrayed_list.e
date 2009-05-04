@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 1999-2004, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-12-23 16:09:12 +0100 (Tue, 23 Dec 2008) $"
-	revision: "$Revision: 6570 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
+	revision: "$Revision: 6630 $"
 
 class DS_ARRAYED_LIST [G]
 

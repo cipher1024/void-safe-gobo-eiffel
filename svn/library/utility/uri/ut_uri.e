@@ -7,8 +7,8 @@ indexing
 	standards: "RFC 3986 (obsoleting RFC 2396)"
 	library: "Gobo Eiffel XML Library"
 	author: "Copyright (c) 2004, Berend de Boer and others"
-	revision: "$Revision: 6626 $"
-	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6630 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
 
 class UT_URI
 
@@ -734,7 +734,7 @@ feature {NONE} -- Update cached attributes
 				l_scheme := scheme
 				check
 						-- condition `is_absolute'
-						is_absolute: l_scheme /= Void
+					is_absolute: l_scheme /= Void
 				end
 				Result := STRING_.appended_string (Result, l_scheme)
 				Result.append_character (':')

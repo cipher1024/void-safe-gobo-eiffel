@@ -21,8 +21,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2008, Daniel Tuser and others"
 	license: "MIT License"
-	date: "$Date: 2009-04-29 16:52:03 +0200 (Wed, 29 Apr 2009) $"
-	revision: "$Revision: 6629 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
+	revision: "$Revision: 6630 $"
 
 deferred class DS_BINARY_SEARCH_TREE_CONTAINER [G, K]
 

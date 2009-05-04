@@ -7,8 +7,8 @@ indexing
 
 	copyright: "Copyright (c) 2007, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
-	revision: "$Revision: 6626 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
+	revision: "$Revision: 6630 $"
 
 class UT_CONFIG_PARSER
 

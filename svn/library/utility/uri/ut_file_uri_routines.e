@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Utility Library"
 	copyright: "Copyright (c) 2004, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-02-03 18:55:34 +0100 (sam., 03 févr. 2007) $"
-	revision: "$Revision: 5887 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
+	revision: "$Revision: 6630 $"
 
 class UT_FILE_URI_ROUTINES
 
