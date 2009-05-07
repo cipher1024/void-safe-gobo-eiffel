@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel XML Library"
 	copyright: "Copyright (c) 2005, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-01-11 20:41:51 +0100 (ven., 11 janv. 2008) $"
-	revision: "$Revision: 6255 $"
+	date: "$Date: 2009-05-06 19:42:16 +0200 (Wed, 06 May 2009) $"
+	revision: "$Revision: 6632 $"
 
 
 class XM_DATA_URI_RESOLVER
@@ -81,8 +81,12 @@ feature -- Operation(s)
 							else
 								l_data := Url_encoding.unescape_string (l_data)
 							end
-							create l_string_stream.make (l_data)
-							last_stream := l_string_stream
+							if l_data = Void then
+								set_last_error (STRING_.concat (l_data, " has escaped characters that do not represent valid UTF-8 (and the content encoding was specified as UTF-8)"))
+							else
+								create l_string_stream.make (l_data)
+								last_stream := l_string_stream
+							end
 						end
 					end
 				end

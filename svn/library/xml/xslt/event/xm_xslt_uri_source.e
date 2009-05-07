@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel XSLT Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2007-05-21 21:45:48 +0200 (Mon, 21 May 2007) $"
-	revision: "$Revision: 5973 $"
+	date: "$Date: 2009-05-06 19:42:16 +0200 (Wed, 06 May 2009) $"
+	revision: "$Revision: 6632 $"
 
 class	XM_XSLT_URI_SOURCE
 
@@ -53,7 +53,7 @@ feature -- Access
 	system_id: STRING
 			-- System-id of source
 
-	fragment_identifier: STRING
+	fragment_identifier: ?STRING
 			-- Possible decoded fragment identifier
 
 	default_media_type: UT_MEDIA_TYPE

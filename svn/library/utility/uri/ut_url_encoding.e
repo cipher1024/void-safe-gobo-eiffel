@@ -6,8 +6,8 @@ indexing
 
 	library: "Gobo Eiffel Utility Library"
 	author: "Copyright (c) 2004, Berend de Boer and others"
-	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
-	revision: "$Revision: 6627 $"
+	date: "$Date: 2009-05-06 19:42:16 +0200 (Wed, 06 May 2009) $"
+	revision: "$Revision: 6632 $"
 
 class UT_URL_ENCODING
 
@@ -28,7 +28,7 @@ feature -- Escape/unescape data characters
 
 	unescape_string (a_string: STRING): STRING is
 			-- Replace the URI hexadecimal escape sequences in `a_string'
-			-- with the corresponding characters.
+			-- with the corresponding Latin-1 characters.
 		require
 			a_string_not_void: a_string /= Void
 		local
