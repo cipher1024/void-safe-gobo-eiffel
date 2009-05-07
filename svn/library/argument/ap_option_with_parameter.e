@@ -49,7 +49,10 @@ feature -- Access
 			else
 				Result.append_character (long_option_introduction)
 				l_long_form := long_form
-				check l_long_form /= Void end -- implied by inherited invariant has_short_or_long
+				check 
+						-- implied by inherited invariant has_short_or_long
+					has_short_or_long: l_long_form /= Void 
+				end
 				Result.append_string (l_long_form)
 				if not needs_parameter then
 					Result.append_character ('[')

@@ -84,7 +84,10 @@ feature -- Access
 				Result.append_string (short_form.out)
 			else
 				l_long_form := long_form
-				check l_long_form /= Void end -- implied by invariant: has_short_or_long
+				check
+						-- invariant has_short_or_long ensures `log_form' is not Void
+					not_has_short_form: l_long_form /= Void
+				end
 				Result.append_character (long_option_introduction)
 				Result.append_string (l_long_form)
 			end
@@ -103,9 +106,11 @@ feature -- Access
 		local
 			l_long_form: like long_form
 		do
-			l_long_form := long_form
-			if l_long_form /= Void then
-				check has_long_form: has_long_form end
+			if has_long_form then
+				l_long_form := l_long_form
+				check
+					has_long_form: l_long_form /= Void
+				end
 				Result := short_option_introduction.out + long_option_introduction.out + l_long_form
 			else
 				Result := short_option_introduction.out + short_form.out
@@ -124,9 +129,11 @@ feature -- Access
 				s := short_option_introduction.out
 				s.append_character (short_form)
 			end
-			l_long_form := long_form
-			if l_long_form /= Void then
-				check has_long_form end
+			if has_long_form then
+				l_long_form := long_form
+				check
+					has_long_form: l_long_form /= Void
+				end
 				if s = Void then
 					s := "    "
 				else
@@ -136,7 +143,10 @@ feature -- Access
 				s.append_character (long_option_introduction)
 				s.append_string (l_long_form)
 			end
-			check s /= Void end -- implied by invariant: has_short_or_long
+			check
+					-- `s' not Void implied by invariant: has_short_or_long
+				has_short_or_long: s /= Void
+			end
 			Result := s
 		ensure
 			names_not_void: Result /= Void

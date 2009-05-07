@@ -62,7 +62,10 @@ feature {AP_PARSER} -- Parser Interface
 			l_last_option_parameter: ?STRING
 		do
 			l_last_option_parameter := a_parser.last_option_parameter
-			check l_last_option_parameter /= Void end -- Implied by inherited precondition `parameter_if_needed' and value of `needs_parameter'
+			check 
+					-- Implied by inherited precondition `parameter_if_needed' and Current's value of `needs_parameter'
+				parameter_needed: l_last_option_parameter /= Void 
+			end 
 			if l_last_option_parameter.is_integer then
 				parameters.force_last (l_last_option_parameter.to_integer)
 			else
