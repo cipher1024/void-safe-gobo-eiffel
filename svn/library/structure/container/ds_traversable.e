@@ -78,6 +78,8 @@ feature {NONE} -- Cursor implementation
 	set_internal_cursor (c: like detachable_internal_cursor) is
 			-- Set `detachable_internal_cursor' to `c'
 		deferred
+		ensure
+			internal_cursor_set: detachable_internal_cursor = c
 		end
 
 	detachable_internal_cursor: ?like new_cursor is
@@ -199,6 +201,6 @@ invariant
 
 	empty_constraint: initialized implies (is_empty implies off)
 	internal_cursor_not_void: initialized implies (detachable_internal_cursor /= Void)
-	valid_internal_cursor: initialized implies {l_cursor: like detachable_internal_cursor} detachable_internal_cursor and then valid_cursor (l_cursor)
+	valid_internal_cursor: initialized implies valid_cursor (internal_cursor)
 
 end
