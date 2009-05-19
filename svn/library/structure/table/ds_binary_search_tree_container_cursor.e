@@ -58,6 +58,7 @@ feature {NONE} -- Access
 		local
 			l_position: like position
 		do
+			l_position := position
 			check l_position /= Void end
 			Result := l_position.key
 		end

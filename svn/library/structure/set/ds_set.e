@@ -209,7 +209,7 @@ feature -- Element change
 
 	put_last (v: G) is
 			-- Add `v' to set, replacing any existing item.
-			-- If `v' was not included yet, insert it at
+			-- If `v' was not included yet, insert it at 
 			-- last position if implementation permits.
 			-- (Use `equality_tester''s comparison criterion
 			-- if not void, use `=' criterion otherwise.)
@@ -245,7 +245,7 @@ feature -- Element change
 
 	force_last (v: G) is
 			-- Add `v' to set, replacing any existing item.
-			-- If `v' was not included yet, insert it at
+			-- If `v' was not included yet, insert it at 
 			-- last position if implementation permits.
 			-- (Use `equality_tester''s comparison criterion
 			-- if not void, use `=' criterion otherwise.)
