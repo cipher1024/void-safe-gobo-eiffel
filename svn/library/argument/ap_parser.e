@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Argument Library"
 	copyright: "Copyright (c) 2006, Bernd Schoeller and others"
 	license: "MIT License"
-	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
-	revision: "$Revision: 6626 $"
+	date: "$Date: 2009-05-16 11:30:58 +0200 (Sat, 16 May 2009) $"
+	revision: "$Revision: 6637 $"
 
 class AP_PARSER
 
@@ -500,8 +500,8 @@ feature {NONE} -- Implementation
 		require
 			a_argument_list_attached: a_argument_list /= Void
 			a_argument_list_not_off: not a_argument_list.off
-			current_is_long_option: {rl_item: STRING} a_argument_list.item_for_iteration and then rl_item.count >= 2 and then
-				(rl_item.item (1) = short_option_introduction and rl_item.item (2) = long_option_introduction)
+--			current_is_long_option: {rl_item: STRING} a_argument_list.item_for_iteration and then rl_item.count >= 2 and then
+--				(rl_item.item (1) = short_option_introduction and rl_item.item (2) = long_option_introduction)
 		local
 			l_argument: STRING
 			option_string: STRING
@@ -601,10 +601,10 @@ feature {NONE} -- Implementation
 		require
 			a_argument_list_attached: a_argument_list /= Void
 			a_argument_list_not_off: not a_argument_list.off
-			current_is_short_option: {rl_item: STRING} a_argument_list.item_for_iteration and then
-				rl_item.count > 1 and then
-				(rl_item.item (1) = short_option_introduction and
-				 rl_item.item (2) /= long_option_introduction)
+--			current_is_short_option: {rl_item: STRING} a_argument_list.item_for_iteration and then
+--				rl_item.count > 1 and then
+--				(rl_item.item (1) = short_option_introduction and
+--				 rl_item.item (2) /= long_option_introduction)
 		local
 			l_argument: STRING
 			i: INTEGER
