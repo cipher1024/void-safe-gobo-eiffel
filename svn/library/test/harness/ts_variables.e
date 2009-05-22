@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Test Library"
 	copyright: "Copyright (c) 2001, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-01-26 19:55:25 +0100 (Fri, 26 Jan 2007) $"
-	revision: "$Revision: 5877 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class TS_VARIABLES
 
@@ -88,7 +88,7 @@ feature {NONE} -- Implementation
 invariant
 
 	variables_not_void: variables /= Void
-	no_void_variable_name: not variables.has (Void)
-	no_void_variable_value: not variables.has_item (Void)
+	no_void_variable_name: not variables.has_void
+	no_void_variable_value: not variables.has_void_item
 
 end

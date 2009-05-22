@@ -3,8 +3,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 deferred class
 	MEMORY_STRUCTURE
@@ -69,7 +69,7 @@ feature {NONE} -- Implementation
 	internal_item: POINTER
 			-- Pointer holding value when shared.
 
-	managed_pointer: ?MANAGED_POINTER
+	managed_pointer: detachable MANAGED_POINTER
 			-- Hold memory area in a managed way.
 
 invariant

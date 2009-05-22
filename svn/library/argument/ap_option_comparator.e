@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Argument Library"
 	copyright: "Copyright (c) 2006, Bernd Schoeller and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-05-16 11:30:58 +0200 (Sat, 16 May 2009) $"
+	revision: "$Revision: 6637 $"
 
 class AP_OPTION_COMPARATOR
 
@@ -26,16 +26,20 @@ feature -- Status report
 			u_string, v_string: STRING
 			l_long_form: ?STRING
 		do
-			l_long_form := u.long_form
-			if l_long_form /= Void then
-				check u.has_long_form end
+			if u.has_long_form then
+				l_long_form := u.long_form
+				check 
+					u_has_long_form : l_long_form /= Void
+				end
 				u_string := l_long_form
 			else
 				u_string := u.short_form.out
 			end
-			l_long_form := v.long_form
-			if l_long_form /= Void then
-				check v.has_long_form end
+			if v.has_long_form then
+				l_long_form := v.long_form
+				check 
+					v_has_long_form: l_long_form /= Void
+				end
 				v_string := l_long_form
 			else
 				v_string := v.short_form.out

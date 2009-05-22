@@ -8,8 +8,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2000-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-12-23 16:09:12 +0100 (Tue, 23 Dec 2008) $"
-	revision: "$Revision: 6570 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 deferred class DS_SPARSE_TABLE [G, K]
 
@@ -184,7 +184,7 @@ feature -- Access
 	key_for_iteration: K is
 			-- Key at internal cursor position
 		do
-			Result := cursor_key (attached_internal_cursor)
+			Result := cursor_key (internal_cursor)
 		end
 
 	new_cursor: DS_SPARSE_TABLE_CURSOR [G, K] is
@@ -694,11 +694,11 @@ feature {NONE} -- Implementation
 			-- Some Eiffel compilers check invariants even when the
 			-- execution of the creation procedure is not completed.
 			-- (In this case, checking the assertions of the being
-			-- created `internal_cursor' and `internal_keys'
+			-- created `detachable_internal_cursor' and `internal_keys'
 			-- triggers the invariants on the current container.
 			-- So these invariants need to be protected.)
 		do
-			Result := (internal_cursor /= Void and internal_keys /= Void)
+			Result := (detachable_internal_cursor /= Void and internal_keys /= Void)
 		end
 
 feature {DS_SPARSE_TABLE_CURSOR} -- Cursor implementation

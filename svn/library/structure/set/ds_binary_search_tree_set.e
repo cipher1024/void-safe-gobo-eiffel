@@ -11,8 +11,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2008, Daniel Tuser and others"
 	license: "MIT License"
-	date: "$Date: 2008-09-28 20:40:54 +0200 (Sun, 28 Sep 2008) $"
-	revision: "$Revision: 6526 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class DS_BINARY_SEARCH_TREE_SET [G]
 
@@ -32,6 +32,7 @@ inherit
 	DS_BINARY_SEARCH_TREE_CONTAINER [G, G]
 		rename
 			has_key as has,
+			has_void_key as has_void,
 			key_comparator as equality_tester,
 			key_comparator_settable as equality_tester_settable,
 			set_key_comparator as set_equality_tester
@@ -248,10 +249,10 @@ feature -- Duplication
 		local
 			l_old_cursor_position: ?DS_BINARY_SEARCH_TREE_CONTAINER_NODE [G, G]
 			l_other_node: like root_node
-			l_internal_cursor: like internal_cursor
+			l_internal_cursor: like detachable_internal_cursor
 		do
 			if other /= Current then
-				l_internal_cursor := attached_internal_cursor
+				l_internal_cursor := internal_cursor
 				if not l_internal_cursor.off then
 					l_old_cursor_position := l_internal_cursor.position
 				end

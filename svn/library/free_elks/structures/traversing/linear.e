@@ -8,8 +8,8 @@ note
 	names: sequential, traversing;
 	access: membership;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 deferred class LINEAR [G] inherit
 
@@ -181,10 +181,10 @@ feature -- Iteration
 			-- in such a case, apply iterator to clone of structure instead.
 		local
 			t: TUPLE [G]
-			c: ?CURSOR
-			cs: ?CURSOR_STRUCTURE [G]
+			c: detachable CURSOR
+			cs: detachable CURSOR_STRUCTURE [G]
 		do
-			if {acs: CURSOR_STRUCTURE [G]} Current then
+			if attached {CURSOR_STRUCTURE [G]} Current as acs then
 				cs := acs
 				c := acs.cursor
 			end
@@ -211,10 +211,10 @@ feature -- Iteration
 			-- in such a case, apply iterator to clone of structure instead.
 		local
 			t: TUPLE [G]
-			c: ?CURSOR
-			cs: ?CURSOR_STRUCTURE [G]
+			c: detachable CURSOR
+			cs: detachable CURSOR_STRUCTURE [G]
 		do
-			if {acs: CURSOR_STRUCTURE [G]} Current then
+			if attached {CURSOR_STRUCTURE [G]} Current as acs then
 				cs := acs
 				c := acs.cursor
 			end
@@ -242,13 +242,13 @@ feature -- Iteration
 			-- Semantics not guaranteed if `test' changes the structure;
 			-- in such a case, apply iterator to clone of structure instead.
 		local
-			c: ?CURSOR
-			cs: ? CURSOR_STRUCTURE [G]
+			c: detachable CURSOR
+			cs: detachable  CURSOR_STRUCTURE [G]
 			t: TUPLE [G]
 		do
 			create t
 
-			if {acs: CURSOR_STRUCTURE [G]} Current then
+			if attached {CURSOR_STRUCTURE [G]} Current as acs then
 				cs := acs
 				c := acs.cursor
 			end
@@ -273,13 +273,13 @@ feature -- Iteration
 			-- Semantics not guaranteed if `test' changes the structure;
 			-- in such a case, apply iterator to clone of structure instead.
 		local
-			c: ?CURSOR
-			cs: ? CURSOR_STRUCTURE [G]
+			c: detachable CURSOR
+			cs: detachable  CURSOR_STRUCTURE [G]
 			t: TUPLE [G]
 		do
 			create t
 
-			if {acs: CURSOR_STRUCTURE [G]} Current then
+			if attached {CURSOR_STRUCTURE [G]} Current as acs then
 				cs := acs
 				c := acs.cursor
 			end

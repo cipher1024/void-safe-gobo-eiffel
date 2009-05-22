@@ -44,7 +44,7 @@ feature -- Status report
 	is_first: BOOLEAN is
 			-- Is internal cursor on first item?
 		do
-			Result := cursor_is_first (attached_internal_cursor)
+			Result := cursor_is_first (internal_cursor)
 		ensure
 			not_empty: Result implies not is_empty
 			not_off: Result implies not off
@@ -54,7 +54,7 @@ feature -- Status report
 	after: BOOLEAN is
 			-- Is there no valid position to right of internal cursor?
 		do
-			Result := cursor_after (attached_internal_cursor)
+			Result := cursor_after (internal_cursor)
 		end
 
 	has (v: G): BOOLEAN is
@@ -101,7 +101,7 @@ feature -- Cursor movement
 	start is
 			-- Move internal cursor to first position.
 		do
-			cursor_start (attached_internal_cursor)
+			cursor_start (internal_cursor)
 		ensure
 			empty_behavior: is_empty implies after
 			not_empty_behavior: not is_empty implies is_first
@@ -112,7 +112,7 @@ feature -- Cursor movement
 		require
 			not_after: not after
 		do
-			cursor_forth (attached_internal_cursor)
+			cursor_forth (internal_cursor)
 		end
 
 	search_forth (v: G) is
@@ -124,13 +124,13 @@ feature -- Cursor movement
 		require
 			not_off: not off or after
 		do
-			cursor_search_forth (attached_internal_cursor, v)
+			cursor_search_forth (internal_cursor, v)
 		end
 
 	go_after is
 			-- Move internal cursor to `after' position.
 		do
-			cursor_go_after (attached_internal_cursor)
+			cursor_go_after (internal_cursor)
 		ensure
 			after: after
 		end

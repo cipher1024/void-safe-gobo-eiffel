@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel XML Library"
 	copyright: "Copyright (c) 2004, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-07-08 16:19:43 +0200 (dim., 08 juil. 2007) $"
-	revision: "$Revision: 6002 $"
+	date: "$Date: 2009-05-06 19:42:16 +0200 (Wed, 06 May 2009) $"
+	revision: "$Revision: 6632 $"
 
 class XM_FILE_URI_RESOLVER
 
@@ -43,14 +43,17 @@ feature -- Action(s)
 	resolve (a_uri: UT_URI) is
 			-- Resolve file URI.
 		local
-			l_path: STRING
+			l_path: ?STRING
 			l_last_stream: like last_stream
 		do
+			last_stream := Void
 			l_path := File_uri.uri_to_filename (a_uri)
-			create {KL_BINARY_INPUT_FILE} l_last_stream.make (l_path)
-			last_stream := l_last_stream
-			l_last_stream.open_read
-			if l_last_stream.is_open_read then
+			if l_path /= Void then
+				create {KL_BINARY_INPUT_FILE} l_last_stream.make (l_path)
+				l_last_stream.open_read
+				last_stream := l_last_stream
+			end
+			if l_last_stream /= Void and then l_last_stream.is_open_read then
 				last_error := Void
 			else
 				last_error := STRING_.concat (Cannot_open_file_error, a_uri.path)

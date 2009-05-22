@@ -8,8 +8,8 @@ note
 	names: linkable, cell;
 	representation: linked;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class LINKABLE [G] inherit
 
@@ -26,12 +26,12 @@ create {CHAIN}
 
 feature -- Access
 
-	right: ?like Current
+	right: detachable like Current
 			-- Right neighbor
 
 feature {CELL, CHAIN} -- Implementation
 
-	put_right (other: ?like Current)
+	put_right (other: detachable like Current)
 			-- Put `other' to the right of current cell.
 		do
 			right := other

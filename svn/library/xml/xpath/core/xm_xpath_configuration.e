@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel XPath Library"
 	copyright: "Copyright (c) 2005, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-01-19 14:05:30 +0100 (Sat, 19 Jan 2008) $"
-	revision: "$Revision: 6265 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class XM_XPATH_CONFIGURATION
 
@@ -228,6 +228,6 @@ invariant
 
 	collection_resolver_not_void: initialized implies collection_resolver /= Void
 	system_properties_not_void: initialized implies system_properties /= Void
-	no_void_namespace: initialized implies not system_properties.has (Void)
+	no_void_namespace: initialized implies not system_properties.has_void
 
 end

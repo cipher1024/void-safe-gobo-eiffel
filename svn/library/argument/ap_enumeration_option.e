@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Argument Library"
 	copyright: "Copyright (c) 2006, Bernd Schoeller and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-05-16 11:30:58 +0200 (Sat, 16 May 2009) $"
+	revision: "$Revision: 6637 $"
 
 class AP_ENUMERATION_OPTION
 

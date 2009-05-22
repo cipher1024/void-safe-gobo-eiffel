@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Argument Library"
 	copyright: "Copyright (c) 2006, Bernd Schoeller and others"
 	license: "MIT License"
-	date: "$Date: 2007-11-27 15:46:17 +0100 (mar., 27 nov. 2007) $"
-	revision: "$Revision: 6192 $"
+	date: "$Date: 2009-05-16 11:30:58 +0200 (Sat, 16 May 2009) $"
+	revision: "$Revision: 6637 $"
 
 class AP_BOOLEAN_OPTION
 
@@ -109,15 +109,17 @@ feature {AP_PARSER} -- Parser Interface
 			l_last_option_parameter: ?STRING
 		do
 			l_last_option_parameter := a_parser.last_option_parameter
-			if l_last_option_parameter /= Void then
-				if true_strings.has (l_last_option_parameter) then
-					parameters.force_last (True)
-				elseif false_strings.has (l_last_option_parameter) then
-					parameters.force_last (False)
-				else
-					create error.make_invalid_parameter_error (Current, l_last_option_parameter)
-					a_parser.error_handler.report_error (error)
-				end
+			check 
+					-- Implied by inherited precondition `parameter_if_needed' and Current's value of `needs_parameter'
+				parameter_needed: l_last_option_parameter /= Void 
+			end 
+			if true_strings.has (l_last_option_parameter) then
+				parameters.force_last (True)
+			elseif false_strings.has (l_last_option_parameter) then
+				parameters.force_last (False)
+			else
+				create error.make_invalid_parameter_error (Current, l_last_option_parameter)
+				a_parser.error_handler.report_error (error)
 			end
 		end
 

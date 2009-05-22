@@ -3,8 +3,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class DIRECTORY
 
@@ -71,7 +71,7 @@ feature -- Access
 			string_exists: entry_name /= Void
 		local
 			dir_temp: DIRECTORY
-			e: ?STRING
+			e: detachable STRING
 		do
 			create dir_temp.make_open_read (name)
 			from
@@ -161,7 +161,7 @@ feature -- Conversion
 			-- The entries, in sequential format.
 		local
 			dir_temp: DIRECTORY
-			e: ?STRING
+			e: detachable STRING
 		do
 			create dir_temp.make_open_read (name)
 				-- Arbitrary size for arrayed_list creation to avoid
@@ -185,7 +185,7 @@ feature -- Conversion
 
 feature -- Status report
 
-	lastentry: ?STRING
+	lastentry: detachable STRING
 			-- Last entry read by `readentry'
 
 	is_closed: BOOLEAN
@@ -484,7 +484,7 @@ feature {NONE} -- Implementation
 			"C use %"eif_dir.h%""
 		end
 
-	dir_next (dir_ptr: POINTER): ?STRING
+	dir_next (dir_ptr: POINTER): detachable STRING
 			-- Return the next entry for directory 'dir_ptr'.
 		external
 			"C use %"eif_dir.h%""

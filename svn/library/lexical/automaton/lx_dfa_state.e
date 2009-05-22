@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Lexical Library"
 	copyright: "Copyright (c) 1999-2001, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-05 12:21:37 +0200 (Sun, 05 Oct 2008) $"
-	revision: "$Revision: 6530 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class LX_DFA_STATE
 

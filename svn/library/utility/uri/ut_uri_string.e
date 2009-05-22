@@ -6,8 +6,8 @@ indexing
 
 	library: "Gobo Eiffel Utility Library"
 	author: "Copyright (c) 2004, Franck Arnaud and others"
-	date: "$Date: 2006-11-20 05:03:52 +0100 (lun., 20 nov. 2006) $"
-	revision: "$Revision: 5766 $"
+	date: "$Date: 2009-05-06 19:42:16 +0200 (Wed, 06 May 2009) $"
+	revision: "$Revision: 6632 $"
 
 class UT_URI_STRING
 
@@ -72,7 +72,8 @@ feature -- Access
 
 	decoded: STRING is
 			-- Decoded string where each %-encoded character
-			-- gives one item in the resulting string
+			-- gives one item in the resulting string;
+			-- The encoding is assumed to be Latin-1.
 		local
 			l_decoded_impl: like decoded_impl
 		do
@@ -86,7 +87,7 @@ feature -- Access
 			decoded_not_void: Result /= Void
 		end
 
-	decoded_utf8: STRING is
+	decoded_utf8: ?STRING is
 			-- Decoded string where the percent-encoded characters
 			-- are in the UTF-8 character set
 			-- (This may return a STRING object of another type than STRING)
@@ -96,12 +97,10 @@ feature -- Access
 			l_decoded_utf8_impl := decoded_utf8_impl
 			if l_decoded_utf8_impl = Void then
 				l_decoded_utf8_impl := Url_encoding.unescape_utf8 (encoded)
-				check l_decoded_utf8_impl /= Void end
+				check l_decoded_utf8_impl /= Void end -- implied by ???
 				decoded_utf8_impl := l_decoded_utf8_impl
 			end
 			Result := l_decoded_utf8_impl
-		ensure
-			decoded_utf8_not_void: Result /= Void
 		end
 
 feature {NONE} -- Implementation

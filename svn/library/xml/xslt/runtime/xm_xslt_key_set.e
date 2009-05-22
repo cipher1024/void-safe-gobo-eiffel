@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel XSLT Library"
 	copyright: "Copyright (c) 2007, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-03-29 17:45:27 +0100 (Sat, 29 Mar 2008) $"
-	revision: "$Revision: 6330 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class XM_XSLT_KEY_SET
 
@@ -66,6 +66,6 @@ invariant
 
 	strictly_positive_fingerprint: fingerprint > 0
 	key_definitions_not_void: key_definitions /= Void
-	no_void_definitions: not key_definitions.has (Void)
+	no_void_definitions: not key_definitions.has_void
 
 end

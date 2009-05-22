@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel XPath Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-08-17 10:35:35 +0200 (Sun, 17 Aug 2008) $"
-	revision: "$Revision: 6480 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 deferred class XM_XPATH_COMMON_TYPE_FACTORY
 
@@ -301,7 +301,7 @@ feature {NONE} -- Implementation
 			if nmtokens_type /= Void then Result.put_new (nmtokens_type, Nmtokens_type_code) end
 		ensure
 			type_map_not_void: Result /= Void
-			no_void_type: not Result.has_item (Void)
+			no_void_type: not Result.has_void_item
 		end
 
 	fingerprint_map: DS_HASH_TABLE [INTEGER, STRING] is

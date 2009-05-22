@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 1999-2007, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-12-23 16:09:12 +0100 (Tue, 23 Dec 2008) $"
-	revision: "$Revision: 6570 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
+	revision: "$Revision: 6630 $"
 
 class DS_LINKED_LIST [G]
 
@@ -50,7 +50,7 @@ feature {NONE} -- Initialization
 			-- Create an empty list.
 			-- Use `=' as comparison criterion.
 		do
-			internal_cursor := new_cursor
+			set_internal_cursor (new_cursor)
 		ensure
 			empty: is_empty
 			before: before
@@ -60,7 +60,7 @@ feature {NONE} -- Initialization
 			-- Create an empty list.
 			-- Use `equal' as comparison criterion.
 		do
-			internal_cursor := new_cursor
+			set_internal_cursor (new_cursor)
 			create equality_tester
 		ensure
 			empty: is_empty
@@ -418,18 +418,18 @@ feature -- Duplication
 			old_cursor: ?like new_cursor
 		do
 			if other /= Current then
-				old_cursor := internal_cursor
+				old_cursor := detachable_internal_cursor
 				move_all_cursors_after
 				standard_copy (other)
 				if old_cursor /= Void and then valid_cursor (old_cursor) then
-					internal_cursor := old_cursor
+					set_internal_cursor (old_cursor)
 				else
 						-- This may happen when `copy' is called from `clone'
 						-- and the target has not been properly initialized.
-						-- Set `internal_cursor' to Void before calling
+						-- Set `detachable_internal_cursor' to Void before calling
 						-- `new_cursor' to avoid an invariant violation.
-					internal_cursor := Void
-					internal_cursor := new_cursor
+					set_internal_cursor (Void)
+					set_internal_cursor (new_cursor)
 				end
 				if not other.is_empty then
 					from
@@ -1484,7 +1484,7 @@ feature {DS_LINKED_LIST, DS_LINKED_LIST_CURSOR} -- Implementation
 
 feature {NONE} -- Implementation
 
-	set_first_cell (a_cell: !like first_cell) is
+	set_first_cell (a_cell: like first_cell) is
 			-- Set `first_cell' to `a_cell'.
 			-- This routine has to be called (instead of
 			-- making a direct assignment to `first_cell')
@@ -1519,7 +1519,13 @@ feature {NONE} -- Implementation
 
 feature {NONE} -- Implementation
 
-	internal_cursor: ?like new_cursor
+	set_internal_cursor (c: like detachable_internal_cursor) is
+			-- Set `detachable_internal_cursor' to `c'
+		do
+			detachable_internal_cursor := c
+		end
+
+	detachable_internal_cursor: ?like new_cursor
 			-- Internal cursor
 
 feature {NONE} -- Cursor movement
@@ -1530,7 +1536,7 @@ feature {NONE} -- Cursor movement
 			a_cursor, previous_cursor, next_cursor: ?like new_cursor
 			old_cell: like first_cell
 		do
-			a_cursor := attached_internal_cursor
+			a_cursor := internal_cursor
 			old_cell := last_cell
 			if a_cursor.current_cell = old_cell then
 				a_cursor.set_after
@@ -1563,7 +1569,7 @@ feature {NONE} -- Cursor movement
 			a_cursor: ?like new_cursor
 		do
 			from
-				a_cursor := internal_cursor
+				a_cursor := detachable_internal_cursor
 			until
 				(a_cursor = Void)
 			loop
@@ -1580,7 +1586,7 @@ feature {NONE} -- Cursor movement
 			a_cursor, next_cursor: ?like new_cursor
 		do
 			from
-				a_cursor := internal_cursor
+				a_cursor := detachable_internal_cursor
 			until
 				(a_cursor = Void)
 			loop

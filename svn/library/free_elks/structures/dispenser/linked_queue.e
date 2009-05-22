@@ -9,8 +9,8 @@ note
 	representation: linked;
 	access: fixed, fifo, membership;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class LINKED_QUEUE [G] inherit
 
@@ -137,14 +137,14 @@ feature -- Duplication
 			-- Update current object using fields of object attached
 			-- to `other', so as to yield equal objects.
 		local
-			cur: ?like cursor
+			cur: detachable like cursor
 			obj_comparison: BOOLEAN
 		do
 			obj_comparison := other.object_comparison
 			standard_copy (other)
 			if not other.is_empty then
 				internal_wipe_out
-				if {l_cur: like cursor} other.cursor then
+				if attached {like cursor} other.cursor as l_cur then
 					cur := l_cur
 				end
 				from

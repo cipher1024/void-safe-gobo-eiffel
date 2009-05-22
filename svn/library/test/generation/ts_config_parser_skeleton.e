@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Test Library"
 	copyright: "Copyright (c) 2000-2003, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 deferred class TS_CONFIG_PARSER_SKELETON
 
@@ -146,7 +146,7 @@ feature -- AST factory
 			a_compile_not_void: a_compile /= Void
 			an_execute_not_void: an_execute /= Void
 			a_clusters_not_void: a_clusters /= Void
-			no_void_cluster: not a_clusters.has (Void)
+			no_void_cluster: not a_clusters.has_void
 		do
 			create Result.make (a_root_class, a_testgen, a_compile, an_execute, a_clusters)
 		ensure

@@ -12,8 +12,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2001-2003, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-09-28 20:40:54 +0200 (Sun, 28 Sep 2008) $"
-	revision: "$Revision: 6526 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class DS_TOPOLOGICAL_SORTER [G]
 
@@ -109,17 +109,9 @@ feature -- Status report
 		end
 
 	has_void: BOOLEAN is
-			-- Does container include Void?
-		local
-			v: ?G
-			l_current: ?DS_TOPOLOGICAL_SORTER [?G]
+			-- Is Void included in the list of items to be sorted?
 		do
-			l_current ?= Current
-			if l_current /= Void then
-				Result := l_current.has (v)
-			end
-		ensure
-			not_empty: Result implies not is_empty
+			Result := items.has_void
 		end
 
 	is_sorted: BOOLEAN is

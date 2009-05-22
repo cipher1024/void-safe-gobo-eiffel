@@ -9,8 +9,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 1999-2007, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-09-28 20:40:54 +0200 (Sun, 28 Sep 2008) $"
-	revision: "$Revision: 6526 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
+	revision: "$Revision: 6630 $"
 
 deferred class DS_TRAVERSABLE [G]
 
@@ -25,7 +25,7 @@ feature -- Access
 		require
 			not_off: not off
 		do
-			Result := cursor_item (attached_internal_cursor)
+			Result := cursor_item (internal_cursor)
 		end
 
 	new_cursor: DS_CURSOR [G] is
@@ -41,7 +41,7 @@ feature -- Status report
 	off: BOOLEAN is
 			-- Is there no item at internal cursor position?
 		do
-			Result := cursor_off (attached_internal_cursor)
+			Result := cursor_off (internal_cursor)
 		end
 
 	same_position (a_cursor: like new_cursor): BOOLEAN is
@@ -49,7 +49,7 @@ feature -- Status report
 		require
 			a_cursor_not_void: a_cursor /= Void
 		do
-			Result := cursor_same_position (attached_internal_cursor, a_cursor)
+			Result := cursor_same_position (internal_cursor, a_cursor)
 		end
 
 	valid_cursor (a_cursor: DS_CURSOR [G]): BOOLEAN is
@@ -68,27 +68,34 @@ feature -- Cursor movement
 			cursor_not_void: a_cursor /= Void
 			valid_cursor: valid_cursor (a_cursor)
 		do
-			cursor_go_to (attached_internal_cursor, a_cursor)
+			cursor_go_to (internal_cursor, a_cursor)
 		ensure
 			same_position: same_position (a_cursor)
 		end
 
 feature {NONE} -- Cursor implementation
 
-	internal_cursor: ?like new_cursor is
+	set_internal_cursor (c: like detachable_internal_cursor) is
+			-- Set `detachable_internal_cursor' to `c'
+		deferred
+		ensure
+			internal_cursor_set: detachable_internal_cursor = c
+		end
+
+	detachable_internal_cursor: ?like new_cursor is
 			-- Internal cursor
 		deferred
 		end
 
-	frozen attached_internal_cursor: like new_cursor is
+	frozen internal_cursor: like new_cursor is
 			-- Attached internal cursor
 			--| FIXME:jfiat: for ease of conversion. Rename as cursor ?
 		require
-			internal_cursor_attached: internal_cursor /= Void
+			internal_cursor_attached: detachable_internal_cursor /= Void
 		local
-			c: like internal_cursor
+			c: like detachable_internal_cursor
 		do
-			c := internal_cursor
+			c := detachable_internal_cursor
 			check c /= Void end
 			Result := c
 		end
@@ -140,12 +147,12 @@ feature {DS_CURSOR} -- Cursor implementation
 		require
 			a_cursor_not_void: a_cursor /= Void
 		local
-			c: like internal_cursor
+			l_internal_cursor: like internal_cursor
 		do
-			c := attached_internal_cursor
-			if a_cursor /= c then
-				a_cursor.set_next_cursor (c.next_cursor)
-				c.set_next_cursor (a_cursor)
+			l_internal_cursor := internal_cursor
+			if a_cursor /= l_internal_cursor then
+				a_cursor.set_next_cursor (l_internal_cursor.next_cursor)
+				l_internal_cursor.set_next_cursor (a_cursor)
 			end
 		end
 
@@ -157,13 +164,13 @@ feature {DS_CURSOR} -- Cursor implementation
 			a_cursor_not_void: a_cursor /= Void
 		local
 			current_cursor, previous_cursor: ?like new_cursor
-			c: like internal_cursor
+			l_internal_cursor: like internal_cursor
 		do
-			c := attached_internal_cursor
-			if a_cursor /= c then
+			l_internal_cursor := internal_cursor
+			if a_cursor /= l_internal_cursor then
 				from
-					previous_cursor := c
-					current_cursor := c.next_cursor
+					previous_cursor := l_internal_cursor
+					current_cursor := l_internal_cursor.next_cursor
 				until
 					current_cursor = a_cursor or current_cursor = Void
 				loop
@@ -183,17 +190,17 @@ feature {NONE} -- Implementation
 			-- Some Eiffel compilers check invariants even when the
 			-- execution of the creation procedure is not completed.
 			-- (In this case, checking the assertions of the being
-			-- created `internal_cursor' triggers the invariants
+			-- created `detachable_internal_cursor' triggers the invariants
 			-- on the current container. So these invariants need
 			-- to be protected.)
 		do
-			Result := (internal_cursor /= Void)
+			Result := (detachable_internal_cursor /= Void)
 		end
 
 invariant
 
 	empty_constraint: initialized implies (is_empty implies off)
-	internal_cursor_not_void: initialized implies (internal_cursor /= Void)
-	valid_internal_cursor: initialized implies {l_cursor: like internal_cursor} internal_cursor and then valid_cursor (l_cursor)
+	internal_cursor_not_void: initialized implies (detachable_internal_cursor /= Void)
+	valid_internal_cursor: initialized implies valid_cursor (internal_cursor)
 
 end

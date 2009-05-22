@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Utility Library"
 	copyright: "Copyright (c) 1999-2002, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2007-03-31 00:05:10 +0200 (Sat, 31 Mar 2007) $"
-	revision: "$Revision: 5933 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
+	revision: "$Revision: 6627 $"
 
 deferred class UT_ERROR
 

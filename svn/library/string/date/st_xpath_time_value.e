@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel String Library"
 	copyright: "Copyright (c) 2007, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
+	revision: "$Revision: 6630 $"
 
 class ST_XPATH_TIME_VALUE
 
@@ -77,11 +77,17 @@ feature -- Access
 		do
 			if zoned then
 				l_zoned_time := zoned_time
-				check l_zoned_time /= Void end -- implied by `zoned'
+				check 
+						-- condition `zoned'
+					zoned: l_zoned_time /= Void 
+				end
 				l_time := l_zoned_time.time
 			else
 				l_time := local_time
-				check l_time /= Void end -- implied by `not zoned'
+				check 
+						-- condition `not zoned'
+					not_zoned: l_time /= Void 
+				end
 			end
 			Result := l_time
 		ensure

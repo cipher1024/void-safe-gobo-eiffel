@@ -21,8 +21,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2008, Daniel Tuser and others"
 	license: "MIT License"
-	date: "$Date: 2008-12-23 16:09:12 +0100 (Tue, 23 Dec 2008) $"
-	revision: "$Revision: 6570 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
+	revision: "$Revision: 6630 $"
 
 deferred class DS_BINARY_SEARCH_TREE_CONTAINER [G, K]
 
@@ -46,7 +46,7 @@ feature {NONE} -- Initialization
 		do
 			internal_set_key_comparator (a_comparator)
 			count := 0
-			internal_cursor := new_cursor
+			set_internal_cursor (new_cursor)
 		ensure
 			comparator_set: key_comparator = a_comparator
 		end
@@ -299,13 +299,7 @@ feature -- Status report
 			end
 		end
 
-feature {NONE} -- Status report
-
-	valid_key (k: K): BOOLEAN is
-			-- Is `k' a valid key?
-		do
-			Result := True
-		end
+feature {DS_BINARY_SEARCH_TREE_CONTAINER} -- Status report
 
 	has_key (a_key: K): BOOLEAN is
 			-- Is there an item associated with `a_key'?
@@ -314,6 +308,27 @@ feature {NONE} -- Status report
 			if root_node /= Void then
 				search_node (a_key)
 				Result := found_node /= Void
+			end
+		end
+
+feature {NONE} -- Status report
+
+	valid_key (k: K): BOOLEAN is
+			-- Is `k' a valid key?
+		do
+			Result := True
+		end
+
+	has_void_key: BOOLEAN is
+			-- Is there an item associated with Void?
+			-- (Performance: O(height).)
+		local
+			k: ?K
+			l_current: ?DS_BINARY_SEARCH_TREE_CONTAINER [G, ?K]
+		do
+			l_current ?= Current
+			if l_current /= Void and k = Void then
+				Result := l_current.has_key (k)
 			end
 		end
 
@@ -602,13 +617,14 @@ feature {DS_LINEAR_CURSOR} -- Cursor implementation
 			-- Move `after' if not found.
 		local
 			l_was_off: BOOLEAN
-
+			l_equality_tester: like equality_tester
 		do
 			if a_cursor.before then
 				a_cursor.forth
 				l_was_off := True
 			end
-			if {l_equality_tester: like equality_tester} equality_tester then
+			l_equality_tester := equality_tester
+			if l_equality_tester /= Void then
 				from
 				until
 					a_cursor.after or else l_equality_tester.test (a_cursor.item, v)
@@ -646,8 +662,11 @@ feature {DS_BILINEAR_CURSOR} -- Cursor implementation
 
 	cursor_is_last (a_cursor: like new_cursor): BOOLEAN is
 			-- Is `a_cursor' on last item?
+		local
+			l_last_node: like last_node
 		do
-			if {l_last_node: like last_node} last_node then
+			l_last_node := last_node
+			if l_last_node /= Void then
 				Result := a_cursor.position = l_last_node
 			end
 		end
@@ -679,6 +698,7 @@ feature {DS_BILINEAR_CURSOR} -- Cursor implementation
 		local
 			l_position: ?DS_BINARY_SEARCH_TREE_CONTAINER_NODE [G, K]
 			l_has_cursor, l_add_cursor: BOOLEAN
+			l_equality_tester: like equality_tester
 		do
 			l_position := a_cursor.position
 			l_has_cursor := l_position /= Void
@@ -710,12 +730,14 @@ feature {DS_BILINEAR_CURSOR} -- Cursor implementation
 			-- Move `before' if not found.
 		local
 			l_was_off: BOOLEAN
+			l_equality_tester: like equality_tester
 		do
 			if a_cursor.after then
 				a_cursor.back
 				l_was_off := True
 			end
-			if {l_equality_tester: like equality_tester} equality_tester then
+			l_equality_tester := equality_tester
+			if l_equality_tester /= Void then
 				from
 				until
 					a_cursor.before or else l_equality_tester.test (a_cursor.item, v)
@@ -748,6 +770,80 @@ feature {DS_BILINEAR_CURSOR} -- Cursor implementation
 				remove_traversing_cursor (a_cursor)
 			end
 		end
+
+feature {DS_BINARY_SEARCH_TREE_CONTAINER_CURSOR} -- Cursor implementation
+
+	cursor_go_at_or_before_key (a_cursor: like new_cursor; k: K) is
+			-- Move `a_cursor' to last position with a smaller key than `k'.
+		require
+			a_cursor_not_void: a_cursor /= Void
+		local
+			l_was_off: BOOLEAN
+			l_position: like found_node
+			l_position_key: detachable K
+		do
+			l_was_off := a_cursor.off
+			if is_empty then
+				a_cursor.set_is_before (True)
+			elseif k = Void then
+				a_cursor.set_is_before (True)
+				if not l_was_off then
+					remove_traversing_cursor (a_cursor)
+				end
+			else
+				search_insert_position (k)
+				l_position := found_node
+				check l_position /= Void end -- implied by ???
+				a_cursor.set_position (l_position)
+				l_position_key := l_position.key
+				if l_position_key = Void or else key_comparator.less_than (k, l_position_key) then
+					a_cursor.back
+				end
+			end
+		ensure
+			has_key_k_implies_a_cursor_points_to_it:
+				(has_key (k) and k /= Void and {el_position: like found_node} a_cursor.position and then {el_position_key: K} el_position.key) implies
+					key_comparator.order_equal (el_position_key, k)
+			k_greater_equal_cursor_positions_key:
+				(not a_cursor.off and then {el_position2: like found_node} a_cursor.position and then {el_position2_key: K} el_position2.key and k /= Void) implies
+					key_comparator.greater_equal (k, el_position2_key)
+			a_cursor_not_after: not a_cursor.after
+		end
+
+	cursor_go_at_or_after_key (a_cursor: like new_cursor; k: K) is
+			-- Move `a_cursor' to first position with a greater key than `k'.
+		require
+			a_cursor_not_void: a_cursor /= Void
+		local
+			l_was_off: BOOLEAN
+			l_position: like found_node
+			l_position_key: detachable K
+		do
+			l_was_off := a_cursor.off
+			if is_empty then
+				a_cursor.set_is_before (False)
+			elseif k = Void then
+				a_cursor.set_position (first_node)
+			else
+				search_insert_position (k)
+				l_position := found_node
+				check l_position /= Void end -- implied by ???
+				a_cursor.set_position (l_position)
+				l_position_key := l_position.key
+				if l_position_key = Void or else key_comparator.greater_than (k, l_position_key) then
+					a_cursor.forth
+				end
+			end
+		ensure
+			has_key_k_implies_a_cursor_points_to_it:
+				(has_key (k) and k /= Void and {el_position: like found_node} a_cursor.position and then {el_position_key: K} el_position.key) implies
+					key_comparator.order_equal (el_position_key, k)
+			k_less_equal_cursors_key:
+				(not a_cursor.off and then {el_position2: like found_node} a_cursor.position and then {el_position2_key: K} el_position2.key and k /= Void) implies
+					key_comparator.less_equal (k, el_position2_key)
+			a_cursor_not_before: not a_cursor.before
+		end
+
 
 feature {DS_BINARY_SEARCH_TREE_CONTAINER} -- Cursor implementation
 
@@ -844,7 +940,13 @@ feature {DS_BINARY_SEARCH_TREE_CONTAINER} -- Cursor implementation
 			successor_in_same_tree: Result /= Void implies are_nodes_in_same_tree (Result, v)
 		end
 
-	internal_cursor: ?like new_cursor
+	set_internal_cursor (c: like detachable_internal_cursor) is
+			-- Set `detachable_internal_cursor' to `c'
+		do
+			detachable_internal_cursor := c
+		end
+
+	detachable_internal_cursor: ?like new_cursor
 			-- Internal cursor
 
 feature {NONE} -- Cursor movement
@@ -854,11 +956,11 @@ feature {NONE} -- Cursor movement
 		require
 			a_last_position_not_void: a_last_position /= Void
 		local
-			l_internal_cursor: like internal_cursor
+			l_internal_cursor: like detachable_internal_cursor
 			l_cursor: ?like new_cursor
 			l_previous_cursor: ?like new_cursor
 		do
-			l_internal_cursor := internal_cursor
+			l_internal_cursor := detachable_internal_cursor
 			check l_internal_cursor /= Void end
 			from
 				if l_internal_cursor.position = a_last_position then
@@ -885,10 +987,10 @@ feature {NONE} -- Cursor movement
 			a_old_node_not_void: a_old_node /= Void
 			a_new_node_not_void: a_new_node /= Void
 		local
-			l_cursor: like internal_cursor
+			l_cursor: like detachable_internal_cursor
 		do
 			from
-				l_cursor := internal_cursor
+				l_cursor := detachable_internal_cursor
 			until
 				l_cursor = Void
 			loop
@@ -902,9 +1004,9 @@ feature {NONE} -- Cursor movement
 	move_all_cursors_after is
 			-- Move `after' all cursors.
 		local
-			l_internal_cursor, l_cursor: like internal_cursor
+			l_internal_cursor, l_cursor: like detachable_internal_cursor
 		do
-			l_internal_cursor := internal_cursor
+			l_internal_cursor := detachable_internal_cursor
 			check l_internal_cursor /= Void end -- FIXME:jfiat: no assertion precise it is not Void, potential bug in origin code
 			from
 				if not l_internal_cursor.off then
@@ -1529,7 +1631,7 @@ feature {NONE} -- Basic operation
 			grand_parent_correct: a_node.parent = old (grand_parent_of_node (a_node))
 			parent_correct: a_node.right_child = old (parent_of_node (a_node))
 			a_correct: a_node.left_child = old (a_node.left_child)
-			b_correct: {l_right_child: like root_node} a_node.right_child and then 
+			b_correct: {l_right_child: like root_node} a_node.right_child and then
 				l_right_child.left_child = old (a_node.right_child)
 			c_correct: {l_right_child2: like root_node} a_node.right_child and then
 				l_right_child2.right_child = old (right_child_of_parent_of_node (a_node))
@@ -1664,9 +1766,9 @@ feature {NONE} -- Basic operation
 		ensure
 			grand_parent_correct: grand_parent_of_node (a_node) = old (grand_parent_of_node (a_node))
 			parent_correct: left_child_of_parent_of_node (a_node) = old (a_node.parent)
-			a_correct: {l_parent_left_child: like root_node} left_child_of_parent_of_node (a_node) and then 
+			a_correct: {l_parent_left_child: like root_node} left_child_of_parent_of_node (a_node) and then
 				l_parent_left_child.left_child = old (left_child_of_parent_of_node (a_node))
-			b_correct: {l_parent_left_child_2: like root_node} left_child_of_parent_of_node (a_node) and then 
+			b_correct: {l_parent_left_child_2: like root_node} left_child_of_parent_of_node (a_node) and then
 				l_parent_left_child_2.right_child = old (left_child_of_left_child_of_node (a_node))
 			c_correct: a_node.left_child = old (right_child_of_left_child_of_node (a_node))
 			d_correct: a_node.right_child = old (a_node.right_child)
@@ -1821,6 +1923,7 @@ feature {NONE} -- Basic operation
 				until
 					l_stop
 				loop
+					check l_found_node /= Void end -- implied by loop's invariant `result_not_void'
 					if l_found_node.key = Void then
 						if l_found_node.right_child /= Void then
 							found_node := l_found_node.right_child

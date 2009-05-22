@@ -43,8 +43,8 @@ feature {NONE} -- Element change
 				end
 			invariant
 				correct_parent: l_parent /= Void implies l_child.parent = l_parent
-				left_child: l_parent /= Void and l_is_left_child implies l_parent.left_child = l_child
-				right_child: l_parent /= Void and not l_is_left_child implies l_parent.right_child = l_child
+				left_child: (l_parent /= Void and l_is_left_child) implies l_parent.left_child = l_child
+				right_child: (l_parent /= Void and not l_is_left_child) implies l_parent.right_child = l_child
 			until
 				l_parent = Void
 			loop

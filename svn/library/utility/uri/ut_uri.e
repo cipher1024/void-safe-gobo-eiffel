@@ -7,8 +7,8 @@ indexing
 	standards: "RFC 3986 (obsoleting RFC 2396)"
 	library: "Gobo Eiffel XML Library"
 	author: "Copyright (c) 2004, Berend de Boer and others"
-	revision: "$Revision: 5914 $"
-	date: "$Date: 2007-03-05 08:07:05 +0100 (lun., 05 mars 2007) $"
+	revision: "$Revision: 6630 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
 
 class UT_URI
 
@@ -180,9 +180,8 @@ feature -- Status report
 			l_path_base_item: like path_base_item
 		do
 			Result := True
-			if has_path_base then
-				l_path_base_item := path_base_item
-				check l_path_base_item /= Void end -- implied by `has_path_base'
+			l_path_base_item := path_base_item
+			if l_path_base_item /= Void and then has_path_base then
 				Result := not is_dot_dot (l_path_base_item) and not is_dot (l_path_base_item)
 			end
 			if path_items.count > 0 then
@@ -217,6 +216,7 @@ feature -- Status report
 		do
 			Result := path_base_item /= Void
 		ensure
+			result_implies_path_base_item_not_void: Result implies path_base_item /= Void
 			-- Commented out CPA 2006/10/06 as it fails for gex:/ : no_base: has_path implies (Result = (path.item (path.count) /= '/'))
 		end
 
@@ -247,8 +247,11 @@ feature -- Status report
 
 	has_valid_scheme: BOOLEAN is
 			-- Is scheme set and containing valid characters?
+		local
+			l_scheme: like scheme
 		do
-			Result := {l_scheme: like scheme} scheme and then (not l_scheme.is_empty and Url_encoding.is_valid_scheme (l_scheme))
+			l_scheme := scheme
+			Result := l_scheme /= Void and then (not l_scheme.is_empty and Url_encoding.is_valid_scheme (l_scheme))
 		ensure
 			valid_scheme_not_void: Result implies scheme /= Void
 			valid_scheme_not_empty: Result implies {el_scheme: like scheme} scheme and then not el_scheme.is_empty
@@ -312,7 +315,10 @@ feature -- Access
 				Result := full_reference
 			else
 				l_scheme := scheme
-				check l_scheme /= Void end
+				check
+						-- `not is_relative' means `is_absolute" means `scheme /= Void'
+					scheme_not_void: l_scheme /= Void
+				end
 				Result := full_reference.substring (l_scheme.count + 2, full_reference.count)
 			end
 		ensure
@@ -331,7 +337,10 @@ feature -- Components
 			l_authority_item: like authority_item
 		do
 			l_authority_item := authority_item
-			check l_authority_item /= Void end
+			check
+					-- Precondition `has_authority'
+				l_authority_item /= Void
+			end
 			Result := l_authority_item.encoded
 		ensure
 			authority_not_void: Result /= Void
@@ -358,9 +367,8 @@ feature -- Components
 				Result.append_character ('/')
 				i := i + 1
 			end
-			if has_path_base then
-				l_path_base_item := path_base_item
-				check l_path_base_item /= Void end -- implied by `has_path_base'
+			l_path_base_item := path_base_item
+			if l_path_base_item /= Void and then has_path_base then
 				Result := STRING_.appended_string (Result, l_path_base_item.encoded)
 			end
 		ensure
@@ -382,7 +390,10 @@ feature -- Components
 			l_path_base_item: like path_base_item
 		do
 			l_path_base_item := path_base_item
-			check l_path_base_item /= Void end -- implied by precondition `has_path_base'
+			check
+					-- precondition `has_path_base'
+				has_path_base: l_path_base_item /= Void
+			end
 			Result := l_path_base_item.encoded
 		ensure
 			path_base_not_void: Result /= Void
@@ -398,7 +409,10 @@ feature -- Components
 			l_query_item: like query_item
 		do
 			l_query_item := query_item
-			check l_query_item /= Void end -- implied by precondition `has_query'
+			check
+					-- precondition `has_query'
+				has_query: l_query_item /= Void
+			end
 			Result := l_query_item.encoded
 		ensure
 			query_not_void: Result /= Void
@@ -414,7 +428,10 @@ feature -- Components
 			l_fragment_item: like fragment_item
 		do
 			l_fragment_item := fragment_item
-			check l_fragment_item /= Void end -- implied by precondition `has_fragment'
+			check
+					-- precondition `has_fragment'
+				has_fragment: l_fragment_item /= Void
+			end
 			Result := l_fragment_item.encoded
 		ensure
 			fragment_not_void: Result /= Void
@@ -501,7 +518,10 @@ feature -- If authority is <userinfo>@<host>:<port>
 		do
 				-- Scan for `userinfo'.
 			l_authority_item := authority_item
-			check l_authority_item /= Void end -- implied by precondition `valid_authority'
+			check
+					-- precondition `valid_authority'
+				valid_authority: l_authority_item /= Void
+			end
 			p := l_authority_item.encoded.index_of ('@', 1)
 			user_info_present := p > 1
 			if user_info_present then
@@ -528,7 +548,10 @@ feature -- If authority is <userinfo>@<host>:<port>
 			l_host_port: like host_port
 		do
 			l_host_port := host_port
-			check l_host_port /= Void end -- implied by precondition `has_authority'
+			check
+					-- precondition `has_authority'
+				has_authority: l_host_port /= Void
+			end
 			Result := l_host_port.host
 		ensure
 			host_not_void: Result /= Void
@@ -543,7 +566,10 @@ feature -- If authority is <userinfo>@<host>:<port>
 			l_host_port: like host_port
 		do
 			l_host_port := host_port
-			check l_host_port /= Void end -- implied by precondition `has_authority'
+			check
+					-- precondition `has_authority'
+				has_authority: l_host_port /= Void
+			end
 			Result := l_host_port.port
 		ensure
 			definition: {el_host_port: like host_port} host_port and then port = el_host_port.port
@@ -706,7 +732,10 @@ feature {NONE} -- Update cached attributes
 			create Result.make_empty
 			if is_absolute then
 				l_scheme := scheme
-				check l_scheme /= Void end -- implied by `is_absolute'
+				check
+						-- condition `is_absolute'
+					is_absolute: l_scheme /= Void
+				end
 				Result := STRING_.appended_string (Result, l_scheme)
 				Result.append_character (':')
 			end
@@ -998,7 +1027,10 @@ feature {NONE} -- Resolve a relative-path reference
 				-- Handle path base if relative.
 			if has_path_base then
 				l_path_base_item := path_base_item
-				check l_path_base_item /= Void end -- implied by `has_path_base'
+				check
+						-- condition `has_path_base'
+					has_path_base: l_path_base_item /= Void
+				end
 				if is_dot (l_path_base_item) or is_dot_dot (l_path_base_item) then
 					path_items.force_last (l_path_base_item)
 					path_base_item := Void

@@ -114,7 +114,10 @@ feature -- Access
 			l_first_cell: like first_cell
 		do
 			l_first_cell := first_cell
-			check l_first_cell /= Void end -- implied by precondition `not_empty'
+			check 
+					-- precondition `not_empty' and invariant `first_cell'
+				first_cell_not_void: l_first_cell /= Void 
+			end
 			Result := l_first_cell.item
 		end
 
@@ -169,7 +172,10 @@ feature -- Duplication
 				if not other.is_empty then
 					from
 						old_cell := other.first_cell
-						check old_cell /= Void end -- implied by `not other.is_empty'
+						check 
+								-- condition `not other.is_empty' and invariant `first_cell' on `other'
+							first_cell_not_void: old_cell /= Void 
+						end
 						create a_cell.make (old_cell.item)
 						first_cell := a_cell
 						old_cell := old_cell.right
@@ -202,7 +208,10 @@ feature -- Comparison
 				until
 					a_cell = Void
 				loop
-					check other_cell /= Void end -- implied by `other.count = count' and `a_cell /= Void'
+					check 
+						-- other_cell is not Void because `a_cell /= Void', `other.count = count' and invariant `first_cell'
+						other_cell_not_void: other_cell /= Void 
+					end
 					if a_cell.item /= other_cell.item then
 						Result := False
 							-- Jump out of the loop.
@@ -221,9 +230,11 @@ feature -- Element change
 			-- Push `v' on stack.
 		local
 			a_cell: like first_cell
+			l_first_cell: like first_cell
 		do
 			create a_cell.make (v)
-			if {l_first_cell: like first_cell} first_cell then
+			l_first_cell := first_cell
+			if l_first_cell /= Void then
 				a_cell.put_right (l_first_cell)
 			end
 			first_cell := a_cell
@@ -236,7 +247,10 @@ feature -- Element change
 			l_first_cell: like first_cell
 		do
 			l_first_cell := first_cell
-			check l_first_cell /= Void end -- implied by inherited precondition `not_empty'
+			check 
+					-- inherited precondition `not_empty' and invariant `first_cell'
+				first_cell_not_void: l_first_cell /= Void 
+			end
 			l_first_cell.put (v)
 		end
 
@@ -245,6 +259,7 @@ feature -- Element change
 			-- Add `other.first' first, etc.
 		local
 			a_cell, new_first: like first_cell
+			l_first_cell: like first_cell
 			other_cursor: DS_LINEAR_CURSOR [G]
 		do
 			if not other.is_empty then
@@ -252,7 +267,8 @@ feature -- Element change
 				from
 					other_cursor.start
 					create a_cell.make (other_cursor.item)
-					if {l_first_cell: like first_cell} first_cell then
+					l_first_cell := first_cell
+					if l_first_cell /= Void then
 						a_cell.put_right (l_first_cell)
 					end
 					new_first := a_cell
@@ -278,7 +294,10 @@ feature -- Removal
 			l_first_cell: like first_cell
 		do
 			l_first_cell := first_cell
-			check l_first_cell /= Void end -- implied by inherited precondition `not_empty'
+			check 
+					-- inherited precondition `not_empty' and invariant `first_cell'
+				first_cell_not_void: l_first_cell /= Void 
+			end
 			first_cell := l_first_cell.right
 			count := count - 1
 		end
@@ -293,14 +312,20 @@ feature -- Removal
 				wipe_out
 			else
 				a_cell := first_cell
-				check a_cell /= Void end -- implied by `valid_n' and `n < count'
+				check 
+						-- inherited precondition `not_empty' and invariant `first_cell'
+					first_cell_not_void: a_cell /= Void 
+				end
 				from
 					i := 1
 				until
 					i > n
 				loop
 					a_cell := a_cell.right
-					check a_cell /= Void end -- implied by `valid_n' and `i < n < count'
+					check 
+							-- inherited precondition `valid_n' and `i <= n < count'
+						a_cell_right_not_void: a_cell /= Void 
+					end 
 					i := i + 1
 				end
 				first_cell := a_cell

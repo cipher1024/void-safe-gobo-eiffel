@@ -3,8 +3,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class
 	STRING_TO_INTEGER_CONVERTOR
@@ -110,7 +110,7 @@ feature -- String parsing
 			reset (type)
 			i := 0
 			l_c := s.count
-			if {l_str8: STRING_8} s then
+			if attached {STRING_8} s as l_str8 then
 				from
 					l_area8 := l_str8.area
 				until
@@ -119,7 +119,7 @@ feature -- String parsing
 					parse_character (l_area8.item (i))
 					i := i + 1
 				end
-			elseif {l_str32: STRING_32} s then
+			elseif attached {STRING_32} s as l_str32 then
 				from
 					l_area32 := l_str32.area
 				until

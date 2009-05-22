@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel String Library"
 	copyright: "Copyright (c) 2007, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
+	revision: "$Revision: 6627 $"
 
 class ST_STRING_ROUTINES
 
@@ -24,7 +24,7 @@ feature -- Status report
 	is_all_whitespace (chars: STRING): BOOLEAN is
 			-- Does `chars' consist only of XML white-space characters?
 		require
-			chars_attached: chars /= Void
+			chars_not_void: chars /= Void
 		local
 			counter: INTEGER
 		do
@@ -60,4 +60,4 @@ feature -- Status report
 		end
 
 end
-
+	

@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Utility Library"
 	copyright: "Copyright (c) 2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-05-22 15:27:01 +0200 (Thu, 22 May 2008) $"
-	revision: "$Revision: 6422 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class UT_CSV_HANDLER
 
@@ -93,7 +93,6 @@ feature -- Input
 			a_action_not_void: a_action /= Void
 		local
 			l_cells: DS_ARRAYED_LIST [STRING]
-			l_last_string: ?STRING
 		do
 			if not a_file.end_of_input then
 				create l_cells.make (512)
@@ -102,9 +101,7 @@ feature -- Input
 				until
 					a_file.end_of_input
 				loop
-					l_last_string := a_file.last_string
-					check l_last_string /= Void end -- implied by postcondition of `file.read_line'
-					read_row (l_last_string, l_cells)
+					read_row (a_file.last_string, l_cells)
 					a_action.call ([l_cells])
 					l_cells.wipe_out
 					a_file.read_line

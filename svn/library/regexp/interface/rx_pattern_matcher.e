@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Regexp Library"
 	copyright: "Copyright (c) 2002, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 deferred class RX_PATTERN_MATCHER
 

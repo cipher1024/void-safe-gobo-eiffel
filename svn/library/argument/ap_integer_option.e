@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Argument Library"
 	copyright: "Copyright (c) 2006, Bernd Schoeller and others"
 	license: "MIT License"
-	date: "$Date: 2007-09-20 16:54:24 +0200 (jeu., 20 sept. 2007) $"
-	revision: "$Revision: 6088 $"
+	date: "$Date: 2009-05-16 11:30:58 +0200 (Sat, 16 May 2009) $"
+	revision: "$Revision: 6637 $"
 
 class AP_INTEGER_OPTION
 
@@ -62,14 +62,16 @@ feature {AP_PARSER} -- Parser Interface
 			l_last_option_parameter: ?STRING
 		do
 			l_last_option_parameter := a_parser.last_option_parameter
-			if l_last_option_parameter /= Void then
-				if l_last_option_parameter.is_integer then
-					parameters.force_last (l_last_option_parameter.to_integer)
-				else
-					create error.make_invalid_parameter_error (Current, l_last_option_parameter)
-					a_parser.error_handler.report_error (error)
-					parameters.force_last (0)
-				end
+			check 
+					-- Implied by inherited precondition `parameter_if_needed' and Current's value of `needs_parameter'
+				parameter_needed: l_last_option_parameter /= Void 
+			end 
+			if l_last_option_parameter.is_integer then
+				parameters.force_last (l_last_option_parameter.to_integer)
+			else
+				create error.make_invalid_parameter_error (Current, l_last_option_parameter)
+				a_parser.error_handler.report_error (error)
+				parameters.force_last (0)
 			end
 		end
 

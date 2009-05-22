@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Test Library"
 	copyright: "Copyright (c) 2000-2006, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-10-06 09:53:14 +0200 (Mon, 06 Oct 2008) $"
-	revision: "$Revision: 6531 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class TS_TEST_SUITE
 
@@ -98,6 +98,6 @@ feature {NONE} -- Implementation
 invariant
 
 	tests_not_void: tests /= Void
-	no_void_test: not tests.has (Void)
+	no_void_test: not tests.has_void
 
 end

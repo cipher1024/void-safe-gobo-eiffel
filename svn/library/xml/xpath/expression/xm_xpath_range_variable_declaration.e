@@ -10,8 +10,8 @@ indexing
 	library: "Gobo Eiffel XPath Library"
 	copyright: "Copyright (c) 2004, Colin Adams and others"
 	license: "MIT License"
-	date: "$Date: 2008-05-05 19:06:00 +0200 (Mon, 05 May 2008) $"
-	revision: "$Revision: 6390 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 class XM_XPATH_RANGE_VARIABLE_DECLARATION
 
@@ -153,7 +153,7 @@ feature {NONE} -- Implementation
 invariant
 
 	references_not_void: not references.has_void
-	all_references_not_void: not references.has (Void)
+	all_references_not_void: not references.has_void
 	name_not_void: variable_name /= Void and then variable_name.count > 0
 	required_type_not_void: required_type /= Void
 

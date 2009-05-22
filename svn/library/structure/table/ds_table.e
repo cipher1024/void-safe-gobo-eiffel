@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2000-2008, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-12-23 16:09:12 +0100 (Tue, 23 Dec 2008) $"
-	revision: "$Revision: 6570 $"
+	date: "$Date: 2009-04-22 15:37:59 +0200 (Wed, 22 Apr 2009) $"
+	revision: "$Revision: 6626 $"
 
 deferred class DS_TABLE [G, K]
 
@@ -49,11 +49,37 @@ feature -- Status report
 		deferred
 		end
 
+	valid_void_key: BOOLEAN is
+			-- Is Void a valid key?
+		local
+			k: ?K
+			l_current: ?DS_TABLE [G, ?K]
+		do
+			l_current ?= Current
+			if l_current /= Void and k = Void then
+				Result := l_current.valid_key (k)
+			end
+		end
+
 	has (k: ?K): BOOLEAN is
 			-- Is there an item associated with `k'?
 		deferred
 		ensure
 			valid_key: Result implies valid_key (k)
+		end
+
+	has_void: BOOLEAN is
+			-- Is there an item associated with Void?
+		local
+			k: ?K
+			l_current: ?DS_TABLE [G, ?K]
+		do
+			l_current ?= Current
+			if l_current /= Void and k = Void then
+				Result := l_current.has (k)
+			end
+		ensure
+			valid_key: Result implies valid_void_key
 		end
 
 feature -- Element change

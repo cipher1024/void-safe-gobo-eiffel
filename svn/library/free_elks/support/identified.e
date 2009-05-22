@@ -3,8 +3,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class IDENTIFIED
 
@@ -34,11 +34,11 @@ feature -- Access
 			valid_id: Result > 0 implies id_object (Result) = Current
 		end
 
-	frozen id_object (an_id: INTEGER): ?IDENTIFIED
+	frozen id_object (an_id: INTEGER): detachable IDENTIFIED
 			-- Object associated with `an_id' (void if no such object)
 		do
 			if an_id > 0 then
-				if {l_result: IDENTIFIED} eif_id_object (an_id) then
+				if attached {IDENTIFIED} eif_id_object (an_id) as l_result then
 					Result := l_result
 				end
 			end

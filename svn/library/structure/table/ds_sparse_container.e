@@ -7,8 +7,8 @@ indexing
 	library: "Gobo Eiffel Structure Library"
 	copyright: "Copyright (c) 2003-2007, Eric Bezault and others"
 	license: "MIT License"
-	date: "$Date: 2008-09-28 20:40:54 +0200 (Sun, 28 Sep 2008) $"
-	revision: "$Revision: 6526 $"
+	date: "$Date: 2009-05-02 17:23:17 +0200 (Sat, 02 May 2009) $"
+	revision: "$Revision: 6630 $"
 
 deferred class DS_SPARSE_CONTAINER [G, K]
 
@@ -47,7 +47,7 @@ feature {NONE} -- Initialization
 			free_slot := No_position
 			position := No_position
 			unset_found_item
-			internal_cursor := new_cursor
+			set_internal_cursor (new_cursor)
 		ensure
 			empty: is_empty
 			capacity_set: capacity = n
@@ -347,17 +347,17 @@ feature -- Duplication
 			old_cursor: ?like new_cursor
 		do
 			if other /= Current then
-				old_cursor := internal_cursor
+				old_cursor := detachable_internal_cursor
 				move_all_cursors_after
 				standard_copy (other)
-					-- Set `internal_cursor' to Void before calling
+					-- Set `detachable_internal_cursor' to Void before calling
 					-- `valid_cursor' and `new_cursor' to avoid an
 					-- invariant violation.
-				internal_cursor := Void
+				set_internal_cursor (Void)
 				if old_cursor /= Void and then valid_cursor (old_cursor) then
-					internal_cursor := old_cursor
+					set_internal_cursor (old_cursor)
 				else
-					internal_cursor := new_cursor
+					set_internal_cursor (new_cursor)
 				end
 				unset_found_item
 				clone_item_storage
@@ -922,7 +922,13 @@ feature {NONE} -- Constants
 
 feature {NONE} -- Cursor movements
 
-	internal_cursor: ?like new_cursor
+	set_internal_cursor (c: like detachable_internal_cursor) is
+			-- Set `detachable_internal_cursor' to `c'
+		do
+			detachable_internal_cursor := c
+		end
+
+	detachable_internal_cursor: ?like new_cursor
 			-- Internal cursor
 
 	move_all_cursors_after is
@@ -931,7 +937,7 @@ feature {NONE} -- Cursor movements
 			a_cursor, next_cursor: ?like new_cursor
 		do
 			from
-				a_cursor := internal_cursor
+				a_cursor := detachable_internal_cursor
 			until
 				(a_cursor = Void)
 			loop
@@ -952,7 +958,7 @@ feature {NONE} -- Cursor movements
 			a_cursor: ?like new_cursor
 		do
 			from
-				a_cursor := internal_cursor
+				a_cursor := detachable_internal_cursor
 			until
 				(a_cursor = Void)
 			loop
@@ -970,7 +976,7 @@ feature {NONE} -- Cursor movements
 		local
 			a_cursor, previous_cursor, next_cursor: ?like new_cursor
 		do
-			a_cursor := attached_internal_cursor
+			a_cursor := internal_cursor
 			if a_cursor.position = old_position then
 				a_cursor.set_position (after_position)
 			end

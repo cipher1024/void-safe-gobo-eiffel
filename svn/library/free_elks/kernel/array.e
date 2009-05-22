@@ -8,8 +8,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-03-14 15:13:03 +0100 (Sat, 14 Mar 2009) $"
-	revision: "$Revision: 6612 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class ARRAY [G] inherit
 
@@ -38,7 +38,7 @@ create
 	make_from_cil
 
 convert
-	to_cil: {NATIVE_ARRAY [G], ?NATIVE_ARRAY [G]},
+	to_cil: {NATIVE_ARRAY [G], detachable NATIVE_ARRAY [G]},
 	to_special: {SPECIAL [G]},
 	make_from_cil ({NATIVE_ARRAY [G]})
 
@@ -225,7 +225,7 @@ feature -- Status report
 			Result := area.all_default (0, upper - lower)
 		ensure
 			definition: Result = (count = 0 or else
-				((not {i: like item} item (upper) or else i = i.default) and
+				((not attached {like item} item (upper) as i or else i = i.default) and
 				subarray (lower, upper - 1).all_default))
 		end
 

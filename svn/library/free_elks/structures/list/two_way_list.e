@@ -9,8 +9,8 @@ note
 	representation: linked;
 	access: index, cursor, membership;
 	contents: generic;
-	date: "$Date: 2009-03-14 15:13:03 +0100 (Sat, 14 Mar 2009) $"
-	revision: "$Revision: 6612 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class TWO_WAY_LIST [G] inherit
 
@@ -55,14 +55,14 @@ create {TWO_WAY_LIST}
 
 feature -- Access
 
-	first_element: ?like new_cell
+	first_element: detachable like new_cell
 			-- Head of list
 			-- (Anchor redefinition)
 
 	last_element: like first_element
 			-- Tail of the list
 
-	sublist: ?like Current
+	sublist: detachable like Current
 			-- Result produced by last `split'
 
 	cursor: TWO_WAY_LIST_CURSOR [G]
@@ -492,9 +492,9 @@ invariant
 
 	non_empty_list_has_two_endpoints: not is_empty implies
 				(first_element /= Void and last_element /= Void)
-	first_element_constraint: {f: like first_element} first_element implies
+	first_element_constraint: attached first_element as f implies
 				f.left = Void
-	last_element_constraint: {l: like last_element} last_element implies
+	last_element_constraint: attached last_element as l implies
 				l.right = Void
 
 note

@@ -9,8 +9,8 @@ note
 	representation: array;
 	access: index, cursor, membership;
 	contents: generic;
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 class FIXED_LIST [G] inherit
 
@@ -160,7 +160,7 @@ feature -- Status report
 	valid_cursor (p: CURSOR): BOOLEAN
 			-- Is `p' a valid cursor?
 		do
-			if {fl_c: ARRAYED_LIST_CURSOR} p then
+			if attached {ARRAYED_LIST_CURSOR} p as fl_c then
 				Result := valid_cursor_index (fl_c.index)
 			end
 		end
@@ -211,7 +211,7 @@ feature -- Cursor movement
 	go_to (p: CURSOR)
 			-- Move cursor to element remembered in `p'.
 		do
-			if {fl_c: ARRAYED_LIST_CURSOR} p then
+			if attached {ARRAYED_LIST_CURSOR} p as fl_c then
 				index := fl_c.index
 			end
 		end

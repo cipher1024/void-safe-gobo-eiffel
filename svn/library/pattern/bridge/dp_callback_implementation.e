@@ -8,10 +8,14 @@ indexing
 	library: "Gobo Eiffel Pattern Library"
 	copyright: "Copyright (c) 2001, Andreas Leitner and others"
 	license: "MIT License"
-	date: "$Date: 2008-09-28 20:35:10 +0200 (Sun, 28 Sep 2008) $"
-	revision: "$Revision: 6524 $"
+	date: "$Date: 2009-04-23 16:03:08 +0200 (Thu, 23 Apr 2009) $"
+	revision: "$Revision: 6627 $"
 
 class DP_CALLBACK_IMPLEMENTATION
+
+obsolete
+
+	"[090423] This class does not work well in void-safe mode. Please stop using it."
 
 inherit
 
@@ -23,7 +27,7 @@ inherit
 
 feature {DP_INTERFACE} -- Status report
 
-	can_implement (an_interface: !like interface): BOOLEAN is
+	can_implement (an_interface: DP_INTERFACE): BOOLEAN is
 			-- Can current implementation implement `an_interface'?
 		do
 			Result := (interface = Void or else interface = an_interface)
@@ -31,7 +35,7 @@ feature {DP_INTERFACE} -- Status report
 
 feature {DP_INTERFACE} -- Setting
 
-	implement (an_interface: !like interface) is
+	implement (an_interface: DP_INTERFACE) is
 			-- Tell current implementation to implement `an_interface'?
 		do
 			interface := an_interface
@@ -46,6 +50,6 @@ feature {DP_INTERFACE} -- Implementation
 
 invariant
 
-	bidirectional: {ot_interface: like interface} interface implies ot_interface.implementation = Current
+	bidirectional: {l_interface: DP_INTERFACE} interface implies l_interface.implementation = Current
 
 end

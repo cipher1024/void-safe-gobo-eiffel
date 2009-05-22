@@ -3,8 +3,8 @@ note
 	library: "Free implementation of ELKS library"
 	copyright: "Copyright (c) 1986-2008, Eiffel Software and others"
 	license: "Eiffel Forum License v2 (see forum.txt)"
-	date: "$Date: 2009-01-12 17:05:16 +0100 (Mon, 12 Jan 2009) $"
-	revision: "$Revision: 6572 $"
+	date: "$Date: 2009-03-16 19:28:54 +0100 (Mon, 16 Mar 2009) $"
+	revision: "$Revision: 6620 $"
 
 deferred class PATH_NAME
 
@@ -190,12 +190,12 @@ feature {NONE} -- Externals
 			"C signature (EIF_CHARACTER *, EIF_CHARACTER *, EIF_INTEGER): EIF_BOOLEAN use %"eif_path_name.h%""
 		end
 
-	eif_volume_name (s: POINTER): ?STRING
+	eif_volume_name (s: POINTER): detachable STRING
 		external
 			"C signature (EIF_CHARACTER *): EIF_REFERENCE use %"eif_path_name.h%""
 		end
 
-	eif_extracted_paths (s: POINTER): ?ARRAY [STRING]
+	eif_extracted_paths (s: POINTER): detachable ARRAY [STRING]
 		external
 			"C signature (EIF_CHARACTER *): EIF_REFERENCE use %"eif_path_name.h%""
 		end
