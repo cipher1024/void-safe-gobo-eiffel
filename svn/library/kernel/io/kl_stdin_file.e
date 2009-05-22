@@ -57,7 +57,8 @@ inherit
 			{NONE} all
 		redefine
 			file_readable,
-			last_string
+			last_string,
+			copy_to
 		end
 
 create
@@ -317,6 +318,17 @@ feature -- Input
 			else
 				Result := precursor (a_buffer, pos, nb)
 			end
+		end
+
+feature {NONE} -- Obsolete
+
+	copy_to (file: like Current)
+			-- Copy content of current from current cursor
+			-- position to end of file into `file' from
+			-- current cursor position of `file'.
+		obsolete
+			"Not appropriate for {KL_STDIN_FILE}"
+		do
 		end
 
 feature {NONE} -- Implementation

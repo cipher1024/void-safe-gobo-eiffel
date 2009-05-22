@@ -63,9 +63,7 @@ inherit
 		undefine
 			file_readable
 		redefine
-
-
-
+			copy_to,
 			string_name,
 			last_character,
 			last_string
@@ -86,6 +84,17 @@ feature -- Access
 			-- Therefore a clone should be used if the result
 			-- is to be kept beyond the next call to this feature.
 			-- However `last_string' is not shared between file objects.)
+
+feature {NONE} -- Obsolete
+
+	copy_to (file: like Current)
+			-- Copy content of current from current cursor
+			-- position to end of file into `file' from
+			-- current cursor position of `file'.
+		obsolete
+			"Not appropriate for {KL_STDIN_FILE}"
+		do
+		end
 
 feature {NONE} -- Implementation
 

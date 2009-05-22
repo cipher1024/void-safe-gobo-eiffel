@@ -15,28 +15,18 @@
 			<exclude>/EIFGENs$</exclude>
 			<exclude>/Documentation$</exclude>
 		</file_rule>
-		<option full_class_checking="true" is_attached_by_default="true" is_void_safe="true" syntax_level="1" namespace="Gobo.Library" />
-
+		<option full_class_checking="true" is_attached_by_default="true" is_void_safe="true" syntax_level="1" namespace="Gobo.Library">
+		</option>
 		<setting name="dotnet_naming_convention" value="true"/>
 		<library name="eiffelbase" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
 		<library name="eiffeltime" location="$ISE_LIBRARY\library\time\time-safe.ecf"/>
 		<assembly name="eiffelsoftware.runtime" location="$ISE_EIFFEL\studio\spec\$ISE_PLATFORM\lib\EiffelSoftware.Runtime.dll"/>
-		<cluster name="override" location="override\library\kernel" recursive="true">
-			<file_rule>
-				<exclude>uc_character.e$</exclude>
-			</file_rule>
+		<cluster name="argument" location="svn\library\argument\" recursive="true">
+			<option namespace="Argument">
+			</option>
 		</cluster>
 		<cluster name="kernel" location="svn\library\kernel\" recursive="true">
 			<option namespace="Kernel">
-			</option>
-			<file_rule>
-				<exclude>/unicode/uc_string.e$</exclude>
-				<exclude>/misc/kl_comparable.e$</exclude>
-				<exclude>/misc/kl_numeric.e$</exclude>
-			</file_rule>
-		</cluster>
-		<cluster name="argument" location="svn\library\argument\" recursive="true">
-			<option namespace="Argument">
 			</option>
 		</cluster>
 		<cluster name="lexical" location="svn\library\lexical\" recursive="true">
@@ -64,18 +54,13 @@
 			</option>
 		</cluster>
 		<cluster name="structure" location="svn\library\structure\" recursive="true">
-			<option namespace="Structure"/>
+			<option namespace="Structure">
+			</option>
 		</cluster>
 		<cluster name="time" location="svn\library\time\" recursive="true">
 			<option namespace="Time">
 			</option>
 		</cluster>
-		<!--
-		<cluster name="tools" location="svn\library\tools\" recursive="true">
-			<option namespace="Tools">
-			</option>
-		</cluster>
-		-->
 		<cluster name="utility" location="svn\library\utility\" recursive="true">
 			<option namespace="Utility">
 			</option>

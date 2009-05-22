@@ -66,9 +66,7 @@ inherit
 		undefine
 			file_readable
 		redefine
-
-
-
+			copy_to,
 			string_name,
 			last_character,
 			last_string
@@ -171,6 +169,17 @@ feature -- Input
 				end
 			end
 			end_of_file := False
+		end
+
+feature {NONE} -- Obsolete
+
+	copy_to (file: like Current)
+			-- Copy content of current from current cursor
+			-- position to end of file into `file' from
+			-- current cursor position of `file'.
+		obsolete
+			"Not appropriate for {KL_STDIN_FILE}"
+		do
 		end
 
 feature {NONE} -- Implementation
